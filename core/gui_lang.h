@@ -566,8 +566,11 @@
 #define LANG_MENU_MISC_IMAGE_QUALITY	454
 #define LANG_MENU_LUA_RESTART        455
 //-------------------------------------------------------------------
-
-#define GUI_LANG_ITEMS                  455
+#define LANG_MENU_DEBUG_CHDKLOG        456   // CAM_CONSOLE_LOG_ENABLED
+#define LANG_MENU_DEBUG_STDOUTLOG      457
+#define LANG_MENU_DEBUG_ROMLOG         458
+//---------------------------------------------------
+#define GUI_LANG_ITEMS                  458
 
 //-------------------------------------------------------------------
 extern void gui_lang_init();
