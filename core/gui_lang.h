@@ -569,10 +569,13 @@
 #define LANG_MENU_EDGE_SHOW        457
 #define LANG_MENU_EDGE_PANO_OVERLAP  458
 //-------------------------------------------------------------------
+#define LANG_MENU_DEBUG_CHDKLOG        459   // CAM_CONSOLE_LOG_ENABLED
+#define LANG_MENU_DEBUG_STDOUTLOG      460
+#define LANG_MENU_DEBUG_ROMLOG         461
+//---------------------------------------------------
+#define GUI_LANG_ITEMS                  461
 
-#define GUI_LANG_ITEMS                  458
-
-//-------------------------------------------------------------------
+-------------------------------------------------------------------
 extern void gui_lang_init();
 
 //-------------------------------------------------------------------
