@@ -1,7 +1,6 @@
-
-// Change to your ROM start
-#define ROM_START   0xFF810000
-
+// Use correct start address for your ROM file
+//#define ROM_START   0xFFC00000   // A-series
+#define ROM_START   0xFF810000   // S-, SD-, and G- series
 
 static getString(addr)
 {
@@ -22,9 +21,6 @@ static getString(addr)
 
   return stringRead;
 }
-
-
-
 
 static replace(str, src, dest)
 {
