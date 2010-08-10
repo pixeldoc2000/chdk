@@ -93,6 +93,7 @@ void core_spytask()
     gui_init();
 
 #if CAM_CONSOLE_LOG_ENABLED
+    extern void console_init(void);
     console_init();
 #endif
 
