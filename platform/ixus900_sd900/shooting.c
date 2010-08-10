@@ -86,6 +86,45 @@ const ISOTable iso_table[] = {
     { 6,  1600,  "1600", -1},
 };
 
+/*
+http://www.usa.canon.com/cusa/support/consumer/digital_cameras/powershot_sd_series/powershot_sd900#Specifications
+Shooting Modes:
+    Auto, Camera M,
+    Special Scene (Portrait, Foliage, Snow, Beach, Fireworks, Aquarium, Underwater, ISO 3200, Indoor, Kids & Pets, Night Snapshot),
+    Color Accent, Color Swap, Digital Macro, Stitch Assist, Movie
+
+    Still Image: 640 x 480 (Small), 1,600 x 1,200 (Medium 3), 2,272 x 1,704 (Medium 2), 2,816 x 2,112 (Medium 1), 3,648 x 2,736 (Large), 3,648 x 2,048 (Widescreen)
+    Movie: 640 x 480 / 320 x 240 (30 fps/15 fps) available up to 4GB or 1 hour for each file size, 1,024 x 768 (15 fps), 160 x 120 (3 min. at 15 fps)
+*/
+
+// PROPCASE 49
+// Mapping between camera mode and PROPCASE_SHOOTING_MODE
+static const CapturemodeMap modemap[] = {   // PROPCASE 0, check with CHDK debug menu option "Show Parameter Data 0"
+    {MODE_AUTO,               32768},
+    {MODE_M,                  33772},
+    {MODE_DIGITAL_MACRO,      33288},
+    {MODE_STITCH,             33290},
+    {MODE_COLOR_ACCENT,       33305},
+    {MODE_MY_COLORS,          33306},   // mode M "color swap" ???
+    //{MODE_NIGHT_SNAPSHOT,     16395},   // mode SCN NIGHT SNAPSHOT ???
+    {MODE_SCN_NIGHT,          16395},   // mode SCN NIGHT SNAPSHOT ???
+    {MODE_SCN_PORTRAIT,       16397},
+    {MODE_SCN_KIDS_PETS,      16399},
+    {MODE_SCN_INDOOR,         16400},
+    {MODE_SCN_FOLIAGE,        16401},
+    {MODE_SCN_SNOW,           16402},
+    {MODE_SCN_BEACH,          16403},
+    {MODE_SCN_FIREWORK,       16404},
+    {MODE_SCN_WATER,          16405},   // mode SCN "underwater" ???
+    {MODE_SCN_AQUARIUM,       16406},
+    {MODE_SCN_ISO_3200,       16411},
+    {MODE_VIDEO_STD,          2596},
+    {MODE_VIDEO_COLOR_ACCENT, 2594},
+    {MODE_VIDEO_COLOR_SWAP,   2595},
+    {MODE_VIDEO_COMPACT,      2598},
+    {MODE_VIDEO_HIRES,        2599},
+};
+
 #include "../generic/shooting.c"
 
 long get_file_next_counter() {
