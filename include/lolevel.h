@@ -141,6 +141,9 @@ extern long _iosDevAdd(void*,void*,int);
 extern long _iosDevDelete(void*);
 extern long _iosDrvInstall(void*,void*,void*,void*,void*,void*,void*);
 extern void _GiveSemaphore(int sem);
+#ifdef CAM_CONSOLE_LOG_ENABLED
+    int *_iosDevFind(const char *device, int foo);
+#endif
 
 /* misc */
 extern const char aPhysw;

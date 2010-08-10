@@ -579,6 +579,10 @@ static char* gui_lang_default = \
 "456 \"Filter edges\"\n"
 "457 \"Always show\"\n"
 "458 \"   Pano overlap (%)\"\n"
+"459 \"View ChdkLog.txt\"\n"   // CAM_CONSOLE_LOG_ENABLED
+"460 \"View StdOut.txt\"\n"
+//"460 \"Save and view RomLog.txt\"\n"
+"461 \"View RomLog.txt\"\n"
 ;
 
 //-------------------------------------------------------------------
