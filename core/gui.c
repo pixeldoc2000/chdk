@@ -2875,7 +2875,6 @@ void gui_draw_osd() {
 //        long v=get_file_counter();
 //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
 //	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
-=======
 	gui_draw_debug_vals_osd();
         //extern long physw_status[3];
         //sprintf(osd_buf, "1:%8x  ", physw_status[0]);
