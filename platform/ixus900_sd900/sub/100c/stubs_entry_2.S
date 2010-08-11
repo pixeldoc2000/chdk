@@ -13,7 +13,6 @@ NHSTUB(GetDrive_FreeClusters, 0xFF87ADE8)   // note "GetCatFs_FreeClusters"
 
 NHSTUB(WriteSDCard, 0xFF88A8A4)
 
-
 NHSTUB(kbd_pwr_on, 0xFF8291F8)
 NHSTUB(kbd_pwr_off, 0xFF829238)
 NHSTUB(kbd_read_keys_r2, 0xFF828D40)   // search for "MOVL    R4, 0x223000"
@@ -37,6 +36,8 @@ NHSTUB(ExitFromCompensationEVF, 0xFF98F044)
 
 NHSTUB(DoAFLock, 0xFF98EE30)
 NHSTUB(UnlockAF, 0xFF98EE7C)
+
+NHSTUB(SetScriptMode, 0xFF9A6394)   // search for SetScriptMode in IDA
 
 NHSTUB(iosInit, 0xFFB58E2C)   // used if CAM_CONSOLE_LOG_ENABLED
 NHSTUB(ttyDrv_Start, 0xFF811874)   // VxWorks console
