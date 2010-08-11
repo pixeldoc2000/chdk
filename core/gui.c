@@ -254,10 +254,6 @@ static const char* gui_override_disable_enum(int change, int arg);
 	static const char* gui_debug_shortcut_enum(int change, int arg);
 	static const char* gui_debug_display_enum(int change, int arg);
 	static void gui_debug_shortcut(void);
-	static void gui_menuproc_chdklog(int arg);
-	//static void save_rom_log();
-	static void gui_menuproc_romlog(int arg);
-	static void gui_menuproc_stdoutlog(int arg);
 #endif
 void rinit();
 
@@ -389,9 +385,6 @@ static CMenuItem debug_submenu_items[] = {
     {0x5c,LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &conf.debug_misc_vals_show },
     {0x2a,LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },
     {0x2a,LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
-    {0x35,LANG_MENU_DEBUG_CHDKLOG,           MENUITEM_PROC,          (int*)gui_menuproc_chdklog },
-    {0x35,LANG_MENU_DEBUG_ROMLOG,            MENUITEM_PROC,          (int*)gui_menuproc_romlog },
-    {0x35,LANG_MENU_DEBUG_STDOUTLOG,         MENUITEM_PROC,          (int*)gui_menuproc_stdoutlog },
     {0x5c,LANG_MENU_DEBUG_SHORTCUT_ACTION,   MENUITEM_ENUM,          (int*)gui_debug_shortcut_enum },
     {0x5c,LANG_MENU_RAW_TIMER,               MENUITEM_BOOL,          &conf.raw_timer },
     {0x5c,LANG_MENU_LUA_RESTART,             MENUITEM_BOOL,          &conf.debug_lua_restart_on_error },
@@ -2867,91 +2860,7 @@ void gui_draw_osd() {
     if (movie_status==VIDEO_RECORD_IN_PROGRESS) gui_osd_draw_ev_video(get_ev_video_avail());
 #endif
 
-#ifdef OPT_DEBUGGING
-    if (debug_vals_show) {
-//        long v=get_file_counter();
-//	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
-//	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
 	gui_draw_debug_vals_osd();
-        //extern long physw_status[3];
-        //sprintf(osd_buf, "1:%8x  ", physw_status[0]);
-        //draw_txt_string(28, 10, osd_buf, conf.osd_color);
-
-        //sprintf(osd_buf, "2:%8x  ", physw_status[1]);
-        //draw_txt_string(28, 11, osd_buf, conf.osd_color);
-
-        //sprintf(osd_buf, "3:%8x  ", physw_status[2]);
-        //draw_txt_string(28, 12, osd_buf, conf.osd_color);
-
-        //sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
-
-        //sprintf(osd_buf, "u:%8x  ", get_usb_power(1));
-        //draw_txt_string(28,  9, osd_buf, conf.osd_color);
-
-        //	sprintf(osd_buf, "1:%8x  ", (void*) (*(int*)conf.mem_view_addr_init));
-        //	draw_txt_string(28, 10, osd_buf, conf.osd_color);
-
-        extern volatile long focus_busy;
-        sprintf(osd_buf, "f:%8x  ", focus_busy);
-        draw_txt_string(28, 11, osd_buf, conf.osd_color);
-
-        extern volatile long zoom_busy;
-        sprintf(osd_buf, "z:%8x  ", zoom_busy);
-        draw_txt_string(28, 12, osd_buf, conf.osd_color);
-
-        // some cameras missing zoom_status
-        //#if 0
-            sprintf(osd_buf, "t:%8x  ", zoom_status);
-           draw_txt_string(28, 13, osd_buf, conf.osd_color);
-        //#endif
-    }
-
-
-   {
-	static char sbuf[100];
-    int r,i, p, len;
-    if (conf.debug_display == DEBUG_DISPLAY_PROPS){
-
-	for (i=0;i<10;i++){
-	    r = 0;
-	    p = debug_propcase_page*10+i;
-	    get_property_case(p, &r, 4);
-	    sprintf(sbuf, "%3d: %d              ", p, r);sbuf[20]=0;
-	    draw_string(64,16+16*i,sbuf, conf.osd_color);
-	}
-    }
-
-    if (conf.debug_display == DEBUG_DISPLAY_PARAMS){
-        extern long* FlashParamsTable[]; 
-	char s[30];
-	int count;
-
-	for (i=0;i<10;i++){
-	    r = 0;
-	    p = debug_propcase_page*10+i;
-	    if (p>=get_flash_params_count())  sprintf(sbuf, "%3d: This parameter does not exists", p);
-	    else   {
-             len=FlashParamsTable[p][1]>>16;
-             if ((len==1)||(len==2)||(len==4)){
-              get_parameter_data(p, &r, len); 
-	      sprintf(sbuf, "%3d: %30d :%2d ", p, r,len);
-	      }
-	     else {
-	      if (len>=sizeof(s)) count=sizeof(s)-1; else count=len;
-	      get_parameter_data(p, &s, count);
-	      s[count]=0;
-	      sprintf(sbuf, "%3d: %30s :%2d ", p, s,len);
-	     }
-	    }
-	    draw_string(16,16+16*i,sbuf, conf.osd_color);
-	}
-    }
-   }
-
-    if(conf.debug_display == DEBUG_DISPLAY_TASKS) {
-        gui_debug_draw_tasklist();
-    }
-#endif
 
     if (ubasic_error){
 	const char *msg;
@@ -3287,25 +3196,6 @@ void gui_draw_read_last(int arg) {
 #endif
 
 //-------------------------------------------------------------------
-
-#ifdef OPT_DEBUGGING
-    void gui_menuproc_chdklog(int arg) {   // CAM_CONSOLE_LOG_ENABLED
-          //gui_draw_read_selected(conf.debug_chdklog);
-          gui_draw_read_selected("A/chdklog.txt");
-    }
-
-    void gui_menuproc_romlog(int arg) {   // CAM_CONSOLE_LOG_ENABLED
-        //save_rom_log();
-        //gui_draw_read_selected(conf.debug_romlog);
-        gui_draw_read_selected("A/ROMLOG.txt");
-    }
-
-    void gui_menuproc_stdoutlog(int arg) {   // CAM_CONSOLE_LOG_ENABLED
-        //gui_draw_read_selected(conf.debug_stoutlog);
-        gui_draw_read_selected("A/STDOUT.txt");
-    }
-#endif
-
 void gui_menuproc_mkbootdisk(int arg) {
     mark_filesystem_bootable();
 }
