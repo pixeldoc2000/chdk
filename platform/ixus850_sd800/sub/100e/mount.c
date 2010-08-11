@@ -1,7 +1,7 @@
-void __attribute__((naked,noinline)) init_file_modules_task(){
- asm volatile(
+void __attribute__((naked,noinline)) init_file_modules_task() {
+    asm volatile(
                 "STMFD   SP!, {R4,LR}\n"
-                "BL      _Unmount_FileSystem\n" // + 
+                "BL      _Unmount_FileSystem\n"   // +
                 "BL      sub_FFB420CC\n"
                 "SUBS    R4, R0, #0\n"
                 "MOV     R0, #0x5000\n"
@@ -9,8 +9,8 @@ void __attribute__((naked,noinline)) init_file_modules_task(){
                 "ADD     R0, R0, #6\n"
                 "BEQ     loc_FF9D8A80\n"
                 "BL      sub_FF9A9E74\n"
-"loc_FF9D8A80:\n"
-                "BL      sub_FFB420F8_my\n"  //------------->
+            "loc_FF9D8A80:\n"
+                "BL      sub_FFB420F8_my\n"   // ------------->
                 "MOV     R0, #0x5000\n"
                 "CMP     R4, #0\n"
                 "MOV     R1, R4\n"
@@ -18,11 +18,11 @@ void __attribute__((naked,noinline)) init_file_modules_task(){
                 "LDMNEFD SP!, {R4,PC}\n"
                 "LDMFD   SP!, {R4,LR}\n"
                 "B       sub_FF9A9E74\n"
- );
+    );
 }
 
-void __attribute__((naked,noinline)) sub_FFB420F8_my(){
- asm volatile(
+void __attribute__((naked,noinline)) sub_FFB420F8_my() {
+    asm volatile(
                 "STR     LR, [SP,#-4]!\n"
                 "BL      Mount_FileSystem_my\n"
                 "LDR     R3, =0xBD84\n"
@@ -38,7 +38,7 @@ void __attribute__((naked,noinline)) sub_FFB420F8_my(){
                 "BL      sub_FF9F8A9C\n"
                 "AND     R0, R0, #0xFF\n"
                 "BL      sub_FF834A84\n"
-"loc_FFB42134:\n"
+            "loc_FFB42134:\n"
                 "LDR     R2, =0xBD80\n"
                 "MOV     R3, #1\n"
                 "STR     R3, [R2]\n"
@@ -46,8 +46,8 @@ void __attribute__((naked,noinline)) sub_FFB420F8_my(){
  );
 }
 
-void __attribute__((naked,noinline)) Mount_FileSystem_my(){
- asm volatile(
+void __attribute__((naked,noinline)) Mount_FileSystem_my() {
+    asm volatile(
                 "STMFD   SP!, {R4-R6,LR}\n"
                 "MOV     R5, #0\n"
                 "LDR     R6, =0x2D908\n"
@@ -64,10 +64,10 @@ void __attribute__((naked,noinline)) Mount_FileSystem_my(){
                 "LDR     R3, =0x278C\n"
                 "STR     R1, [R2]\n"
                 "STR     R1, [R3]\n"
-"loc_FF879774:\n"
+            "loc_FF879774:\n"
                 "BL      sub_FF87916C\n"
                 "MOV     R0, R5\n"
-                "BL      sub_FF879494_my\n"  //------------>
+                "BL      sub_FF879494_my\n"   // ------------>
                 "MOV     R4, R0\n"
                 "MOV     R0, R5\n"
                 "BL      sub_FF87951C\n"
@@ -78,11 +78,11 @@ void __attribute__((naked,noinline)) Mount_FileSystem_my(){
                 "BL      sub_FF8796E4\n"
                 "STR     R0, [R6,#0x40]\n"
                 "LDMFD   SP!, {R4-R6,PC}\n"
-);
+    );
 }
 
 void __attribute__((naked,noinline)) sub_FF879494_my(){
- asm volatile(
+    asm volatile(
                 "STMFD   SP!, {R4-R7,LR}\n"
                 "LDR     R7, =0x278C\n"
                 "LDR     R3, [R7]\n"
@@ -95,33 +95,33 @@ void __attribute__((naked,noinline)) sub_FF879494_my(){
                 "MOV     R1, R4\n"
                 "BNE     loc_FF879508\n"
                 "LDR     R0, [R6,R5]\n"
-                "BL      sub_FF879228_my\n"  //----------------->
+                "BL      sub_FF879228_my\n"   // ----------------->
                 "SUBS    R3, R0, #0\n"
                 "MOV     R1, R4\n"
                 "BEQ     loc_FF8794E0\n"
                 "LDR     R0, [R6,R5]\n"
                 "BL      sub_FF879374\n"
                 "MOV     R3, R0\n"
-"loc_FF8794E0:\n"
+            "loc_FF8794E0:\n"
                 "CMP     R3, #0\n"
                 "MOV     R0, R4\n"
                 "BEQ     loc_FF8794F4\n"
                 "BL      sub_FF8788B4\n"
                 "MOV     R3, R0\n"
-"loc_FF8794F4:\n"
+            "loc_FF8794F4:\n"
                 "CMP     R3, #0\n"
                 "MOV     R0, R3\n"
                 "MOVNE   R3, #1\n"
                 "STRNE   R3, [R7]\n"
                 "LDMFD   SP!, {R4-R7,PC}\n"
-"loc_FF879508:\n"
+            "loc_FF879508:\n"
                 "MOV     R0, #1\n"
                 "LDMFD   SP!, {R4-R7,PC}\n"
 );
 }
 
-void __attribute__((naked,noinline)) sub_FF879228_my(){
- asm volatile(
+void __attribute__((naked,noinline)) sub_FF879228_my() {
+    asm volatile(
                 "STMFD   SP!, {R4-R8,LR}\n"
                 "MOV     R5, R1\n"
                 "MOV     R8, R5,LSL#1\n"
@@ -143,7 +143,7 @@ void __attribute__((naked,noinline)) sub_FF879228_my(){
                 ".long loc_FF87927C\n"
                 ".long loc_FF87927C\n"
                 ".long loc_FF879314\n"
-"loc_FF87927C:\n"
+            "loc_FF87927C:\n"
                 "MOV     R0, #3\n"
                 "MOV     R1, #0x200\n"
                 "MOV     R2, #0\n"
@@ -163,10 +163,10 @@ void __attribute__((naked,noinline)) sub_FF879228_my(){
                 "BNE     loc_FF8792D0\n"
                 "MOV     R0, #3\n"
                 "BL      sub_FF812904\n"
-"loc_FF8792C8:\n"
+            "loc_FF8792C8:\n"
                 "MOV     R0, #0\n"
                 "B       loc_FF879358\n"
-"loc_FF8792D0:\n"
+            "loc_FF8792D0:\n"
                 "MOV     R0, R7\n"
                 "BL      sub_FF889BE0\n"
                 "MOV     R1, R0\n"
@@ -174,11 +174,10 @@ void __attribute__((naked,noinline)) sub_FF879228_my(){
                 "MOV     R3, SP\n"
                 "MOV     R0, R6\n"
 
-                "STMFD   SP!, {R4-R11,LR}\n" // +
-                "BL      mbr_read\n"    //-----------> 
-                "LDMFD   SP!, {R4-R11,LR}\n" // +
-
-     //         "BL      sub_FF8789B8\n" // original function
+                //"BL      sub_FF8789B8\n"   // original function
+                "STMFD   SP!, {R4-R11,LR}\n"   // +
+                "BL      mbr_read\n"   // ----------->
+                "LDMFD   SP!, {R4-R11,LR}\n"   // +
 
                 "MOV     R4, R0\n"
                 "MOV     R0, #3\n"
@@ -190,16 +189,16 @@ void __attribute__((naked,noinline)) sub_FF879228_my(){
                 "BL      sub_FF889BE0\n"
                 "STR     R0, [SP]\n"
                 "B       loc_FF879330\n"
-"loc_FF879314:\n"
+            "loc_FF879314:\n"
                 "MOV     R3, #0\n"
                 "MOV     R2, #0x40\n"
                 "STMEA   SP, {R2,R3}\n"
                 "B       loc_FF879330\n"
-"loc_FF879324:\n"
+            "loc_FF879324:\n"
                 "LDR     R0, =0xFF879010\n"
                 "MOV     R1, #0x2B4\n"
-                "BL      sub_FF813E84\n"
-"loc_FF879330:\n"
+                "BL      sub_FF813E84\n"   // DebugAssert
+            "loc_FF879330:\n"
                 "LDR     R2, =0x2D908\n"
                 "ADD     R3, R8, R5\n"
                 "LDMFD   SP, {R0,R12}\n"
@@ -210,9 +209,8 @@ void __attribute__((naked,noinline)) sub_FF879228_my(){
                 "STR     R0, [R1,R3]\n"
                 "STR     R12, [R2,R3]\n"
                 "MOV     R0, #1\n"
-"loc_FF879358:\n"
+            "loc_FF879358:\n"
                 "ADD     SP, SP, #8\n"
                 "LDMFD   SP!, {R4-R8,PC}\n"
-);
+    );
 }
-
