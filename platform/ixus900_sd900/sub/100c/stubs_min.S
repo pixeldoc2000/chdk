@@ -240,3 +240,5 @@ DEF(InvertData, 0x0000FB90)
 // This is the real name for 'physw_status'
 DEF(GpioStatus, 0x0000FBA0)
 DEF(SwitchStatus, 0x0000FBB0)
+
+DEF(levent_table,0xFF9A1124)   // search for "DCD aPressrightbutton" and look above
