@@ -22,8 +22,6 @@ NHSTUB(GetDrive_ClusterSize, 0xFF879BF8)   // note "GetCatFs_ClusterSize"
 NHSTUB(GetDrive_TotalClusters, 0xFF879C34)   // note "GetCatFs_TotalClusters"
 NHSTUB(GetDrive_FreeClusters, 0xFF879C70)   // note "GetCatFs_FreeClusters"
 
-NSTUB(Fwrite_Fut, 0xFF873550)
-NSTUB(Fseek_Fut, 0xFF8735F0)
 
 NHSTUB(MFOn, 0xFF996198)
 NHSTUB(MFOff, 0xFF9961C8)

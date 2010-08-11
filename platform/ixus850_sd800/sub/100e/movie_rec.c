@@ -36,9 +36,9 @@ void __attribute__((naked,noinline)) movie_record_task(){
                  "LDR     R3, [R1]\n"
                  "SUB     R3, R3, #2\n"
                  "MOV     R0, R1\n"
-                 "CMP     R3, #9\n"
-                 "LDRLS   PC, [PC,R3,LSL#2]\n"
-                 "B       loc_FF98B46C\n"
+                 "CMP     R3, #9\n"   // switch 10 cases
+                 "LDRLS   PC, [PC,R3,LSL#2]\n"   // switch jump
+                 "B       loc_FF98B46C\n"   // switch default
                  ".long loc_FF98B42C\n" // jump table for switch statement
                  ".long loc_FF98B444\n"
                  ".long loc_FF98B44C\n"
