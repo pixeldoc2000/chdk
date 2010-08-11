@@ -3,7 +3,9 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
 //void __attribute__((naked,noinline)) sub_FF9D32AC_my() {
     asm volatile(
         "STMFD   SP!, {R4,LR}\n"
+
         "BL      _Unmount_FileSystem\n"   // +
+
         "BL      sub_FFB3B500\n"
         "SUBS    R4, R0, #0\n"
         "MOV     R0, #0x5000\n"
@@ -12,8 +14,10 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
         "BEQ     loc_FF9D32CC\n"
         "BL      sub_FF9A42AC\n"   // eventproc_export_PostLogicalEventToUI
         "loc_FF9D32CC:\n"
+
         //"BL      sub_FFB3B52C\n"   // orginal
-        "BL      sub_FFB3B52C_my\n"   // <---
+        "BL      sub_FFB3B52C_my\n"   // + <---
+
         "MOV     R0, #0x5000\n"
         "CMP     R4, #0\n"
         "MOV     R1, R4\n"
@@ -28,7 +32,9 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
 void __attribute__((naked,noinline)) sub_FFB3B52C_my() {
     asm volatile(
         "STR     LR, [SP,#-4]!\n"
-        "BL      Mount_FileSystem_my\n"
+
+        "BL      Mount_FileSystem_my\n"   // +
+
         "LDR     R3, =0xBDDC\n"
         "LDR     R2, [R3]\n"
         "CMP     R2, #0\n"
@@ -71,11 +77,13 @@ void __attribute__((naked,noinline)) Mount_FileSystem_my() {
         "loc_FF87A8EC:\n"
         "BL      sub_FF87A2E4\n"
         "MOV     R0, R5\n"
-        //"BL      sub_FF87A60C\n"
-        "BL      sub_FF87A60C_my\n"   // <---
+
+        //"BL      sub_FF87A60C\n"   // orginal
+        "BL      sub_FF87A60C_my\n"   // + <---
+
         "MOV     R4, R0\n"
         "MOV     R0, R5\n"
-        "BL      sub_FF87A694\n;   // LOCATION: Mounter.c:808
+        "BL      sub_FF87A694\n"   // Mounter.c:808
         "AND     R4, R4, R0\n"
         "MOV     R2, R4\n"
         "MOV     R0, R6\n"
@@ -99,10 +107,15 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
         "LDR     R6, =0x2DA38\n"
         "MOV     R5, R3,LSL#2\n"
         "MOV     R1, R4\n"
-        "BNE     loc_FF87A680\n"
+
+        //"BNE     loc_FF87A680\n"   // loc_FF87A680 not found
+        "BNE     sub_FF87A680\n"   // +
+
         "LDR     R0, [R6,R5]\n"
-        //"BL      sub_FF87A3A0\n"   // Mounter.c:692
-        "BL      sub_FF87A3A0_my\n"   // <---
+
+        //"BL      sub_FF87A3A0\n"   // orginal, Mounter.c:692
+        "BL      sub_FF87A3A0_my\n"   // + <---
+
         "SUBS    R3, R0, #0\n"
         "MOV     R1, R4\n"
         "BEQ     loc_FF87A658\n"
@@ -154,7 +167,10 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
         "MOV     R2, #0\n"
         "BL      sub_FF812834\n"
         "SUBS    R6, R0, #0\n"
-        "BEQ     loc_FF87A4D0\n"
+
+        //"BEQ     loc_FF87A4D0\n"   // loc_FF87A4D0 not found
+        "BEQ     sub_FF87A4D0\n"   // +
+
         "ADD     R12, R8, R5\n"
         "RSB     R12, R5, R12,LSL#3\n"
         "LDR     R4, =0x2DA4C\n"
@@ -170,7 +186,10 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
         "BL      sub_FF812904\n"
         "loc_FF87A440:\n"
         "MOV     R0, #0\n"
-        "B       loc_FF87A4D0\n"
+
+        //"B       loc_FF87A4D0\n"    // loc_FF87A4D0 not found
+        "B       sub_FF87A4D0\n"    // +
+
         "loc_FF87A448:\n"
         "MOV     R0, R7\n"
         "BL      sub_FF88AD88\n"
@@ -180,9 +199,9 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
         "MOV     R0, R6\n"
 
         //"BL      sub_FF879B30\n"   // original
-        "STMFD   SP!, {R4-R11,LR}\n" // +
-        "BL      mbr_read\n"    // <---
-        "LDMFD   SP!, {R4-R11,LR}\n" // +
+        "STMFD   SP!, {R4-R11,LR}\n" // save registers to stack
+        "BL      mbr_read\n"    // + <---
+        "LDMFD   SP!, {R4-R11,LR}\n" // restore registers from stack
 
         "MOV     R4, R0\n"
         "MOV     R0, #3\n"
