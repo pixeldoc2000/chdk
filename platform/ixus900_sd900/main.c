@@ -1,11 +1,5 @@
 #include "../generic/main.c"
 
-static const int fl_tbl[] = {4600, 6140, 7560, 9110, 10830, 12670, 14690, 17300};   // exif value for each zoom step (3x zoom lens)
-#define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
-#define CF_EFL 47946   // 60345 for 1/2.5" sensor, 47946 for 1/1.8" sensor
-
-const int zoom_points = NUM_FL;
-
 long get_vbatt_min() {
     return 3500;
 }
@@ -13,6 +7,12 @@ long get_vbatt_min() {
 long get_vbatt_max() {
     return 4100;
 }
+
+static const int fl_tbl[] = {4600, 6140, 7560, 9110, 10830, 12670, 14690, 17300};   // EXIF value for each zoom step (3x zoom lens)
+#define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
+#define CF_EFL 47946   // 60345 for 1/2.5" sensor, 47946 for 1/1.8" sensor
+
+const int zoom_points = NUM_FL;
 
 int get_effective_focal_length(int zp) {
     return (CF_EFL*get_focal_length(zp))/10000;
@@ -32,7 +32,7 @@ int get_zoom_x(int zp) {
 
 #if 0
 int rec_switch_state(void) {
-//    mode  = (physw_status[2] & 0x4000)?MODE_REC:MODE_PLAY;
-	return (physw_status[2] & 0x4000);
+    //mode  = (physw_status[2] & 0x4000)?MODE_REC:MODE_PLAY;
+    return (physw_status[2] & 0x4000);
 }
 #endif
