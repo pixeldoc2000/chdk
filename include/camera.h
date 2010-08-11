@@ -1600,7 +1600,7 @@
     #define CAM_RAW_ROWS                2760   // value from RAW file (2736 + 24px) #
 
     //#undef  CAM_USE_ZOOM_FOR_MF
-    #define  CAM_MULTIPART              1
+    //#define  CAM_MULTIPART              1   // ToDo: camera does still crash
     #define  CAM_DRAW_EXPOSITION        1
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
@@ -1609,7 +1609,7 @@
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
     #define CAM_FEATURE_FEATHER         1
     //#define CAM_HAS_JOGDIAL             1   // ToDo
-    #define CAM_CONSOLE_LOG_ENABLED     1
+    //#define CAM_CONSOLE_LOG_ENABLED     1   // ToDo: LOG stuff is disabled/removed
     #undef  CAM_HAS_IS
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #define DNG_SUPPORT                 1
