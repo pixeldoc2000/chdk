@@ -27,7 +27,7 @@ int get_flash_params_count(void) {
     return 110;
 }
 
-#define LED_PR    0xC02200C4
+#define LED_PR    0xC02200C4   // (Direct Print Button, Blue Led)
 
 void debug_led(int state) {
     volatile long *p=(void*)LED_PR;

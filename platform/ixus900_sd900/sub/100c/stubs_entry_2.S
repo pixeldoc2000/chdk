@@ -1,5 +1,7 @@
 #include "stubs_asm.h"
 
+// manually searched / corrected adresses in canon firmware
+
 NHSTUB(AllocateMemory, 0xFF81AC70)
 NHSTUB(FreeMemory, 0xFF81AC5C)
 
