@@ -1530,7 +1530,7 @@
     #define CAM_HAS_ND_FILTER           1
     //#undef  CAM_HAS_MANUAL_FOCUS
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1
-    #define CAM_FEATURE_FEATHER         1
+    #define CAM_FEATURE_FEATHER         1   // ToDo: test it!
     //#define CAM_HAS_JOGDIAL             1   // ToDo
     //#define CAM_CONSOLE_LOG_ENABLED     1   // ToDo: LOG stuff is disabled/removed
     #undef  CAM_HAS_IS
