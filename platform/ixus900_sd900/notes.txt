@@ -23,6 +23,12 @@ Product and Company names mentioned herein may be the trademarks of their respec
 
 
 --- Changelog -------------------------------------------------------
+* Beta v23 (2010-08-12)
+    * trunk: #901
+    * version: 0.9.9
+    * CAM_CONSOLE_LOG_ENABLED enabled
+    * camera.h defines updated
+
 * Beta v22 (2010-08-12)
     * trunk: #901
     * version: 0.9.9
