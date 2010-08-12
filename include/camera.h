@@ -1609,7 +1609,7 @@
     #undef  CAM_HAS_USER_TV_MODES
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1   // ToDo: what does this exacly do?
     #define CAM_FEATURE_FEATHER         1   // ToDo: test it!
-    //#define CAM_CONSOLE_LOG_ENABLED     1   // ToDo: LOG stuff is disabled/removed
+    #define CAM_CONSOLE_LOG_ENABLED     1   // ToDo: LOG stuff is disabled/removed
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     //#define  CAM_MULTIPART              1   // ToDo: camera does still crash
     #define DNG_SUPPORT                 1
