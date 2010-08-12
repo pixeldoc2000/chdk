@@ -29,7 +29,6 @@ static int remote_key, remote_count;
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
-#define FEATURE_FEATHER 0
 #define USB_MASK (0x40000)
 #define USB_REG 2
 
@@ -228,7 +227,7 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f()
     return 0; // shut up the compiler
 }
 
-#if FEATURE_FEATHER
+#if CAM_FEATURE_FEATHER
 extern int touch_keys_angle;
 extern int * touch_keys_sema;
 int touch_keys_sema_stored;
@@ -252,7 +251,7 @@ void my_kbd_read_keys()
 	physw_status[0] = kbd_new_state[0];
 	physw_status[1] = kbd_new_state[1];
 	physw_status[2] = kbd_new_state[2];
-// #if FEATURE_FEATHER
+// #if CAM_FEATURE_FEATHER
 //        if (*touch_keys_sema == 0) {
 //            *touch_keys_sema = touch_keys_sema_stored;
 //        }
@@ -264,7 +263,7 @@ void my_kbd_read_keys()
     physw_status[1] = (kbd_new_state[1] & (~KEYS_MASK1)) |(kbd_mod_state[1] & KEYS_MASK1);
     physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) |
 			  (kbd_mod_state[2] & KEYS_MASK2);
-// #if FEATURE_FEATHER
+// #if CAM_FEATURE_FEATHER
  //       if (*touch_keys_sema != 0) {
  //           touch_keys_sema_stored = *touch_keys_sema;
  //           *touch_keys_sema = 0;
