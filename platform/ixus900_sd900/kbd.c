@@ -27,8 +27,6 @@ static int shoot_counter=0;
 #define KEYS_MASK1 (0xc0000000)   // (0xc0800000)
 #define KEYS_MASK2 (0x0ffc)
 
-#define FEATURE_FEATHER 0   // ???
-
 #define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 
@@ -196,7 +194,7 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
     return 0;   // shut up the compiler
 }
 
-#if FEATURE_FEATHER
+#if CAM_FEATURE_FEATHER
     extern int touch_keys_angle;
     extern int * touch_keys_sema;
     int touch_keys_sema_stored;
@@ -222,7 +220,7 @@ void my_kbd_read_keys() {
         physw_status[2] = kbd_new_state[2];
         //physw_status[1] |= alt_mode_key_mask;
 
-        #if FEATURE_FEATHER
+        #if CAM_FEATURE_FEATHER
             if (*touch_keys_sema == 0) {
                 *touch_keys_sema = touch_keys_sema_stored;
             }
@@ -238,7 +236,7 @@ void my_kbd_read_keys() {
         physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) |
               (kbd_mod_state[2] & KEYS_MASK2);
 
-        #if FEATURE_FEATHER
+        #if CAM_FEATURE_FEATHER
             if (*touch_keys_sema != 0) {
                 touch_keys_sema_stored = *touch_keys_sema;
                 *touch_keys_sema = 0;
