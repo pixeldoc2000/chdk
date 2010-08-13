@@ -155,8 +155,8 @@ void __attribute__((naked,noinline)) sub_FF811A0C_my(long p) {
         "STR     LR, [SP]\n"
         "BL      sub_FF811474\n"   // tty_StartMsg
         "MOV     R1, #0x32\n"
-        //"LDR     R2, =aNull\n"
-        "LDR     R2, ='/tyCo/0'\n"
+        //"LDR     R2, =aNull\n"   // original
+        "LDR     R2, ='/tyCo/0'\n"   // +
         "MOV     R0, #0x14\n"
         "BL      _iosInit\n"
         "BL      sub_FFB5DBB0\n"   // ttyDrv
