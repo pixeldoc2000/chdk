@@ -49,3 +49,5 @@ static void __attribute__((noreturn)) panic(int cnt) {
     }
     shutdown();
 }
+
+// next: loader/ixus900_sd900/resetcode/entry.S

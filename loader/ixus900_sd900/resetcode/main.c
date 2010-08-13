@@ -74,7 +74,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         :: "r"(dst_void) : "memory","r1","r2","r3"
     );
 
-    // ---> camera will reset and execute platform\ixus900_sd900\sub\100c\boot.c boot()
-
     while(1);
 }
+
+// next: core/entry.S -> platform/<camera>/main.c startup()
