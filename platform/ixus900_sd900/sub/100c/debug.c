@@ -48,7 +48,7 @@ void __attribute__((naked,noinline)) sub_FF811A0C_my(){
     asm volatile (
         "MOV     R0, #0x1000\n"
         "STR     LR, [SP]!\n"
-        "BL      sub_FF811474\n"
+        "BL      sub_FF811474\n"   // tty_StartMsg
         "MOV     R1, #0x32\n"
         "LDR     R2, =aNull\n"   // change console target ?
         "MOV     R0, #0x14\n"
@@ -59,6 +59,7 @@ void __attribute__((naked,noinline)) sub_FF811A0C_my(){
     );
 */
 
+/*
 #if CAM_CONSOLE_LOG_ENABLED
     extern void msleep(long);
 
@@ -192,3 +193,4 @@ void __attribute__((naked,noinline)) sub_FF811A0C_my(){
         */
     }
 #endif
+*/
