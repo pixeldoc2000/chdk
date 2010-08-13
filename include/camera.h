@@ -35,7 +35,7 @@
     #define CAM_HAS_IS                  1   // Camera has image stabilizer
     #undef  CAM_HAS_JOGDIAL                 // Camera has a "jog dial"
 
-    #undef  CAM_CONSOLE_LOG_ENABLED         // Development: internal camera stdout -> A/stdout.txt
+    #undef  CAM_CONSOLE_LOG_ENABLED         // Development: enable chdk-log -> A/chdklog.txt, enable internal camera stdout -> A/stdout.txt (only if file does exist !!!)
     #define CAM_CHDK_HAS_EXT_VIDEO_MENU 1   // In CHDK for this camera realized adjustable video compression
     #undef  CAM_CAN_MUTE_MICROPHONE         // Camera has function to mute microphone
 
