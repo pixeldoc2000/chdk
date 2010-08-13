@@ -1760,7 +1760,6 @@
     #undef  CAM_ADJUSTABLE_ALT_BUTTON
     #undef  CAM_CONSOLE_LOG_ENABLED 
     #undef  CAM_DRAW_EXPOSITION             // XXX
-    #undef  CAM_FEATURE_FEATHER             // XXX
     #undef  CAM_USE_ZOOM_FOR_MF
     #undef  CAM_VIDEO_CONTROL               // XXX
 //----------------------------------------------------------
