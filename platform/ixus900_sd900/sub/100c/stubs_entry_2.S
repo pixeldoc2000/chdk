@@ -41,9 +41,12 @@ NHSTUB(UnlockAF, 0xFF98EE7C)
 
 NHSTUB(SetScriptMode, 0xFF9A6394)   // search for SetScriptMode in IDA
 
-NHSTUB(iosInit, 0xFFB58E2C)   // used if CAM_CONSOLE_LOG_ENABLED
+// CAM_CONSOLE_LOG_ENABLED
+NHSTUB(iosInit, 0xFFB58E2C)
 NHSTUB(ttyDrv_Start, 0xFF811874)   // VxWorks console
-NHSTUB(GetLogToFile, 0xFFB44520)   // eventproc_GetLogToFile() -> A/ROMLOG.txt
+NHSTUB(GetLogToFile, 0xFFB44520)   // GetLogToFile() -> A/ROMLOG.txt
+
+NHSTUB(GetSystemTime, 0xFF8150D8)   // not in use yet, maybe usefull for CAM_CONSOLE_LOG_ENABLED
 
 NHSTUB(TurnOnBackLight, 0xFF9F5308)
 NHSTUB(TurnOffBackLight, 0xFF9F5338)
