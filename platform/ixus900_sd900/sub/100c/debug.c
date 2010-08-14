@@ -3,28 +3,6 @@
 //#include "core.h"
 #include "script.h"
 
-/*
-// from A550
-static void debug_led_asm(int cnt) {
-    volatile long *p=(void*)LED_PR;
-    int i;
-
-    for(;cnt>0;cnt--) {
-        p[0]=0x46;
-
-        for(i=0;i<0x200000;i++) {
-            asm ("nop\n");
-            asm ("nop\n");
-        }
-        p[0]=0x44;
-        for(i=0;i<0x200000;i++) {
-            asm ("nop\n");
-            asm ("nop\n");
-        }
-    }
-}
-*/
-
 // A550
 /*
 static int dump_rom() {
@@ -59,8 +37,8 @@ void __attribute__((naked,noinline)) sub_FF811A0C_my(){
     );
 */
 
-/*
-#if CAM_CONSOLE_LOG_ENABLED
+#if 0
+//#if CAM_CONSOLE_LOG_ENABLED
     extern void msleep(long);
 
     typedef struct {
@@ -193,4 +171,3 @@ void __attribute__((naked,noinline)) sub_FF811A0C_my(){
         */
     }
 #endif
-*/
