@@ -1,3 +1,5 @@
+#include "../../lib.c"  // debug_led()
+
 // ROM:FF9D32AC
 void __attribute__((naked,noinline)) init_file_modules_task() {
 //void __attribute__((naked,noinline)) sub_FF9D32AC_my() {
