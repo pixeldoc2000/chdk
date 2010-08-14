@@ -44,3 +44,8 @@ NHSTUB(ExitFromCompensationEVF, 0xFF99552C)
 NHSTUB(DoAFLock, 0xff995318)
 NHSTUB(UnlockAF, 0xff995364)
 NHSTUB(SetScriptMode,0xFF9ABC48)   // by find_eventproc name @ 0xFF9D3ED4
+
+// CAM_CONSOLE_LOG_ENABLED
+NHSTUB(iosInit, 0xFFB5FA24)
+NHSTUB(ttyDrv_Start, 0xFF811874)   // VxWorks console
+NHSTUB(GetLogToFile, 0xFFB4B0EC)
