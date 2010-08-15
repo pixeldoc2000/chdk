@@ -18,6 +18,7 @@ NHSTUB(WriteSDCard, 0xFF88A8A4)
 NHSTUB(kbd_pwr_on, 0xFF8291F8)
 NHSTUB(kbd_pwr_off, 0xFF829238)
 NHSTUB(kbd_read_keys_r2, 0xFF828D40)   // search for "MOVL    R4, 0x223000"
+NHSTUB(taskNameToId, 0xFFB67700)
 
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF8E5AAC)
 
