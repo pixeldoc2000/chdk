@@ -253,10 +253,12 @@ static const char* gui_override_disable_enum(int change, int arg);
 	static const char* gui_debug_shortcut_enum(int change, int arg);
 	static const char* gui_debug_display_enum(int change, int arg);
 	static void gui_debug_shortcut(void);
-	static void gui_menuproc_chdklog(int arg);
-	//static void save_rom_log();
-	static void gui_menuproc_romlog(int arg);
-	static void gui_menuproc_stdoutlog(int arg);
+	#ifdef CAM_CONSOLE_LOG_ENABLED
+		static void gui_menuproc_chdklog(int arg);
+		static void save_rom_log();
+		static void gui_menuproc_romlog(int arg);
+		static void gui_menuproc_stdoutlog(int arg);
+	#endif
 #endif
 
 #ifdef OPT_EDGEOVERLAY
@@ -395,9 +397,11 @@ static CMenuItem debug_submenu_items[] = {
     {0x5c,LANG_MENU_DEBUG_SHOW_MISC_VALS,    MENUITEM_BOOL,          &conf.debug_misc_vals_show },
     {0x2a,LANG_MENU_DEBUG_MEMORY_BROWSER,    MENUITEM_PROC,          (int*)gui_draw_debug },
     {0x2a,LANG_MENU_DEBUG_BENCHMARK,         MENUITEM_PROC,          (int*)gui_draw_bench },
-    {0x35,LANG_MENU_DEBUG_CHDKLOG,           MENUITEM_PROC,          (int*)gui_menuproc_chdklog },
-    {0x35,LANG_MENU_DEBUG_ROMLOG,            MENUITEM_PROC,          (int*)gui_menuproc_romlog },
-    {0x35,LANG_MENU_DEBUG_STDOUTLOG,         MENUITEM_PROC,          (int*)gui_menuproc_stdoutlog },
+    #ifdef CAM_CONSOLE_LOG_ENABLED
+        {0x35,LANG_MENU_DEBUG_CHDKLOG,           MENUITEM_PROC,          (int*)gui_menuproc_chdklog },
+        {0x35,LANG_MENU_DEBUG_ROMLOG,            MENUITEM_PROC,          (int*)gui_menuproc_romlog },
+        {0x35,LANG_MENU_DEBUG_STDOUTLOG,         MENUITEM_PROC,          (int*)gui_menuproc_stdoutlog },
+    #endif
     {0x5c,LANG_MENU_DEBUG_SHORTCUT_ACTION,   MENUITEM_ENUM,          (int*)gui_debug_shortcut_enum },
     {0x5c,LANG_MENU_RAW_TIMER,               MENUITEM_BOOL,          &conf.raw_timer },
     {0x5c,LANG_MENU_LUA_RESTART,             MENUITEM_BOOL,          &conf.debug_lua_restart_on_error },
@@ -3208,21 +3212,32 @@ void gui_draw_read_last(int arg) {
 //-------------------------------------------------------------------
 
 #ifdef OPT_DEBUGGING
-    void gui_menuproc_chdklog(int arg) {   // CAM_CONSOLE_LOG_ENABLED
-          //gui_draw_read_selected(conf.debug_chdklog);
-          gui_draw_read_selected("A/chdklog.txt");
-    }
+    #ifdef CAM_CONSOLE_LOG_ENABLED
+        void gui_menuproc_chdklog(int arg) {
+            FILE *fdchdklog = fopen("A/chdklog.txt", "r");
+            if (fdchdklog) {
+                fclose(fdchdklog);
+                gui_draw_read_selected("A/chdklog.txt");
+            }
+       }
 
-    void gui_menuproc_romlog(int arg) {   // CAM_CONSOLE_LOG_ENABLED
-        //save_rom_log();
-        //gui_draw_read_selected(conf.debug_romlog);
-        gui_draw_read_selected("A/ROMLOG.txt");
-    }
+        void gui_menuproc_romlog(int arg) {
+            save_rom_log();
+            FILE *fdromlog = fopen("A/romlog.txt", "r");
+            if (fdromlog) {
+                fclose(fdromlog);
+                gui_draw_read_selected("A/romlog.txt");
+            }
+        }
 
-    void gui_menuproc_stdoutlog(int arg) {   // CAM_CONSOLE_LOG_ENABLED
-        //gui_draw_read_selected(conf.debug_stoutlog);
-        gui_draw_read_selected("A/STDOUT.txt");
-    }
+        void gui_menuproc_stdoutlog(int arg) {
+            FILE *fdstdout = fopen("A/stdout.txt", "r");
+            if (fdstdout) {
+                fclose(fdstdout);
+                gui_draw_read_selected("A/stdout.txt");
+            }
+        }
+    #endif
 #endif
 
 void gui_menuproc_mkbootdisk(int arg) {
