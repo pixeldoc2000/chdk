@@ -576,6 +576,7 @@ static char* gui_lang_default = \
 "453 \"Force manual flash\"\n"
 "454 \"Quality override\"\n"
 "455 \"Restart Lua on error\"\n"
+<<<<<<< HEAD
 "456 \"Filter edges\"\n"
 "457 \"Always show\"\n"
 "458 \"   Pano overlap (%)\"\n"
@@ -583,6 +584,12 @@ static char* gui_lang_default = \
 "460 \"View StdOut.txt\"\n"
 //"460 \"Save and view RomLog.txt\"\n"
 "461 \"View RomLog.txt\"\n"
+=======
+"456 \"View ChdkLog.txt\"\n"   // CAM_CONSOLE_LOG_ENABLED
+"457 \"View StdOut.txt\"\n"
+"458 \"Save and view RomLog.txt\"\n"
+//"458 \"View RomLog.txt\"\n"
+>>>>>>> 8894a67... ixus900_sd900 CAM_CONSOLE_LOG_ENABLED updated (check if log files exist) and save_rom_log() added
 ;
 
 //-------------------------------------------------------------------
