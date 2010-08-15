@@ -578,8 +578,8 @@ static char* gui_lang_default = \
 "455 \"Restart Lua on error\"\n"
 "456 \"View ChdkLog.txt\"\n"   // CAM_CONSOLE_LOG_ENABLED
 "457 \"View StdOut.txt\"\n"
-//"458 \"Save and view RomLog.txt\"\n"
-"458 \"View RomLog.txt\"\n"
+"458 \"Save and view RomLog.txt\"\n"
+//"458 \"View RomLog.txt\"\n"
 ;
 
 //-------------------------------------------------------------------
