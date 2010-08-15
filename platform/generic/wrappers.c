@@ -83,6 +83,19 @@ void remount_filesystem()
     _Mount_FileSystem();
 }
 
+#ifdef CAM_CONSOLE_LOG_ENABLED
+    void save_rom_log() {
+        asm volatile(
+            "mov r0, #0 \n"
+            "mov r1, #1 \n"
+            "stmdb sp!, {r0, r1, lr}\n"
+            "mov r0, sp\n"
+            "BL _GetLogToFile\n"
+            "ldmia sp!, {r0, r1, lr}\n"
+        );
+    }
+#endif
+
 void mark_filesystem_bootable()
 {
     _UpdateMBROnFlash(0, 0x40, "BOOTDISK");
