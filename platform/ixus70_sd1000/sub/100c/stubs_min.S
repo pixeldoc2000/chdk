@@ -1,6 +1,6 @@
 #include "stubs_asm.h"
 
-DEF(physw_status, 0x564B0) // find in "PhySw"
+DEF(physw_status, 0x564B0) // ROM:FFA2F0A8 find in "PhySw"
 DEF(physw_run, 0x87B4) // find in "PhySw"
 
 DEF(zoom_busy, 0x96804) // find in "ZoomLens"
