@@ -1,7 +1,10 @@
+// Multiple Partition support, used if CAM_MULTIPART enabled
+
 // ROM:FF9D32AC
 void __attribute__((naked,noinline)) init_file_modules_task() {
     asm volatile(
             "STMFD   SP!, {R4,LR}\n"
+
             "BL      _Unmount_FileSystem\n"   // +
 
             "BL      sub_FFB3B500\n"
@@ -33,6 +36,8 @@ void __attribute__((naked,noinline)) sub_FFB3B52C_my() {
 
             //"BL      Mount_FileSystem\n"   // orginal
             "BL      Mount_FileSystem_my\n"   // +
+
+            // OK
 
             "LDR     R3, =0xBDDC\n"
             "LDR     R2, [R3]\n"
@@ -96,7 +101,7 @@ void __attribute__((naked,noinline)) Mount_FileSystem_my() {
 
 // ROM:FF87A60C
 void __attribute__((naked,noinline)) sub_FF87A60C_my() {
- asm volatile(
+    asm volatile(
             "STMFD   SP!, {R4-R7,LR}\n"
             "LDR     R7, =0x27E8\n"
             "LDR     R3, [R7]\n"
@@ -113,8 +118,12 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
 
             "LDR     R0, [R6,R5]\n"
 
+            // OK
+
             //"BL      sub_FF87A3A0\n"   // orginal, Mounter.c:692
             "BL      sub_FF87A3A0_my\n"   // + --->
+
+            // OK
 
             "SUBS    R3, R0, #0\n"
             "MOV     R1, R4\n"
@@ -122,33 +131,47 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
             "LDR     R0, [R6,R5]\n"
             "BL      sub_FF87A4EC\n"   // Mounter.c:728
             "MOV     R3, R0\n"
+
+            // OK
+
         "loc_FF87A658:\n"
             "CMP     R3, #0\n"
             "MOV     R0, R4\n"
             "BEQ     loc_FF87A66C\n"
             "BL      sub_FF879A2C\n"
             "MOV     R3, R0\n"
+
+            // OK
+
         "loc_FF87A66C:\n"
             "CMP     R3, #0\n"
             "MOV     R0, R3\n"
             "MOVNE   R3, #1\n"
             "STRNE   R3, [R7]\n"
-            "LDMFD   SP!, {R4-R7,PC}\n"
+
+            // OK
+
+            //"LDMFD   SP!, {R4-R7,PC}\n"   // <--- CRASH
+    );
+
+    //debug_led(1);   // DEBUG help (check if code gets executed)
+
+    asm volatile(
         "loc_FF87A680:\n"
             "MOV     R0, #1\n"
-            "LDMFD   SP!, {R4-R7,PC}\n"
-    );
-}
-
-// ROM:FF87A3A0
-void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
- asm volatile(
-            "STMFD   SP!, {R4-R8,LR}\n"
+            //"LDMFD   SP!, {R4-R7,PC}\n"   // <--- CRASH
     );
 
     debug_led(1);   // DEBUG help (check if code gets executed)
 
+    //asm volatile(
+    //);
+}
+
+// ROM:FF87A3A0
+void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
     asm volatile(
+            "STMFD   SP!, {R4-R8,LR}\n"
             "MOV     R5, R1\n"
             "MOV     R8, R5,LSL#1\n"
             "ADD     R3, R8, R5\n"
@@ -210,6 +233,8 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
             "STMFD   SP!, {R4-R11,LR}\n"   // save registers to stack
             "BL      mbr_read\n"    // + --->
             "LDMFD   SP!, {R4-R11,LR}\n"   // restore registers from stack
+
+            // OK
 
             "MOV     R4, R0\n"
             "MOV     R0, #3\n"
