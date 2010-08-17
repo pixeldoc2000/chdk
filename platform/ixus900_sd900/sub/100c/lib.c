@@ -27,7 +27,6 @@ void *hook_raw_ret_addr() {
 }
 
 /*********** hook_raw_image_addr()
-SD900 has volatile RAW buffer like G7 / G9 / A650
 search for string "ImgPrcssBuf.c:156", raw buffer table is right above sub
 
 ROM:FF99865C                 LDR     LR, =0xFF9985B8   ; <--- raw buffer table
@@ -44,8 +43,8 @@ ROM:FF9985E8                 DCD 0x11BE3880            ; <---
 ROM:FF9985EC                 DCD 0x114D36C0
 ***********/
 char *hook_raw_image_addr() {
-    //return (char*)(0x1082C320);   // 0x1082C000 + 0x320
-    return (char*) (*(int*)0x6BC4 ? 0x11BE3880 : 0x1082C320);
+    // return (char*)(0x1082C320);   // 0x1082C000 + 0x320 does not work
+    return (char*) (*(int*)0x6BC4 ? 0x11BE3880 : 0x1082C320);   // looks like SD900 has volatile RAW buffer like G7 / G9 / A650
 }
 
 /*********** hook_raw_size()
