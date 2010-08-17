@@ -23,11 +23,13 @@ Product and Company names mentioned herein may be the trademarks of their respec
 
 
 --- Changelog -------------------------------------------------------
-* Beta v23 (2010-08-12)
+* Beta v23 (2010-08-17)
     * trunk: #920
     * version: 0.9.9
-    * CAM_CONSOLE_LOG_ENABLED enabled
+    * CAM_MULTIPART enabled (mount.c)
+    * CAM_CONSOLE_LOG_ENABLED enabled (chdklog.txt, stdout.txt, romlog.txt)
     * camera.h defines updated
+    * minor improvments
 
 * Beta v22 (2010-08-12)
     * trunk: #919
@@ -120,3 +122,7 @@ Product and Company names mentioned herein may be the trademarks of their respec
 * Beta v1
     * chdk boot not completly and flashes every led in a loop
     * boot.c working
+
+--- ToDo -----------------------------------------------------------
+* badpixel.lua does not finish correctly
+* CAM_MULTIPART (mount.c) does crash camera
