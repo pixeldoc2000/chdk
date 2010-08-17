@@ -25,7 +25,12 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
             "ADD     R0, R0, #6\n"
             "LDMNEFD SP!, {R4,PC}\n"
             "LDMFD   SP!, {R4,LR}\n"
-            "B       sub_FF9A9E74\n"   // PostLogicalEventToUI
+    );
+
+    //debug_led(1);   // DEBUG help (check if code gets executed)
+
+    asm volatile(
+            "B       sub_FF9A42AC\n"   // PostLogicalEventToUI
     );
 }
 
@@ -36,8 +41,6 @@ void __attribute__((naked,noinline)) sub_FFB3B52C_my() {
 
             //"BL      Mount_FileSystem\n"   // orginal
             "BL      Mount_FileSystem_my\n"   // +
-
-            // OK
 
             "LDR     R3, =0xBDDC\n"
             "LDR     R2, [R3]\n"
@@ -118,12 +121,8 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
 
             "LDR     R0, [R6,R5]\n"
 
-            // OK
-
             //"BL      sub_FF87A3A0\n"   // orginal, Mounter.c:692
             "BL      sub_FF87A3A0_my\n"   // + --->
-
-            // OK
 
             "SUBS    R3, R0, #0\n"
             "MOV     R1, R4\n"
@@ -131,41 +130,21 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
             "LDR     R0, [R6,R5]\n"
             "BL      sub_FF87A4EC\n"   // Mounter.c:728
             "MOV     R3, R0\n"
-
-            // OK
-
         "loc_FF87A658:\n"
             "CMP     R3, #0\n"
             "MOV     R0, R4\n"
             "BEQ     loc_FF87A66C\n"
             "BL      sub_FF879A2C\n"
             "MOV     R3, R0\n"
-
-            // OK
-
         "loc_FF87A66C:\n"
             "CMP     R3, #0\n"
             "MOV     R0, R3\n"
             "MOVNE   R3, #1\n"
             "STRNE   R3, [R7]\n"
-
-            // OK
-
-            //"LDMFD   SP!, {R4-R7,PC}\n"   // <--- CRASH
-    );
-
-    //debug_led(1);   // DEBUG help (check if code gets executed)
-
-    asm volatile(
+            "LDMFD   SP!, {R4-R7,PC}\n"
         "loc_FF87A680:\n"
             "MOV     R0, #1\n"
-            //"LDMFD   SP!, {R4-R7,PC}\n"   // <--- CRASH
-    );
-
-    debug_led(1);   // DEBUG help (check if code gets executed)
-
-    //asm volatile(
-    //);
+            "LDMFD   SP!, {R4-R7,PC}\n"
 }
 
 // ROM:FF87A3A0
@@ -233,8 +212,6 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
             "STMFD   SP!, {R4-R11,LR}\n"   // save registers to stack
             "BL      mbr_read\n"    // + --->
             "LDMFD   SP!, {R4-R11,LR}\n"   // restore registers from stack
-
-            // OK
 
             "MOV     R4, R0\n"
             "MOV     R0, #3\n"
