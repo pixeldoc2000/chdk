@@ -1,8 +1,5 @@
-#include "../../lib.c"  // debug_led()
-
 // ROM:FF9D32AC
 void __attribute__((naked,noinline)) init_file_modules_task() {
-//void __attribute__((naked,noinline)) sub_FF9D32AC_my() {
     asm volatile(
             "STMFD   SP!, {R4,LR}\n"
             "BL      _Unmount_FileSystem\n"   // +
@@ -111,7 +108,7 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
             "MOV     R5, R3,LSL#2\n"
             "MOV     R1, R4\n"
 
-            //"BNE     loc_FF87A680\n"   // loc_FF87A680 not found
+            //"BNE     loc_FF87A680\n"   // gcc: loc_FF87A680 not found
             "BNE     sub_FF87A680\n"   // +
 
             "LDR     R0, [R6,R5]\n"
@@ -136,11 +133,9 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
             "MOV     R0, R3\n"
             "MOVNE   R3, #1\n"
             "STRNE   R3, [R7]\n"
-    );
-
-    debug_led(1);   // DEBUG help (check if code gets executed)
-
-    asm volatile(
+            "LDMFD   SP!, {R4-R7,PC}\n"
+        "loc_FF87A680:\n"
+            "MOV     R0, #1\n"
             "LDMFD   SP!, {R4-R7,PC}\n"
     );
 }
@@ -149,6 +144,11 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
 void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
  asm volatile(
             "STMFD   SP!, {R4-R8,LR}\n"
+    );
+
+    debug_led(1);   // DEBUG help (check if code gets executed)
+
+    asm volatile(
             "MOV     R5, R1\n"
             "MOV     R8, R5,LSL#1\n"
             "ADD     R3, R8, R5\n"
@@ -176,7 +176,7 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
             "BL      sub_FF812834\n"
             "SUBS    R6, R0, #0\n"
 
-            //"BEQ     loc_FF87A4D0\n"   // loc_FF87A4D0 not found
+            //"BEQ     loc_FF87A4D0\n"   // gcc: loc_FF87A4D0 not found
             "BEQ     sub_FF87A4D0\n"   // +
 
             "ADD     R12, R8, R5\n"
@@ -195,8 +195,8 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
         "loc_FF87A440:\n"
             "MOV     R0, #0\n"
 
-            //"B       loc_FF87A4D0\n"    // loc_FF87A4D0 not found
-            "B       sub_FF87A4D0\n"    // +
+            //"B       loc_FF87A4D0\n"   // gcc: loc_FF87A4D0 not found
+            "B       sub_FF87A4D0\n"   // +
 
         "loc_FF87A448:\n"
             "MOV     R0, R7\n"
@@ -207,9 +207,9 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
             "MOV     R0, R6\n"
 
             //"BL      sub_FF879B30\n"   // original
-            "STMFD   SP!, {R4-R11,LR}\n" // save registers to stack
+            "STMFD   SP!, {R4-R11,LR}\n"   // save registers to stack
             "BL      mbr_read\n"    // + --->
-            "LDMFD   SP!, {R4-R11,LR}\n" // restore registers from stack
+            "LDMFD   SP!, {R4-R11,LR}\n"   // restore registers from stack
 
             "MOV     R4, R0\n"
             "MOV     R0, #3\n"
