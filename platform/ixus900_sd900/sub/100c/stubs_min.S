@@ -1,5 +1,6 @@
 #include "stubs_asm.h"
 
+// This stuff is mostly memory (RAM) related
 // some things are based on quietschi's port to SD1000
 
 /******************* physw_status & physw_run
@@ -8,10 +9,8 @@ ROM:FF827EFC                 LDR     R3, =0xFBA0     ; <--- ### physw_status ###
 ROM:FF827F00                 LDR     R0, [R3,R4,LSL#2]
 ROM:FF827F04                 LDMFD   SP!, {R4,PC}
 ROM:FF827F04 ; End of function sub_FF827EFC
-ROM:FF827F08 off_FF827F08    DCD aPhysw_c            ; DATA XREF: ROM:FF827EF0
-ROM:FF827F08                                         ; "PhySw.c"
+ROM:FF827F08 off_FF827F08    DCD aPhysw_c            ; DATA XREF: ROM:FF827EF0 "PhySw.c"
 ROM:FF827F0C dword_FF827F0C  DCD 0xFBA0              ; DATA XREF: sub_FF827EFC
-ROM:FF827F0C                                         ; physw_status
 ROM:FF827F10 PhySw_task                              ; DATA XREF: ROM:off_FF827ED4
 ROM:FF827F10                 STMFD   SP!, {R4,LR}
 ROM:FF827F14                 LDR     R2, =0x1FDC     ; <--- ### physw_run ###
