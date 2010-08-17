@@ -66,15 +66,17 @@ long hook_raw_size() {
 /*********** vid_get_bitmap_fb()
 look near string "BmpDDev.c"
 
-ROM:FF95A844                 MOV     R3, #0x10000000    ; <---
-ROM:FF95A848                 ADD     R3, R3, #0x360000  ; <---
-ROM:FF95A84C                 LDR     LR, =0x6884
-ROM:FF95A850                 MOV     R12, #0x2D0
-ROM:FF95A854                 MOV     R2, #0xF0
-ROM:FF95A858                 ADD     R3, R3, #0x1000    ; <---
+ROM:FF95A884                 MOV     R3, #0x10000000   ; <---
+ROM:FF95A888                 ADD     R3, R3, #0x360000   ; <---
+ROM:FF95A88C                 ADD     R3, R3, #0x1000   ; <---
+ROM:FF95A890                 CMP     R0, R3
+ROM:FF95A894                 STR     LR, [SP,#-4]!
+ROM:FF95A898                 MOV     R2, #0
+ROM:FF95A89C                 MOV     R1, #0xF6
+ROM:FF95A8A0                 LDR     R0, =aBmpddev_c
 ***********/
 void *vid_get_bitmap_fb() {
-    return (void*)0x10361000;   // 0x10360000 + 0x1000 , same as SD800 / SD1000
+    return (void*)0x10361000;   // 0x10000000 + 0x360000 + 0x1000 , same as SD800 / SD1000
 }
 
 /*********** vid_get_viewport_live_fb()
@@ -195,17 +197,3 @@ char *camera_jpeg_count_str() {
 long vid_get_bitmap_buffer_width() { return 360; }
 
 long vid_get_bitmap_buffer_height() { return 240; }
-
-/* ??? from G7
-void JogDial_CW(void) {
-  (*(short*)0x106EE)++;
-  *(int*)0x106F4=0x32;
-  _GiveSemaphore(*(int*)0x106E4);
-}
-
-void JogDial_CCW(void) {
-  (*(short*)0x106EE)--;
-  *(int*)0x106F4=0x32;
-  _GiveSemaphore(*(int*)0x106E4);
-}
-*/
