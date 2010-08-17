@@ -1523,10 +1523,12 @@
     #define CAM_RAW_ROWS                2760   // value from RAW file (2736 + 24px)
 
     #undef  CAM_USE_ZOOM_FOR_MF
-    #define  CAM_DRAW_EXPOSITION        1   // ToDo: test if required
-    #define CAM_HAS_ND_FILTER           1
+    #define CAM_DRAW_EXPOSITION         1   // ToDo: test if required
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define CAM_HAS_ND_FILTER           1
+    #undef  CAM_CAN_SD_OVER_NOT_IN_MF
+    #undef  CAM_CAN_SD_OVERRIDE
     #undef  CAM_HAS_IS
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_HAS_USER_TV_MODES
@@ -1534,7 +1536,7 @@
     #define CAM_FEATURE_FEATHER         1   // ToDo: test it!
     #define CAM_CONSOLE_LOG_ENABLED     1   // ToDo: LOG stuff is disabled/removed
     #define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
-    //#define  CAM_MULTIPART              1   // ToDo: camera does still crash
+    //#define CAM_MULTIPART               1   // ToDo: camera does still crash
     #define DNG_SUPPORT                 1
 
     // pattern
