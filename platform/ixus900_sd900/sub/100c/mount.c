@@ -145,6 +145,7 @@ void __attribute__((naked,noinline)) sub_FF87A60C_my() {
         "loc_FF87A680:\n"
             "MOV     R0, #1\n"
             "LDMFD   SP!, {R4-R7,PC}\n"
+    );
 }
 
 // ROM:FF87A3A0
