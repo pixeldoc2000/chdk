@@ -421,6 +421,7 @@ long kbd_use_zoom_as_mf() {
     return 0;
 }
 
+// ROM:FF82882C ?
 static KeyMap keymap[] = {
     // tiny bug: key order matters. see kbd_get_pressed_key() for example
     {2, KEY_UP            , 0x00000010},
