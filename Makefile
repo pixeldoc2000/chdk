@@ -279,8 +279,9 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-ixus300_sd4000-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus300_sd4000-100d-$(BUILD_NUMBER)_BETA.zip
-	@echo "**** Done Copying duplicate Firmwares"
+	#mv $(topdir)bin/$(VER)-ixus300_sd4000-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus300_sd4000-100d-$(BUILD_NUMBER)_BETA.zip
+<<<<<<< .mine=======	mv $(topdir)bin/$(VER)-ixus300_sd4000-100d-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus300_sd4000-100d-$(BUILD_NUMBER)_BETA.zip
+>>>>>>> .theirs	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
 	rm -f $(topdir)bin/caminfo.txt   > $(DEVNULL)
