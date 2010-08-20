@@ -1,121 +1,168 @@
 // !!! THIS FILE IS GENERATED. DO NOT EDIT. !!!
 #include "stubs_asm.h"
 
-NSTUB(AllocateMemory, 0xffdd7df4)
-NSTUB(AllocateUncacheableMemory, 0xffc19848)
-NSTUB(Close, 0xffc1502c)
-NSTUB(CreateTask, 0xffc0bbc0)
-NSTUB(DeleteFile_Fut, 0xffc14894)
-// Best match: 79%
-NSTUB(EnterToCompensationEVF, 0xffc170a4)
-NSTUB(ExecuteEventProcedure, 0xffc0c278)
-// Best match: 79%
-NSTUB(ExitFromCompensationEVF, 0xffc170f4)
-NSTUB(ExitTask, 0xffc0be50)
-NSTUB(Fclose_Fut, 0xffc14a10)
-NSTUB(Feof_Fut, 0xffc14bfc)
-NSTUB(Fflush_Fut, 0xffc14c38)
-NSTUB(Fgets_Fut, 0xffc14b64)
-NSTUB(Fopen_Fut, 0xffc149d0)
-NSTUB(Fread_Fut, 0xffc14abc)
-NSTUB(FreeMemory, 0xffdd7de0)
-NSTUB(FreeUncacheableMemory, 0xffc1987c)
-NSTUB(Fseek_Fut, 0xffc14bb0)
-NSTUB(Fwrite_Fut, 0xffc14b10)
+NSTUB(AllocateMemory, 0xffab8cf0)
+NSTUB(AllocateUncacheableMemory, 0xff83a41c)
 // Best match: 96%
-NSTUB(GetBatteryTemperature, 0xffc39178)
+NSTUB(Close, 0xff836db8)
+NSTUB(CreateTask, 0xff81e83c)
+NSTUB(DeleteFile_Fut, 0xff836730)
+// ERROR: EnterToCompensationEVF is not found!
+NSTUB(ExecuteEventProcedure, 0xff88b9c0)
+// ERROR: ExitFromCompensationEVF is not found!
+// Best match: 57%
+NSTUB(ExitTask, 0xff81eacc)
+NSTUB(Fclose_Fut, 0xff8368ac)
+NSTUB(Feof_Fut, 0xff836a98)
+NSTUB(Fflush_Fut, 0xff836ad4)
+NSTUB(Fgets_Fut, 0xff836a00)
+NSTUB(Fopen_Fut, 0xff83686c)
+NSTUB(Fread_Fut, 0xff836958)
+NSTUB(FreeMemory, 0xffab8ce8)
+// Best match: 91%
+NSTUB(FreeUncacheableMemory, 0xff83a45c)
+NSTUB(Fseek_Fut, 0xff836a4c)
+NSTUB(Fwrite_Fut, 0xff8369ac)
+// Best match: 52%
+NSTUB(GetBatteryTemperature, 0xff8652a0)
+// Best match: 52%
+NSTUB(GetCCDTemperature, 0xff86522c)
+// ERROR: GetCurrentAvValue is not found!
+// Best match: 66%
+NSTUB(GetDrive_ClusterSize, 0xff871e30)
+// ERROR: GetDrive_FreeClusters is not found!
+// Best match: 60%
+NSTUB(GetDrive_TotalClusters, 0xff871e64)
+// Best match: 64%
+NSTUB(GetFocusLensSubjectDistance, 0xff9629b8)
+// Best match: 77%
+NSTUB(GetFocusLensSubjectDistanceFromLens, 0xff962d40)
+// Best match: 88%
+NSTUB(GetOpticalTemperature, 0xff865314)
 // Best match: 96%
-NSTUB(GetCCDTemperature, 0xffc39108)
-NSTUB(GetCurrentAvValue, 0xffcffca8)
-NSTUB(GetDrive_ClusterSize, 0xffc3f4c4)
-NSTUB(GetDrive_FreeClusters, 0xffc3f564)
-NSTUB(GetDrive_TotalClusters, 0xffc3f4f8)
-NSTUB(GetFocusLensSubjectDistance, 0xffcfdb3c)
-NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffcfde48)
+NSTUB(GetParameterData, 0xff9975f4)
+// Best match: 72%
+NSTUB(GetPropertyCase, 0xff88f660)
+// Best match: 96%
+NSTUB(GetSystemTime, 0xffab8d48)
+// ERROR: GetZoomLensCurrentPoint is not found!
+// ERROR: GetZoomLensCurrentPosition is not found!
+// Best match: 58%
+NSTUB(IsStrobeChargeCompleted, 0xff8da44c)
+NSTUB(LocalTime, 0xff88923c)
+// Best match: 82%
+NSTUB(LockMainPower, 0xff895b78)
+// ERROR: Lseek is not found!
 // Best match: 92%
-NSTUB(GetOpticalTemperature, 0xffc391e8)
-NSTUB(GetParameterData, 0xffd1c5b8)
-NSTUB(GetPropertyCase, 0xffc59c2c)
-NSTUB(GetSystemTime, 0xffdd7efc)
-NSTUB(GetZoomLensCurrentPoint, 0xffd02fdc)
-NSTUB(GetZoomLensCurrentPosition, 0xffd03b5c)
-NSTUB(IsStrobeChargeCompleted, 0xffc974e4)
-NSTUB(LocalTime, 0xffc56058)
-NSTUB(LockMainPower, 0xffc5bf6c)
-NSTUB(Lseek, 0xffc1516c)
-NSTUB(MakeDirectory_Fut, 0xffc14908)
-NSTUB(MoveFocusLensToDistance, 0xffda6578)
-NSTUB(MoveZoomLensWithPoint, 0xffd03a88)
-NSTUB(NewTaskShell, 0xffc596b0)
-NSTUB(Open, 0xffc15004)
+NSTUB(MakeDirectory_Fut, 0xff8367a4)
+// Best match: 57%
+NSTUB(MoveFocusLensToDistance, 0xffb228b0)
+// Best match: 58%
+NSTUB(MoveZoomLensWithPoint, 0xffab6b64)
+// Best match: 62%
+NSTUB(NewTaskShell, 0xff88f06c)
+// Best match: 69%
+NSTUB(Open, 0xff86f13c)
 // ERROR: PT_PlaySound is not found!
-NSTUB(PostLogicalEventForNotPowerType, 0xffc5b650)
-NSTUB(PostLogicalEventToUI, 0xffc5b69c)
-NSTUB(Read, 0xffc0a448)
-NSTUB(ReadFastDir, 0xffdc1b98)
-NSTUB(RefreshPhysicalScreen, 0xffd62184)
-NSTUB(Remove, 0xffc15074)
-NSTUB(RenameFile_Fut, 0xffc14840)
-NSTUB(SetAutoShutdownTime, 0xffc5bfe0)
-NSTUB(SetCurrentCaptureModeType, 0xffc6214c)
-NSTUB(SetFileTimeStamp, 0xffc15308)
-NSTUB(SetLogicalEventActive, 0xffc5bcd0)
-NSTUB(SetParameterData, 0xffd1c528)
-NSTUB(SetPropertyCase, 0xffc59b24)
-NSTUB(SleepTask, 0xffc196d0)
-NSTUB(TakeSemaphore, 0xffc0ba5c)
-NSTUB(TurnOffBackLight, 0xffc676f4)
-NSTUB(TurnOnBackLight, 0xffc676dc)
-NSTUB(UIFS_WriteFirmInfoToFile, 0xffd4a934)
-NSTUB(UnlockMainPower, 0xffc5bec0)
-NSTUB(UpdateMBROnFlash, 0xffc3f28c)
-// ALT: NSTUB(UpdateMBROnFlash, 0xffc71b5c) // 21/0
-NSTUB(VbattGet, 0xffc119a8)
-NSTUB(Write, 0xffc150d8)
-NSTUB(_log, 0xffe3c8dc)
-NSTUB(_log10, 0xffe3b820)
-NSTUB(_pow, 0xffe3b990)
-NSTUB(_sqrt, 0xffe3dc44)
-NSTUB(close, 0xffc0a260)
-NSTUB(closedir, 0xffdc1c68)
-NSTUB(closefastdir, 0xffdc1c68)
-NSTUB(free, 0xffc03ab0)
-NSTUB(kbd_p1_f, 0xffc131d0)
-NSTUB(kbd_p1_f_cont, 0xffc131dc)
-NSTUB(kbd_p2_f, 0xffc12a1c)
-NSTUB(kbd_pwr_off, 0xffc370c0)
-NSTUB(kbd_pwr_on, 0xffc37068)
-NSTUB(kbd_read_keys, 0xffc130cc)
-NSTUB(kbd_read_keys_r2, 0xffc36b14)
-NSTUB(lseek, 0xffc1516c)
-NSTUB(malloc, 0xffc039dc)
-NSTUB(memcmp, 0xffc0e8f0)
-NSTUB(memcpy, 0xffc71bf4)
-NSTUB(memset, 0xffe0e37c)
-NSTUB(mkdir, 0xffc153d0)
-NSTUB(mktime_ext, 0xffc72460)
-NSTUB(open, 0xffc0a1b0)
-NSTUB(opendir, 0xffdc1b04)
-NSTUB(openfastdir, 0xffdc1b04)
-NSTUB(qsort, 0xffd62a14)
-// ALT: NSTUB(qsort, 0xffd62a14) // 9/0
-NSTUB(rand, 0xffc0e9f8)
-NSTUB(read, 0xffc0a448)
-NSTUB(readfastdir, 0xffdc1b98)
-NSTUB(rename, 0xffc15100)
-NSTUB(srand, 0xffc0e9ec)
-NSTUB(stat, 0xffc15238)
-NSTUB(strcat, 0xffc71b20)
-NSTUB(strchr, 0xffc71ba8)
-NSTUB(strcmp, 0xffc0e888)
-NSTUB(strcpy, 0xffc0e834)
-NSTUB(strftime, 0xffc71e68)
-NSTUB(strlen, 0xffc0e8cc)
-NSTUB(strncmp, 0xffc71b5c)
-NSTUB(strncpy, 0xffc0e84c)
-NSTUB(strrchr, 0xffc71bcc)
-NSTUB(strtol, 0xffc1fc0c)
-NSTUB(strtolx, 0xffc1fa10)
-NSTUB(time, 0xffc55f0c)
-NSTUB(vsprintf, 0xffc0e7b4)
-NSTUB(write, 0xffc0a4a8)
+// Best match: 86%
+NSTUB(PostLogicalEventForNotPowerType, 0xff893948)
+// Best match: 92%
+NSTUB(PostLogicalEventToUI, 0xff893994)
+NSTUB(Read, 0xff81ac7c)
+// ERROR: ReadFastDir is not found!
+// ERROR: RefreshPhysicalScreen is not found!
+// ERROR: Remove is not found!
+// Best match: 53%
+NSTUB(RenameFile_Fut, 0xff836868)
+// ALT: NSTUB(RenameFile_Fut, 0xffa79a44) // 8/7
+// ALT: NSTUB(RenameFile_Fut, 0xffa79a94) // 8/7
+// Best match: 80%
+NSTUB(SetAutoShutdownTime, 0xff895bec)
+// Best match: 81%
+NSTUB(SetCurrentCaptureModeType, 0xff89e550)
+// Best match: 55%
+NSTUB(SetFileTimeStamp, 0xff9514c0)
+// Best match: 64%
+NSTUB(SetLogicalEventActive, 0xff8958b4)
+// Best match: 96%
+NSTUB(SetParameterData, 0xff997564)
+// Best match: 72%
+NSTUB(SetPropertyCase, 0xff88f530)
+// Best match: 92%
+NSTUB(SleepTask, 0xff83a0a0)
+// Best match: 60%
+NSTUB(TakeSemaphore, 0xff839d68)
+// ERROR: TurnOffBackLight is not found!
+// ERROR: TurnOnBackLight is not found!
+// ERROR: UIFS_WriteFirmInfoToFile is not found!
+// Best match: 83%
+NSTUB(UnlockMainPower, 0xff895acc)
+NSTUB(UpdateMBROnFlash, 0xff813f98)
+// Best match: 85%
+NSTUB(VbattGet, 0xff8330d8)
+NSTUB(Write, 0xff836e48)
+NSTUB(_log, 0xffb5b348)
+NSTUB(_log10, 0xffb59fd4)
+NSTUB(_pow, 0xffb5a144)
+NSTUB(_sqrt, 0xffb5cf50)
+NSTUB(close, 0xff81aa94)
+// Best match: 71%
+NSTUB(closedir, 0xffa95e28)
+// Best match: 71%
+NSTUB(closefastdir, 0xffa95e28)
+// Best match: 91%
+NSTUB(free, 0xff81415c)
+// Best match: 60%
+NSTUB(kbd_p1_f, 0xff83484c)
+// Best match: 58%
+NSTUB(kbd_p1_f_cont, 0xff834858)
+// Best match: 86%
+NSTUB(kbd_p2_f, 0xff8340d0)
+// ERROR: kbd_pwr_off is not found!
+// ERROR: kbd_pwr_on is not found!
+// ERROR: kbd_read_keys is not found!
+// Best match: 81%
+NSTUB(kbd_read_keys_r2, 0xff86122c)
+// Best match: 68%
+NSTUB(lseek, 0xff836ee0)
+NSTUB(malloc, 0xff814100)
+NSTUB(memcmp, 0xff82066c)
+NSTUB(memcpy, 0xff83fae8)
+NSTUB(memset, 0xffa15ddc)
+// Best match: 74%
+NSTUB(mkdir, 0xff837254)
+NSTUB(mktime_ext, 0xff8ac9f0)
+NSTUB(open, 0xff81a9e4)
+// Best match: 81%
+NSTUB(opendir, 0xffa95c90)
+// ERROR: openfastdir is not found!
+// ERROR: qsort is not found!
+// Best match: 95%
+NSTUB(rand, 0xff820774)
+NSTUB(read, 0xff81ac7c)
+// ERROR: readfastdir is not found!
+// ERROR: rename is not found!
+// Best match: 95%
+NSTUB(srand, 0xff820768)
+NSTUB(stat, 0xff836f1c)
+// Best match: 61%
+NSTUB(strcat, 0xff813f5c)
+// Best match: 56%
+NSTUB(strchr, 0xff813fe4)
+NSTUB(strcmp, 0xff820628)
+NSTUB(strcpy, 0xff820610)
+NSTUB(strftime, 0xff8ac3f8)
+NSTUB(strlen, 0xff814030)
+NSTUB(strncmp, 0xff813f98)
+// Best match: 73%
+NSTUB(strncpy, 0xff813f5c)
+// Best match: 71%
+NSTUB(strrchr, 0xff83fac0)
+// ALT: NSTUB(strrchr, 0xff8ac1c0) // 18/8
+// Best match: 96%
+NSTUB(strtol, 0xff83fdc8)
+NSTUB(strtolx, 0xff83fbcc)
+// Best match: 83%
+NSTUB(time, 0xff88981c)
+NSTUB(vsprintf, 0xff8205d4)
+NSTUB(write, 0xff81acdc)
