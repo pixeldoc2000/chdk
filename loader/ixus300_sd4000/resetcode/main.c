@@ -6,18 +6,18 @@
  * Make sure stack is not used.
  */
 
-#define DP (void*)0xC02200C4	// direct-print (blue)
+#define DP (void*)0xC02200C4    // direct-print (blue)
 #define DELAY 5000000
 
 void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_void, long length) {
 
-        //volatile long *p = (void*)DP;       // turned off later, so assumed to be power
-
-        //int counter;
+        // DEBUG: turned off later, so assumed to be power
+        volatile long *p = (void*)DP;
+        int counter;
 
         // DEBUG: blink led
-        //counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
-        //counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
+        counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
+        counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
 
         {
                 char *dst = dst_void;
@@ -25,7 +25,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 
                 if (src < dst && dst < src + length)
                 {
-                        /* Have to copy backwards */
+                        // Have to copy backwards
                         src += length;
                         dst += length;
                         while (length--)
@@ -42,12 +42,12 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
                 }
         }
 
-        //DEBUG: blink again
-        //counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
-        //counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
+        // DEBUG: blink again
+        counter = DELAY; *p = 0x46;  while (counter--) { asm("nop\n nop\n"); };
+        counter = DELAY; *p = 0x44;  while (counter--) { asm("nop\n nop\n"); };
 
         // DEBUG: jump to regular firmware-boot (causing a boot loop)
-        //dst_void = (void*) 0xFFC00000;
+        dst_void = (void*) 0xFF810000;
 
         // resetcode here:
         asm volatile (
@@ -91,7 +91,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
                         "LDR     R0, =0x12345678\n"
                         "MOV     R1, #0x40000000\n"
                         "STR     R0, [R1,#0xFFC]\n"
-                        //"LDR     R0, =0xFFC00000\n"   // original jump-vector
+                        //"LDR     R0, =0xFF810000\n"   // original jump-vector
                         "MOV     R0, %0\n"              // new jump-vector
                         "LDMFD   SP!, {R4,LR}\n"
                         //"BX        %0\n"

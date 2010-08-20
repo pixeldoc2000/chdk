@@ -15,17 +15,16 @@ void CreateTask_spytask();
 void boot();
 
 
-
 #define DEBUG_LED 0xC02200C4
+
 void boot() { //#fs
-    long *canon_data_src = (void*)0xFFE9C5D0;
-    long *canon_data_dst = (void*)0x1900;
-    long canon_data_len = 0xf0c4 - 0x1900; // data_end - data_start
-    long *canon_bss_start = (void*)0xf0c4; // just after data 
-    long canon_bss_len = 0x9d024 - 0xf0c4; 
+    long *canon_data_src = (void*)0xFFC206D4;   // ROM:FF810130 ?!?
+    long *canon_data_dst = (void*)0x1900;    // ROM:FF810134
+    long canon_data_len = 0xf0c4 - 0x1900;    // data_end - data_start ?!?
+    long *canon_bss_start = (void*)0xf0c4;    // just after data ?!?
+    long canon_bss_len = 0x9d024 - 0xf0c4;    // ?!?
 
     long i;
-
 
     // Code taken from VxWorks CHDK. Changes CPU speed?
     asm volatile (
