@@ -3,10 +3,10 @@ PLATFORMID=12565
 
 PLATFORMOS=vxworks
 
-MEMBASEADDR=0x1900   # address where wif or diskboot code will be loaded by camera
-RESTARTSTART=0x50000   # address of a free region
+MEMBASEADDR=0x1900   # address where wif or diskboot code will be loaded by camera, ROM:FF810108
+RESTARTSTART=0x50000   # address of memory free region
 MEMISOSTART=0xA4D10   # ROM:FF810134 or ROM:FF8117A8
-ROMBASEADDR=0xFF810000   # 0xFF810000 for S-, SD-, and G- series, 0xFFC00000 for A-series camera models
+ROMBASEADDR=0xFF810000   # 0xFF810000 for S-, SD-, and G- series
 
 
 PLFLAGS=-DMEMBASEADDR=$(MEMBASEADDR) -DMEMISOSTART=$(MEMISOSTART) -DMEMISOSIZE=$(MEMISOSIZE)
