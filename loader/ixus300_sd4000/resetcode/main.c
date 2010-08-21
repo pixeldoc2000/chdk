@@ -6,7 +6,8 @@
  * Make sure stack is not used.
  */
 
-#define DP (void*)0xC02200C4    // direct-print (blue)
+//#define DP (void*)0xC02200C4    // direct-print (blue)
+#define DP (void*)0xC0220130    // ToDo: from http://chdk.wikia.com/wiki/SD1400IS
 #define DELAY 5000000
 
 void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_void, long length) {
