@@ -11,5 +11,8 @@ ROMBASEADDR=0xFF810000    # 0xFF810000 for S-, SD-, and G- series
 PLFLAGS=-DMEMBASEADDR=$(MEMBASEADDR) -DMEMISOSTART=$(MEMISOSTART) -DMEMISOSIZE=$(MEMISOSIZE)
 PLFLAGS+=-DRESTARTSTART=$(RESTARTSTART)
 
-NEED_ENCODED_DISKBOOT=4    # Dancing Bits
-KEYSYS=d4    # FIR (requres correct keys values in fi2.inc)
+# Dancing Bits
+NEED_ENCODED_DISKBOOT=4
+
+# FIR (requires correct keys in platform/fi2.inc)
+KEYSYS=d4a
