@@ -4,12 +4,12 @@ PLATFORMID=12791
 PLATFORMOS=dryos
 
 MEMBASEADDR=0x1900    # address where wif or diskboot code will be loaded by camera, ROM:FF810134
-RESTARTSTART=0x50000   # address of memory free region
+RESTARTSTART=0x50000   # size of memory region for CHDK
 MEMISOSTART=0x14B394    # ROM:FF81014C
 ROMBASEADDR=0xFF810000    # 0xFF810000 for S-, SD-, and G- series
-
 
 PLFLAGS=-DMEMBASEADDR=$(MEMBASEADDR) -DMEMISOSTART=$(MEMISOSTART) -DMEMISOSIZE=$(MEMISOSIZE)
 PLFLAGS+=-DRESTARTSTART=$(RESTARTSTART)
 
-KEYSYS=d3    // ToDo: check if correct
+NEED_ENCODED_DISKBOOT=4    # Dancing Bits
+KEYSYS=d4    # FIR (requres correct keys values in fi2.inc)
