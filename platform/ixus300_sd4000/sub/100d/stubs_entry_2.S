@@ -1,33 +1,38 @@
 #include "stubs_asm.h"
 
-NHSTUB(EnterToCompensationEVF, 0x12345678)
-NHSTUB(ExitFromCompensationEVF, 0x12345678)
-NHSTUB(GetCurrentAvValue, 0x12345678)
-NHSTUB(GetDrive_FreeClusters, 0x12345678)
-NHSTUB(GetZoomLensCurrentPoint, 0x12345678)
-NHSTUB(GetZoomLensCurrentPosition, 0x12345678)
-NHSTUB(Lseek, 0x12345678)
-NHSTUB(PT_PlaySound, 0x12345678)
-NHSTUB(ReadFastDir, 0x12345678)
-NHSTUB(RefreshPhysicalScreen, 0x12345678)
-NHSTUB(Remove, 0x12345678)
-NHSTUB(TurnOffBackLight, 0x12345678)
-NHSTUB(TurnOnBackLight, 0x12345678)
-NHSTUB(UIFS_WriteFirmInfoToFile, 0x12345678)
-NHSTUB(kbd_pwr_off, 0x12345678)
-NHSTUB(kbd_pwr_on, 0x12345678)
-NHSTUB(kbd_read_keys, 0x12345678)
-NHSTUB(openfastdir, 0x12345678)
-NHSTUB(qsort, 0x12345678)
-NHSTUB(readfastdir, 0x12345678)
-NHSTUB(rename, 0x12345678)
+//NHSTUB(SleepTask, 0xFFC196d0)
+NHSTUB(CreateTask, 0xFF81E83C)    // OK
+NHSTUB(ExitTask, 0xFF81EACC)    // OK
+NHSTUB(AllocateMemory, 0xFFAB8CF0)
 
-NSTUB(Unmount_FileSystem, 0x12345678)
-NSTUB(Mount_FileSystem, 0x12345678)
-NSTUB(rewinddir, 0x12345678)
-NSTUB(DoAFLock, 0x12345678)
-NSTUB(UnlockAF, 0x12345678)
-NSTUB(SetScriptMode, 0x12345678)
-NSTUB(PostLEDMessage, 0x12345678)
-NSTUB(UnsetZoomForMovie, 0x12345678)
-NSTUB(SetZoomActuatorSpeedPercent, 0x12345678)
+NHSTUB(EnterToCompensationEVF, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(ExitFromCompensationEVF, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(GetCurrentAvValue, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(GetDrive_FreeClusters, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(GetZoomLensCurrentPoint, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(GetZoomLensCurrentPosition, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(Lseek, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(PT_PlaySound, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(ReadFastDir, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(RefreshPhysicalScreen, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(Remove, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(TurnOffBackLight, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(TurnOnBackLight, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(UIFS_WriteFirmInfoToFile, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(kbd_pwr_off, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(kbd_pwr_on, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(kbd_read_keys, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(openfastdir, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(qsort, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(readfastdir, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(rename, 0xFFC00958)    // ToDo: nullsub_1
+
+NSTUB(Unmount_FileSystem, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(Mount_FileSystem, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(rewinddir, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(DoAFLock, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(UnlockAF, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(SetScriptMode, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(PostLEDMessage, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(UnsetZoomForMovie, 0xFFC00958)    // ToDo: nullsub_1
+NSTUB(SetZoomActuatorSpeedPercent, 0xFFC00958)    // ToDo: nullsub_1
