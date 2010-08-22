@@ -577,5 +577,6 @@ batch-clean:
 	#$(MAKE) -s --no-print-directory PLATFORM=ixus95_sd1200 PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	#$(MAKE) -s --no-print-directory PLATFORM=a430 PLATFORMSUB=100b NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=ixus300_sd4000 PLATFORMSUB=100d NO_INC_BUILD=1 clean
+	#$(MAKE) -s --no-print-directory PLATFORM=a430 PLATFORMSUB=100b NO_INC_BUILD=1 clean
 
 	.PHONY: fir upload
