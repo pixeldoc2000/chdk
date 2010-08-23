@@ -1,9 +1,19 @@
 #include "stubs_asm.h"
 
-//NHSTUB(SleepTask, 0xFFC196d0)
-NHSTUB(CreateTask, 0xFF81E83C)    // OK
-NHSTUB(ExitTask, 0xFF81EACC)    // OK
-NHSTUB(AllocateMemory, 0xFFAB8CF0)
+//NHSTUB(SleepTask,                               0xFF83A0A0)    // eventproc_export_SleepTask()
+NHSTUB(CreateTask,                                0xFF81E83C)    // eventproc_export_CreateTask()
+NHSTUB(ExitTask,                                  0xFF81EACC)    // eventproc_export_ExitTask()
+NHSTUB(AllocateMemory,                            0xFFAB8CF0)    // OK
+
+NHSTUB(ExecuteEventProcedure,                     0xFF88B948)    // OK
+
+//NHSTUB(mkdir,                                     0xFFC153D0)
+//NHSTUB(open,                                      0xFF81A9E4)    // OK
+//NHSTUB(write,                                     0xFF81ACDC)    // OK
+//NHSTUB(close,                                     0xFF81AA94)    // OK
+//NHSTUB(lseek,                                     0xFFC1516C)
+//NHSTUB(read,                                      0xFF81AC7C)    // OK
+
 
 NHSTUB(EnterToCompensationEVF, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(ExitFromCompensationEVF, 0xFFC00958)    // ToDo: nullsub_1
