@@ -49,7 +49,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         // DEBUG: jump to regular firmware-boot (causing a boot loop)
         //dst_void = (void*) 0xFFC00000;
 
-        // resetcode here:
+        // ROM:FFC1B8A4 resetcode here:
         asm volatile (
                         "MRS     R0, CPSR\n"
                         "BIC     R0, R0, #0x3F\n"
@@ -101,3 +101,5 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
 
         while(1);
 }
+
+// NEXT: core/entry.S

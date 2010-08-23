@@ -101,21 +101,18 @@ void __attribute__((naked,noinline)) sub_FFC001a4_my() { //#fs
 void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs 
         asm volatile (
               //"STR     LR, [SP,#0xFFFFFFFC]!\n"
-              "STR     LR, [SP,#-4]!\n"         // inspired by original CHDK-code
+              "STR     LR, [SP,#-4]!\n"          // inspired by original CHDK-code
               "SUB     SP, SP, #0x74\n"
               "MOV     R0, SP\n"
               "MOV     R1, #0x74\n"
               "BL      sub_FFE3B620\n"
               "MOV     R0, #0x53000\n"
               "STR     R0, [SP,#0x74-0x70]\n"
-        );
-//              "LDR     R0, =0xDD024\n"          // 0x9d024 + 0x40000, note: 0x20000 *should* have been enough, but our code was overwritten...
-                                                // ...thus we push the memory pool a little more up (0x30000 = 192k)
-        asm volatile (
+
+              //"LDR     R0, =0x9D024   // original
               "LDR     R0, =new_sa\n"
               "LDR     R0, [R0]\n"
-        );
-        asm volatile (
+
               "LDR     R2, =0x2ABC00\n"
               "LDR     R1, =0x2A4968\n"
               "STR     R0, [SP,#0x74-0x6C]\n"
@@ -150,8 +147,8 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs
               "MOV     R0, #0x280\n"
               "STR     R0, [SP,#0x74-0x0C]\n"
 
-              //"LDR     R1, =0xFFC04DBC\n"         // uHwSetup = 0xFFC04DBC
-              "LDR     R1, =uHwSetup_my\n"         // followup to own function
+              //"LDR     R1, =0xFFC04DBC\n"        // uHwSetup = 0xFFC04DBC
+              "LDR     R1, =uHwSetup_my\n"       // followup to own function
 
               "MOV     R0, SP\n"
               "MOV     R2, #0\n"
@@ -161,36 +158,37 @@ void __attribute__((naked,noinline)) sub_FFC00FB8_my() { //#fs
         );
 }; //#fe
 
+// ROM:FFC04DBC
 void __attribute__((naked,noinline)) uHwSetup_my() { //#fs 
         asm volatile (
               "STMFD   SP!, {R4,LR}\n"
               "BL      sub_FFC0095C\n"
-              "BL      sub_FFC09A18\n"          // _dmSetup
+              "BL      sub_FFC09A18\n"           // _dmSetup
               "CMP     R0, #0\n"
-              "LDRLT   R0, =0xffc04ed0\n"       // FFC04ED0 aDmsetup
-              "BLLT    sub_FFC04EB0\n"          // FFC04EB0  _err_init_task
-              "BL      sub_FFC049E0\n"          // _termDriverInit
+              "LDRLT   R0, =0xffc04ed0\n"        // FFC04ED0 aDmsetup
+              "BLLT    sub_FFC04EB0\n"           // FFC04EB0  _err_init_task
+              "BL      sub_FFC049E0\n"           // _termDriverInit
               "CMP     R0, #0\n"
-              "LDRLT   R0, =0xFFC04ED8\n"       // aTermdriverinit
-              "BLLT    sub_FFC04EB0\n"          // FFC04EB0  _err_init_task
-              "LDR     R0, =0xFFc04EE8\n"       // a_term
-              "BL      sub_FFc04ACC\n"          // _termDeviceCreate
+              "LDRLT   R0, =0xFFC04ED8\n"        // aTermdriverinit
+              "BLLT    sub_FFC04EB0\n"           // FFC04EB0  _err_init_task
+              "LDR     R0, =0xFFc04EE8\n"        // a_term
+              "BL      sub_FFc04ACC\n"           // _termDeviceCreate
               "CMP     R0, #0\n"
-              "LDRLT   R0, =0xFFC04EF0\n"       // aTermdevicecrea
-              "BLLT    sub_FFC04EB0\n"          // FFC04EB0  _err_init_task
-              "LDR     R0, =0xFFc04EE8\n"       // a_term
-              "BL      sub_FFc0357C\n"          // _stdioSetup
+              "LDRLT   R0, =0xFFC04EF0\n"        // aTermdevicecrea
+              "BLLT    sub_FFC04EB0\n"           // FFC04EB0  _err_init_task
+              "LDR     R0, =0xFFc04EE8\n"        // a_term
+              "BL      sub_FFc0357C\n"           // _stdioSetup
               "CMP     R0, #0\n"
-              "LDRLT   R0, =0xFFC04F04\n"       // aStdiosetup
-              "BLLT    sub_FFC04EB0\n"          // FFC04EB0  _err_init_task
-              "BL      sub_FFc095A0\n"          // _stdlibSetup
+              "LDRLT   R0, =0xFFC04F04\n"        // aStdiosetup
+              "BLLT    sub_FFC04EB0\n"           // FFC04EB0  _err_init_task
+              "BL      sub_FFc095A0\n"           // _stdlibSetup
               "CMP     R0, #0\n"
-              "LDRLT   R0, =0xFFC04F10\n"       // aStdlibsetup
-              "BLLT    sub_FFC04EB0\n"          // FFC04EB0  _err_init_task
-              "BL      sub_FFC014D0\n"          // _armlib_setup
+              "LDRLT   R0, =0xFFC04F10\n"        // aStdlibsetup
+              "BLLT    sub_FFC04EB0\n"           // FFC04EB0  _err_init_task
+              "BL      sub_FFC014D0\n"           // _armlib_setup
               "CMP     R0, #0\n"
-              "LDRLT   R0, =0xFFC04F1C\n"       // aArmlib_setup
-              "BLLT    sub_FFC04EB0\n"          // FFC04EB0  _err_init_task
+              "LDRLT   R0, =0xFFC04F1C\n"        // aArmlib_setup
+              "BLLT    sub_FFC04EB0\n"           // FFC04EB0  _err_init_task
               "LDMFD   SP!, {R4,LR}\n"
               //"B       _CreateTaskStartup\n"   // FFC0DCDC
               "B       CreateTask_Startup_my\n"
@@ -198,6 +196,7 @@ void __attribute__((naked,noinline)) uHwSetup_my() { //#fs
         );
 }; //#fe
 
+// ROM:FFC0DCDC
 void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs 
         asm volatile (
                 "STMFD   SP!, {R3,LR}\n"
@@ -237,23 +236,24 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
         );
 }; //#fe
 
+// ROM:FFC0DCDC
 void __attribute__((naked,noinline)) task_Startup_my() { //#fs 
         
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
-                "BL      sub_FFC051CC\n"  // uRegClockSave
+                "BL      sub_FFC051CC\n"         // uRegClockSave
                 "BL      sub_FFC13FA8\n"
                 "BL      sub_FFC10EA4\n"
                 "BL      sub_FFC1B9FC\n"
                 "BL      sub_FFC1BB9C\n"
-                //"BL      sub_FFC1BA84\n"  // StartDiskboot
+                //"BL      sub_FFC1BA84\n"       // StartDiskboot
         );
 
         CreateTask_spytask();
 
         asm volatile (
                 "BL      sub_FFC1BD64\n"
-                "BL      sub_FFC1BBEC\n"        
+                "BL      sub_FFC1BBEC\n"
 
                 "BL      sub_FFC18A8C\n"
                 "BL      sub_FFC1BD68\n"
@@ -262,9 +262,11 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
         CreateTask_PhySw();
 
         asm volatile (
-                //"BL      sub_FFC12DAC\n"        // CreateTask_PhySw - checks buttons and acts accordingly
+                //"BL      sub_FFC12DAC\n"       // CreateTask_PhySw - checks buttons and acts accordingly
 
-                "BL      sub_FFC15BC8_my\n"        // divert to intercept task_ShootSeqTask
+                //"BL      sub_FFC15BC8\n"       // original
+                "BL      sub_FFC15BC8_my\n"      // divert to intercept task_ShootSeqTask
+
                 "BL      sub_FFC1BD80\n"
                 //"BL      nullsub_2\n"
                 "BL      sub_FFC1213C\n"
@@ -272,12 +274,12 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 "BL      sub_FFC128D8\n"
                 "BL      sub_FFC12048\n"
                 //"BL      sub_FFC1C6C4\n"
-                "BL      sub_FFC1C6C4_my\n"     // divert for SDHC-bootdisk-support
+                "BL      sub_FFC1C6C4_my\n"      // divert for SDHC-bootdisk-support
                 "BL      sub_FFC12004\n"
 
                 // modification: BL instead of B to last function to control action after its return
                 "BL       sub_FFC05088\n"
-                "LDMFD   SP!, {R4,PC}\n"        // restore stack to PC instead of LR to return to caller
+                "LDMFD   SP!, {R4,PC}\n"         // restore stack to PC instead of LR to return to caller
         );
 }; //#fe
 
