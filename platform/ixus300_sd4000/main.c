@@ -15,15 +15,14 @@ void startup()
     long *ptr;
 
     // sanity check
-    if ((long)&link_bss_end > (MEMISOSTART + MEMISOSIZE)){
-	started();
-	shutdown();
+    if ((long)&link_bss_end > (MEMISOSTART + MEMISOSIZE)) {
+        started();
+        shutdown();
     }
 
     // initialize .bss senment
     while (bss<&link_bss_end)
-	*bss++ = 0;
-
+        *bss++ = 0;
 
     boot();
 }
@@ -53,17 +52,17 @@ int get_zoom_x(int zp) {
 
 #if 0
 int rec_switch_state(void) {
-	return (physw_status[1] & 0x02000000);
+    return (physw_status[1] & 0x02000000);
 }
 #endif
 
 
-long get_vbatt_min()
-{
+long get_vbatt_min() {
     return 2300;
 }
 
-long get_vbatt_max()
-{
+long get_vbatt_max() {
     return 2550;
 }
+
+// NEXT: platform/ixus300_sd4000/sub/100d/boot.c
