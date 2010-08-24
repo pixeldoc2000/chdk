@@ -1,7 +1,7 @@
 VER=CHDK
 
-PLATFORM=s3is
-PLATFORMSUB=100a
+#PLATFORM=s3is
+#PLATFORMSUB=100a
 
 #PLATFORM=a620
 #PLATFORMSUB=100f
@@ -264,6 +264,7 @@ PLATFORMSUB=100e
 
 #PLATFORM=ixus95_sd1200
 #PLATFORMSUB=100c
+<<<<<<< HEAD
 
 #PLATFORM=sx30
 #PLATFORMSUB=100e
@@ -279,6 +280,8 @@ PLATFORMSUB=100e
 
 #PLATFORM=g12
 #PLATFORMSUB=100e
+=======
+>>>>>>> 2eab7b9... ixus300_sd4000 chdk does boot with disabled tasks, says Card is locked and shut down after some seconds
 
 #PLATFORM=a430
 #PLATFORMSUB=100b

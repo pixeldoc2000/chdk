@@ -14,6 +14,9 @@ void startup()
     long *bss = &link_bss_start;
     long *ptr;
 
+    //debug_led(1);
+    //debug_led(0);
+
     // sanity check
     if ((long)&link_bss_end > (MEMISOSTART + MEMISOSIZE)) {
         started();
@@ -23,6 +26,9 @@ void startup()
     // initialize .bss senment
     while (bss<&link_bss_end)
         *bss++ = 0;
+
+    //debug_led(1);
+    //debug_led(0);
 
     boot();
 }
@@ -65,4 +71,4 @@ long get_vbatt_max() {
     return 2550;
 }
 
-// NEXT: platform/ixus300_sd4000/sub/100d/boot.c
+// NEXT: platform/ixus300_sd4000/sub/100d/boot.c boot()
