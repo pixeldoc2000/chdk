@@ -9,24 +9,20 @@ extern long blob_copy_and_reset_size;
 
 void __attribute__((noreturn)) my_restart() 
 {
+    /*
+    // DEBUG LED STUFF
+    #define DEBUG_LED (void*)0xC0220130    // Greed Led at th Backside
+    #define DEBUG_LED_DELAY 10000000
+    volatile long *pDebugLed = (void*)DEBUG_LED;
+    int DebugLedCounter;
+    DebugLedCounter = DEBUG_LED_DELAY; *pDebugLed = 0x46;  while (DebugLedCounter--) { asm("nop\n nop\n"); };
+    DebugLedCounter = DEBUG_LED_DELAY; *pDebugLed = 0x44;  while (DebugLedCounter--) { asm("nop\n nop\n"); };
+    */
+    // OK
+
     void __attribute__((noreturn)) (*copy_and_restart)(char *dst, char *src, long length);
+
     int i;
-
-    // DEBUG LED
-    #define DEBUG_LED 0xC02200C4
-    #define DEBUG_CYCLE 0x1000000
-    //int i;
-    *((volatile int *) DEBUG_LED) = 0x46;    // Turn on LED
-    for (i=0; i<DEBUG_CYCLE; i++)    // Wait a while
-    {
-         asm volatile ( "nop\n" );
-    }
-    *((volatile int *) DEBUG_LED) = 0x44;    // Turn off LED
-    for (i=0; i<DEBUG_CYCLE; i++)    // Wait a while
-    {
-        asm volatile ( "nop\n" );
-    }
-
     for (i=0; i<(blob_copy_and_reset_size/sizeof(long)); i++){
         ((long*)(RESTARTSTART))[i] = blob_copy_and_reset[i];
     }
@@ -36,8 +32,8 @@ void __attribute__((noreturn)) my_restart()
 }
 
 //#define LED_PR 0xc0220084
-#define LED_PR 0xC02200D4
-
+//#define LED_PR 0xC02200D4
+#define LED_PR 0xC0220130
 
 static void __attribute__((noreturn)) shutdown()
 {

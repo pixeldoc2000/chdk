@@ -1,5 +1,7 @@
 #include "platform.h"
 
+// names from sd890
+
 void *hook_raw_fptr()
 {
     return (void*)0;
@@ -20,10 +22,13 @@ long hook_raw_size()
     return 0x9DCCE0;
 }
 
+// Live picture buffer (shoot not pressed)
+// ROM:FF84FB50 ?!?
 void *vid_get_viewport_live_fb()
 {
-//    return (void*)0;//0x10670ee0;
-    void **fb=(void **)0x21D0;
+    return (void*)0;
+    /*
+    void **fb=(void **)0x21EC;
     unsigned char buff = *((unsigned char*)0x2084);
     if (buff == 0) {
         buff = 2;
@@ -32,18 +37,22 @@ void *vid_get_viewport_live_fb()
         buff--;
     }
     return fb[buff];
+    */
 }
 
-void *vid_get_bitmap_fb()       
+// OSD buffer
+void *vid_get_bitmap_fb()
 {
-    return (void*)0x10361000;
+    return (void*)0x40471000;   // ROM:FFA347DC ?!?
 }
 
+// Live picture buffer (shoot half-pressed)
 void *vid_get_viewport_fb()
 {
     return (void*)0x1065A4D0; // 0x107D5FD0
 }
 
+// possible future use
 void *vid_get_viewport_fb_d()
 {
     return (void*)(*(int*)0x540C);  //5410
