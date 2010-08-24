@@ -53,7 +53,7 @@ int prev_usb_power,cur_usb_power;
 
 asm volatile ("STMFD SP!, {R0-R11,LR}\n"); // store R0-R11 and LR in stack
 
-debug_led(1);
+//debug_led(1);
 tick = get_tick_count();
 tick2 = tick;
 static long usb_physw[3];
@@ -157,7 +157,7 @@ if (conf.synch_delay_enable && conf.synch_delay_value>0)                        
      }
   }
 
-debug_led(0);
+//debug_led(0);
 asm volatile ("LDMFD SP!, {R0-R11,LR}\n"); // restore R0-R11 and LR from stack
 }
 

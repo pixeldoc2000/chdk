@@ -14,7 +14,7 @@ NHSTUB(ExecuteEventProcedure,                     0xFF88B948)    // OK
 //NHSTUB(lseek,                                     0xFFC1516C)
 //NHSTUB(read,                                      0xFF81AC7C)    // OK
 
-
+// not found by finsig
 NHSTUB(EnterToCompensationEVF, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(ExitFromCompensationEVF, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(GetCurrentAvValue, 0xFFC00958)    // ToDo: nullsub_1
@@ -24,14 +24,14 @@ NHSTUB(GetZoomLensCurrentPosition, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(Lseek, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(PT_PlaySound, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(ReadFastDir, 0xFFC00958)    // ToDo: nullsub_1
-NHSTUB(RefreshPhysicalScreen, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(RefreshPhysicalScreen, 0xFFA12124)    // ?!? search String "ScreenUnLock"
 NHSTUB(Remove, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(TurnOffBackLight, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(TurnOnBackLight, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFFC00958)    // ToDo: nullsub_1
-NHSTUB(kbd_pwr_off, 0xFFC00958)    // ToDo: nullsub_1
-NHSTUB(kbd_pwr_on, 0xFFC00958)    // ToDo: nullsub_1
-NHSTUB(kbd_read_keys, 0xFFC00958)    // ToDo: nullsub_1
+NHSTUB(kbd_pwr_off, 0xFFC00958)    // ?!? does not exist like SD990
+NHSTUB(kbd_pwr_on, 0xFFC00958)    // ?!? does not exist like SD990
+NHSTUB(kbd_read_keys, 0xFF8347D4)    // ?!?
 NHSTUB(openfastdir, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(qsort, 0xFFC00958)    // ToDo: nullsub_1
 NHSTUB(readfastdir, 0xFFC00958)    // ToDo: nullsub_1
