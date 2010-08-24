@@ -15,18 +15,19 @@ void CreateTask_spytask();
 void boot();
 
 
-#define DEBUG_LED 0xC02200C4
-
 void boot() {    //#fs
     long *canon_data_src = (void*)0xFFC206D4;    // ROM:FF810130 ?!?
     long *canon_data_dst = (void*)0x1900;        // ROM:FF810134
-    long canon_data_len = 0xf0c4 - 0x1900;       // data_end - data_start ?!?
-    long *canon_bss_start = (void*)0xf0c4;       // just after data ?!?
-    long canon_bss_len = 0x9d024 - 0xf0c4;       // ?!?
+    long canon_data_len = 0xF244 - 0x1900;       // ROM:FF810618 data_end - data_start ?!?
+    long *canon_bss_start = (void*)0xF244;       // just after data ?!?
+    long canon_bss_len = 0x14B394 - 0xF244;       // ROM:FF81014C ?!?
 
     long i;
 
-    // Code taken from VxWorks CHDK. Changes CPU speed?
+    //debug_led(1);
+    //debug_led(0);
+
+    // Code taken from VxWorks CHDK. Changes CPU speed!
     asm volatile (
         "MRC     p15, 0, R0,c1,c0\n"
         "ORR     R0, R0, #0x1000\n"
@@ -50,7 +51,10 @@ void boot() {    //#fs
     :::"r0");
 */
 
-    // jump to init-sequence that follows the data-copy-routine 
+    debug_led(1);
+    debug_led(0);
+
+    // jump to init-sequence that follows the data-copy-routine
     asm volatile ("B      sub_FF810354_my\n");
 }; //#fe
 
@@ -87,6 +91,8 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
                 "CMP     R0, R3\n"
                 "STRCC   R2, [R0],#4\n"
                 "BCC     loc_FF8103B0\n"
+
+                // DEBUG LED ---> OK <------------------
                 //"BL      sub_FF811198\n"    // original
                 "BL      sub_FF811198_my\n"    // +
         );
@@ -120,6 +126,7 @@ void __attribute__((naked,noinline)) sub_FF811198_my() { //#fs
                 "STR     R0, [SP,#0x78-0x5C]\n"
                 "LDR     R0, =0x19B\n"
 
+                // DEBUG LED ---> OK <------------------
                 //"LDR     R1, =sub_FF815E58\n"    // original uHwSetup()
                 "LDR     R1, =uHwSetup_my\n"       // +
 
@@ -156,11 +163,13 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
                 "BL      sub_FF810B20\n"
                 "BL      sub_FF81A244\n"       // dmSetup()
                 "CMP     R0, #0\n"
+                // DEBUG LED ---> OK <------------------
                 //"ADRLT   R0, =0xFF815F6C\n"      // "dmSetup"
                 "LDRLT   R0, =0xFF815F6C\n"      // + "dmSetup"
                 "BLLT    sub_FF815F4C\n"       // err_init_task()
                 "BL      sub_FF815A94\n"       // termDriverInit()
                 "CMP     R0, #0\n"
+                // DEBUG LED ---> OK <------------------
                 //"ADRLT   R0, =0xFF815F74\n"      // "termDriverInit"
                 "LDRLT   R0, =0xFF815F74\n"      // + "termDriverInit"
                 "BLLT    sub_FF815F4C\n"       // err_init_task()
@@ -190,6 +199,7 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
                 "BLLT    sub_FF815F4C\n"       // err_init_task()
                 "LDMFD   SP!, {R4,LR}\n"
 
+                // DEBUG LED ---> OK <------------------
                 // "B       sub_FF81FAF0\n"    // taskcreate_Startup() ROM:FF81FAF0
                 "B       CreateTask_Startup_my\n"    // +
         );
@@ -227,8 +237,9 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
                 "MOV     R3, #0\n"
                 "STR     R3, [SP,#8-8]\n"
 
+                // DEBUG LED ---> OK <------------------
                 //"ADR     R3, =0xFF81FA8C\n"    // original: task_Startup()
-                "LDR     R3, task_Startup_my\n"    // + ROM:FF81FA8C
+                "LDR     R3, =task_Startup_my\n"    // + ROM:FF81FA8C
 
                 "MOV     R2, #0\n"
                 "MOV     R1, #0x19\n"
@@ -242,8 +253,8 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
 
 // ROM:FF81FA8C
 void __attribute__((naked,noinline)) task_Startup_my() { //#fs 
-        
         asm volatile (
+                // DEBUG LED ---> OK <------------------
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FF81650C\n"    // taskcreate_ClockSave()
                 "BL      sub_FF835674\n"
@@ -251,9 +262,18 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 //"BL      j_nullsub_217\n"
                 "BL      sub_FF83BF1C\n"
 
-                //"BL      sub_FF83BDC4\n"    // StartSdInit() -> StartDiskboot()
+                // with StartSdInit() Camera does not show anything and restart
+                //"BL      sub_FF83BDC4\n"    // original: StartSdInit() -> StartDiskboot()
         );
-        CreateTask_spytask();    // +
+
+        // DEBUG LED ---> OK <------------------
+        //debug_led(1);
+        //debug_led(0);
+
+        //CreateTask_spytask();    // +
+
+        //debug_led(1);
+        //debug_led(0);
 
         asm volatile (
                 "BL      sub_FF83C0C0\n"
@@ -262,10 +282,14 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 "BL      sub_FF8396BC\n"
                 "BL      sub_FF83C0C4\n"
 
-                //"BL      sub_FF834434\n"    // taskcreate_PhySw()
+                "BL      sub_FF834434\n"    // taskcreate_PhySw()
         );
+
         //CreateTask_PhySw();    // +
-        debug_led(1);
+
+        // DEBUG LED ---> OK <------------------ without CreateTask_PhySw()
+        //debug_led(1);
+        //debug_led(0);
 
         asm volatile (
                 "BL      sub_FF8379F8\n"     // ToDo: task_ShootSeqTask Mod here ?
@@ -283,6 +307,12 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 //"LDMFD   SP!, {R4,LR}\n"
                 //"B       sub_FF81662C\n"    // "MLHClock.c:992"
                 "BL      sub_FF81662C\n"    // BL instead of B to last function to control action after its return
+        );
+
+        //debug_led(1);
+        //debug_led(0);
+
+        asm volatile (
                 "LDMFD   SP!, {R4,LR}\n"    // +
         );
 }; //#fe
