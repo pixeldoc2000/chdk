@@ -309,7 +309,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 
         //debug_led(1);
         //debug_led(0);
-        core_spytask_can_start();
+        //core_spytask_can_start();
 
         asm volatile (
                 "LDMFD   SP!, {R4,LR}\n"    // +
