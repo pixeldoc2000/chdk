@@ -115,6 +115,7 @@ NSTUB(eventproc_export_PostLogicalEventForNotPowerType, 0xff893948)
 NSTUB(eventproc_export_PostLogicalEventToUI, 0xff893994)
 NSTUB(eventproc_export_PostEventShootSeqToUI, 0xff893a0c)
 NSTUB(eventproc_export_ShowLogicalEventName, 0xff893a68)
+NSTUB(eventproc_export, 0xff893a80)
 
 NSTUB(eventproc_export_IsControlEventActive, 0xff895844)
 NSTUB(eventproc_export_UiEvnt_SetLogicalEventActive, 0xff8958b4)
@@ -148,6 +149,8 @@ NSTUB(eventproc_export_PTM_SetProprietyEnable, 0xff896634)
 
 NSTUB(eventproc_export_PTM_BackupUIProperty, 0xff89664c)
 NSTUB(eventproc_export_PTM_RestoreUIProperty, 0xff896650)
+
+NSTUB(eventproc_export_0, 0xff899538)
 
 NSTUB(eventproc_export_SetCurrentCaptureModeType, 0xff89e550)
 NSTUB(eventproc_export_GetCurrentCaptureModeType, 0xff89e58c)

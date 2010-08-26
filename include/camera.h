@@ -2308,6 +2308,12 @@
 
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP
     #define CAM_RAW_ROWS                2480   // for new 8 MP
+    #undef CAM_HAS_ERASE_BUTTON
+    #undef CAM_REMOTE
+    #undef CAM_SYNCH
+    #define CAM_HAS_ND_FILTER           1
+    #undef CAM_HAS_IRIS_DIAPHRAGM
+    #undef  CAM_USE_ZOOM_FOR_MF
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1
     //#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     //#define CAM_EV_IN_VIDEO             1
