@@ -18,11 +18,11 @@ void boot();
 
 #define DEBUG_LED 0xC02200C4
 void boot() { //#fs
-    long *canon_data_src = (void*)0xFFE9C5D0;
-    long *canon_data_dst = (void*)0x1900;
-    long canon_data_len = 0xf0c4 - 0x1900; // data_end - data_start
-    long *canon_bss_start = (void*)0xf0c4; // just after data 
-    long canon_bss_len = 0x9d024 - 0xf0c4; 
+    long *canon_data_src = (void*)0xFFE9C5D0;   // ROM:FFC00130
+    long *canon_data_dst = (void*)0x1900;       // ROM:FFC00134
+    long canon_data_len = 0xf0c4 - 0x1900;      // ROM:FFC00138 data_end - data_start
+    long *canon_bss_start = (void*)0xf0c4;      // ROM:FFC00138 just after data
+    long canon_bss_len = 0x9d024 - 0xf0c4;      // ROM:FFC00138
 
     long i;
 
@@ -236,7 +236,7 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
         );
 }; //#fe
 
-// ROM:FFC0DCDC
+// ROM:FFC0DC80
 void __attribute__((naked,noinline)) task_Startup_my() { //#fs 
         
         asm volatile (
