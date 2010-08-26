@@ -51,8 +51,8 @@ void boot() {    //#fs
     :::"r0");
 */
 
-    debug_led(1);
-    debug_led(0);
+    //debug_led(1);
+    //debug_led(0);
 
     // jump to init-sequence that follows the data-copy-routine
     asm volatile ("B      sub_FF810354_my\n");
@@ -93,7 +93,6 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
                 "STRCC   R2, [R0],#4\n"
                 "BCC     loc_FF8103B0\n"
 
-                // DEBUG LED ---> OK <------------------
                 //"BL      sub_FF811198\n"    // original
                 "BL      sub_FF811198_my\n"    // +
         );
@@ -126,7 +125,6 @@ void __attribute__((naked,noinline)) sub_FF811198_my() { //#fs
                 "STR     R0, [SP,#0x78-0x5C]\n"
                 "LDR     R0, =0x19B\n"
 
-                // DEBUG LED ---> OK <------------------
                 //"LDR     R1, =sub_FF815E58\n"    // original uHwSetup()
                 "LDR     R1, =uHwSetup_my\n"       // +
 
@@ -163,13 +161,11 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
                 "BL      sub_FF810B20\n"
                 "BL      sub_FF81A244\n"       // dmSetup()
                 "CMP     R0, #0\n"
-                // DEBUG LED ---> OK <------------------
                 //"ADRLT   R0, =0xFF815F6C\n"      // "dmSetup"
                 "LDRLT   R0, =0xFF815F6C\n"      // + "dmSetup"
                 "BLLT    sub_FF815F4C\n"       // err_init_task()
                 "BL      sub_FF815A94\n"       // termDriverInit()
                 "CMP     R0, #0\n"
-                // DEBUG LED ---> OK <------------------
                 //"ADRLT   R0, =0xFF815F74\n"      // "termDriverInit"
                 "LDRLT   R0, =0xFF815F74\n"      // + "termDriverInit"
                 "BLLT    sub_FF815F4C\n"       // err_init_task()
@@ -199,7 +195,6 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
                 "BLLT    sub_FF815F4C\n"       // err_init_task()
                 "LDMFD   SP!, {R4,LR}\n"
 
-                // DEBUG LED ---> OK <------------------
                 //"B       sub_FF81FAF0\n"    // taskcreate_Startup() ROM:FF81FAF0
                 "B       CreateTask_Startup_my\n"    // +
         );
@@ -237,7 +232,6 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
                 "MOV     R3, #0\n"
                 "STR     R3, [SP,#8-8]\n"
 
-                // DEBUG LED ---> OK <------------------
                 //"ADR     R3, =0xFF81FA8C\n"    // original: task_Startup()
                 //"LDR     R3, =0xFF81FA8C\n"    // + gcc does not like ADR
                 "LDR     R3, =task_Startup_my\n"    // + ROM:FF81FA8C
@@ -255,7 +249,6 @@ void __attribute__((naked,noinline)) CreateTask_Startup_my() { //#fs
 // ROM:FF81FA8C
 void __attribute__((naked,noinline)) task_Startup_my() { //#fs 
         asm volatile (
-                // DEBUG LED ---> OK <------------------
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FF81650C\n"    // taskcreate_ClockSave()
                 "BL      sub_FF835674\n"
@@ -267,7 +260,6 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 //"BL      sub_FF83BDC4\n"    // original: StartSdInit() -> StartDiskboot()
         );
 
-        // DEBUG LED ---> OK <------------------
         //debug_led(1);
         //debug_led(0);
 
@@ -289,7 +281,8 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 
         //CreateTask_PhySw();    // +
 
-        // DEBUG LED ---> OK <------------------ without CreateTask_PhySw()
+        // OK  without CreateTask_PhySw()
+
         //debug_led(1);
         //debug_led(0);
 
@@ -316,7 +309,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 
         //debug_led(1);
         //debug_led(0);
-        //core_spytask_can_start();
+        core_spytask_can_start();
 
         asm volatile (
                 "LDMFD   SP!, {R4,LR}\n"    // +
