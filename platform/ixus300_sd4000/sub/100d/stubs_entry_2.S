@@ -102,44 +102,46 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(_log10, 0xffb59fd4)
 //NHSTUB(_pow, 0xffb5a144)
 //NHSTUB(_sqrt, 0xffb5cf50)
-//NHSTUB(close, 0xff81aa94)                          OK
-//NHSTUB(closedir, 0xffa95e28)                       does not point to function start
-//NHSTUB(closefastdir, 0xffa95e28)                   same as closedir
-//NHSTUB(free, 0xff81415c)                           maybe ok
-//NHSTUB(kbd_p1_f, 0xff83484c)                       looks ok
-//NHSTUB(kbd_p1_f_cont, 0xff834858)                  looks ok
-//NHSTUB(kbd_p2_f, 0xff8340d0)                       maybe ok
-//NHSTUB(kbd_read_keys_r2, 0xff86122c)               OK
-//NHSTUB(lseek, 0xff836ee0)                          does not point to function start
+//NHSTUB(close, 0xff81aa94)                          // OK
+//NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
+//NHSTUB(closefastdir, 0xffa95e28)                   // same as closedir
+//NHSTUB(free, 0xff81415c)                           // maybe ok
+//NHSTUB(kbd_p1_f, 0xff83484c)                       // looks ok
+//NHSTUB(kbd_p1_f_cont, 0xff834858)                  // looks ok
+//NHSTUB(kbd_p2_f, 0xff8340d0)                       // maybe ok
+//NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK
+//NHSTUB(lseek, 0xff836ee0)                          // does not point to function start
 NHSTUB(lseek, 0xFF836ED4)                            // maybe ok
-//NHSTUB(malloc, 0xff814100)                         OK
-//NHSTUB(memcmp, 0xff82066c)                         OK
-//NHSTUB(memcpy, 0xff83fae8)                         OK
-//NHSTUB(memset, 0xffa15ddc)                         OK
-//NHSTUB(mkdir, 0xff837254)                          maybe ok
+//NHSTUB(malloc, 0xff814100)                         // OK
+//NHSTUB(memcmp, 0xff82066c)                         // OK
+//NHSTUB(memcpy, 0xff83fae8)                         // OK
+//NHSTUB(memset, 0xffa15ddc)                         // OK
+//NHSTUB(mkdir, 0xff837254)                          // maybe ok
 //NHSTUB(mktime_ext, 0xff8ac9f0)
-//NHSTUB(open, 0xff81a9e4)                           OK
-//NHSTUB(opendir, 0xffa95c90)                        looks OK
-//NHSTUB(rand, 0xff820774)                           OK
-//NHSTUB(read, 0xff81ac7c)                           OK
-//NHSTUB(srand, 0xff820768)                          OK
-NHSTUB(stat, 0xff836f1c)                             //maybe ok
+//NHSTUB(open, 0xff81a9e4)                           // OK
+//NHSTUB(opendir, 0xffa95c90)                        // looks OK
+//NHSTUB(rand, 0xff820774)                           // OK
+//NHSTUB(read, 0xff81ac7c)                           // OK
+//NHSTUB(srand, 0xff820768)                          // OK
 //NHSTUB(stat, 0xFF810B1C)                           // ToDo: nullsub_1
-//NHSTUB(strcat, 0xff813f5c)
-//NHSTUB(strchr, 0xff813fe4)                         maybe ok
-//NHSTUB(strcmp, 0xff820628)                         OK
-//NHSTUB(strcpy, 0xff820610)                         OK
-//NHSTUB(strftime, 0xff8ac3f8)
-//NHSTUB(strlen, 0xff814030)                         OK
-//NHSTUB(strncmp, 0xff813f98)
-//NHSTUB(strncpy, 0xff813f5c)
+NHSTUB(stat, 0xff836f1c)                             //maybe ok
+//NHSTUB(strcat, 0xff813f5c)                         // WRONG
+NHSTUB(strcat, 0xFF8AC1AC)                           // OK
+//NHSTUB(strchr, 0xff813fe4)                         // OK
+//NHSTUB(strcmp, 0xff820628)                         // OK
+//NHSTUB(strcpy, 0xff820610)                         // WRONG this is eventproc_export_strcpy()
+NHSTUB(strcpy, 0xFF813F5C)                           // OK
+//NHSTUB(strftime, 0xff8ac3f8)                       // maybe ok
+//NHSTUB(strlen, 0xff814030)                         // OK
+//NHSTUB(strncmp, 0xff813f98)                        // OK
+//NHSTUB(strncpy, 0xff813f5c)                        // OK
 //NHSTUB(strrchr, 0xff83fac0)
-// ALT: NHSTUB(strrchr, 0xff8ac1c0) // 18/8
-//NHSTUB(strtol, 0xff83fdc8)
-//NHSTUB(strtolx, 0xff83fbcc)
-//NHSTUB(time, 0xff88981c)                           looks ok
-//NHSTUB(vsprintf, 0xff8205d4)
-//NHSTUB(write, 0xff81acdc)                          OK
+NHSTUB(strrchr, 0xFF814008)                          // OK
+//NHSTUB(strtol, 0xff83fdc8)                         // OK
+//NHSTUB(strtolx, 0xff83fbcc)                        // OK
+//NHSTUB(time, 0xff88981c)                           // looks simular to A720
+//NHSTUB(vsprintf, 0xff8205d4)                       // maybe ok
+//NHSTUB(write, 0xff81acdc)                          // OK
 
 
 // --- DEBUG Stuff
