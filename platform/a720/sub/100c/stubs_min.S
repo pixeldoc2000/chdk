@@ -1,5 +1,7 @@
 #include "stubs_asm.h"
 
+// RAM addresses
+
 DEF(physw_status, 0x1061c)   // ROM:FFC1295C
 DEF(physw_run, 0x1ca4)
 DEF(FlashParamsTable,0xFFE7D1B4)
