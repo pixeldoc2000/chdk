@@ -36,23 +36,22 @@ void dump_memory()
     static int cnt=1;
     static char fn[32];
 
-
     started();
-        mkdir("A/DCIM");
-        mkdir("A/DCIM/100CANON");
-	sprintf(fn, "A/DCIM/100CANON/CRW_%04d.JPG", cnt++);
-	fd = open(fn, O_WRONLY|O_CREAT, 0777);
-	if (fd) {
-#ifdef CAMERA_ixus65_sd630 // Zero is not readable on ixus65!
-	    write(fd, (int*)0xFFFF0000, 4);
-	    write(fd, (int*)4, 0x1900-4);
-#else
-	    write(fd, (void*)0, 0x1900);
-#endif
-// TODO actual memory size is larger than 32 MB on many cameras!
-	    write(fd, (void*)0x1900, 32*1024*1024-0x1900);
-	    close(fd);
-	}
+    mkdir("A/DCIM");
+    mkdir("A/DCIM/100CANON");
+    sprintf(fn, "A/DCIM/100CANON/CRW_%04d.JPG", cnt++);
+    fd = open(fn, O_WRONLY|O_CREAT, 0777);
+    if (fd) {
+        #ifdef CAMERA_ixus65_sd630 // Zero is not readable on ixus65!
+            write(fd, (int*)0xFFFF0000, 4);
+            write(fd, (int*)4, 0x1900-4);
+        #else
+            write(fd, (void*)0, 0x1900);
+        #endif
+        // TODO actual memory size is larger than 32 MB on many cameras!
+        write(fd, (void*)0x1900, 32*1024*1024-0x1900);
+        close(fd);
+    }
     vid_bitmap_refresh();
     finished();
 }
@@ -92,10 +91,10 @@ void core_spytask()
     conf_restore();
     gui_init();
 
-#if CAM_CONSOLE_LOG_ENABLED
-    extern void console_init(void);
-    console_init();
-#endif
+    #if CAM_CONSOLE_LOG_ENABLED
+        extern void console_init(void);
+        console_init();
+    #endif
 
     mkdir("A/CHDK");
     mkdir("A/CHDK/FONTS");
@@ -104,47 +103,53 @@ void core_spytask()
     mkdir("A/CHDK/LANG");
     mkdir("A/CHDK/BOOKS");
     mkdir("A/CHDK/GRIDS");
-#ifdef OPT_CURVES
-    mkdir("A/CHDK/CURVES");
-#endif
+    #ifdef OPT_CURVES
+        mkdir("A/CHDK/CURVES");
+    #endif
     mkdir("A/CHDK/DATA");
     mkdir("A/CHDK/LOGS");
-#ifdef OPT_EDGEOVERLAY
-    mkdir("A/CHDK/EDGE");
-#endif
+    #ifdef OPT_EDGEOVERLAY
+        mkdir("A/CHDK/EDGE");
+    #endif
     auto_started = 0;
 
+    /*
     if (conf.script_startup==1) script_autostart();				// remote autostart
-	if (conf.script_startup==2) {
-		conf.script_startup=0;
-		conf_save();
-		script_autostart();
-	}
+    if (conf.script_startup==2) {
+        conf.script_startup=0;
+        conf_save();
+        script_autostart();
+    }
+    */
+
     while (1){
-
-	if (raw_data_available){
+        /*
+        if (raw_data_available){
             raw_need_postprocess = raw_savefile();
-	    hook_raw_save_complete();
-	    raw_data_available = 0;
-	    continue;
-	}
+            hook_raw_save_complete();
+            raw_data_available = 0;
+            continue;
+        }
+        */
 
-	if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) {
-	    if (((cnt++) & 3) == 0)
-	        gui_redraw();
+        if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) {
+            if (((cnt++) & 3) == 0)
+                gui_redraw();
 
-	    histogram_process();
-#ifdef OPT_EDGEOVERLAY
-        if(conf.edge_overlay_thresh && conf.edge_overlay_enable) edge_overlay();
-#endif
-	}
-
-	if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress())) {
-	    state_shooting_progress = SHOOTING_PROGRESS_DONE;
-            if (raw_need_postprocess) raw_postprocess();
+            /*
+            histogram_process();
+            #ifdef OPT_EDGEOVERLAY
+                if(conf.edge_overlay_thresh && conf.edge_overlay_enable) edge_overlay();
+            #endif
+            */
         }
 
-	msleep(20);
+        if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress())) {
+            state_shooting_progress = SHOOTING_PROGRESS_DONE;
+            //if (raw_need_postprocess) raw_postprocess();
+        }
+
+        msleep(20);
     }
 }
 
