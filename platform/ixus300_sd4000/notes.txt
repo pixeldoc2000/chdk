@@ -3,11 +3,45 @@
 Camera depending notes: 
 
 - A720 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
-- dryos camera
-- A720 does have a real IRIS Diaphragm, it does not have an ND Filter! 
-Mind this.
 
 
+* Camera: http://chdk.wikia.com/wiki/SD4000IS
+* P-ID: 31F7
+* Firmware Version: 1.00d
+* OS: DRYOS version 2.3, release #0043
+* Port is based on A720 & SD990
+
+* Rom Start address: 0xFF810000
+* NEED_ENCODED_DISKBOOT=4 (DISKBOOT Encoding)
+* KEYSYS=d4a (Dancing Bits)
+* camera has ND-Filter
+* camera has IS
+* Proset ?
 
 
-* a720 copied to ixus300_sd4000
+--- Ausprobiert
+* ver.req und vers.req funktioniert nicht
+* udumper "NewDryOs" (CardTricks) funktioniert mit 2010 Kameras nicht
+* CBasic dumper funktioniert!
+
+
+--- Hardware Adressen
+0xC0220018  SD-Card Status (locked / unlocked) ?!?
+0xC0220130  Green Led (backside)
+0xc0220134  Red Led (backside)
+0xC0223030  Red AF Led (front)
+
+
+--- JogDiag ?!?
+0xC0220114
+0xC0220118
+0xC022011C
+
+
+--- Keyboard Status ?!?
+0xC0220200
+0xC0220204
+0xC0220208
+
+
+?!? or ToDo means i'm unshure about it
