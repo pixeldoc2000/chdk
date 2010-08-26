@@ -16,14 +16,14 @@ void *hook_raw_ret_addr()
 
 char *hook_raw_image_addr()
 {
-//    return (char*)0x40EBAFA0; // seach on CRAW BUF
+//    return (char*)0x40EBAFA0; // seach on CRAW BUFF
  	return (char*) (*(int*)(0x5520 + 0x18)? 0x42CFB780 : 0x40EBAFA0); 
 	// similar to a560, searched for first raw address in a table with others, get variable from functions that use table
 }
 
 long hook_raw_size()
 {
-    return 0x1574D00; // CRAW BUF SIZE
+    return 0x1574D00; // CRAW BUFF SIZE
 }
 
 void *vid_get_viewport_live_fb()
