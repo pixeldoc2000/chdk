@@ -21,14 +21,17 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
     // DEBUG: jump to rom base address of regular firmware (causing camera to restart in a loop, enable flash led to get feedback)
     //dst_void = (void*)0xFF810000;   // Canon A-series: 0xFFC00000 ; S-, SD-, and G- series: 0xFF810000
 
-    // camera reset (generic DIGIC II & III)
+    // ROM:FF823AE4 resetcode here:
+    // ToDo: copy real RestartDevice stuff from dissassemble
+    // This is generic restartcode
+    // search for "0xC0200000"
     asm volatile(
-        "MRS     R1, CPSR\n"   // ROM:FF823AE4
+        "MRS     R1, CPSR\n"
         "BIC     R1, R1, #0x3F\n"
         "ORR     R1, R1, #0xD3\n"
         //"MSR     CPSR_cf, R1\n"   // orginal
-        "MSR     CPSR, R1\n"   // ???
-        "LDR     R2, =0xC0200000\n"   // search for "LDR     R2, =0xC0200000"
+        "MSR     CPSR, R1\n"
+        "LDR     R2, =0xC0200000\n"
         "MOV     R1, #0xFFFFFFFF\n"
         "STR     R1, [R2,#0x10C]\n"
         "STR     R1, [R2,#0xC]\n"
@@ -47,7 +50,8 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         "STR     R1, [R2,#0xDC]\n"
         "STR     R1, [R2,#0xEC]\n"
         "STR     R1, [R2,#0xFC]\n"
-
+        //"CMP     R4, #7\n"
+        //"LDMEQFD SP!, {R4,PC}\n"
         "MOV     R1, #0x78\n"
         "MCR     p15, 0, R1,c1,c0\n"
         "MOV     R1, #0\n"
@@ -77,4 +81,4 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
     while(1);
 }
 
-// next: core/entry.S -> platform/<camera>/main.c startup()
+// NEXT: core/entry.S -> platform/<camera>/main.c startup()
