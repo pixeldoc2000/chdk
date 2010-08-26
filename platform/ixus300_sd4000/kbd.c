@@ -42,11 +42,11 @@ long __attribute__((naked)) wrap_kbd_p1_f() ;
 static void __attribute__((noinline)) mykbd_task_proceed()
 {
     while (physw_run){ 
-	_SleepTask(10);
+        _SleepTask(10);
 
-	if (wrap_kbd_p1_f() == 1){ // autorepeat ?
-	    _kbd_p2_f();
-	}
+        if (wrap_kbd_p1_f() == 1){ // autorepeat ?
+            _kbd_p2_f();
+        }
     }
 }
 
@@ -66,25 +66,24 @@ mykbd_task(long ua, long ub, long uc, long ud, long ue, long uf)
     register int i;
     register long *newstack;
 
-#ifndef MALLOCD_STACK
-    newstack = (void*)kbd_stack;
-#else
-    newstack = malloc(NEW_SS);
-#endif
+    #ifndef MALLOCD_STACK
+        newstack = (void*)kbd_stack;
+    #else
+        newstack = malloc(NEW_SS);
+    #endif
 
     for (i=0;i<NEW_SS/4;i++)
 	newstack[i]=0xdededede;
 
     asm volatile (
-	"MOV	SP, %0"
-	:: "r"(((char*)newstack)+NEW_SS)
-	: "memory"
+        "MOV	SP, %0"
+        :: "r"(((char*)newstack)+NEW_SS)
+        : "memory"
     );
 
     mykbd_task_proceed();
 
-    /* function can be modified to restore SP here...
-     */
+    // function can be modified to restore SP here...
 
     _ExitTask();
 }
@@ -92,7 +91,6 @@ mykbd_task(long ua, long ub, long uc, long ud, long ue, long uf)
 
 long __attribute__((naked,noinline)) wrap_kbd_p1_f()
 {
-
     asm volatile(
                 "STMFD   SP!, {R1-R5,LR}\n"
                 "MOV     R4, #0\n"
@@ -333,6 +331,7 @@ static KeyMap keymap[] = {
 };
 
 
+// ROM:FFC37034
 void kbd_fetch_data(long *dst)
 {
     volatile long *mmio0 = (void*)0xc0220200;

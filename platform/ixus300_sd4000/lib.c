@@ -16,7 +16,10 @@ void shutdown() {
     while(1);
 }
 
-#define LED_DEBUG 0xC0220130    // Green Led (backside)
+//#define LED_DEBUG 0xC0220130    // Green Led (backside)
+#define LED_DEBUG 0xc0220134    // Red Led (backside)
+//#define LED_DEBUG 0xC0223030    // Red AF Led (front)
+
 //#define DEBUG_LED_DELAY 2500000    // use beforce change CPU speed in boot.c
 #define DEBUG_LED_DELAY 9000000    // use after change CPU speed in boot.c
 
@@ -34,7 +37,7 @@ void debug_led(int state) {
         asm("nop\n nop\n");
 }
 
-#define LED_AF 0xc0220080
+#define LED_AF 0xC0223030
 
 int get_flash_params_count(void) {
     return 114;
