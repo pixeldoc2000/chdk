@@ -1,8 +1,10 @@
     .section .entry
 
+// ?!?
 // Turn OFF SD Card power
 // to support autostart
-	LDR     R3, =0xC0220048
+	LDR     R3, =0xC0220018  // ?!? ROM:FF8722F0 (search String "SdPower.c")
+//	LDR     R3, =0xC0220048
 	MOV     R2, #0x44
 	STR     R2, [R3]
 
@@ -14,7 +16,6 @@
 	BNE	1b
 
 // ordinary startup...
-
 	MOV     SP, #0x1900
 	MOV     R11, #0
 	B	my_restart
