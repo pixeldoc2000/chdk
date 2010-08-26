@@ -9,17 +9,6 @@ extern long blob_copy_and_reset_size;
 
 void __attribute__((noreturn)) my_restart() 
 {
-    /*
-    // DEBUG LED STUFF
-    #define DEBUG_LED (void*)0xC0220130    // Greed Led at th Backside
-    #define DEBUG_LED_DELAY 10000000
-    volatile long *pDebugLed = (void*)DEBUG_LED;
-    int DebugLedCounter;
-    DebugLedCounter = DEBUG_LED_DELAY; *pDebugLed = 0x46;  while (DebugLedCounter--) { asm("nop\n nop\n"); };
-    DebugLedCounter = DEBUG_LED_DELAY; *pDebugLed = 0x44;  while (DebugLedCounter--) { asm("nop\n nop\n"); };
-    */
-    // OK
-
     void __attribute__((noreturn)) (*copy_and_restart)(char *dst, char *src, long length);
 
     int i;
@@ -31,10 +20,8 @@ void __attribute__((noreturn)) my_restart()
     copy_and_restart((void*)MEMISOSTART, (char*)blob_chdk_core, blob_chdk_core_size);
 }
 
-//#define LED_PR 0xc0220084
-//#define LED_PR 0xC02200D4
-#define LED_PR 0xC0220130
-
+// #define LED_PR 0xC0220130    // Green Led
+#define LED_PR 0xC0223030    // AF Led
 static void __attribute__((noreturn)) shutdown()
 {
     //volatile long *p = (void*)0xc02200a0;       // what does this LED? Powe
