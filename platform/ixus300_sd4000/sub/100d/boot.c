@@ -298,7 +298,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
 
     asm volatile (
             //"BL      sub_FF834434\n"           // taskcreate_PhySw()
-            "BL      taskcreate_PhySw_my\n"      // +
+            //"BL      taskcreate_PhySw_my\n"      // +
             //"BL      sub_FF8379F8\n"           // task_ShootSeqTask()
             //"BL      task_ShootSeqTask_my\n"   // +
 
