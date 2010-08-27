@@ -1,7 +1,7 @@
 #include "platform.h"
 
 void shutdown() {
-    volatile long *p = (void*)0xC0220130;
+    volatile long *p = (void*)0xC0223030;    // Red AF Led (front)
 
     asm(
          "MRS     R1, CPSR\n"
@@ -39,6 +39,12 @@ void debug_led(int state) {
 
 #define LED_AF 0xC0223030
 
-int get_flash_params_count(void) {
-    return 114;
+// ROM:FF997634 near PropertyTableManagerCore (from SD990) ?!?
+//ROM:FF997624                 LDREQ   R0, =aPropertytablemanagerco ; "PropertyTableManagerCore.c"
+//ROM:FF997628                 MOVEQ   R1, R6
+//ROM:FF99762C                 BLEQ    DebugAssert
+//ROM:FF997630                 BIC     R4, R4, #0x4000
+//ROM:FF997634                 CMP     R4, #0x94 <---
+int get_flash_params_count(void){
+    return 148;     // 0x94 = 148
 }
