@@ -83,10 +83,10 @@ const ISOTable iso_table[] = {
 http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=15657#ModelTechSpecsAct
 
 Shooting Modes
-	Auto, P, Av, Tv, M, Portrait, Landscape,
-	Special Scene
-		(Foliage, Snow, Beach, Fireworks, Night Scene, Aquarium, Underwater),
-	Indoor, Kids & Pets, Night Snapshot, Stitch Assist, Movie
+    Auto, P, Av, Tv, M, Portrait, Landscape,
+    Special Scene
+        (Foliage, Snow, Beach, Fireworks, Night Scene, Aquarium, Underwater),
+    Indoor, Kids & Pets, Night Snapshot, Stitch Assist, Movie
 Movie: 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes, 160 x 120 (3 minutes at 15 fps)
 
 canon mode list in FFE7CFFC 100c
@@ -100,17 +100,17 @@ static const CapturemodeMap modemap[] = {
     { MODE_VIDEO_STD,          2597  },
     { MODE_VIDEO_COMPACT,      2599  },
     { MODE_STITCH,             33290 },
-    { MODE_SCN_UNDERWATER,     16406 },  
-    { MODE_SCN_AQUARIUM,       16407 },  
-    { MODE_SCN_NIGHT_SCENE,    16398 },  
-    { MODE_SCN_FOLIAGE,        16402 },   
-    { MODE_SCN_SNOW,           16403 },  
-    { MODE_SCN_BEACH,          16404 },  
-    { MODE_SCN_FIREWORK,       16405 },  
+    { MODE_SCN_UNDERWATER,     16406 },
+    { MODE_SCN_AQUARIUM,       16407 },
+    { MODE_SCN_NIGHT_SCENE,    16398 },
+    { MODE_SCN_FOLIAGE,        16402 },
+    { MODE_SCN_SNOW,           16403 },
+    { MODE_SCN_BEACH,          16404 },
+    { MODE_SCN_FIREWORK,       16405 },
     { MODE_INDOOR,             32785 },
-    { MODE_KIDS_PETS,          32784 },	
+    { MODE_KIDS_PETS,          32784 },
     { MODE_NIGHT_SNAPSHOT,     32779 },
-    { MODE_LANDSCAPE,          32780 },	
+    { MODE_LANDSCAPE,          32780 },
     { MODE_PORTRAIT,           32781 },
 };
 
