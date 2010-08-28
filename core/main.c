@@ -109,46 +109,42 @@ void core_spytask()
     #endif
     auto_started = 0;
 
-    /*
+    debug_led(1);
+    debug_led(0);
+
     if (conf.script_startup==1) script_autostart();				// remote autostart
     if (conf.script_startup==2) {
         conf.script_startup=0;
         conf_save();
         script_autostart();
     }
-    */
 
     while (1){
-        /*
         if (raw_data_available){
             raw_need_postprocess = raw_savefile();
             hook_raw_save_complete();
             raw_data_available = 0;
             continue;
         }
-        */
 
         if (state_shooting_progress != SHOOTING_PROGRESS_PROCESSING) {
             if (((cnt++) & 3) == 0)
                 gui_redraw();
 
-            /*
-            histogram_process();
+            //histogram_process();          // <---------------- SHUTDOWN
             #ifdef OPT_EDGEOVERLAY
                 if(conf.edge_overlay_thresh && conf.edge_overlay_enable) edge_overlay();
             #endif
-            */
         }
 
         if ((state_shooting_progress == SHOOTING_PROGRESS_PROCESSING) && (!shooting_in_progress())) {
             state_shooting_progress = SHOOTING_PROGRESS_DONE;
-            //if (raw_need_postprocess) raw_postprocess();
+            if (raw_need_postprocess) raw_postprocess();
         }
+
+        //debug_led(1);
+        //debug_led(0);
 
         msleep(20);
     }
 }
-
-
-
-
