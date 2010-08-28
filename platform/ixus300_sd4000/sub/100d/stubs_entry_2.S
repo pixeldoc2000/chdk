@@ -1,32 +1,34 @@
 #include "stubs_asm.h"
 
 // --- not found by finsig
+NHSTUB(Lseek, 0xFF836ED4)                            // maybe ok, same as lseek
+NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // maybe ok, search String "ScreenUnLock"
+NHSTUB(Remove, 0xFF836DEC)                           // maybe ok, looks simular to A720
+NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK
+NHSTUB(openfastdir, 0xFF810B1C)                      // ToDo: nullsub_1
+//NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
+NHSTUB(readfastdir, 0xFF810B1C)                      // ToDo: nullsub_1
+//NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720
+NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK eventproc
+NHSTUB(SetScriptMode, 0xFF895904)                    // OK eventproc
+
+
+// --- NULLSTUBS
 NHSTUB(EnterToCompensationEVF, 0xFF810B1C)           // ToDo: nullsub_1
 NHSTUB(ExitFromCompensationEVF, 0xFF810B1C)          // ToDo: nullsub_1
 NHSTUB(GetCurrentAvValue, 0xFF810B1C)                // ToDo: nullsub_1
 NHSTUB(GetDrive_FreeClusters, 0xFF810B1C)            // ToDo: nullsub_1, there are some simular functions around ROM:FF871DCC
 NHSTUB(GetZoomLensCurrentPoint, 0xFF810B1C)          // ToDo: nullsub_1
 NHSTUB(GetZoomLensCurrentPosition, 0xFF810B1C)       // ToDo: nullsub_1
-NHSTUB(Lseek, 0xFF836ED4)                            // maybe ok, same as lseek
 NHSTUB(PT_PlaySound, 0xFF810B1C)                     // ToDo: nullsub_1
 NHSTUB(ReadFastDir, 0xFF810B1C)                      // ToDo: nullsub_1, not found yet
-NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // maybe ok, search String "ScreenUnLock"
 //NHSTUB(Remove, 0xFF810B1C)                         // ToDo: nullsub_1
-NHSTUB(Remove, 0xFF836DEC)                           // maybe ok, looks simular to A720
 NHSTUB(TurnOffBackLight, 0xFF810B1C)                 // ToDo: nullsub_1
 NHSTUB(TurnOnBackLight, 0xFF810B1C)                  // ToDo: nullsub_1
-NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // ?!? does not exist like SD990
-NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // ?!? does not exist like SD990
-NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK
-//NHSTUB(openfastdir, 0xFF810B1C)                    // ToDo: nullsub_1
-NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
 NHSTUB(qsort, 0xFF810B1C)                            // ToDo: nullsub_1, not found yet
-NHSTUB(readfastdir, 0xFF810B1C)                      // ToDo: nullsub_1, not found yet
 NHSTUB(rename, 0xFF810B1C)                           // ToDo: nullsub_1, not found yet
 NHSTUB(DoAFLock, 0xFF810B1C)                         // ToDo: nullsub_1
 NHSTUB(UnlockAF, 0xFF810B1C)                         // ToDo: nullsub_1
-NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK eventproc
-NHSTUB(SetScriptMode, 0xFF895904)                    // OK eventproc
 NHSTUB(PostLEDMessage, 0xFF810B1C)                   // ToDo: nullsub_1, not found yet
 NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // ToDo: nullsub_1
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
@@ -38,6 +40,8 @@ NHSTUB(PutOutNdFilter, 0xFF810B1C)                   // ToDo: nullsub_1
 NHSTUB(Mount_FileSystem, 0xFF810B1C)                 // ToDo: nullsub_1
 NHSTUB(Unmount_FileSystem, 0xFF810B1C)               // ToDo: nullsub_1
 NHSTUB(rewinddir, 0xFF810B1C)                        // ToDo: nullsub_1
+NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // ?!? does not exist like SD990
+NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // ?!? does not exist like SD990
 
 
 // --- stubs_entry.S (auto sig finder)
