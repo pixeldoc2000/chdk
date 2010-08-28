@@ -14,17 +14,17 @@ void JogDial_task_my(void);
 void boot();
 
 void taskCreateHook(int *p) {
- p-=17;
-// if (p[0]==0x)  p[0]=(int)capt_seq_task;
-//if (p[0]==0xFF96BD30)  p[0]=(int)movie_record_task;
-// task_InitFileModules
- if (p[0]==0xFF8995E0)  p[0]=(int)init_file_modules_task;
-//if (p[0]==0xFF861B68)  p[0]=(int)JogDial_task_my;
+    p-=17;
+    // if(p[0]==0x)  p[0]=(int)capt_seq_task;
+    //if(p[0]==0xFF96BD30) p[0]=(int)movie_record_task;
+    // task_InitFileModules
+    if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
+    //if (p[0]==0xFF861B68) p[0]=(int)JogDial_task_my;
 }
 // ??? from sx10
 void taskCreateHook2(int *p) {
- p-=17;
- if (p[0]==0xFF8995E0)  p[0]=(int)init_file_modules_task;
+    p-=17;
+    if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
 }
 
 
@@ -72,12 +72,12 @@ void boot() {    //#fs
     *(int*)(0x24B8)= (*(int*)0xC0220110)&1 ? 0x400000 : 0x200000; // replacement of sub_FF834580 for correct power-on.
     //*(int*)(0x2588)= (*(int*)0xC02200F8)&1 ? 0x200000 : 0x100000; // from SD990, replacement of sub_FF8219D8 for correct power-on.
 
-    debug_led(1);
-    debug_led(0);
+    //debug_led(1);
+    //debug_led(0);
 
     // jump to init-sequence that follows the data-copy-routine
-    asm volatile ("B      sub_FF810354_my\n");
-    //asm volatile ("B      sub_FF810354\n");
+    //asm volatile("B      sub_FF810354\n");
+    asm volatile("B      sub_FF810354_my\n");    // +
 }; //#fe
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
@@ -297,9 +297,9 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
     //debug_led(0);
 
     asm volatile (
-            //"BL      sub_FF834434\n"           // taskcreate_PhySw()
+            "BL      sub_FF834434\n"           // taskcreate_PhySw()
             //"BL      taskcreate_PhySw_my\n"      // +
-            //"BL      sub_FF8379F8\n"           // task_ShootSeqTask()
+            "BL      sub_FF8379F8\n"           // task_ShootSeqTask()
             //"BL      task_ShootSeqTask_my\n"   // +
 
             "BL      sub_FF83C0DC\n"
@@ -313,7 +313,6 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
             "BL      sub_FF8331C8\n"             // taskcreate_Ui()
             "LDMFD   SP!, {R4,LR}\n"
             "B       sub_FF81662C\n"             // "MLHClock.c:992"
-            //"BL      sub_FF81662C\n"           // BL instead of B to last function to control action after its return
     );
 }; //#fe
 
@@ -329,7 +328,7 @@ void __attribute__((naked,noinline)) task_ShootSeqTask_my() {    //#fs
             "BL      sub_FF883B38\n"             // taskcreate_SsTask()
             "BL      sub_FF881468\n"
             //"BL      sub_FF87BE2C\n"
-            "BL      sub_FF87BE2C_my\n"         // +
+            "BL      sub_FF87BE2C_my\n"          // +
             "BL      sub_FF8825C0\n"
             "LDR     R0, [R4,#0x10]\n"
             "LDMFD   SP!, {R4,LR}\n"
@@ -445,8 +444,8 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
 
             "MOV     R1, #0x17\n"
             //"ADR     R0, aPhysw      ; "PhySw"\n"
-            "LDR     R0, =0xFF83464C\n"         // + "PhySw"
-            "BL      sub_FF83A160\n"            // KernelCreateTask() LOCATION: KernelMisc.c:19
+            "LDR     R0, =0xFF83464C\n"          // + "PhySw"
+            "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
             "STR     R0, [R4,#0x10]\n"
         "loc_FF834468:\n"
             "BL      sub_FF861F04\n"
@@ -488,8 +487,8 @@ void __attribute__((naked,noinline)) sub_FF88FF58_my() {    //#fs
     asm volatile (
             "STMFD   SP!, {R4,LR}\n"
             "MOV     R0, #3\n"
-            //"BL      sub_FF871A04\n"             // LOCATION: Mounter.c:0
-            "BL      sub_FF871A04_my\n"           // +
+            //"BL      sub_FF871A04\n"           // LOCATION: Mounter.c:0
+            "BL      sub_FF871A04_my\n"          // +
             //"BL      nullsub_84\n"
             "LDR     R4, =0x3034\n"
             "LDR     R0, [R4,#4]\n"
@@ -679,338 +678,5 @@ void __attribute__((naked,noinline)) sub_FF87185C_my() {    //#fs
 
 // looks generic
 void CreateTask_spytask() {    //#fs
-        _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
-
+    _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 };    //#fe
-
-/*
-// looks generic
-void CreateTask_PhySw() {    //#fs
-        _CreateTask("PhySw", 0x18, 0x800, mykbd_task, 0);
-};    //#fe
-*/
-
-/*
-// SDHC Support
-void __attribute__((naked,noinline)) sub_FF83CB24_my() {    //#fs
-    asm volatile (
-            "STMFD   SP!, {R4,LR}\n"
-            "BL      sub_FF8966D8\n"
-            "BL      sub_FF835CE4\n"             // IsFactoryMode()
-            "CMP     R0, #1\n"
-            "BNE     loc_FF83CB44\n"
-            "BL      sub_FF89973C\n"
-            "LDMFD   SP!, {R4,LR}\n"
-            "B       sub_FF835D84\n"             // StartFactoryModeController()
-        "loc_FF83CB44:\n"
-            "BL      sub_FF8987AC\n"
-            "LDR     R4, =0x1D7C\n"
-            "LDR     R0, [R4,#4]\n"
-            "CMP     R0, #0\n"
-            "LDMNEFD SP!, {R4,PC}\n"
-            "MOV     R1, #0\n"
-
-            //"LDR     R0, =sub_FF83C6E8\n"
-            "LDR     R0, =sub_FF83C6E8_my\n" // +
-
-            "BL      sub_FF893154\n"             // eventproc_export_CreateController()
-            "STR     R0, [R4,#4]\n"
-            "LDMFD   SP!, {R4,PC}\n"
-    );
-};    //#fe
-
-// SDHC Support
-void __attribute__((naked,noinline)) sub_FF83C6E8_my() {    //#fs
-    asm volatile (
-            "STMFD   SP!, {R4-R10,LR}\n"
-            "MOV     R5, R1\n"
-            "LDR     R1, =0x1D7C\n"
-            "MOV     R4, R3\n"
-            "LDR     R0, [R1,#0x14]\n"
-            "CMP     R0, #1\n"
-            "BNE     loc_FF83C70C\n"
-            "BL      sub_FF896D3C\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83C70C:\n"
-            "LDR     R6, =0x1168\n"
-            "LDR     R8, =0x1005\n"
-            "SUB     R12, R6, #1\n"
-            "CMP     R5, R12\n"
-            "MOV     R7, #1\n"
-            "BEQ     loc_FF83C9CC\n"
-            "BGT     loc_FF83C864\n"
-            "LDR     R12, =0x10AD\n"
-            "CMP     R5, R12\n"
-            "BEQ     loc_FF83CA8C\n"
-            "BGT     loc_FF83C7E0\n"
-            "LDR     R12, =0x1003\n"
-            "CMP     R5, R12\n"
-            "BEQ     loc_FF83CA70\n"
-            "BGT     loc_FF83C7A4\n"
-            "SUB     R12, R5, #0x800\n"
-            "SUBS    R12, R12, #3\n"
-            "LDMEQFD SP!, {R4-R10,LR}\n"
-            "BEQ     sub_FF83CF48\n"
-            "SUB     R12, R5, #0x900\n"
-            "SUBS    R12, R12, #0x45\n"
-            "BEQ     loc_FF83CAD8\n"
-            "LDR     R4, =0x9A3\n"
-            "CMP     R5, R4\n"
-            "SUBNE   R12, R5, #0x900\n"
-            "SUBNES  R12, R12, #0xA5\n"
-            "BNE     loc_FF83CAFC\n"
-            "LDR     R0, [R1,#0xC]\n"
-            "MOV     R6, R1\n"
-            "SUB     R12, R0, #0x8000\n"
-            "SUBS    R12, R12, #2\n"
-            "BEQ     loc_FF83C79C\n"
-            "LDR     R0, =0x10A5\n"
-            "BL      sub_FF895844\n"             // eventproc_export_IsControlEventActive()
-            "CMP     R0, #0\n"
-            "BEQ     loc_FF83CA4C\n"
-        "loc_FF83C79C:\n"
-            "MOV     R0, #0\n"
-            "LDMFD   SP!, {R4-R10,PC}\n"
-        "loc_FF83C7A4:\n"
-            "CMP     R5, R8\n"
-            "BEQ     loc_FF83C7D8\n"
-            "SUB     R12, R5, #0x1000\n"
-            "LDR     R0, =0x10A3\n"
-            "SUBS    R12, R12, #0xA9\n"
-            "BEQ     loc_FF83CA80\n"
-            "SUB     R12, R5, #0x1000\n"
-            "SUBS    R12, R12, #0xAA\n"
-            "BNE     loc_FF83CAFC\n"
-            "BL      sub_FF895844\n"             // eventproc_export_IsControlEventActive()
-            "CMP     R0, #0\n"
-            "BNE     loc_FF83C79C\n"
-        "loc_FF83C7D4:\n"
-            "BL      sub_FF83CFE0\n"
-        "loc_FF83C7D8:\n"
-            "MOV     R1, R4\n"
-            "B       loc_FF83CA58\n"
-        "loc_FF83C7E0:\n"
-            "LDR     R12, =0x1162\n"
-            "CMP     R5, R12\n"
-            "BEQ     loc_FF83CA60\n"
-            "BGT     loc_FF83C82C\n"
-            "SUB     R12, R5, #0x1000\n"
-            "SUBS    R12, R12, #0xAE\n"
-            "BEQ     loc_FF83C7D4\n"
-            "SUB     R12, R5, #0x1000\n"
-            "SUBS    R12, R12, #0xAF\n"
-            "BEQ     loc_FF83CA8C\n"
-            "SUB     R12, R5, #0x1000\n"
-            "SUBS    R12, R12, #0xB0\n"
-            "BEQ     loc_FF83C7D4\n"
-            "SUB     R12, R5, #0x1000\n"
-            "SUBS    R12, R12, #0xB2\n"
-            "LDREQ   R0, =0x1008\n"
-            "MOVEQ   R1, R4\n"
-            "BEQ     loc_FF83CA78\n"
-            "B       loc_FF83CAFC\n"
-        "loc_FF83C82C:\n"
-            "SUB     R12, R5, #0x1100\n"
-            "SUBS    R12, R12, #0x63\n"
-            "MOVEQ   R0, #0\n"
-            "BEQ     loc_FF83C85C\n"
-            "SUB     R12, R5, #0x1000\n"
-            "SUBS    R12, R12, #0x164\n"
-            "MOVEQ   R0, #1\n"
-            "BEQ     loc_FF83C85C\n"
-            "SUB     R12, R5, #0x1100\n"
-            "SUBS    R12, R12, #0x65\n"
-            "BNE     loc_FF83CAFC\n"
-            "MOV     R0, #2\n"
-        "loc_FF83C85C:\n"
-            "BL      sub_FF83D010\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83C864:\n"
-            "LDR     R0, =0x2027\n"
-            "LDR     R2, =0x1D7C\n"
-            "CMP     R5, R0\n"
-            "LDR     R2, [R2,#0x20]\n"
-            "SUB     R9, R0, #0xC\n"
-            "SUB     R10, R0, #0x23\n"
-            "BEQ     loc_FF83CA98\n"
-            "BGT     loc_FF83C914\n"
-            "LDR     R12, =0x2005\n"
-            "MOV     R0, #0\n"
-            "CMP     R5, R12\n"
-            "BEQ     loc_FF83C908\n"
-            "BGT     loc_FF83C8E0\n"
-            "CMP     R5, R6\n"
-            "BEQ     loc_FF83C9CC\n"
-            "LDR     R6, =0x116A\n"
-            "CMP     R5, R6\n"
-            "BEQ     loc_FF83CA28\n"
-            "SUB     R12, R5, #0x2000\n"
-            "SUBS    R12, R12, #2\n"
-            "BEQ     loc_FF83C908\n"
-            "CMP     R5, R10\n"
-            "BNE     loc_FF83CAFC\n"
-            "MOV     R6, R1\n"
-            "STR     R0, [R1,#0x20]\n"
-            "BL      sub_FF83CD2C\n"
-            "LDR     R0, [R6,#0x10]\n"
-            "CMP     R0, #1\n"
-            "BNE     loc_FF83C7D8\n"
-            "BL      loc_FF896DB8\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83C8E0:\n"
-            "LDR     R3, =0x1D7C\n"
-            "SUB     R12, R5, #0x2000\n"
-            "LDR     R3, [R3,#0x10]\n"
-            "SUBS    R12, R12, #0x19\n"
-            "BEQ     loc_FF83CAB0\n"
-            "CMP     R5, R9\n"
-            "BEQ     loc_FF83CA3C\n"
-            "SUB     R12, R5, #0x2000\n"
-            "SUBS    R12, R12, #0x1D\n"
-            "BNE     loc_FF83CAFC\n"
-        "loc_FF83C908:\n"
-            "STR     R0, [R1,#0x20]\n"
-            "BL      sub_FF83CD2C\n"
-            "B       loc_FF83C7D8\n"
-        "loc_FF83C914:\n"
-            "CMP     R5, #0x3140\n"
-            "BEQ     loc_FF83CACC\n"
-            "BGT     loc_FF83C950\n"
-            "SUB     R12, R5, #0x3000\n"
-            "SUBS    R12, R12, #6\n"
-            "BEQ     loc_FF83C7D8\n"
-            "SUB     R12, R5, #0x3000\n"
-            "SUBS    R12, R12, #0x10\n"
-            "BEQ     loc_FF83CAF4\n"
-            "SUB     R12, R5, #0x3000\n"
-            "SUBS    R12, R12, #0x110\n"
-            "SUBNE   R12, R5, #0x3100\n"
-            "SUBNES  R12, R12, #0x11\n"
-            "BEQ     loc_FF83C7D8\n"
-            "B       loc_FF83CAFC\n"
-        "loc_FF83C950:\n"
-            "SUB     R12, R5, #0x3200\n"
-            "SUBS    R12, R12, #1\n"
-            "BEQ     loc_FF83CB1C\n"
-            "SUB     R12, R5, #0x3200\n"
-            "SUBS    R12, R12, #2\n"
-            "BEQ     loc_FF83C7D8\n"
-            "SUB     R12, R5, #0x6600\n"
-            "SUBS    R12, R12, #0x59\n"
-            "BNE     loc_FF83CAFC\n"
-            "MOV     R0, R4\n"
-            "BL      sub_FF89C824\n"
-            "B       loc_FF83C79C\n"
-
-        "loc_FF83C9CC:\n"
-            "MOV     R4, R1\n"
-            "STR     R7, [R1,#0x10]\n"
-            "MOV     R1, #0\n"
-            "MOV     R0, #0x54\n"
-            "BL      sub_FF8A3108\n"
-            "LDR     R0, [R4,#0x20]\n"
-            "LDR     R4, =0x4508\n"
-            "CMP     R0, #0\n"
-            "BEQ     loc_FF83CA04\n"
-            "BL      loc_FF896D6C\n"
-            "B       loc_FF83CA1C\n"
-        "loc_FF83C9F8:\n"
-            "MOV     R0, R4\n"
-            "BL      sub_FF884134\n"         // AudioHandle.c:0
-            "B       loc_FF83C79C\n"
-        "loc_FF83CA04:\n"
-            "BL      sub_FF89A67C\n"
-            "BL      sub_FF89A5B0\n"
-            "BL      sub_FF8A09A8\n"
-            "CMP     R0, #0\n"
-            "BLNE    sub_FF89F4C4\n"
-            "BL      sub_FF837B20\n"
-            "CMP     R5, R6\n"
-            "BNE     loc_FF83C79C\n"
-            "B       loc_FF83C9F8\n"
-        "loc_FF83CA28:\n"
-            "MOV     R0, #1\n"
-            "BL      loc_FF896E48\n"
-            "MOV     R1, R6\n"
-            "MOV     R0, R8\n"
-            "B       loc_FF83CA78\n"
-        "loc_FF83CA3C:\n"
-            "CMP     R3, #1\n"
-            "BNE     loc_FF83C7D8\n"
-            "BL      loc_FF896D6C\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83CA4C:\n"
-            "CMP     R5, R4\n"
-            "STREQ   R7, [R6,#0x34]\n"
-            "B       loc_FF83CB1C\n"
-        "loc_FF83CA58:\n"
-            "; sub_FF83C6E8+438j\n"
-            "MOV     R0, R5\n"
-            "B       loc_FF83CA78\n"
-        "loc_FF83CA60:\n"
-            "BL      sub_FF8A09A8\n"
-            "CMP     R0, #0\n"
-            "BLNE    sub_FF89F4C4\n"
-            "B       loc_FF83C7D8\n"
-        "loc_FF83CA70:\n"
-            "BL      sub_FF83C64C\n"
-            "MOV     R1, R4\n"
-        "loc_FF83CA78:\n"
-            "LDMFD   SP!, {R4-R10,LR}\n"
-            "B       sub_FF8984DC\n"
-        "loc_FF83CA80:\n"
-            "BL      sub_FF895844\n"         // eventproc_export_IsControlEventActive()
-            "CMP     R0, #0\n"
-            "BNE     loc_FF83C79C\n"
-        "loc_FF83CA8C:\n"
-            "MOV     R0, R5\n"
-            "LDMFD   SP!, {R4-R10,LR}\n"
-            "B       sub_FF83C468\n"
-        "loc_FF83CA98:\n"
-            "MOV     R1, #0\n"
-            "BL      sub_FF8984DC\n"
-            "MOV     R1, #0\n"
-            "MOV     R0, R9\n"
-            "BL      sub_FF8984DC\n"
-            "B       loc_FF83CAC0\n"
-        "loc_FF83CAB0:\n"
-            "CMP     R2, #0\n"
-            "BEQ     loc_FF83C79C\n"
-            "CMP     R3, #0\n"
-            "BNE     loc_FF83C79C\n"
-        "loc_FF83CAC0:\n"
-            "MOV     R1, #0\n"
-            "MOV     R0, R10\n"
-            "B       loc_FF83CB14\n"
-        "loc_FF83CACC:\n"
-            "CMP     R2, #0\n"
-            "BLEQ    sub_FF83CD2C\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83CAD8:\n"
-            "TST     R4, #0x80000000\n"
-            "MOVNE   R0, #1\n"
-            "LDMNEFD SP!, {R4-R10,PC}\n"
-            "BL      sub_FF8A2190\n"
-            "CMP     R0, #0\n"
-            "BLEQ    sub_FF8395D8\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83CAF4:\n"
-            "BL      sub_FF8927FC\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83CAFC:\n"
-            "; sub_FF83C6E8+DCj ...\n"
-            "SUB     R0, R5, #0x1000\n"
-            "SUB     R0, R0, #0x51\n"
-            "CMP     R0, #0x39\n"
-            "BCS     loc_FF83CB1C\n"
-            "MOV     R0, 0xFFFFFFFF\n"
-            "MOV     R1, #0\n"
-        "loc_FF83CB14:\n"
-            "BL      sub_FF8984DC\n"
-            "B       loc_FF83C79C\n"
-        "loc_FF83CB1C:\n"
-            "MOV     R1, #0\n"
-            "B       loc_FF83CA58\n"
-    );
-};    //#fe
-*/
