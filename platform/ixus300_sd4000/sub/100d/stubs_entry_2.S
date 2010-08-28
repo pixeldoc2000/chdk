@@ -5,10 +5,8 @@ NHSTUB(Lseek, 0xFF836ED4)                            // maybe ok, same as lseek
 NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // maybe ok, search String "ScreenUnLock"
 NHSTUB(Remove, 0xFF836DEC)                           // maybe ok, looks simular to A720
 NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK
-NHSTUB(openfastdir, 0xFF810B1C)                      // ToDo: nullsub_1
-//NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
-NHSTUB(readfastdir, 0xFF810B1C)                      // ToDo: nullsub_1
-//NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720
+NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
+NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK eventproc
 NHSTUB(SetScriptMode, 0xFF895904)                    // OK eventproc
 
