@@ -21,7 +21,7 @@ void shutdown() {
 //#define LED_DEBUG 0xC0223030    // Red AF Led (front)
 
 //#define DEBUG_LED_DELAY 2500000    // use beforce change CPU speed in boot.c
-#define DEBUG_LED_DELAY 9000000    // use after change CPU speed in boot.c
+#define DEBUG_LED_DELAY 50000000    // use after change CPU speed in boot.c
 
 void debug_led(int state) {
     volatile long *p=(void*)LED_DEBUG;
