@@ -19,7 +19,7 @@ NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // ?!? does not exist like 
 NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // ?!? does not exist like SD990
 NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK
 //NHSTUB(openfastdir, 0xFF810B1C)                    // ToDo: nullsub_1
-NHSTUB(openfastdir, 0xFFA95CB8)                      // maybe ok, looks simular to A720
+NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
 NHSTUB(qsort, 0xFF810B1C)                            // ToDo: nullsub_1, not found yet
 NHSTUB(readfastdir, 0xFF810B1C)                      // ToDo: nullsub_1, not found yet
 NHSTUB(rename, 0xFF810B1C)                           // ToDo: nullsub_1, not found yet
