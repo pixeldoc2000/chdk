@@ -11,6 +11,7 @@ ROMBASEADDR=0xFF810000    # 0xFF810000 for S-, SD-, and G- series
 PLFLAGS=-DMEMBASEADDR=$(MEMBASEADDR) -DMEMISOSTART=$(MEMISOSTART) -DMEMISOSIZE=$(MEMISOSIZE)
 PLFLAGS+=-DRESTARTSTART=$(RESTARTSTART)
 
+# type of diskboot encoding: undefined = none; 1 = original; 2 = sx200, d10; 3 = ixus200...
 # Dancing Bits
 NEED_ENCODED_DISKBOOT=4
 
