@@ -1,10 +1,12 @@
 #include "stubs_asm.h"
 
+// ROM addresses
+
 // --- not found by finsig
 NHSTUB(Lseek, 0xFF836ED4)                            // maybe ok, same as lseek
 NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // maybe ok, search String "ScreenUnLock"
-NHSTUB(Remove, 0xFF836DEC)                           // maybe ok, looks simular to A720
-NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK
+NHSTUB(Remove, 0xFF836DEC)                           // OK
+NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!
 NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
 NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK eventproc
@@ -53,13 +55,13 @@ NHSTUB(Close, 0xFF81AA94)                            // OK
 NHSTUB(ExecuteEventProcedure, 0xFF88B948)            // OK
 //NHSTUB(ExitTask, 0xff81eacc)                       // OK
 //NHSTUB(Fclose_Fut, 0xff8368ac)                     // OK
-//NHSTUB(Feof_Fut, 0xff836a98)                       // OK
-//NHSTUB(Fflush_Fut, 0xff836ad4)                     // OK
+//NHSTUB(Feof_Fut, 0xff836a98)                       // OK!
+//NHSTUB(Fflush_Fut, 0xff836ad4)                     // OK!
 //NHSTUB(Fgets_Fut, 0xff836a00)                      // OK
 //NHSTUB(Fopen_Fut, 0xff83686c)                      // OK
 //NHSTUB(Fread_Fut, 0xff836958)                      // OK
 //NHSTUB(FreeMemory, 0xffab8ce8)                     // maybe ok
-//NHSTUB(FreeUncacheableMemory, 0xff83a45c)          // maybe ok
+//NHSTUB(FreeUncacheableMemory, 0xff83a45c)          // OK!
 //NHSTUB(Fseek_Fut, 0xff836a4c)                      // OK
 //NHSTUB(Fwrite_Fut, 0xff8369ac)                     // OK
 //NHSTUB(GetBatteryTemperature, 0xff8652a0)          // maybe ok
@@ -105,7 +107,7 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(_log10, 0xffb59fd4)
 //NHSTUB(_pow, 0xffb5a144)
 //NHSTUB(_sqrt, 0xffb5cf50)
-//NHSTUB(close, 0xff81aa94)                          // OK
+//NHSTUB(close, 0xff81aa94)                          // OK!
 //NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
 //NHSTUB(closefastdir, 0xffa95e28)                   // same as closedir
 //NHSTUB(free, 0xff81415c)                           // maybe ok
@@ -115,13 +117,13 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK
 //NHSTUB(lseek, 0xff836ee0)                          // does not point to function start
 NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
-//NHSTUB(malloc, 0xff814100)                         // OK
+//NHSTUB(malloc, 0xff814100)                         // OK!
 //NHSTUB(memcmp, 0xff82066c)                         // OK
 //NHSTUB(memcpy, 0xff83fae8)                         // OK
 //NHSTUB(memset, 0xffa15ddc)                         // OK
 //NHSTUB(mkdir, 0xff837254)                          // maybe ok
 //NHSTUB(mktime_ext, 0xff8ac9f0)
-//NHSTUB(open, 0xff81a9e4)                           // OK
+//NHSTUB(open, 0xff81a9e4)                           // OK!
 //NHSTUB(opendir, 0xffa95c90)                        // looks OK
 //NHSTUB(rand, 0xff820774)                           // OK
 //NHSTUB(read, 0xff81ac7c)                           // OK
@@ -137,13 +139,13 @@ NHSTUB(strcpy, 0xFF813F5C)                           // OK
 //NHSTUB(strftime, 0xff8ac3f8)                       // maybe ok
 //NHSTUB(strlen, 0xff814030)                         // OK
 //NHSTUB(strncmp, 0xff813f98)                        // OK
-//NHSTUB(strncpy, 0xff813f5c)                        // OK
+//NHSTUB(strncpy, 0xff813f5c)                        // OK!
 //NHSTUB(strrchr, 0xff83fac0)
 NHSTUB(strrchr, 0xFF814008)                          // OK
 //NHSTUB(strtol, 0xff83fdc8)                         // OK
 //NHSTUB(strtolx, 0xff83fbcc)                        // OK
 //NHSTUB(time, 0xff88981c)                           // looks simular to A720
-//NHSTUB(vsprintf, 0xff8205d4)                       // maybe ok
+//NHSTUB(vsprintf, 0xff8205d4)                       // OK!
 //NHSTUB(write, 0xff81acdc)                          // OK
 
 
