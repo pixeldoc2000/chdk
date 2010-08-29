@@ -1,5 +1,7 @@
 #include "platform.h"
 
+// RAM addresses
+
 // Description from SD890
 
 // ?!?
@@ -35,9 +37,10 @@ long hook_raw_size() {
 // ROM:FF84FB50 ?!?
 void *vid_get_viewport_live_fb() {
     return (void*)0;
-    /*
-    void **fb=(void **)0x21EC;
-    unsigned char buff = *((unsigned char*)0x2084);
+    //void **fb=(void **)0x21E8;      // ?!?
+    //void **fb=(void **)0x21EC;      // ?!?
+    void **fb=(void **)0x21F8;      // ROM:FF85078C ?!? more or less guesswork
+    unsigned char buff = *((unsigned char*)0x204C);   // ROM:FF850904
     if (buff == 0) {
         buff = 2;
     }
@@ -45,7 +48,6 @@ void *vid_get_viewport_live_fb() {
         buff--;
     }
     return fb[buff];
-    */
 }
 
 // OSD buffer
@@ -88,17 +90,17 @@ void *vid_get_bitmap_fb() {
 // search for String "VRAM Address" (like SX10)
 // or search for String "MaxY %ld MinY %ld" and look below
 void *vid_get_viewport_fb() {
-    //return (void*)0x1065A4D0; // 0x107D5FD0
     return (void*)0x40587700; // ROM:FFB25ED8 or ROM:FFB25DFC
 }
 
 // ?!?
 // possible future use
 void *vid_get_viewport_fb_d() {
-    //return (void*)(*(int*)0x540C);  //5410
-    return (void*)(*(int*)0);         // DUMMY
+    return (void*)(*(int*)0x2AA4);         // ROM:FF874770 0x2A50 + 0x54
 }
 
+// ROM:FF9013D8 0x2D0 = 720 ?!?
+// SD990 ROM:FF83CFC8 ?!?
 //long vid_get_bitmap_screen_width() { return 360; }
 long vid_get_bitmap_screen_width() { return 720; }
 
@@ -109,7 +111,7 @@ int vid_get_viewport_width() { return 360; }    // viewport is still 360, even t
 long vid_get_viewport_height() { return 240; }
 
 // ?!?
-// search for String "9999" (like SX10)
+// search for String "9999" (like SX10) and SD990
 //ROM:FFA04F74                 SUBS    R12, R5, #0x2700
 //ROM:FFA04F78                 SUBCSS  R12, R12, #0xF
 //ROM:FFA04F7C                 BCC     loc_FFA04F90
@@ -120,7 +122,10 @@ char *camera_jpeg_count_str() {
     return (char*)0xA15B8;
 }
 
+// if buffer width was to small, Logo was shown as distorted "row" on Display
 //long vid_get_bitmap_buffer_width() { return 360; }
-long vid_get_bitmap_buffer_width() { return 720; }
+//long vid_get_bitmap_buffer_width() { return 720; }
+long vid_get_bitmap_buffer_width() { return 960; }      // working
 
-long vid_get_bitmap_buffer_height() { return 240; }
+//long vid_get_bitmap_buffer_height() { return 240; }
+long vid_get_bitmap_buffer_height() { return 360; }
