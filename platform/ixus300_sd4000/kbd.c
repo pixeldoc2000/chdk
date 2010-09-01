@@ -38,7 +38,7 @@ long __attribute__((naked)) wrap_kbd_p1_f();
 
 static void __attribute__((noinline)) mykbd_task_proceed()
 {
-    while (physw_run){ 
+    while (physw_run) {
         _SleepTask(10);
 
         if (wrap_kbd_p1_f() == 1) { // autorepeat ?
@@ -48,11 +48,8 @@ static void __attribute__((noinline)) mykbd_task_proceed()
 }
 
 // no stack manipulation needed here, since we create the task directly
-void __attribute__((naked,noinline))
-mykbd_task()
-{
+void __attribute__((naked,noinline)) mykbd_task() {
     mykbd_task_proceed();
-
     _ExitTask();
 }
 
