@@ -2203,8 +2203,8 @@
     #undef CAM_UNCACHED_BIT             // shut up compiler
     #define CAM_UNCACHED_BIT            0x40000000
 
-    #define CAM_RAW_ROWPIX              3648   // ToDo
-    #define CAM_RAW_ROWS                2736   // ToDo
+    #define CAM_RAW_ROWPIX              3336   // for new 8 MP
+    #define CAM_RAW_ROWS                2480   // for new 8 MP
     #undef CAM_HAS_ERASE_BUTTON
     #undef CAM_REMOTE
     #undef CAM_SYNCH
@@ -2217,23 +2217,25 @@
     //#define DNG_SUPPORT                 1
     //#define CAM_HAS_JOGDIAL             1
 
-    // ToDo: pattern
+    #define CAM_ADJUSTABLE_ALT_BUTTON   1       // Camera has no Direct Print Button (we need support for multiple button to enter ALT mode)
+
+    // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
-    // ToDo: color
+    // color
     #define CAM_COLORMATRIX1                               \
       640019, 1000000, -220031, 1000000, -96241, 1000000,  \
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
-    #define cam_CalibrationIlluminant1 1 // ToDo: Daylight
-    // ToDo: cropping
-    #define CAM_JPEG_WIDTH  3648
-    #define CAM_JPEG_HEIGHT 2736
+    #define cam_CalibrationIlluminant1 1 // Daylight
+    // cropping
+    #define CAM_JPEG_WIDTH  3264
+    #define CAM_JPEG_HEIGHT 2448
     #define CAM_ACTIVE_AREA_X1 10
     #define CAM_ACTIVE_AREA_Y1 8
-    #define CAM_ACTIVE_AREA_X2 3648
-    #define CAM_ACTIVE_AREA_Y2 2736
-    // ToDo: camera name
+    #define CAM_ACTIVE_AREA_X2 3302
+    #define CAM_ACTIVE_AREA_Y2 2474
+    // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define DNG_EXT_FROM ".CR2"
 
