@@ -4,7 +4,6 @@
 
 const char * const new_sa = &_end;
 
-/* Ours stuff */
 extern long wrs_kernel_bss_start;
 extern long wrs_kernel_bss_end;
 
@@ -21,12 +20,12 @@ void taskCreateHook(int *p) {
     if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
     //if (p[0]==0xFF861B68) p[0]=(int)JogDial_task_my;
 }
-// ??? from sx10
+
+// like SX10
 void taskCreateHook2(int *p) {
     p-=17;
     if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
 }
-
 
 void boot() {    //#fs
     long *canon_data_src = (void*)0xFFC206D4;    // ROM:FF810130
@@ -40,7 +39,7 @@ void boot() {    //#fs
     //debug_led(1);
     //debug_led(0);
 
-    // Code taken from VxWorks CHDK. Changes CPU speed!
+    // Code taken from VxWorks CHDK. Change CPU speed!
     asm volatile (
         "MRC     p15, 0, R0,c1,c0\n"
         "ORR     R0, R0, #0x1000\n"
@@ -62,15 +61,12 @@ void boot() {    //#fs
     // ##############################################################################################################################
 
     // see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
-    *(int*)0x1938=(int)taskCreateHook;           // ROM:FF810698 = 0x1938 ?!?
-    //*(int*)0x1930=(int)taskCreateHook;           // from SD990
-    *(int*)0x193C=(int)taskCreateHook2;          // ROM:FF8106D8 = 0x193C ?!?
-    //*(int*)0x1934=(int)taskCreateHook2;          // from SD990
+    *(int*)0x1938=(int)taskCreateHook;           // ROM:FF810698
+    *(int*)0x193C=(int)taskCreateHook2;          // ROM:FF8106D8
 
     // ROM:FF861134 similar to SX10 (but no +4 and values are >> 8)
     // Search on 0x12345678 finds function called by this (near kbd_p1_f)
-    *(int*)(0x24B8)= (*(int*)0xC0220110)&1 ? 0x400000 : 0x200000; // replacement of sub_FF834580 for correct power-on.
-    //*(int*)(0x2588)= (*(int*)0xC02200F8)&1 ? 0x200000 : 0x100000; // from SD990, replacement of sub_FF8219D8 for correct power-on.
+    *(int*)(0x24B8)=(*(int*)0xC0220110)&1 ? 0x400000 : 0x200000; // replacement of sub_FF834580 for correct power-on.
 
     //debug_led(1);
     //debug_led(0);
@@ -181,15 +177,15 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
             "BL      sub_FF81A244\n"             // dmSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815F6C\n"        // "dmSetup"
-            "LDRLT   R0, =0xFF815F6C\n"          // + compiler does not like ADRLT
+            "LDRLT   R0, =0xFF815F6C\n"          // compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "BL      sub_FF815A94\n"             // termDriverInit()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815F74\n"        // "termDriverInit"
-            "LDRLT   R0, =0xFF815F74\n"          // + compiler does not like ADRLT
+            "LDRLT   R0, =0xFF815F74\n"          // compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             //"ADR     R0, =0xFF815F84\n"        // "/_term"
-            "LDR     R0, =0xFF815F84\n"          // + compiler does not like ADR
+            "LDR     R0, =0xFF815F84\n"          // compiler does not like ADR
             "BL      sub_FF815B7C\n"             // termDeviceCreate()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815B7C\n"        // "termDeviceCreate"
@@ -200,17 +196,17 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
             "BL      sub_FF813BF0\n"             // stdioSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF813BF0\n"        // "stdioSetup"
-            "LDRLT   R0, =0xFF813BF0\n"          // + compiler does not like ADRLT
+            "LDRLT   R0, =0xFF813BF0\n"          // compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "BL      sub_FF819C3C\n"             // stdlibSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815FAC\n"        // "stdlibSetup"
-            "LDRLT   R0, =0xFF815FAC\n"          // + compiler does not like ADRLT
+            "LDRLT   R0, =0xFF815FAC\n"          // compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "BL      sub_FF81167C\n"             // armlib_setup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815FB8\n"        // "armlib_setup"
-            "LDRLT   R0, =0xFF815FB8\n"          // + compiler does not like ADRLT
+            "LDRLT   R0, =0xFF815FB8\n"          // compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "LDMFD   SP!, {R4,LR}\n"
 
@@ -252,13 +248,13 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
             "STR     R3, [SP,#8-8]\n"
 
             //"ADR     R3, =0xFF81FA8C\n"        // original: task_Startup()
-            //"LDR     R3, =0xFF81FA8C\n"        // + compiler does not like ADR
-            "LDR     R3, =task_Startup_my\n"     // + ROM:FF81FA8C
+            //"LDR     R3, =0xFF81FA8C\n"        // compiler does not like ADR
+            "LDR     R3, =task_Startup_my\n"     // +
 
             "MOV     R2, #0\n"
             "MOV     R1, #0x19\n"
             //"ADR     R0, =0xFF81FB7C\n"        // "Startup"
-            "LDR     R0, =0xFF81FB7C\n"          // + compiler does not like ADR
+            "LDR     R0, =0xFF81FB7C\n"          // compiler does not like ADR
             "BL      sub_FF81E83C\n"             // eventproc_export_CreateTask() KerTask.c:163
             "MOV     R0, #0\n"
             "LDMFD   SP!, {R12,PC}\n"
@@ -299,7 +295,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
     asm volatile (
             "BL      sub_FF834434\n"           // taskcreate_PhySw()
             //"BL      taskcreate_PhySw_my\n"      // +
-            "BL      sub_FF8379F8\n"           // task_ShootSeqTask()
+            "BL      sub_FF8379F8\n"             // task_ShootSeqTask()
             //"BL      task_ShootSeqTask_my\n"   // +
 
             "BL      sub_FF83C0DC\n"
@@ -366,7 +362,7 @@ void __attribute__((naked,noinline)) sub_FF87BE2C_my() {    //#fs
             "STR     R1, [R0],#4\n"
             "STR     R1, [R0]\n"
             //"BL      loc_FF87CAAC\n"
-            "BL      sub_FF87CAAC\n"             // +
+            "BL      sub_FF87CAAC\n"
             "BL      sub_FF8827C0\n"
             "BL      sub_FF87FDCC\n"
             //"BL      sub_FF87D668\n"           // taskcreate_CaptSeqTask()
@@ -415,7 +411,7 @@ void __attribute__((naked,noinline)) sub_FF87D668_my() {    //#fs
             //"LDR     R3, =task_CaptSeqTask_my\n"    // + ToDo
 
             //"ADR     R0, sub_FF87D900\n"       // "CaptSeqTask"
-            "LDR     R0, =0xFF87D900\n"          // +
+            "LDR     R0, =0xFF87D900\n"          // compiler does not like ADR
             "MOV     R2, #0x1000\n"
             "MOV     R1, #0x17\n"
             "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
@@ -432,31 +428,62 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             "CMP     R0, #0\n"
             "BNE     loc_FF834468\n"
             "MOV     R3, #0\n"
-            //"STR     R3, [SP,#0x10+var_10]\n"
             "STR     R3, [SP]\n"
 
             //"ADR     R3, FF834400\n"           // task_PhySw()
-            //"LDR     R3, FF834400\n"           // + compiler does not like ADR
-            "LDR     R3, =mykbd_task\n"          // +
-            //"MOV     R2, #0x800\n"
-            "MOV     R2, #0x2000\n"              // + stack size for new task_PhySw so we don't have to do stack switch
+            "LDR     R3, =0xFF834400\n"           // compiler does not like ADR
+            //"LDR     R3, =mykbd_task\n"        // +
+            "MOV     R2, #0x800\n"
+            //"MOV     R2, #0x2000\n"            // + stack size for new task_PhySw so we don't have to do stack switch
 
             "MOV     R1, #0x17\n"
-            //"ADR     R0, aPhysw      ; "PhySw"\n"
-            "LDR     R0, =0xFF83464C\n"          // + "PhySw"
+            //"ADR     R0, 0xFF83464C\n"         // "PhySw"
+            "LDR     R0, =0xFF83464C\n"          // compiler does not like ADR
             "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
             "STR     R0, [R4,#0x10]\n"
         "loc_FF834468:\n"
-            "BL      sub_FF861F04\n"
+            "BL      sub_FF861F04\n"             // taskcreate_RotarySw()
             "BL      sub_FF88DA70\n"
             "BL      sub_FF835CE4\n"             // IsFactoryMode()
             "CMP     R0, #0\n"
             "LDREQ   R1, =0x32EA0\n"
             "LDMEQFD SP!, {R3-R5,LR}\n"
-            "BEQ     sub_FF88D9F8\n"             // + eventproc_export_OpLog.Start()
+            "BEQ     sub_FF88D9F8\n"             // eventproc_export_OpLog.Start()
             "LDMFD   SP!, {R3-R5,PC}\n"
     );
 };    //#fe
+
+/*
+// ROM:FF834434
+void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
+    asm volatile (
+                "STMFD   SP!, {R3-R5,LR}\n"
+                "LDR     R4, =0x1C28\n"
+                "LDR     R0, [R4,#0x10]\n"
+                "CMP     R0, #0\n"
+                "BNE     loc_FF834468\n"
+                "MOV     R3, #0\n"
+                "STR     R3, [SP]\n"
+                //"ADR     R3, task_PhySw\n"
+                "LDR     R3, =0xFF834400\n"           // compiler does not like ADR
+                "MOV     R2, #0x800\n"
+                "MOV     R1, #0x17\n"
+                //"ADR     R0, aPhysw\n"
+                "LDR     R0, =0xFF83464C\n"          // compiler does not like ADR
+                "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
+                "STR     R0, [R4,#0x10]\n"
+            "loc_FF834468:\n"
+                "BL      sub_FF861F04\n"             // taskcreate_RotarySw()
+                "BL      sub_FF88DA70\n"
+                "BL      sub_FF835CE4\n"             // IsFactoryMode()
+                "CMP     R0, #0\n"
+                "LDREQ   R1, =0x32EA0\n"
+                "LDMEQFD SP!, {R3-R5,LR}\n"
+                "BEQ     sub_FF88D9F8\n"             // eventproc_export_OpLog.Start()
+                "LDMFD   SP!, {R3-R5,PC}\n"
+    );
+};    //#fe
+*/
 
 // ROM:FF8995E0
 void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
@@ -560,8 +587,7 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
             "CMP     R0, #0\n"
             "LDMEQFD SP!, {R4-R8,LR}\n"
             //"ADREQ   R0, =0xFF871B00\n"        // "EMEM MOUNT ERROR!!!""
-            "LDREQ   R0, =0xFF871B00\n"          // + compiler does not like ADREQ
-            //"BEQ     qPrintf\n"
+            "LDREQ   R0, =0xFF871B00\n"          // compiler does not like ADREQ
             "BEQ     0xFF81177C\n"               // qPrintf()
             "LDMFD   SP!, {R4-R8,PC}\n"
     );
@@ -572,11 +598,10 @@ void __attribute__((naked,noinline)) sub_FF87185C_my() {    //#fs
             "STMFD   SP!, {R3-R9,LR}\n"
             "MOV     R5, R0\n"
             //"ADR     R0, unk_FF871AEC\n"
-            "LDR     R0, =0xFF871AEC\n"          // +
+            "LDR     R0, =0xFF871AEC\n"          // compiler does not like ADR
             "LDR     R0, [R0]\n"
             "LDR     R9, =0x384C8\n"
-            //"STR     R0, [SP,#0x20+var_20]\n"
-            "STR     R0, [SP]\n"                 // +
+            "STR     R0, [SP]\n"
             "ADD     R4, R9, R5,LSL#7\n"
             "LDR     R0, [R4,#0x6C]\n"
             "TST     R0, #4\n"
@@ -639,15 +664,13 @@ void __attribute__((naked,noinline)) sub_FF87185C_my() {    //#fs
         "loc_FF871928:\n"
             //jumptable FF87189C default entry
             "LDR     R1, =0x6A6\n"
-            //"ADR     R0, aMounter_c  ; "Mounter.c"\n"
-            "LDR     R0, =0xFF8714C4\n"          // + "Mounter.c"
-            //"BL      DebugAssert\n"
-            "BL      sub_FF81EB14\n"             // + DebugAssert()
+            //"ADR     R0, 0xFF8714C4\n"         // "Mounter.c"
+            "LDR     R0, =0xFF8714C4\n"          // compiler does not like ADR
+            "BL      sub_FF81EB14\n"             // DebugAssert()
         "loc_FF871934:\n"
             "MOV     R0, R5\n"
             "BL      sub_FF870B54\n"             // LOCATION: DriveLetterManager.c:147
-            //"STRB    R0, [SP,#0x20+var_20]\n"
-            "STRB    R0, [SP]\n"                 // +
+            "STRB    R0, [SP]\n"
             "MOV     R0, R5\n"
             "MOV     R1, SP\n"
             "BL      sub_FF87172C\n"
