@@ -1468,6 +1468,9 @@ const char* gui_alt_mode_button_enum(int change, int arg) {
 #elif defined(CAMERA_a570) || defined(CAMERA_a590) || defined(CAMERA_a720)
     static const char* names[]={ "Print", "Display"};
     static const int keys[] = {KEY_PRINT, KEY_DISPLAY};
+#elif defined(CAMERA_ixus300_sd4000)
+    static const char* names[]={"Left"};
+    static const int keys[] = {KEY_LEFT};
 #else
     #error camera alt-buttons not defined
 #endif
@@ -2607,11 +2610,11 @@ void other_kbd_process(){
 
 void gui_draw_debug_vals_osd() {
 #ifdef OPT_DEBUGGING
-    if (conf.debug_misc_vals_show) {
+    //if (conf.debug_misc_vals_show) {
         //        long v=get_file_counter();
         //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);
         //	sprintf(osd_buf, "1:%d, %08X  ", xxxx, eeee);
-        /*
+
         extern long physw_status[3];
         sprintf(osd_buf, "1:%8x  ", physw_status[0]);
         draw_txt_string(28, 10, osd_buf, conf.osd_color);
@@ -2623,7 +2626,8 @@ void gui_draw_debug_vals_osd() {
         draw_txt_string(28, 12, osd_buf, conf.osd_color);
 
         //      sprintf(osd_buf, "4:%8x  ", vid_get_viewport_fb_d());
-        */
+
+        /*
         sprintf(osd_buf, "u:%8x  ", get_usb_power(1));
         draw_txt_string(28,  9, osd_buf, conf.osd_color);
 
@@ -2643,8 +2647,8 @@ void gui_draw_debug_vals_osd() {
         sprintf(osd_buf, "t:%8x  ", zoom_status);
         draw_txt_string(28, 13, osd_buf, conf.osd_color);
         #endif
-
-    }
+        */
+    //}
     {
         static char sbuf[100];
         int r,i, p, len;
@@ -2709,7 +2713,7 @@ void gui_draw_osd() {
     m = mode_get();
 
 // uncomment if you want debug values always on top
-//	gui_draw_debug_vals_osd();
+    gui_draw_debug_vals_osd();
 
 #if CAM_SWIVEL_SCREEN
     if (conf.flashlight && (m&MODE_SCREEN_OPENED) && (m&MODE_SCREEN_ROTATED) && (gui_mode==GUI_MODE_NONE /* || gui_mode==GUI_MODE_ALT */)) {

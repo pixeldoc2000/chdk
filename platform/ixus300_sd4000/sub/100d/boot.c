@@ -293,8 +293,8 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
     //debug_led(0);
 
     asm volatile (
-            "BL      sub_FF834434\n"           // taskcreate_PhySw()
-            //"BL      taskcreate_PhySw_my\n"      // +
+            //"BL      sub_FF834434\n"           // taskcreate_PhySw()
+            "BL      taskcreate_PhySw_my\n"      // +
             "BL      sub_FF8379F8\n"             // task_ShootSeqTask()
             //"BL      task_ShootSeqTask_my\n"   // +
 
@@ -431,10 +431,10 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             "STR     R3, [SP]\n"
 
             //"ADR     R3, FF834400\n"           // task_PhySw()
-            "LDR     R3, =0xFF834400\n"           // compiler does not like ADR
-            //"LDR     R3, =mykbd_task\n"        // +
-            "MOV     R2, #0x800\n"
-            //"MOV     R2, #0x2000\n"            // + stack size for new task_PhySw so we don't have to do stack switch
+            //"LDR     R3, =0xFF834400\n"           // compiler does not like ADR
+            "LDR     R3, =mykbd_task\n"        // +
+            //"MOV     R2, #0x800\n"
+            "MOV     R2, #0x2000\n"            // + stack size for new task_PhySw so we don't have to do stack switch
 
             "MOV     R1, #0x17\n"
             //"ADR     R0, 0xFF83464C\n"         // "PhySw"
