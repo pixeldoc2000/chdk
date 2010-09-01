@@ -48,3 +48,12 @@ void debug_led(int state) {
 int get_flash_params_count(void){
     return 148;     // 0x94 = 148
 }
+
+// Force Screen to refresh like original Firmware
+void vid_bitmap_refresh() {
+    extern int enabled_refresh_physical_screen;
+    enabled_refresh_physical_screen=1;
+    *(int*)0x926C=3;    // ROM:FFA114FC, like SX210, does work but some Keys are not functional
+    //_ScreenLock();
+    _RefreshPhysicalScreen(1);
+}
