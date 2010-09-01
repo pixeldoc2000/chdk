@@ -5,6 +5,8 @@
 // --- not found by finsig
 NHSTUB(Lseek, 0xFF836ED4)                            // maybe ok, same as lseek
 NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // maybe ok, search String "ScreenUnLock"
+NHSTUB(ScreenLock, 0xFFA1356C)                       // search String "ScreenLock"
+NHSTUB(ScreenUnLock, 0xFFA12124)                     // aka. RefreshPhysicalScreen, search String "ScreenUnLock"
 NHSTUB(Remove, 0xFF836DEC)                           // OK
 NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!
 NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720

@@ -102,9 +102,11 @@ void *vid_get_viewport_fb_d() {
 // ROM:FF9013D8 0x2D0 = 720 ?!?
 // SD990 ROM:FF83CFC8 ?!?
 //long vid_get_bitmap_screen_width() { return 360; }
-long vid_get_bitmap_screen_width() { return 720; }
+//long vid_get_bitmap_screen_width() { return 720; }
+long vid_get_bitmap_screen_width() { return 960; }
 
 long vid_get_bitmap_screen_height() { return 240; }
+//long vid_get_bitmap_screen_height() { return 360; }
 
 int vid_get_viewport_width() { return 360; }    // viewport is still 360, even though live view is 720 (from SD990)
 
