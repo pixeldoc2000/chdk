@@ -109,9 +109,6 @@ void core_spytask()
     #endif
     auto_started = 0;
 
-    debug_led(1);
-    debug_led(0);
-
     if (conf.script_startup==1) script_autostart();				// remote autostart
     if (conf.script_startup==2) {
         conf.script_startup=0;
@@ -141,9 +138,6 @@ void core_spytask()
             state_shooting_progress = SHOOTING_PROGRESS_DONE;
             if (raw_need_postprocess) raw_postprocess();
         }
-
-        //debug_led(1);
-        //debug_led(0);
 
         msleep(20);
     }
