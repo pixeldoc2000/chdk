@@ -181,36 +181,36 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
             "BL      sub_FF81A244\n"             // dmSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815F6C\n"        // "dmSetup"
-            "LDRLT   R0, =0xFF815F6C\n"          // + gcc does not like ADRLT
+            "LDRLT   R0, =0xFF815F6C\n"          // + compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "BL      sub_FF815A94\n"             // termDriverInit()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815F74\n"        // "termDriverInit"
-            "LDRLT   R0, =0xFF815F74\n"          // + gcc does not like ADRLT
+            "LDRLT   R0, =0xFF815F74\n"          // + compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             //"ADR     R0, =0xFF815F84\n"        // "/_term"
-            "LDR     R0, =0xFF815F84\n"          // + gcc does not like ADR
+            "LDR     R0, =0xFF815F84\n"          // + compiler does not like ADR
             "BL      sub_FF815B7C\n"             // termDeviceCreate()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815B7C\n"        // "termDeviceCreate"
-            "LDRLT   R0, =0xFF815B7C\n"          // + gcc does not like ADRLT
+            "LDRLT   R0, =0xFF815B7C\n"          // + compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             //"ADR     R0, =0xFF815F84\n"        // "/_term"
-            "LDR     R0, =0xFF815F84\n"          // + gcc does not like ADR
+            "LDR     R0, =0xFF815F84\n"          // + compiler does not like ADR
             "BL      sub_FF813BF0\n"             // stdioSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF813BF0\n"        // "stdioSetup"
-            "LDRLT   R0, =0xFF813BF0\n"          // + gcc does not like ADRLT
+            "LDRLT   R0, =0xFF813BF0\n"          // + compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "BL      sub_FF819C3C\n"             // stdlibSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815FAC\n"        // "stdlibSetup"
-            "LDRLT   R0, =0xFF815FAC\n"          // + gcc does not like ADRLT
+            "LDRLT   R0, =0xFF815FAC\n"          // + compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "BL      sub_FF81167C\n"             // armlib_setup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815FB8\n"        // "armlib_setup"
-            "LDRLT   R0, =0xFF815FB8\n"          // + gcc does not like ADRLT
+            "LDRLT   R0, =0xFF815FB8\n"          // + compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             "LDMFD   SP!, {R4,LR}\n"
 
@@ -252,13 +252,13 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
             "STR     R3, [SP,#8-8]\n"
 
             //"ADR     R3, =0xFF81FA8C\n"        // original: task_Startup()
-            //"LDR     R3, =0xFF81FA8C\n"        // + gcc does not like ADR
+            //"LDR     R3, =0xFF81FA8C\n"        // + compiler does not like ADR
             "LDR     R3, =task_Startup_my\n"     // + ROM:FF81FA8C
 
             "MOV     R2, #0\n"
             "MOV     R1, #0x19\n"
             //"ADR     R0, =0xFF81FB7C\n"        // "Startup"
-            "LDR     R0, =0xFF81FB7C\n"          // + gcc does not like ADR
+            "LDR     R0, =0xFF81FB7C\n"          // + compiler does not like ADR
             "BL      sub_FF81E83C\n"             // eventproc_export_CreateTask() KerTask.c:163
             "MOV     R0, #0\n"
             "LDMFD   SP!, {R12,PC}\n"
@@ -411,8 +411,7 @@ void __attribute__((naked,noinline)) sub_FF87D668_my() {    //#fs
             //"STR     R3, [SP,#0x10+var_10]\n"
             "STR     R3, [SP]\n"   // +
 
-            //"LDR     R3, =sub_FF87D2D8\n"      // LOCATION: SsShootTask.c:13
-            "LDR     R3, =0xFF87D2D8\n"          // +
+            "LDR     R3, =0xFF87D2D8\n"      // LOCATION: SsShootTask.c:13
             //"LDR     R3, =task_CaptSeqTask_my\n"    // + ToDo
 
             //"ADR     R0, sub_FF87D900\n"       // "CaptSeqTask"
@@ -437,10 +436,10 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             "STR     R3, [SP]\n"
 
             //"ADR     R3, FF834400\n"           // task_PhySw()
-            //"LDR     R3, FF834400\n"           // +
+            //"LDR     R3, FF834400\n"           // + compiler does not like ADR
             "LDR     R3, =mykbd_task\n"          // +
             //"MOV     R2, #0x800\n"
-            "MOV     R2, #0x2000\n"              // stack size for new task_PhySw so we don't have to do stack switch
+            "MOV     R2, #0x2000\n"              // + stack size for new task_PhySw so we don't have to do stack switch
 
             "MOV     R1, #0x17\n"
             //"ADR     R0, aPhysw      ; "PhySw"\n"
@@ -450,12 +449,10 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
         "loc_FF834468:\n"
             "BL      sub_FF861F04\n"
             "BL      sub_FF88DA70\n"
-            //"BL      IsFactoryMode\n"
-            "BL      sub_FF835CE4\n"             // + IsFactoryMode()
+            "BL      sub_FF835CE4\n"             // IsFactoryMode()
             "CMP     R0, #0\n"
             "LDREQ   R1, =0x32EA0\n"
             "LDMEQFD SP!, {R3-R5,LR}\n"
-            //"BEQ     eventproc_export_OpLog.Start\n"
             "BEQ     sub_FF88D9F8\n"             // + eventproc_export_OpLog.Start()
             "LDMFD   SP!, {R3-R5,PC}\n"
     );
@@ -472,7 +469,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
             "MOVNE   R0, R5\n"
             "BLNE    sub_FF893994\n"             // eventproc_export_PostLogicalEventToUI()
             //"BL      sub_FF88FF58\n"
-            "BL      sub_FF88FF58_my\n"
+            "BL      sub_FF88FF58_my\n"          // +
             "BL      core_spytask_can_start\n"   // + safe to start CHDK SpyTask
             "CMP     R4, #0\n"
             "MOVEQ   R0, R5\n"
@@ -518,10 +515,8 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
             "LDR     R0, [R4,#0x6C]\n"
             "CMP     R0, #4\n"
             "LDREQ   R1, =0x83F\n"
-            //"LDREQ   R0, =aMounter_c\n"        // "Mounter.c"
-            "LDREQ   R0, =0xFF8714C4\n"          // +
-            //"BLEQ    DebugAssert\n"
-            "BLEQ    sub_FF81EB14\n"             // + DebugAssert()
+            "LDREQ   R0, =0xFF8714C4\n"          // "Mounter.c"
+            "BLEQ    sub_FF81EB14\n"             // DebugAssert()
             "MOV     R1, R8\n"
             "MOV     R0, R6\n"
             "BL      sub_FF87123C\n"             // LOCATION: Mounter.c:0
@@ -535,7 +530,7 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
             "BL      sub_FF87162C\n"
             "MOV     R5, R0\n"
             "MOV     R0, R6\n"
-            //"BL      sub_FF87185C\n"             // LOCATION: Mounter.c:0
+            //"BL      sub_FF87185C\n"           // LOCATION: Mounter.c:0
             "BL      sub_FF87185C_my\n"          // + correct sub ?!?, is different to SD990
             "LDR     R6, [R4,#0x3C]\n"
             "AND     R7, R5, R0\n"
@@ -564,9 +559,8 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
             "BL      sub_FF8719D4\n"
             "CMP     R0, #0\n"
             "LDMEQFD SP!, {R4-R8,LR}\n"
-            //"ADREQ   R0, aEmemMountError ; "EMEM MOUNT ERROR!!!\n"\n"
-            //"ADREQ   R0, =0xFF871B00\n"          // "EMEM MOUNT ERROR!!!""
-            "LDREQ   R0, =0xFF871B00\n"          // + gcc does not like ADREQ
+            //"ADREQ   R0, =0xFF871B00\n"        // "EMEM MOUNT ERROR!!!""
+            "LDREQ   R0, =0xFF871B00\n"          // + compiler does not like ADREQ
             //"BEQ     qPrintf\n"
             "BEQ     0xFF81177C\n"               // qPrintf()
             "LDMFD   SP!, {R4-R8,PC}\n"
