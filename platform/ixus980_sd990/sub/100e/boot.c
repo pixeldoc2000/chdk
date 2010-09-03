@@ -33,7 +33,7 @@ void boot() { //#fs
     long *canon_data_src = (void*)0xFFB74B98;
     long *canon_data_dst = (void*)0x1900;
     long canon_data_len = 0xFE80 - 0x1900; // data_end - data_start
-    long *canon_bss_start = (void*)0xFE80; // just after data 
+    long *canon_bss_start = (void*)0xFE80; // just after data
     long canon_bss_len = 0xE8B40 - 0xFE80; 
 
     long i;
@@ -41,25 +41,25 @@ void boot() { //#fs
 
     // enable caches and write buffer... this is a carryover from old dryos ports, may not be useful
     asm volatile (
-	"MRC     p15, 0, R0,c1,c0\n"
-	"ORR     R0, R0, #0x1000\n"
-	"ORR     R0, R0, #4\n"
-	"ORR     R0, R0, #1\n"
-	"MCR     p15, 0, R0,c1,c0\n"
+        "MRC     p15, 0, R0,c1,c0\n"
+        "ORR     R0, R0, #0x1000\n"
+        "ORR     R0, R0, #4\n"
+        "ORR     R0, R0, #1\n"
+        "MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 
     for(i=0;i<canon_data_len/4;i++)
-	canon_data_dst[i]=canon_data_src[i];
+        canon_data_dst[i]=canon_data_src[i];
 
     for(i=0;i<canon_bss_len/4;i++)
-	canon_bss_start[i]=0;
+        canon_bss_start[i]=0;
 
-// see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
+    // see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
     *(int*)0x1930=(int)taskCreateHook;
     *(int*)0x1934=(int)taskCreateHook2;
 
-	// similar to SX10 (but no +4 and values are >> 8) via sub_FF849EB0. 
-	// Search on 0x12345678 finds function called by this
+    // similar to SX10 (but no +4 and values are >> 8) via sub_FF849EB0.
+    // Search on 0x12345678 finds function called by this
     *(int*)(0x2588)= (*(int*)0xC02200F8)&1 ? 0x200000 : 0x100000; // replacement of sub_FF8219D8 for correct power-on.
 
     // jump to init-sequence that follows the data-copy-routine 
@@ -126,7 +126,7 @@ void __attribute__((naked,noinline)) sub_FF810F94_my() {
 "                 STR     R0, [SP,#0x1C]\n"
 "                 LDR     R0, =0x19B\n"
 //"                 LDR     R1, =sub_FF814D8C\n"
-"                 LDR     R1, =sub_FF814D8C_my\n"
+"                 LDR     R1, =sub_FF814D8C_my\n"       // uHwSetup()
 "                 STR     R0, [SP,#0x20]\n"
 "                 MOV     R0, #0x96\n"
 "                 STR     R0, [SP,#0x24]\n"
@@ -397,6 +397,7 @@ void CreateTask_spytask() {
         _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }
 
+// ROM:FF881534
 void __attribute__((naked,noinline)) init_file_modules_task() { 
   asm volatile (
 "                 STMFD   SP!, {R4-R6,LR}\n"
