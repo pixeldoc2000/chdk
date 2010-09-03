@@ -262,7 +262,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
         CreateTask_PhySw();
 
         asm volatile (
-                //"BL      sub_FFC12DAC\n"       // CreateTask_PhySw - checks buttons and acts accordingly
+                //"BL      sub_FFC12DAC\n"       // CreateTask_PhySw() - checks buttons and acts accordingly
 
                 //"BL      sub_FFC15BC8\n"       // original
                 "BL      sub_FFC15BC8_my\n"      // divert to intercept task_ShootSeqTask
@@ -270,9 +270,9 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
                 "BL      sub_FFC1BD80\n"
                 //"BL      nullsub_2\n"
                 "BL      sub_FFC1213C\n"
-                "BL      sub_FFC1B768\n"
+                "BL      sub_FFC1B768\n"         // taskcreate_Bye()
                 "BL      sub_FFC128D8\n"
-                "BL      sub_FFC12048\n"
+                "BL      sub_FFC12048\n"         // taskcreate_TempCheck()
                 //"BL      sub_FFC1C6C4\n"
                 "BL      sub_FFC1C6C4_my\n"      // divert for SDHC-bootdisk-support
                 "BL      sub_FFC12004\n"
@@ -407,12 +407,12 @@ void __attribute__((naked,noinline)) sub_FFC1C6C4_my() { //#fs
         asm volatile (
                 "STMFD   SP!, {R4,LR}\n"
                 "BL      sub_FFC5CB64\n"
-                "BL      sub_FFC3A27C\n"    // IsFactoryMode"
+                "BL      sub_FFC3A27C\n"    // IsFactoryMode
                 "CMP     R0, #1\n"
                 "BNE     loc_FFC1C6E4\n"
                 "BL      sub_FFC5F8B0\n"
                 "LDMFD   SP!, {R4,LR}\n"
-                "B       sub_FFC3A2BC\n"    // StartFactoryModeController"
+                "B       sub_FFC3A2BC\n"    // StartFactoryModeController
                 "loc_FFC1C6E4:\n"
                 "BL      sub_FFC5E998\n"
                 "LDR     R4, =0x1DCC\n"
@@ -421,7 +421,7 @@ void __attribute__((naked,noinline)) sub_FFC1C6C4_my() { //#fs
                 "LDMNEFD SP!, {R4,PC}\n"
                 "MOV     R1, #0\n"
                 "LDR     R0, =sub_FFC1C294_my\n"        // continue here for SDHC-boot-support
-                "BL      sub_FFC5AEA0\n"    // CreateController"
+                "BL      sub_FFC5AEA0\n"    // CreateController
                 "STR     R0, [R4,#4]\n"
                 "LDMFD   SP!, {R4,PC}\n"
         );
@@ -628,8 +628,8 @@ void __attribute__((naked,noinline)) sub_FFC1C294_my() { //#fs
                 "LDRNE   R0, =0x310B\n"
                 "LDREQ   R0, =0x310C\n"
                 "MOV     R1, #0\n"
-                "BL      sub_FFC5B69C\n"
-                "BL      sub_FFC5F474_my\n"        // Continue here (possibility 1) for SDHC-boot
+                "BL      sub_FFC5B69C\n"         // eventproc_export_PostLogicalEventToUI()
+                "BL      sub_FFC5F474_my\n"      // Continue here (possibility 1) for SDHC-boot
                 "B       loc_FFC1C560\n"
         "loc_FFC1C588:\n"
                 "MOV     R0, R6\n"
