@@ -453,38 +453,6 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
     );
 };    //#fe
 
-/*
-// ROM:FF834434
-void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
-    asm volatile (
-                "STMFD   SP!, {R3-R5,LR}\n"
-                "LDR     R4, =0x1C28\n"
-                "LDR     R0, [R4,#0x10]\n"
-                "CMP     R0, #0\n"
-                "BNE     loc_FF834468\n"
-                "MOV     R3, #0\n"
-                "STR     R3, [SP]\n"
-                //"ADR     R3, task_PhySw\n"
-                "LDR     R3, =0xFF834400\n"           // compiler does not like ADR
-                "MOV     R2, #0x800\n"
-                "MOV     R1, #0x17\n"
-                //"ADR     R0, aPhysw\n"
-                "LDR     R0, =0xFF83464C\n"          // compiler does not like ADR
-                "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
-                "STR     R0, [R4,#0x10]\n"
-            "loc_FF834468:\n"
-                "BL      sub_FF861F04\n"             // taskcreate_RotarySw()
-                "BL      sub_FF88DA70\n"
-                "BL      sub_FF835CE4\n"             // IsFactoryMode()
-                "CMP     R0, #0\n"
-                "LDREQ   R1, =0x32EA0\n"
-                "LDMEQFD SP!, {R3-R5,LR}\n"
-                "BEQ     sub_FF88D9F8\n"             // eventproc_export_OpLog.Start()
-                "LDMFD   SP!, {R3-R5,PC}\n"
-    );
-};    //#fe
-*/
-
 // ROM:FF8995E0
 void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
     asm volatile (

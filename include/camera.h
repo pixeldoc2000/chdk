@@ -2323,7 +2323,7 @@
     //#define DNG_SUPPORT                 1
     //#define CAM_HAS_JOGDIAL             1
 
-    #define CAM_ADJUSTABLE_ALT_BUTTON   1       // Camera has no Direct Print Button (we need support for multiple button to enter ALT mode)
+    //#define CAM_ADJUSTABLE_ALT_BUTTON   1       // ToDo: Camera has no Direct Print Button (support for multiple buttons to enter ALT mode needed)
 
     // pattern
     #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
