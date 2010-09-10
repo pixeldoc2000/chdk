@@ -2,8 +2,8 @@
 
 // RAM addresses
 
-// --- allready changed but unshure if 100% correct
-DEF(physw_status, 0x32E94)    // ROM:FF8347D4, in ShowPhySwStatus() search "GpioStatus"
+// --- already changed but unshure if 100% correct
+DEF(physw_status, 0x32E94)    // ROM:FF8347D4, in ShowPhySwStatus() search "GpioStatus" or ROM:FF833F4C
 
 DEF(physw_run, 0x1C34)    // ROM:FF834400, in task_PhySw() 0x1C28 + 0xC = 0x1C34
 
@@ -17,9 +17,9 @@ DEF(physw_run, 0x1C34)    // ROM:FF834400, in task_PhySw() 0x1C28 + 0xC = 0x1C34
 // ROM:FF860880                 ADRNE   R0, aLeddrv_c   ; "LEDDrv.c"
 // ROM:FF860884                 BNE     DebugAssert
 // ROM:FF860888                 LDMFD   SP!, {R4,PC}
-DEF(led_table, 0x24AC) // R0 -> 0x24A4 + 0x8
+DEF(led_table, 0x24AC)    // R0 -> 0x24A4 + 0x8
 
-DEF(playrec_mode,0x2D78) // ROM:FF838AE4 (ROM:FF882328) search for String "MenuIn" 0x2D74 + 4 ?!?
+DEF(playrec_mode,0x2D78)    // ROM:FF838AE4 (ROM:FF882328) search for String "MenuIn" 0x2D74 + 4 ?!?
 
 // like SX210
 // ROM:FFA13398                 STMFD   SP!, {R4,LR}
@@ -30,8 +30,9 @@ DEF(playrec_mode,0x2D78) // ROM:FF838AE4 (ROM:FF882328) search for String "MenuI
 // ROM:FFA133AC                 ADREQ   R0, aWindow_c   ; "Window.c"
 DEF(enabled_refresh_physical_screen, 0x92CC)    // ROM:FFA1339C 0x92AC + 0x20 = 0x92CC
 
+DEF(FlashParamsTable,0xFFC00624)    // referenced at ROM:FFAC96B8
+
 // --- ToDo
-DEF(FlashParamsTable,0xFFE7D1B4)
 DEF(zoom_busy, 0x9DC0)  //0x9DAC + 0x14
 DEF(focus_busy, 0x9D50) //  0x9CB8
 DEF(canon_menu_active,0xB55C)

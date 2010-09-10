@@ -42,8 +42,8 @@ NHSTUB(PutOutNdFilter, 0xFF810B1C)                   // ToDo: nullsub_1
 NHSTUB(Mount_FileSystem, 0xFF810B1C)                 // ToDo: nullsub_1
 NHSTUB(Unmount_FileSystem, 0xFF810B1C)               // ToDo: nullsub_1
 NHSTUB(rewinddir, 0xFF810B1C)                        // ToDo: nullsub_1
-NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // ?!? does not exist like SD990
-NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // ?!? does not exist like SD990
+NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // ?!? does not exist, like SD990
+NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // ?!? does not exist, like SD990
 
 
 // --- stubs_entry.S (auto sig finder)
@@ -113,8 +113,8 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
 //NHSTUB(closefastdir, 0xffa95e28)                   // same as closedir
 //NHSTUB(free, 0xff81415c)                           // maybe ok
-//NHSTUB(kbd_p1_f, 0xff83484c)                       // looks ok
-//NHSTUB(kbd_p1_f_cont, 0xff834858)                  // looks ok
+//NHSTUB(kbd_p1_f, 0xff83484c)                       // OK
+//NHSTUB(kbd_p1_f_cont, 0xff834858)                  // OK
 //NHSTUB(kbd_p2_f, 0xff8340d0)                       // maybe ok
 //NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK
 //NHSTUB(lseek, 0xff836ee0)                          // does not point to function start
