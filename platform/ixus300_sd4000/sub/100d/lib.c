@@ -83,14 +83,14 @@ void *vid_get_viewport_live_fb() {
 // ROM:FF919AE4                 MOV     R0, #0
 // ROM:FF919AE8                 LDMFD   SP!, {R4-R8,PC}
 void *vid_get_bitmap_fb() {
-    return (void*)0x40471000;   // ROM:FF919AD4 or ROM:FFA347DC or ROM:FF85B154
+    return (void*)0x40471000;    // ROM:FF919AD4 or ROM:FFA347DC or ROM:FF85B154
 }
 
 // Live picture buffer (shoot half-pressed)
 // search for String "VRAM Address" (like SX10)
 // or search for String "MaxY %ld MinY %ld" and look below
 void *vid_get_viewport_fb() {
-    return (void*)0x40587700; // ROM:FFB25ED8 or ROM:FFB25DFC
+    return (void*)0x40587700;    // ROM:FFB25ED8 or ROM:FFB25DFC
 }
 
 // ?!?
@@ -101,11 +101,13 @@ void *vid_get_viewport_fb_d() {
 
 // ROM:FF9013D8 0x2D0 = 720 ?!?
 // SD990 ROM:FF83CFC8 ?!?
+//long vid_get_bitmap_screen_width() { return 320; }
 //long vid_get_bitmap_screen_width() { return 360; }
 //long vid_get_bitmap_screen_width() { return 720; }
 long vid_get_bitmap_screen_width() { return 960; }
 
 long vid_get_bitmap_screen_height() { return 240; }
+//long vid_get_bitmap_screen_height() { return 270; }
 //long vid_get_bitmap_screen_height() { return 360; }
 
 int vid_get_viewport_width() { return 360; }    // viewport is still 360, even though live view is 720 (from SD990)
@@ -130,4 +132,5 @@ char *camera_jpeg_count_str() {
 long vid_get_bitmap_buffer_width() { return 960; }      // working
 
 //long vid_get_bitmap_buffer_height() { return 240; }
-long vid_get_bitmap_buffer_height() { return 360; }
+long vid_get_bitmap_buffer_height() { return 270; }
+//long vid_get_bitmap_buffer_height() { return 360; }
