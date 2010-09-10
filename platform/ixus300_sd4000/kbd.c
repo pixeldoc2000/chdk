@@ -21,11 +21,12 @@ static int remote_key, remote_count;
 static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
-// OK: taken from sd950
-#define KEYS_MASK0 (0x00000000)
-#define KEYS_MASK1 (0x00000000)
-#define KEYS_MASK2 (0x0FFF)
-static long alt_mode_key_mask = 0x00004000; // key_print
+//#define KEYS_MASK0 (0x00002319)
+#define KEYS_MASK0 (0x0000090F)
+#define KEYS_MASK1 (0x000000F0)
+//#define KEYS_MASK2 (0x0FFF)
+#define KEYS_MASK2 (0x00000000)
+static long alt_mode_key_mask = 0x00000008;    // ToDo: KEY_LEFT, we have no print key...
 
 #define SD_READONLY_FLAG (0x20000)
 
@@ -37,6 +38,7 @@ void kbd_fetch_data(long*);
 
 long __attribute__((naked)) wrap_kbd_p1_f();
 
+
 static void __attribute__((noinline)) mykbd_task_proceed() {
     while (physw_run) {
         _SleepTask(10);
@@ -47,6 +49,7 @@ static void __attribute__((noinline)) mykbd_task_proceed() {
     }
 }
 
+
 // no stack manipulation needed here, since we create the task directly
 void __attribute__((naked,noinline)) mykbd_task() {
     mykbd_task_proceed();
@@ -54,99 +57,46 @@ void __attribute__((naked,noinline)) mykbd_task() {
 }
 
 
+// ROM:FF83484C, like SX110
 long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
     asm volatile(
                 "STMFD   SP!, {R1-R5,LR}\n"
                 "MOV     R4, #0\n"
-                "BL      _kbd_read_keys\n"      // from S5IS
-                "BL      my_kbd_read_keys\n"
-                "B       _kbd_p1_f_cont\n"
+                "BL      _kbd_read_keys\n"       // original function
+                "BL      my_kbd_read_keys\n"     // +
+                "B       _kbd_p1_f_cont\n"       // continue at ROM:FF834858
     );
     return 0; // shut up the compiler
 }
 
 
-/*
+// like SX110
 void my_kbd_read_keys() {
     kbd_prev_state[0] = kbd_new_state[0];
     kbd_prev_state[1] = kbd_new_state[1];
     kbd_prev_state[2] = kbd_new_state[2];
 
-    //_kbd_pwr_on();    // does not exist on SD4000 ?
+    // The following three lines replace the call to kbd_fetch_data()
+    kbd_new_state[0] = physw_status[0];
+    kbd_new_state[1] = physw_status[1];
+    kbd_new_state[2] = physw_status[2];
 
-    kbd_fetch_data(kbd_new_state);
+    if (kbd_process() == 0){
+        // we read keyboard state with _kbd_read_keys()
 
-    if (kbd_process() == 0) {
-        // leave it alone...
-        //physw_status[0] = kbd_new_state[0];
-        //physw_status[1] = kbd_new_state[1];
-        //physw_status[2] = kbd_new_state[2];
-        //jogdial_stopped=0;
+        // override the alt mode key
+        physw_status[0] |= alt_mode_key_mask;
+            //jogdial_stopped=0;
     } else {
         // override keys
-        physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) | (kbd_mod_state[0] & KEYS_MASK0);
+        physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]);
+        physw_status[1] = (kbd_new_state[1] | KEYS_MASK1) & (~KEYS_MASK1 | kbd_mod_state[1]);
+        physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]);
 
-        physw_status[1] = (kbd_new_state[1] & (~KEYS_MASK1)) | (kbd_mod_state[1] & KEYS_MASK1);
-
-        physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) | (kbd_mod_state[2] & KEYS_MASK2);
-
-        if ((jogdial_stopped==0) && !state_kbd_script_run) {
-            jogdial_stopped=1;
-            get_jogdial_direction();
-        }
-        else if (jogdial_stopped && state_kbd_script_run)
-            jogdial_stopped=0;
+    //if ((jogdial_stopped==0) && !state_kbd_script_run){ jogdial_stopped=1; get_jogdial_direction(); }
+    //else if (jogdial_stopped && state_kbd_script_run) jogdial_stopped=0;
     }
-
-    _kbd_read_keys_r2(physw_status);
-
-//    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
-
-    // _kbd_pwr_off();    // does not exist on SD4000 ?
 }
-*/
-
-void my_kbd_read_keys()
-{
-	kbd_prev_state[0] = kbd_new_state[0];
-	kbd_prev_state[1] = kbd_new_state[1];
-	kbd_prev_state[2] = kbd_new_state[2];
-
-	// The following three lines replace the call to kbd_fetch_data
-	kbd_new_state[0] = physw_status[0];
-	kbd_new_state[1] = physw_status[1];
-	kbd_new_state[2] = physw_status[2];
-
-
-	if (kbd_process() == 0){
-		// leave it alone...
-		// keyboard state is already good so nothing needs to happen
-
-		// But do override the alt mode key
-		physw_status[1] |= alt_mode_key_mask;
-	} else {
-		// override keys
-		physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]); // Only overrides shoot-button... off, batt and modeswitch are still enabled.
-		physw_status[1] = (kbd_new_state[1] | KEYS_MASK1) & (~KEYS_MASK1 | kbd_mod_state[1]); // Overrides everything except mode-dial (0xF)
-		physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]); // Currently overrides nothing
-	}
-
-	remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
-		if (remote_key)
-			remote_count += 1;
-		else if (remote_count) {
-			usb_power = remote_count;
-			remote_count = 0;
-		}
-	if (conf.remote_enable) {
-		physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
-		// As much as I'd like to immediately shoot, this trigger is intended for use in scripts, so don't shoot here.
-		//if(remote_key) physw_status[0] &= ~(0x3); // Shoot!
-	} else {
-		physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
-	}
-}
-
 
 int get_usb_power(int edge) {
     int x;
@@ -170,7 +120,7 @@ void kbd_key_press(long key) {
 
 void kbd_key_release(long key) {
     int i;
-    for (i=0;keymap[i].hackkey;i++){
+    for (i=0;keymap[i].hackkey;i++) {
         if (keymap[i].hackkey == key){
             kbd_mod_state[keymap[i].grp] |= keymap[i].canonkey;
             return;
@@ -186,8 +136,8 @@ void kbd_key_release_all() {
 
 long kbd_is_key_pressed(long key) {
     int i;
-    for (i=0;keymap[i].hackkey;i++){
-        if (keymap[i].hackkey == key){
+    for (i=0;keymap[i].hackkey;i++) {
+        if (keymap[i].hackkey == key) {
             return ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0) ? 1:0;
         }
     }
@@ -196,7 +146,7 @@ long kbd_is_key_pressed(long key) {
 
 long kbd_is_key_clicked(long key) {
     int i;
-    for (i=0;keymap[i].hackkey;i++){
+    for (i=0;keymap[i].hackkey;i++) {
         if (keymap[i].hackkey == key){
             return ((kbd_prev_state[keymap[i].grp] & keymap[i].canonkey) != 0) &&
                 ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0);
@@ -207,8 +157,8 @@ long kbd_is_key_clicked(long key) {
 
 long kbd_get_pressed_key() {
     int i;
-    for (i=0;keymap[i].hackkey;i++){
-        if ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0){
+    for (i=0;keymap[i].hackkey;i++) {
+        if ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0) {
             return keymap[i].hackkey;
         }
     }
@@ -217,9 +167,8 @@ long kbd_get_pressed_key() {
 
 long kbd_get_clicked_key() {
     int i;
-    for (i=0;keymap[i].hackkey;i++){
-        if (((kbd_prev_state[keymap[i].grp] & keymap[i].canonkey) != 0) &&
-            ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0)){
+    for (i=0;keymap[i].hackkey;i++) {
+        if (((kbd_prev_state[keymap[i].grp] & keymap[i].canonkey) != 0) && ((kbd_new_state[keymap[i].grp] & keymap[i].canonkey) == 0)) {
             return keymap[i].hackkey;
         }
     }
@@ -296,40 +245,30 @@ long kbd_get_autoclicked_key() {
     }
 #endif
 
-// Base values:
-// physw_status[0] = 0x800C91F
-// physw_status[1] = 0xFFE
-// physw_status[2] = 0x400000
+// Base values in Play Mode
+// physw_status[0] = 0x800C91F      // 1
+// physw_status[1] = 0xFFE          // 2 (Mode Switch: Auto)
+// physw_status[2] = 0x400000       // 3
+// Mode Switch:
+// physw_status[1] 0x1 Auto
+// physw_status[1] 0x0 Photo
+// physw_status[1] 0x2 Video
 static KeyMap keymap[] = {
     // tiny bug: key order matters. see kbd_get_pressed_key() for example
-    { 1, KEY_UP         , 0x00000004 },
-    { 1, KEY_DOWN       , 0x00000001 },
-    { 1, KEY_LEFT       , 0x00000008 },
-    { 1, KEY_RIGHT      , 0x00000002 },
-    { 2, KEY_SET        , 0x00000040 },
-    { 1, KEY_SHOOT_FULL , 0x00000900 },    // 0x800C01F ?!?
-    { 1, KEY_SHOOT_HALF , 0x00000100 },    // 0x800C81F
-    { 2, KEY_ZOOM_IN    , 0x00000010 },
-    { 2, KEY_ZOOM_OUT   , 0x00000020 },
-    { 2, KEY_MENU       , 0x00000080 },
-    { 2, KEY_DISPLAY    , 0x00000000 },    // SD4000 does not have these button
-    { 2, KEY_PRINT      , 0x00000000 },    // SD4000 does not have these button
+    { 0, KEY_UP         , 0x00000004 },
+    { 0, KEY_DOWN       , 0x00000001 },
+    { 0, KEY_LEFT       , 0x00000008 },
+    { 0, KEY_RIGHT      , 0x00000002 },
+    { 1, KEY_SET        , 0x00000040 },
+    { 0, KEY_SHOOT_FULL , 0x00000800 },    // 0x800C01F ?!?
+    { 0, KEY_SHOOT_HALF , 0x00000100 },    // 0x800C81F
+    { 1, KEY_ZOOM_IN    , 0x00000010 },
+    { 1, KEY_ZOOM_OUT   , 0x00000020 },
+    { 1, KEY_MENU       , 0x00000080 },
+    { 0, KEY_PRINT      , 0x00000008 },    // ToDo: workaround, camera has not print key, for now we use KEY_LEFT, otherwise conf.alt_mode_button must be defined in CHDK config
     //{ 1, KEY_PLAY        , 0x80000000 },  // SD990 play button
     { 0, 0, 0 }
 };
-
-
-// ROM:FF861908
-// GetKbdState() is very different compared to other Cameras
-void kbd_fetch_data(long *dst) {
-    volatile long *mmio0 = (void*)0xc0220200;
-    volatile long *mmio1 = (void*)0xc0220204;
-    volatile long *mmio2 = (void*)0xc0220208;
-
-    dst[0] = *mmio0;
-    dst[1] = *mmio1;
-    dst[2] = *mmio2 & 0xffff;
-}
 
 // ToDo: find some way to use Key combination (for Example LEFT+SET) to enter ALT mode
 void kbd_set_alt_mode_key_mask(long key) {
