@@ -10,7 +10,6 @@ typedef struct {
     long canonkey;
 } KeyMap;
 
-
 static long kbd_new_state[3];
 static long kbd_prev_state[3];
 static long kbd_mod_state[3];
@@ -21,34 +20,28 @@ static int remote_key, remote_count;
 static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
-//#define KEYS_MASK0 (0x00002319)
 #define KEYS_MASK0 (0x0000090F)
 #define KEYS_MASK1 (0x000000F0)
-//#define KEYS_MASK2 (0x0FFF)
 #define KEYS_MASK2 (0x00000000)
-static long alt_mode_key_mask = 0x00000008;    // ToDo: KEY_LEFT, we have no print key...
+//static long alt_mode_key_mask = 0x00000000;   // we use two Keys, no need to override
 
 #define SD_READONLY_FLAG (0x20000)
 
-#define USB_MASK (0x40000)
+#define USB_MASK (0x40000)   // ToDo: test value
 
 volatile int jogdial_stopped=0;
 
-void kbd_fetch_data(long*);
-
 long __attribute__((naked)) wrap_kbd_p1_f();
-
 
 static void __attribute__((noinline)) mykbd_task_proceed() {
     while (physw_run) {
         _SleepTask(10);
 
-        if (wrap_kbd_p1_f() == 1) { // autorepeat ?
+        if (wrap_kbd_p1_f() == 1) {   // autorepeat ?
             _kbd_p2_f();
         }
     }
 }
-
 
 // no stack manipulation needed here, since we create the task directly
 void __attribute__((naked,noinline)) mykbd_task() {
@@ -56,19 +49,17 @@ void __attribute__((naked,noinline)) mykbd_task() {
     _ExitTask();
 }
 
-
 // ROM:FF83484C, like SX110
 long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
     asm volatile(
                 "STMFD   SP!, {R1-R5,LR}\n"
                 "MOV     R4, #0\n"
-                "BL      _kbd_read_keys\n"       // original function
+                "BL      _kbd_read_keys\n"       // replaces kbd_fetch_data()
                 "BL      my_kbd_read_keys\n"     // +
                 "B       _kbd_p1_f_cont\n"       // continue at ROM:FF834858
     );
-    return 0; // shut up the compiler
+    return 0;   // shut up the compiler
 }
-
 
 // like SX110
 void my_kbd_read_keys() {
@@ -81,24 +72,26 @@ void my_kbd_read_keys() {
     kbd_new_state[1] = physw_status[1];
     kbd_new_state[2] = physw_status[2];
 
-    if (kbd_process() == 0){
+    if (kbd_process() == 0) {
         // we read keyboard state with _kbd_read_keys()
 
-        // override the alt mode key
-        physw_status[0] |= alt_mode_key_mask;
-            jogdial_stopped=0;
+        //physw_status[0] |= alt_mode_key_mask;   // override the alt mode key
+        jogdial_stopped=0;
     } else {
         // override keys
         physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]);
         physw_status[1] = (kbd_new_state[1] | KEYS_MASK1) & (~KEYS_MASK1 | kbd_mod_state[1]);
         physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]);
 
-        if ((jogdial_stopped==0) && !state_kbd_script_run){ jogdial_stopped=1; get_jogdial_direction(); }
-        else if (jogdial_stopped && state_kbd_script_run) jogdial_stopped=0;
+        if ((jogdial_stopped==0) && !state_kbd_script_run) {
+            jogdial_stopped=1;
+            get_jogdial_direction();
+        }
+        else if (jogdial_stopped && state_kbd_script_run)
+            jogdial_stopped=0;
     }
 
-    // SD-Card override READONLY flag for diskboot
-    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
+    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;   // override SD-Card READONLY flag for diskboot
 }
 
 int get_usb_power(int edge) {
@@ -109,7 +102,6 @@ int get_usb_power(int edge) {
     usb_power = 0;
     return x;
 }
-
 
 void kbd_key_press(long key) {
     int i;
@@ -257,29 +249,16 @@ long kbd_get_autoclicked_key() {
 // physw_status[1] 0x0 Photo
 // physw_status[1] 0x2 Video
 static KeyMap keymap[] = {
-    // tiny bug: key order matters. see kbd_get_pressed_key() for example
     { 0, KEY_UP         , 0x00000004 },
     { 0, KEY_DOWN       , 0x00000001 },
     { 0, KEY_LEFT       , 0x00000008 },
     { 0, KEY_RIGHT      , 0x00000002 },
     { 1, KEY_SET        , 0x00000040 },
-    { 0, KEY_SHOOT_FULL , 0x00000800 },    // 0x800C01F ?!?
-    { 0, KEY_SHOOT_HALF , 0x00000100 },    // 0x800C81F
+    { 0, KEY_SHOOT_FULL , 0x00000800 },
+    { 0, KEY_SHOOT_HALF , 0x00000100 },
     { 1, KEY_ZOOM_IN    , 0x00000010 },
     { 1, KEY_ZOOM_OUT   , 0x00000020 },
     { 1, KEY_MENU       , 0x00000080 },
-    { 0, KEY_PRINT      , 0x00000008 },    // ToDo: workaround, camera has not print key, for now we use KEY_LEFT, otherwise conf.alt_mode_button must be defined in CHDK config
-    //{ 1, KEY_PLAY        , 0x80000000 },  // SD990 play button
+    { 0, KEY_PRINT      , 0x0000000C },   // ALT Keys: KEY_UP +  KEY_LEFT (camera has not print key)
     { 0, 0, 0 }
 };
-
-// ToDo: find some way to use Key combination (for Example LEFT+SET) to enter ALT mode
-void kbd_set_alt_mode_key_mask(long key) {
-    int i;
-    for (i=0; keymap[i].hackkey; ++i) {
-        if (keymap[i].hackkey == key) {
-            alt_mode_key_mask = keymap[i].canonkey;
-            return;
-        }
-    }
-}
