@@ -2304,10 +2304,10 @@
 #elif defined (CAMERA_ixus300_sd4000)
     #define CAM_PROPSET                 2
     #define CAM_DRYOS                   1
-    #define CAM_DRYOS_2_3_R39           1
+    #define CAM_DRYOS_2_3_R39           1   // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
     #undef CAM_UNCACHED_BIT             // shut up compiler
-    #define CAM_UNCACHED_BIT            0x40000000
+    #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
 
     #define CAM_RAW_ROWPIX              3336   // for new 8 MP
     #define CAM_RAW_ROWS                2480   // for new 8 MP
@@ -2326,7 +2326,7 @@
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1       // ToDo: Camera has no Direct Print Button (support for multiple buttons to enter ALT mode needed)
 
     // pattern
-    #define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
+    #define cam_CFAPattern 0x01000201   // Green  Blue  Red  Green
     // color
     #define CAM_COLORMATRIX1                               \
       640019, 1000000, -220031, 1000000, -96241, 1000000,  \
