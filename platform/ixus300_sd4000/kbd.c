@@ -86,16 +86,19 @@ void my_kbd_read_keys() {
 
         // override the alt mode key
         physw_status[0] |= alt_mode_key_mask;
-            //jogdial_stopped=0;
+            jogdial_stopped=0;
     } else {
         // override keys
         physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]);
         physw_status[1] = (kbd_new_state[1] | KEYS_MASK1) & (~KEYS_MASK1 | kbd_mod_state[1]);
         physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]);
 
-    //if ((jogdial_stopped==0) && !state_kbd_script_run){ jogdial_stopped=1; get_jogdial_direction(); }
-    //else if (jogdial_stopped && state_kbd_script_run) jogdial_stopped=0;
+        if ((jogdial_stopped==0) && !state_kbd_script_run){ jogdial_stopped=1; get_jogdial_direction(); }
+        else if (jogdial_stopped && state_kbd_script_run) jogdial_stopped=0;
     }
+
+    // SD-Card override READONLY flag for diskboot
+    physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
 }
 
 int get_usb_power(int edge) {
