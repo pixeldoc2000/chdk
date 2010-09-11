@@ -1,4 +1,5 @@
 #include "platform.h"
+#include "lolevel.h"
 
 void shutdown() {
     volatile long *p = (void*)0xC0223030;    // Red AF Led (front)
@@ -50,10 +51,19 @@ int get_flash_params_count(void){
 }
 
 // Force Screen to refresh like original Firmware
+// ToDo: canon firmware still has redraw issus after exiting ALT mode
 void vid_bitmap_refresh() {
     extern int enabled_refresh_physical_screen;
     enabled_refresh_physical_screen=1;
-    *(int*)0x926C=3;    // ROM:FFA114FC, like SX210, does work but some Keys are not functional
+    *(int*)0x926C=3;    // ROM:FFA114FC, like SX210
     //_ScreenLock();
     _RefreshPhysicalScreen(1);
 }
+
+/*
+// does not work
+void vid_bitmap_refresh() {
+    _ScreenLock();
+    _RefreshPhysicalScreen(1);
+}
+*/
