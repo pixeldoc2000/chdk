@@ -75,7 +75,6 @@ void my_kbd_read_keys() {
     if (kbd_process() == 0) {
         // we read keyboard state with _kbd_read_keys()
 
-        //physw_status[0] |= alt_mode_key_mask;   // override the alt mode key
         jogdial_stopped=0;
     } else {
         // override keys
@@ -248,6 +247,7 @@ long kbd_get_autoclicked_key() {
 // physw_status[1] 0x1 Auto
 // physw_status[1] 0x0 Photo
 // physw_status[1] 0x2 Video
+// physw_status[2] 0x20000 SD-Card READONLY
 static KeyMap keymap[] = {
     { 0, KEY_UP         , 0x00000004 },
     { 0, KEY_DOWN       , 0x00000001 },
@@ -259,6 +259,6 @@ static KeyMap keymap[] = {
     { 1, KEY_ZOOM_IN    , 0x00000010 },
     { 1, KEY_ZOOM_OUT   , 0x00000020 },
     { 1, KEY_MENU       , 0x00000080 },
-    { 0, KEY_PRINT      , 0x0000000C },   // ALT Keys: KEY_UP +  KEY_LEFT (camera has not print key)
+    { 0, KEY_PRINT      , 0x0000000C },   // ALT Key workaround: KEY_UP + KEY_LEFT (camera has no print key)
     { 0, 0, 0 }
 };
