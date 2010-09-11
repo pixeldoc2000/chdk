@@ -1,47 +1,65 @@
-****************************************
+--- CHDK Canon IXUS 300 HS / Powershot SD 4000 IS / IXY 30S Port -------------------
+Camera:     Canon Powershot SD4000 IS (USA) / IXUS 300HS (Europe) / IXY 30S (Japan)
+P-ID:       12791 (0x31F7)
+Firmware:   1.00d
+Author:     pixel::doc (http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/)
+OS:         DRYOS version 2.3, release #0043
+Port is based on A720 & SD990 & SX210
 
-Camera depending notes: 
 
-- A720 uses Propset 2 of Properties (see http://tinyurl.com/6zbv9b)
+--- Note ------------------------------------------------------------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE
+BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Software or Author are not affiliated in any way with Canon INC.
+Product and Company names mentioned herein may be the trademarks of their respective owners.
+
+##############################################################################################################################
+Camera did shutdown cause by messed up filessystem on SD-Card
+Remember to reformat your sd-card and copy fresh files to avoid strange error / crash / shutdown or check filesystem
+also delete chdk config file may help
+##############################################################################################################################
+
+Thanks to reyalp for his support.
 
 
-* Camera: http://chdk.wikia.com/wiki/SD4000IS
-* P-ID: 31F7
-* Firmware Version: 1.00d
-* OS: DRYOS version 2.3, release #0043
-* Port is based on A720 & SD990
+--- Links -----------------------------------------------------------
+* http://chdk.wikia.com/
+* http://chdk.wikia.com/wiki/SD4000IS
+* http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/
 
+
+--- Developer Stuff --------------------------------------------------
 * Rom Start address: 0xFF810000
 * NEED_ENCODED_DISKBOOT=4 (DISKBOOT Encoding)
 * KEYSYS=d4a (Dancing Bits)
 * camera has ND-Filter
 * camera has IS
-* Proset ?
+* Propset ?
 
+* camera does not support ver.req and vers.req
+* udumper "NewDryOs" (CardTricks) does not support 2010 cameras
+* Canon Basic dumper works
 
---- Ausprobiert
-* ver.req und vers.req funktioniert nicht
-* udumper "NewDryOs" (CardTricks) funktioniert mit 2010 Kameras nicht
-* CBasic dumper funktioniert!
-
-
---- Hardware Adressen
-0xC0220018  SD-Card Status (locked / unlocked) ?!?
+--- Hardware address
+physw_status[2] 0x20000  SD-Card Status (locked / unlocked) ?!?
 0xC0220130  Green Led (backside)
 0xc0220134  Red Led (backside)
 0xC0223030  Red AF Led (front)
-
 
 --- JogDiag ?!?
 0xC0220114
 0xC0220118
 0xC022011C
 
-
---- Keyboard Status ?!?
-0xC0220200
-0xC0220204
-0xC0220208
+--- Keyboard Status (physw_status)
+physw_status[0] = 0x32E94   // 0xC0220200 ?
+physw_status[1] = 0x32E98   // 0xC0220204 ?
+physw_status[2] = 0x32E9C   // 0xC0220208 ?
 
 
 ?!? or ToDo means i'm unshure about it
+
