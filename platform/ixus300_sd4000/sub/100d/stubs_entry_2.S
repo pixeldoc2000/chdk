@@ -11,8 +11,13 @@ NHSTUB(Remove, 0xFF836DEC)                           // OK
 NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!
 NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
 NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720
+NHSTUB(ReadFastDir, 0xFFA95DE4)                      // aka. readfastdir
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK eventproc
-NHSTUB(SetScriptMode, 0xFF895904)                    // OK eventproc
+//NHSTUB(SetScriptMode, 0xFF895904)                    // ?!?
+NHSTUB(SetScriptMode, 0xFF810F6C)                    // OK, like SX210
+NHSTUB(UnlockAF, 0xFF83831C)                         // OK, like SX210
+NHSTUB(DoAFLock, 0xFF8382E4)                         // OK, like SX210
+NHSTUB(GiveSemaphore, 0xFF839E38)                    // OK, not in use?
 
 
 // --- NULLSTUBS
@@ -23,14 +28,10 @@ NHSTUB(GetDrive_FreeClusters, 0xFF810B1C)            // ToDo: nullsub_1, there a
 NHSTUB(GetZoomLensCurrentPoint, 0xFF810B1C)          // ToDo: nullsub_1
 NHSTUB(GetZoomLensCurrentPosition, 0xFF810B1C)       // ToDo: nullsub_1
 NHSTUB(PT_PlaySound, 0xFF810B1C)                     // ToDo: nullsub_1
-NHSTUB(ReadFastDir, 0xFF810B1C)                      // ToDo: nullsub_1, not found yet
-//NHSTUB(Remove, 0xFF810B1C)                         // ToDo: nullsub_1
 NHSTUB(TurnOffBackLight, 0xFF810B1C)                 // ToDo: nullsub_1
 NHSTUB(TurnOnBackLight, 0xFF810B1C)                  // ToDo: nullsub_1
 NHSTUB(qsort, 0xFF810B1C)                            // ToDo: nullsub_1, not found yet
 NHSTUB(rename, 0xFF810B1C)                           // ToDo: nullsub_1, not found yet
-NHSTUB(DoAFLock, 0xFF810B1C)                         // ToDo: nullsub_1
-NHSTUB(UnlockAF, 0xFF810B1C)                         // ToDo: nullsub_1
 NHSTUB(PostLEDMessage, 0xFF810B1C)                   // ToDo: nullsub_1, not found yet
 NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // ToDo: nullsub_1
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
@@ -39,16 +40,16 @@ NHSTUB(PutOutNdFilter, 0xFF810B1C)                   // ToDo: nullsub_1
 
 
 // --- Those aren't used or don't exist in DryOS (like A720)
-NHSTUB(Mount_FileSystem, 0xFF810B1C)                 // ToDo: nullsub_1
-NHSTUB(Unmount_FileSystem, 0xFF810B1C)               // ToDo: nullsub_1
-NHSTUB(rewinddir, 0xFF810B1C)                        // ToDo: nullsub_1
-NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // ?!? does not exist, like SD990
-NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // ?!? does not exist, like SD990
+NHSTUB(Mount_FileSystem, 0xFF810B1C)                 // nullsub_1
+NHSTUB(Unmount_FileSystem, 0xFF810B1C)               // nullsub_1
+NHSTUB(rewinddir, 0xFF810B1C)                        // nullsub_1
+NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // nullsub_1, does not exist, like SD990
+NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exist, like SD990
 
 
 // --- stubs_entry.S (auto sig finder)
 //NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK
-//NHSTUB(AllocateUncacheableMemory, 0xff83a41c)      // maybe ok
+//NHSTUB(AllocateUncacheableMemory, 0xff83a41c)      // OK!
 //NHSTUB(Close, 0xff836db8)                          // does point to eventproc_export_Close
 NHSTUB(Close, 0xFF81AA94)                            // OK
 //NHSTUB(CreateTask, 0xff81e83c)                     // OK eventproc
@@ -75,7 +76,7 @@ NHSTUB(ExecuteEventProcedure, 0xFF88B948)            // OK
 //NHSTUB(GetOpticalTemperature, 0xff865314)          // maybe ok
 //NHSTUB(GetParameterData, 0xff9975f4)               // maybe ok
 //NHSTUB(GetPropertyCase, 0xff88f660)                // OK
-//NHSTUB(GetSystemTime, 0xffab8d48)                  // OK
+//NHSTUB(GetSystemTime, 0xffab8d48)                  // OK!
 //NHSTUB(IsStrobeChargeCompleted, 0xff8da44c)
 NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)          // maybe ok
 //NHSTUB(LocalTime, 0xff88923c)
@@ -86,10 +87,11 @@ NHSTUB(MoveFocusLensToDistance, 0xFFB2289C)          // ?!?
 //NHSTUB(MoveZoomLensWithPoint, 0xffab6b64)          // maybe ok
 //NHSTUB(NewTaskShell, 0xff88f06c)                   // OK
 //NHSTUB(Open, 0xff86f13c)                           // WRONG
-NHSTUB(Open, 0xFF81A9E4)                             // maybe ok
-//NHSTUB(PostLogicalEventForNotPowerType, 0xff893948) // OK
+NHSTUB(Open, 0xFF81A9E4)                             // maybe ok, don't cause shutdown
+//NHSTUB(Open, 0xFF836D4C)                           // like SX210, cause shutdown
+//NHSTUB(PostLogicalEventForNotPowerType, 0xff893948) // OK!
 //NHSTUB(PostLogicalEventToUI, 0xff893994)           // OK
-//NHSTUB(Read, 0xff81ac7c)                           // OK
+//NHSTUB(Read, 0xff81ac7c)                           // OK!
 //NHSTUB(RenameFile_Fut, 0xff836868)                 // WRONG, not found yet
 NHSTUB(RenameFile_Fut, 0xFF810B1C)                   // ToDo: nullsub_1
 //NHSTUB(SetAutoShutdownTime, 0xff895bec)            // OK
@@ -111,8 +113,10 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(_sqrt, 0xffb5cf50)
 //NHSTUB(close, 0xff81aa94)                          // OK!
 //NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
+NHSTUB(closedir, 0xFFA95C40)                         // OK, like SX210
 //NHSTUB(closefastdir, 0xffa95e28)                   // same as closedir
-//NHSTUB(free, 0xff81415c)                           // maybe ok
+NHSTUB(closefastdir, 0xFFA95C40)                     // aka. closedir
+//NHSTUB(free, 0xff81415c)                           // OK
 //NHSTUB(kbd_p1_f, 0xff83484c)                       // OK
 //NHSTUB(kbd_p1_f_cont, 0xff834858)                  // OK
 //NHSTUB(kbd_p2_f, 0xff8340d0)                       // maybe ok
@@ -123,12 +127,12 @@ NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
 //NHSTUB(memcmp, 0xff82066c)                         // OK
 //NHSTUB(memcpy, 0xff83fae8)                         // OK
 //NHSTUB(memset, 0xffa15ddc)                         // OK
-//NHSTUB(mkdir, 0xff837254)                          // maybe ok
+//NHSTUB(mkdir, 0xff837254)                          // OK
 //NHSTUB(mktime_ext, 0xff8ac9f0)
 //NHSTUB(open, 0xff81a9e4)                           // OK!
 //NHSTUB(opendir, 0xffa95c90)                        // looks OK
 //NHSTUB(rand, 0xff820774)                           // OK
-//NHSTUB(read, 0xff81ac7c)                           // OK
+//NHSTUB(read, 0xff81ac7c)                           // OK!
 //NHSTUB(srand, 0xff820768)                          // OK
 //NHSTUB(stat, 0xFF810B1C)                           // ToDo: nullsub_1
 NHSTUB(stat, 0xff836f1c)                             // maybe ok
@@ -136,8 +140,7 @@ NHSTUB(stat, 0xff836f1c)                             // maybe ok
 NHSTUB(strcat, 0xFF8AC1AC)                           // OK
 //NHSTUB(strchr, 0xff813fe4)                         // OK
 //NHSTUB(strcmp, 0xff820628)                         // OK
-//NHSTUB(strcpy, 0xff820610)                         // WRONG this is eventproc_export_strcpy()
-NHSTUB(strcpy, 0xFF813F5C)                           // OK
+//NHSTUB(strcpy, 0xff820610)                         // OK
 //NHSTUB(strftime, 0xff8ac3f8)                       // maybe ok
 //NHSTUB(strlen, 0xff814030)                         // OK
 //NHSTUB(strncmp, 0xff813f98)                        // OK
