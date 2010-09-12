@@ -18,7 +18,7 @@ void taskCreateHook(int *p) {
     //if(p[0]==0xFF96BD30) p[0]=(int)movie_record_task;
     // task_InitFileModules
     if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
-    //if (p[0]==0xFF861B68) p[0]=(int)JogDial_task_my;
+    if(p[0]==0xFF861B68) p[0]=(int)JogDial_task_my;
 }
 
 // like SX10
@@ -54,19 +54,12 @@ void boot() {    //#fs
     for(i=0;i<canon_bss_len/4;i++)
         canon_bss_start[i]=0;
 
-    // ##############################################################################################################################
-    // Camera did shutdown cause by messed up filessystem on SD-Card
-    // Remember to reformat your sd-card and copy fresh files to avoid strange error / crash / shutdown or check filesystem
-    // also delete chdk config file may help
-    // ##############################################################################################################################
-
     // see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
     *(int*)0x1938=(int)taskCreateHook;           // ROM:FF810698
     *(int*)0x193C=(int)taskCreateHook2;          // ROM:FF8106D8
 
-    // ROM:FF861134 similar to SX10 (but no +4 and values are >> 8)
-    // Search on 0x12345678 finds function called by this (near kbd_p1_f)
-    *(int*)(0x24B8)=(*(int*)0xC0220110)&1 ? 0x400000 : 0x200000; // replacement of sub_FF834580 for correct power-on.
+    // ROM:FF861134 similar to SX10, G11
+    *(int*)(0x24B8)=(*(int*)0xC0220110)&1 ? 0x400000 : 0x200000;   // replacement for correct power-on ?!?
 
     //debug_led(1);
     //debug_led(0);
@@ -189,10 +182,10 @@ void __attribute__((naked,noinline)) uHwSetup_my() {    //#fs
             "BL      sub_FF815B7C\n"             // termDeviceCreate()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF815B7C\n"        // "termDeviceCreate"
-            "LDRLT   R0, =0xFF815B7C\n"          // + compiler does not like ADRLT
+            "LDRLT   R0, =0xFF815B7C\n"          // compiler does not like ADRLT
             "BLLT    sub_FF815F4C\n"             // err_init_task()
             //"ADR     R0, =0xFF815F84\n"        // "/_term"
-            "LDR     R0, =0xFF815F84\n"          // + compiler does not like ADR
+            "LDR     R0, =0xFF815F84\n"          // compiler does not like ADR
             "BL      sub_FF813BF0\n"             // stdioSetup()
             "CMP     R0, #0\n"
             //"ADRLT   R0, =0xFF813BF0\n"        // "stdioSetup"
@@ -474,6 +467,269 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
             "LDMFD   SP!, {R4-R6,PC}\n"
     );
 };    //#fe
+
+// ROM:FF861B68
+void __attribute__((naked,noinline)) JogDial_task_my() {
+    asm volatile (
+            "STMFD   SP!, {R4-R11,LR}\n"
+            "SUB     SP, SP, #0x2C\n"
+            "BL      sub_FF861F54\n"             // LOCATION: JogDial.c:14
+            "LDR     R1, =0x24CC\n"
+            "LDR     R9, =0xFFB5F800\n"
+            "MOV     R0, #0\n"
+            "ADD     R2, SP, #0x14\n"
+            "ADD     R3, SP, #0x18\n"
+            "ADD     R10, SP, #0xC\n"
+            "ADD     R8, SP, #0x10\n"
+            "MOV     R7, #0\n"
+        "loc_FF861B94:\n"
+            "ADD     R3, SP, #0x18\n"
+            "ADD     R12, R3, R0,LSL#1\n"
+            "ADD     R2, SP, #0x14\n"
+            "STRH    R7, [R12]\n"
+            "ADD     R12, R2, R0,LSL#1\n"
+            "STRH    R7, [R12]\n"
+            "STR     R7, [R8,R0,LSL#2]\n"
+            "STR     R7, [R10,R0,LSL#2]\n"
+            "ADD     R0, R0, #1\n"
+            "CMP     R0, #1\n"
+            "BLT     loc_FF861B94\n"
+        "loc_FF861BC0:\n"
+            "LDR     R0, =0x24CC\n"
+            "MOV     R2, #0\n"
+            "LDR     R0, [R0,#8]\n"
+            "ADD     R1, SP, #0x4\n"
+            "BL      sub_FF83994C\n"             // LOCATION: KerQueue.c:0
+            "TST     R0, #1\n"
+            "MOVNE   R1, #0x25C\n"
+            //"ADRNE   R0, =0xFF861E8C\n"          // "JogDial.c"
+            "LDRNE   R0, =0xFF861E8C\n"          // compiler does not like ADRNE
+            "BLNE    sub_FF81EB14\n"             // DebugAssert()
+
+            // like G11
+            //------------------  added code ---------------------
+        "labelA:\n"
+            "LDR     R0, =jogdial_stopped\n"
+            "LDR     R0, [R0]\n"
+            "CMP     R0, #1\n"
+            "BNE     labelB\n"
+            "MOV     R0, #40\n"
+            "BL      _SleepTask\n"
+            "B       labelA\n"
+        "labelB:\n"
+            //------------------  original code ------------------
+
+            "LDR     R0, [SP,#0x4]\n"
+            "AND     R4, R0, #0xFF\n"
+            "AND     R0, R0, #0xFF00\n"
+            "CMP     R0, #0x100\n"
+            "BEQ     loc_FF861C44\n"
+            "CMP     R0, #0x200\n"
+            "BEQ     loc_FF861C7C\n"
+            "CMP     R0, #0x300\n"
+            "BEQ     loc_FF861ED8\n"
+            "CMP     R0, #0x400\n"
+            "BNE     loc_FF861BC0\n"
+            "CMP     R4, #0\n"
+            "LDRNE   R1, =0x30E\n"
+            //"ADRNE   R0, =0xFF861E8C\n"          // "JogDial.c"
+            "LDRNE   R0, =0xFF861E8C\n"          // compiler does not like ADRNE
+            "BLNE    sub_FF81EB14\n"             // DebugAssert()
+            "LDR     R2, =0xFFB5F7EC\n"
+            "ADD     R0, R4, R4,LSL#2\n"
+            "LDR     R1, [R2,R0,LSL#2]\n"
+            "STR     R7, [R1]\n"
+            "MOV     R1, #1\n"
+            "ADD     R0, R2, R0,LSL#2\n"
+        "loc_FF861C38:\n"
+            "LDR     R0, [R0,#8]\n"
+            "STR     R1, [R0]\n"
+            "B       loc_FF861BC0\n"
+        "loc_FF861C44:\n"
+            "LDR     R5, =0x24DC\n"
+            "LDR     R0, [R5,R4,LSL#2]\n"
+            "BL      sub_FF83A8E4\n"
+            //"ADR     R2, loc_FF861AD0\n"
+            "LDR     R2, =0xFF861AD0\n"          // compiler does not like ADR
+            "MOV     R1, R2\n"
+            "ORR     R3, R4, #0x200\n"
+            "MOV     R0, #0x28\n"
+            "BL      sub_FF83A800\n"
+            "TST     R0, #1\n"
+            "CMPNE   R0, #0x15\n"
+            "STR     R0, [R10,R4,LSL#2]\n"
+            "BEQ     loc_FF861BC0\n"
+            "LDR     R1, =0x271\n"
+            "B       loc_FF861E7C\n"
+        "loc_FF861C7C:\n"
+            "LDR     R1, =0xFFB5F7EC\n"
+            "ADD     R0, R4, R4,LSL#2\n"
+            "STR     R0, [SP,#0x28]\n"
+            "ADD     R0, R1, R0,LSL#2\n"
+            "STR     R0, [SP,#0x24]\n"
+            "LDR     R0, [R0,#4]\n"
+            "LDR     R0, [R0]\n"
+            "MOV     R2, R0,ASR#16\n"
+            "ADD     R0, SP, #0x18\n"
+            "ADD     R0, R0, R4,LSL#1\n"
+            "STR     R0, [SP,#0x20]\n"
+            "STRH    R2, [R0]\n"
+            "ADD     R0, SP, #0x14\n"
+            "ADD     R0, R0, R4,LSL#1\n"
+            "STR     R0, [SP,#0x1C]\n"
+            "LDRSH   R3, [R0]\n"
+            "SUB     R0, R2, R3\n"
+            "CMP     R0, #0\n"
+            "BNE     loc_FF861D0C\n"
+            "LDR     R0, [R8,R4,LSL#2]\n"
+            "CMP     R0, #0\n"
+            "BEQ     loc_FF861E34\n"
+            "LDR     R5, =0x24DC\n"
+            "LDR     R0, [R5,R4,LSL#2]\n"
+            "BL      sub_FF83A8E4\n"
+            //"ADR     R2, sub_FF861ADC\n"         // JogDial.c:824
+            "LDR     R2, =0xFF861ADC\n"          // compiler does not like ADR
+            "MOV     R1, R2\n"
+            "ORR     R3, R4, #0x300\n"
+            "MOV     R0, #0x1F4\n"
+            "BL      sub_FF83A800\n"
+            "TST     R0, #1\n"
+            "CMPNE   R0, #0x15\n"
+            "STR     R0, [R5,R4,LSL#2]\n"
+            "BEQ     loc_FF861E34\n"
+            "LDR     R1, =0x28E\n"
+            "B       loc_FF861E2C\n"
+        "loc_FF861D0C:\n"
+            "MOV     R1, R0\n"
+            "RSBLT   R0, R0, #0\n"
+            "MOVLE   R5, #0\n"
+            "MOVGT   R5, #1\n"
+            "CMP     R0, #0xFF\n"
+            "BLS     loc_FF861D4C\n"
+            "CMP     R1, #0\n"
+            "RSBLE   R0, R3, #0xFF\n"
+            "ADDLE   R0, R0, #0x7F00\n"
+            "ADDLE   R0, R0, R2\n"
+            "RSBGT   R0, R2, #0xFF\n"
+            "ADDGT   R0, R0, #0x7F00\n"
+            "ADDGT   R0, R0, R3\n"
+            "ADD     R0, R0, #0x8000\n"
+            "ADD     R0, R0, #1\n"
+            "EOR     R5, R5, #1\n"
+        "loc_FF861D4C:\n"
+            "STR     R0, [SP,#0x8]\n"
+            "LDR     R0, [R8,R4,LSL#2]\n"
+            "CMP     R0, #0\n"
+            "BEQ     loc_FF861D9C\n"
+            "LDR     R1, =0xFFB5F7E4\n"
+            "ADD     R1, R1, R4,LSL#3\n"
+            "LDR     R1, [R1,R5,LSL#2]\n"
+            "CMP     R1, R0\n"
+            "BEQ     loc_FF861DB8\n"
+            "ADD     R11, R4, R4,LSL#1\n"
+            "ADD     R6, R9, R11,LSL#2\n"
+            "LDRB    R0, [R6,#9]\n"
+            "CMP     R0, #1\n"
+            "LDREQ   R0, [R6,#4]\n"
+            "BLEQ    sub_FF89583C\n"
+            "LDRB    R0, [R6,#8]\n"
+            "CMP     R0, #1\n"
+            "BNE     loc_FF861DB8\n"
+            "LDR     R0, [R9,R11,LSL#2]\n"
+            "B       loc_FF861DB4\n"
+        "loc_FF861D9C:\n"
+            "ADD     R0, R4, R4,LSL#1\n"
+            "ADD     R1, R9, R0,LSL#2\n"
+            "LDRB    R1, [R1,#8]\n"
+            "CMP     R1, #1\n"
+            "BNE     loc_FF861DB8\n"
+            "LDR     R0, [R9,R0,LSL#2]\n"
+        "loc_FF861DB4:\n"
+            "BL      sub_FF89583C\n"
+        "loc_FF861DB8:\n"
+            "LDR     R0, =0xFFB5F7E4\n"
+            "LDR     R1, [SP,#0x8]\n"
+            "ADD     R6, R0, R4,LSL#3\n"
+            "LDR     R0, [R6,R5,LSL#2]\n"
+            "BL      sub_FF89576C\n"
+            "LDR     R0, [R6,R5,LSL#2]\n"
+            "STR     R0, [R8,R4,LSL#2]\n"
+            "LDR     R0, [SP,#0x20]\n"
+            "LDR     R1, [SP,#0x1C]\n"
+            "LDRH    R0, [R0]\n"
+            "STRH    R0, [R1]\n"
+            "ADD     R0, R4, R4,LSL#1\n"
+            "ADD     R0, R9, R0,LSL#2\n"
+            "LDRB    R0, [R0,#9]\n"
+            "CMP     R0, #1\n"
+            "BNE     loc_FF861E34\n"
+            "LDR     R5, =0x24DC\n"
+            "LDR     R0, [R5,R4,LSL#2]\n"
+            "BL      sub_FF83A8E4\n"
+            //"ADR     R2, sub_FF861ADC\n"         // LOCATION: JogDial.c:824
+            "LDR     R2, =0xFF861ADC\n"          // compiler does not like ADR
+            "MOV     R1, R2\n"
+            "ORR     R3, R4, #0x300\n"
+            "MOV     R0, #0x1F4\n"
+            "BL      sub_FF83A800\n"
+            "TST     R0, #1\n"
+            "CMPNE   R0, #0x15\n"
+            "STR     R0, [R5,R4,LSL#2]\n"
+            "BEQ     loc_FF861E34\n"
+            "MOV     R1, #0x2E8\n"
+        "loc_FF861E2C:\n"
+            //"ADR     R0, =0xFF861E8C\n"          // "JogDial.c"
+            "LDR     R0, =0xFF861E8C\n"          // compiler does not like ADR
+            "BL      sub_FF81EB14\n"             // DebugAssert()
+        "loc_FF861E34:\n"
+            "ADD     R0, R4, R4,LSL#1\n"
+            "ADD     R0, R9, R0,LSL#2\n"
+            "LDRB    R0, [R0,#0xA]\n"
+            "CMP     R0, #1\n"
+            "BNE     loc_FF861EBC\n"
+            "LDR     R0, =0x24CC\n"
+            "LDR     R0, [R0,#0xC]\n"
+            "CMP     R0, #0\n"
+            "BEQ     loc_FF861EBC\n"
+            //"ADR     R2, loc_FF861AD0\n"
+            "LDR     R2, =0xFF861AD0\n"          // compiler does not like ADR
+            "MOV     R1, R2\n"
+            "ORR     R3, R4, #0x400\n"
+            "BL      sub_FF83A800\n"
+            "TST     R0, #1\n"
+            "CMPNE   R0, #0x15\n"
+            "STR     R0, [R10,R4,LSL#2]\n"
+            "BEQ     loc_FF861BC0\n"
+            "LDR     R1, =0x2F3\n"
+        "loc_FF861E7C:\n"
+            //"ADR     R0, =0xFF861E8C\n"          // "JogDial.c"
+            "LDR     R0, =0xFF861E8C\n"          // compiler does not like ADR
+            "BL      sub_FF81EB14\n"             // DebugAssert()
+            "B       loc_FF861BC0\n"
+
+        "loc_FF861EBC:\n"
+            "LDR     R1, =0xFFB5F7EC\n"
+            "LDR     R0, [SP,#0x28]\n"
+            "LDR     R0, [R1,R0,LSL#2]\n"
+            "STR     R7, [R0]\n"
+            "LDR     R0, [SP,#0x24]\n"
+            "MOV     R1, #1\n"
+            "B       loc_FF861C38\n"
+        "loc_FF861ED8:\n"
+            "LDR     R0, [R8,R4,LSL#2]\n"
+            "CMP     R0, #0\n"
+            "MOVEQ   R1, #0x300\n"
+            //"ADREQ   R0, =0xFF861E8C\n"          // "JogDial.c"
+            "LDREQ   R0, =0xFF861E8C\n"          // compiler does not like ADREQ
+            "BLEQ    sub_FF81EB14\n"             // DebugAssert()
+            "ADD     R0, R4, R4,LSL#1\n"
+            "ADD     R0, R9, R0,LSL#2\n"
+            "LDR     R0, [R0,#4]\n"
+            "BL      sub_FF89583C\n"
+            "STR     R7, [R8,R4,LSL#2]\n"
+            "B       loc_FF861BC0\n"
+    );
+}
 
 void __attribute__((naked,noinline)) sub_FF88FF58_my() {    //#fs
     asm volatile (
