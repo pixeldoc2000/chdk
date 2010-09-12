@@ -56,12 +56,11 @@ int get_zoom_x(int zp) {
     else return fl_tbl[zp]*10/fl_tbl[0];
 }
 
-#if 0
+/*
 int rec_switch_state(void) {
     return (physw_status[1] & 0x02000000);
 }
-#endif
-
+*/
 
 long get_vbatt_min() {
     return 2300;
