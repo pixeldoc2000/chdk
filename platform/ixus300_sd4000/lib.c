@@ -50,20 +50,45 @@ int get_flash_params_count(void){
     return 148;     // 0x94 = 148
 }
 
+/*
 // Force Screen to refresh like original Firmware
-// ToDo: canon firmware still has redraw issus after exiting ALT mode
+// ToDo: canon firmware and osd still has redraw issus
 void vid_bitmap_refresh() {
     extern int enabled_refresh_physical_screen;
-    enabled_refresh_physical_screen=1;
-    *(int*)0x926C=3;    // ROM:FFA114FC, like SX210
-    //_ScreenLock();
-    _RefreshPhysicalScreen(1);
-}
 
-/*
-// does not work
-void vid_bitmap_refresh() {
     _ScreenLock();
+    enabled_refresh_physical_screen=1;
+    //*(int*)0x926C=3;    // ROM:FFA114FC, like SX210
+    //*(int*)0x926C=2;    // ?!?
+    *(int*)0x926C=1;    // better than 3
     _RefreshPhysicalScreen(1);
 }
 */
+
+// Force Screen to refresh like original Firmware
+// from SX210, thanks asm1989
+void vid_bitmap_refresh() {
+    extern int enabled_refresh_physical_screen;
+    extern int full_screen_refresh;
+
+    // i've tried refreshphysical screen (screen unlock) and that caused the canon and
+    // function menu to not display at all. This seems to work and is called in a similar
+    // way in other places where original OSD should be refreshed.
+    extern void _LockAndRefresh();   // wrapper function for screen lock
+    extern void _UnlockAndRefresh();   // wrapper function for screen unlock
+
+    _LockAndRefresh();
+
+    enabled_refresh_physical_screen=1;
+    full_screen_refresh=3;   // found in ScreenUnlock underneath a CameraLog.c call
+
+    _UnlockAndRefresh();
+}
+
+void JogDial_CW(void) {
+    _PostLogicalEventForNotPowerType(0x876, 2);  // RotateJogDialRight at levent_table
+}
+
+void JogDial_CCW(void) {
+    _PostLogicalEventForNotPowerType(0x877, 2);  // RotateJogDialLeft at levent_table
+}
