@@ -19,6 +19,7 @@ const ApertureSize aperture_sizes_table[] = {
     { 18, 576, "8.0" },
 };
 
+// ROM:FFC15ED0
 const ShutterSpeed shutter_speeds_table[] = {
     { -12, -384, "15", 15000000 },
     { -11, -352, "13", 13000000 },
@@ -103,7 +104,7 @@ static const CapturemodeMap modemap[] = {
     { MODE_AV,                 32770 }, // OK
     { MODE_VIDEO_SPEED,        33288 }, // Highspeed Burst ?!?
     { MODE_VIDEO_STD,          2612  }, // OK
-    { MODE_VIDEO_SLOWMOTION,   2617  }, // OK
+    //{ MODE_VIDEO_SLOWMOTION,   2617  }, // OK
     { MODE_VIDEO_COLOR_SWAP,   2611  }, // OK
     { MODE_VIDEO_COLOR_ACCENT, 2610  }, // OK
     { MODE_STITCH,             33292 }, // OK
