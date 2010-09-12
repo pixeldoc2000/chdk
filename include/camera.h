@@ -2303,18 +2303,18 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus300_sd4000)
-    #define CAM_PROPSET                 2
+    #define CAM_PROPSET                 2   // ?!?
     #define CAM_DRYOS                   1
     #define CAM_DRYOS_2_3_R39           1   // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
     #undef  CAM_BITMAP_PALETTE              // shut up compiler
-    #define CAM_BITMAP_PALETTE          3   // fix wrong CHDK ui colors (video buffer)
+    #define CAM_BITMAP_PALETTE          2   // fix wrong CHDK ui colors (video buffer) ?!?
 
     #undef CAM_UNCACHED_BIT             // shut up compiler
     #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
 
-    #define CAM_RAW_ROWPIX              3336   // for new 8 MP
-    #define CAM_RAW_ROWS                2480   // for new 8 MP
+    #define CAM_RAW_ROWPIX              3336   // ?!?
+    #define CAM_RAW_ROWS                2480   // ?!?
     #undef CAM_HAS_ERASE_BUTTON
     #undef CAM_REMOTE
     #undef CAM_SYNCH
@@ -2327,34 +2327,34 @@
     //#define DNG_SUPPORT                 1
     //#define CAM_HAS_JOGDIAL             1
 
-    //#define CAM_ADJUSTABLE_ALT_BUTTON   1       // ToDo: Camera has no Direct Print Button (support for multiple buttons to enter ALT mode needed)
+    //#define CAM_ADJUSTABLE_ALT_BUTTON   1       // ToDo
 
-    // pattern
+    // pattern ?!?
     #define cam_CFAPattern 0x01000201   // Green  Blue  Red  Green
-    // color
+    // color ?!?
     #define CAM_COLORMATRIX1                               \
       640019, 1000000, -220031, 1000000, -96241, 1000000,  \
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
-    #define cam_CalibrationIlluminant1 1 // Daylight
-    // cropping
+    #define cam_CalibrationIlluminant1 1 // Daylight ?!?
+    // cropping ?!?
     #define CAM_JPEG_WIDTH  3264
     #define CAM_JPEG_HEIGHT 2448
     #define CAM_ACTIVE_AREA_X1 10
     #define CAM_ACTIVE_AREA_Y1 8
     #define CAM_ACTIVE_AREA_X2 3302
     #define CAM_ACTIVE_AREA_Y2 2474
-    // camera name
+    // camera name ?!?
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
     #define DNG_EXT_FROM ".CR2"
 
-    // ---------------------> from SX200IS <------------------------------
     /*
+    // ---------------------> from SX200IS <------------------------------
     //nandoide sept-2009
     #undef CAM_USES_ASPECT_CORRECTION
-    #undef CAM_USES_ASPECT_YCORRECTION
     #define CAM_USES_ASPECT_CORRECTION  1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized
+    #undef CAM_USES_ASPECT_YCORRECTION
     #define CAM_USES_ASPECT_YCORRECTION  0  //only uses mappings on x coordinate
 
     // reyalp TODO not sure this stuff belongs in camera.h there will probably only be a few different setups
@@ -2380,22 +2380,22 @@
     #define EDGE_HMARGIN 20
 
     //games mappings
-   #undef GAMES_SCREEN_WIDTH
-   #undef GAMES_SCREEN_HEIGHT
-   #define GAMES_SCREEN_WIDTH 360
-   #define GAMES_SCREEN_HEIGHT 240
-   #undef ASPECT_GAMES_XCORRECTION
-   // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
-   // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
-   // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
-   #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
-   #undef ASPECT_GAMES_YCORRECTION
-   #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
+    #undef GAMES_SCREEN_WIDTH
+    #undef GAMES_SCREEN_HEIGHT
+    #define GAMES_SCREEN_WIDTH 360
+    #define GAMES_SCREEN_HEIGHT 240
+    #undef ASPECT_GAMES_XCORRECTION
+    // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
+    // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+    // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
+    #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
+    #undef ASPECT_GAMES_YCORRECTION
+    #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
-   //zebra letterbox for saving memory
-   #undef ZEBRA_HMARGIN0
-   #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
-   */
+    //zebra letterbox for saving memory
+    #undef ZEBRA_HMARGIN0
+    #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+    */
 //----------------------------------------------------------
 
 

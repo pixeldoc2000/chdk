@@ -22,13 +22,17 @@ DEF(led_table, 0x24AC)    // R0 -> 0x24A4 + 0x8
 DEF(playrec_mode,0x2D78)    // ROM:FF838AE4 (ROM:FF882328) search for String "MenuIn" 0x2D74 + 4 ?!?
 
 // like SX210
-// ROM:FFA13398                 STMFD   SP!, {R4,LR}
-// ROM:FFA1339C                 LDR     R4, =0x92AC  <---
-// ROM:FFA133A0                 LDR     R0, [R4,#0x20] <---
-// ROM:FFA133A4                 CMN     R0, #1
-// ROM:FFA133A8                 LDREQ   R1, =0x5BC
-// ROM:FFA133AC                 ADREQ   R0, aWindow_c   ; "Window.c"
-DEF(enabled_refresh_physical_screen, 0x92CC)    // ROM:FFA1339C 0x92AC + 0x20 = 0x92CC
+// ROM:FFA1356C ScreenLock                              ; CODE XREF: sub_FFA121C0
+// ROM:FFA1356C                 STMFD   SP!, {R4,LR}
+// ROM:FFA13570                 LDR     R4, =0x92AC <---
+// ROM:FFA13574                 LDR     R0, [R4,#0x20] <---
+// ROM:FFA13578                 CMP     R0, #0
+// ROM:FFA1357C                 BNE     loc_FFA13590
+// ROM:FFA13580                 ADR     R1, aScreenlock ; "ScreenLock"
+// ROM:FFA13584                 MOV     R0, #0x60
+// ROM:FFA13588                 BL      CameraLog       ; LOCATION: CameraLog.c:237
+// ROM:FFA1358C                 BL      sub_FF8ABEF8
+DEF(enabled_refresh_physical_screen, 0x92CC)    // ROM:FFA1339C or ROM:FFA13570, 0x92AC + 0x20 = 0x92CC
 
 // ROM:FFAC96B8 sub_FFAC96B8
 // ROM:FFAC96B8                 LDR     R1, =FlashParamsTable
