@@ -50,9 +50,9 @@ NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exis
 // --- stubs_entry.S (auto sig finder)
 //NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK
 //NHSTUB(AllocateUncacheableMemory, 0xff83a41c)      // OK!
-//NHSTUB(Close, 0xff836db8)                          // does point to eventproc_export_Close
-NHSTUB(Close, 0xFF81AA94)                            // OK
-//NHSTUB(CreateTask, 0xff81e83c)                     // OK eventproc
+//NHSTUB(Close, 0xff836db8)                          // OK, eventproc
+//NHSTUB(Close, 0xFF81AA94)                          // close ?!?
+//NHSTUB(CreateTask, 0xff81e83c)                     // OK, eventproc
 //NHSTUB(DeleteFile_Fut, 0xff836730)                 // OK
 //NHSTUB(ExecuteEventProcedure, 0xff88b9c0)          // maybe ok, there are two simular functions
 NHSTUB(ExecuteEventProcedure, 0xFF88B948)            // OK
@@ -86,8 +86,8 @@ NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)          // maybe ok
 NHSTUB(MoveFocusLensToDistance, 0xFFB2289C)          // ?!?
 //NHSTUB(MoveZoomLensWithPoint, 0xffab6b64)          // maybe ok
 //NHSTUB(NewTaskShell, 0xff88f06c)                   // OK
-//NHSTUB(Open, 0xff86f13c)                           // WRONG
-NHSTUB(Open, 0xFF81A9E4)                             // maybe ok, don't cause shutdown
+//NHSTUB(Open, 0xff86f13c)                           // sigfinder, WRONG ?
+//NHSTUB(Open, 0xFF81A9E4)                           // open, don't cause shutdown
 //NHSTUB(Open, 0xFF836D4C)                           // like SX210, cause shutdown
 //NHSTUB(PostLogicalEventForNotPowerType, 0xff893948) // OK!
 //NHSTUB(PostLogicalEventToUI, 0xff893994)           // OK
@@ -129,7 +129,7 @@ NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
 //NHSTUB(memset, 0xffa15ddc)                         // OK
 //NHSTUB(mkdir, 0xff837254)                          // OK
 //NHSTUB(mktime_ext, 0xff8ac9f0)
-//NHSTUB(open, 0xff81a9e4)                           // OK!
+//NHSTUB(open, 0xff81a9e4)                           // OK!!
 //NHSTUB(opendir, 0xffa95c90)                        // looks OK
 //NHSTUB(rand, 0xff820774)                           // OK
 //NHSTUB(read, 0xff81ac7c)                           // OK!
