@@ -30,17 +30,38 @@ DEF(playrec_mode,0x2D78)    // ROM:FF838AE4 (ROM:FF882328) search for String "Me
 // ROM:FFA133AC                 ADREQ   R0, aWindow_c   ; "Window.c"
 DEF(enabled_refresh_physical_screen, 0x92CC)    // ROM:FFA1339C 0x92AC + 0x20 = 0x92CC
 
-DEF(FlashParamsTable,0xFFC00624)    // referenced at ROM:FFAC96B8
+// ROM:FFAC96B8 sub_FFAC96B8
+// ROM:FFAC96B8                 LDR     R1, =FlashParamsTable
+// ROM:FFAC96BC                 LDR     R0, [R1,R0,LSL#2]
+// ROM:FFAC96C0                 BX      LR
+DEF(FlashParamsTable, 0xFFC00624)    // referenced at ROM:FFAC96B8
+
+// ROM:FF890234, in function StartRecModeMenu() or eventproc_StartRecModeMenu()
+DEF(canon_menu_active, 0x3040)   // 0x303C + 4 ?!?
+
+// ROM:FF8A3280, in taskcreate_DSITask()
+DEF(canon_shoot_menu_active, 0x3D550)   // ?!?
+
+// search for string "PressRightButton"
+DEF(levent_table, 0xFFB9F59C)
+
+// ROM:FF96A780 ?!?
+DEF(movie_status, 0x6A14)   // 0x69D8 + 0x3C ?!?
+
+// ROM:FF99D340
+DEF(recreview_hold, 0x780E)   // 0x780C + 2 ?!?
+
+// ROM:FF965978
+DEF(zoom_busy, 0x9DC0)  // 0x68EC + 0x1C ?!?
+
+// ROM:FF961C50
+DEF(focus_busy, 0x67F0) //  0x67E8 + 0x8 ?!?
+
+// ROM:FFACC8B4, search for "ZoomCon_EnterCaptModeChange"
+DEF(zoom_status, 0x315B)   // ?!?
+
 
 // --- ToDo
-DEF(zoom_busy, 0x9DC0)  //0x9DAC + 0x14
-DEF(focus_busy, 0x9D50) //  0x9CB8
-DEF(canon_menu_active,0xB55C)
-DEF(canon_shoot_menu_active,0xAE15)   // 0xAE14+1
-DEF(recreview_hold, 0xABE8) // 0xAB38+0xB0
-DEF(movie_status, 0x5570)  // 0x5538 + 0x38
-DEF(some_flag_for_af_scan, 0xD688)
-DEF(zoom_status, 0xD7C4)
-DEF(some_f_for_dng, 0x8934)
-DEF(second_ext_for_dng, 0x8954)
-DEF(levent_table,0xFFE60474)
+DEF(some_flag_for_af_scan, 0x0)
+DEF(some_f_for_dng, 0x0)
+DEF(second_ext_for_dng, 0x0)
