@@ -64,6 +64,8 @@ DEF(focus_busy, 0x67F0) //  0x67E8 + 0x8 ?!?
 // ROM:FFACC8B4, search for "ZoomCon_EnterCaptModeChange"
 DEF(zoom_status, 0x315B)   // ?!?
 
+// ROM:FFA114FC, called by RefreshPhysicalScreen()
+DEF(full_screen_refresh, 0x926C)
 
 // --- ToDo
 DEF(some_flag_for_af_scan, 0x0)
