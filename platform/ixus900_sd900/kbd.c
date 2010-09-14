@@ -23,6 +23,7 @@ static int shoot_counter=0;
 #define USB_MASK (0x40000)
 #define USB_REG 2
 
+// ToDo: override key and feather bits to avoid feather osd messing up chdk display in ALT mode like SD4000
 #define KEYS_MASK0 (0x00000000)
 #define KEYS_MASK1 (0xc0000000)   // (0xc0800000)
 #define KEYS_MASK2 (0x0ffc)
@@ -36,7 +37,7 @@ static int shoot_counter=0;
 
 long __attribute__((naked)) wrap_kbd_p1_f();
 
-// called from capt_seq.c in sub_FF995A50_my()
+// called by capt_seq.c at sub_FF995A50_my()
 void wait_until_remote_button_is_released(void) {
     int count1;
     int count2;
@@ -203,6 +204,8 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
 //extern void touch_wheel_print_on();
 //extern void touch_wheel_print_off();
 
+
+// ToDo: test SD4000 methode without kbd_fetch_data()
 void my_kbd_read_keys() {
     //debug_led(1);
     kbd_prev_state[0] = kbd_new_state[0];
