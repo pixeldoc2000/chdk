@@ -50,6 +50,9 @@ NSTUB(eventproc_export_PutsCameraLogEvent, 0xff8372b8)
 NSTUB(eventproc_export_NewTaskShell, 0xff837320)
 
 NSTUB(eventproc_export_ExMem, 0xff837338)
+NSTUB(eventproc_export_CameraLog, 0xff83738c)
+
+NSTUB(eventproc_export_DryShell, 0xff837528)
 
 NSTUB(eventproc_export_CreateCountingSemaphore, 0xff839c64)
 NSTUB(eventproc_export_DeleteSemaphore, 0xff839cbc)
