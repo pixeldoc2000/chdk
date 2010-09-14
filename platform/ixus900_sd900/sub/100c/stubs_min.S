@@ -202,7 +202,7 @@ ROM:FF9E1F44                 STRB    R5, [SP,#0x10+var_D]
 ROM:FF9E1F48                 BEQ     loc_FF9E1F80
 ROM:FF9E1F4C                 BL      eventproc_export_PTM_RestoreUIProperty ; LOCATION: BootParam.c:316
 *******************/
-DEF(recreview_hold, 0x7EB0)   // ROM:FF9E1F18 after function aArSnd0x04x "AR:Snd:0x%04x", LDR R3, =0x7EB4; then 0x7EB4 - 0x4 = 0x7EB0 (quietschi's prescription, SD1000)
+DEF(recreview_hold, 0x7EB0)   // ROM:FF9E1F18 after function string "AR:Snd:0x%04x", LDR R3, =0x7EB4; then 0x7EB4 - 0x4 = 0x7EB0 (quietschi's prescription, SD1000)
 
 
 //DEF(zoom_status, 0x7DB0)   // from SD800 ROM:FF9EAADC ?
