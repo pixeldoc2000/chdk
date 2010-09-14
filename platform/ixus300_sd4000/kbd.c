@@ -20,11 +20,10 @@ static int remote_key, remote_count;
 static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
-#define KEYS_MASK0 (0x0000090F)
-//#define KEYS_MASK1 (0x000000F0)   // 0xF0 = override keys only
+#define KEYS_MASK0 (0x0000090F)     // physw_status[0]
 // override key and feather bits to avoid feather osd messing up chdk display in ALT mode
-#define KEYS_MASK1 (0x00000FF0)     // override 0xF0 (keys) + 0xF00 (feather)
-#define KEYS_MASK2 (0x00000000)
+#define KEYS_MASK1 (0x00000FF0)     // physw_status[1], override 0xF0 (keys) + 0xF00 (feather)
+#define KEYS_MASK2 (0x00000000)     // physw_status[2]
 //static long alt_mode_key_mask = 0x00000000;   // we use two Keys, no need to override
 
 #define SD_READONLY_FLAG (0x20000)
@@ -241,14 +240,36 @@ long kbd_get_autoclicked_key() {
     }
 #endif
 
+// ROM:FF861F98
+int Get_JogDial(void) {
+    return (*(int*)0xC0240104)>>16;     // 0xC0240000 + 0x104
+}
+
+static int new_jogdial=0, old_jogdial=0;
+
+long get_jogdial_direction(void) {
+    old_jogdial=new_jogdial;
+    new_jogdial=Get_JogDial();
+
+    if (old_jogdial<new_jogdial) {
+        //return JOGDIAL_LEFT;
+        return JOGDIAL_RIGHT;
+    } else if (old_jogdial>new_jogdial) {
+        return JOGDIAL_LEFT;
+        //return JOGDIAL_RIGHT;
+    } else {
+        return 0;
+    }
+}
+
 // Base values in Play Mode
 // physw_status[0] = 0x800C91F      // 1
 // physw_status[1] = 0xFFE          // 2 (Mode Switch: Auto)
 // physw_status[2] = 0x400000       // 3
 // Mode Switch:
-// physw_status[1] 0x1 Auto
-// physw_status[1] 0x0 Photo
-// physw_status[1] 0x2 Video
+// physw_status[1] 0x1 Auto Mode
+// physw_status[1] 0x0 Photo Mode
+// physw_status[1] 0x2 Video Mode
 // physw_status[2] 0x20000 SD-Card READONLY
 static KeyMap keymap[] = {
     { 0, KEY_UP         , 0x00000004 },
