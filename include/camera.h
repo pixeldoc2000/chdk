@@ -2325,7 +2325,7 @@
     //#define CAM_EV_IN_VIDEO             1
     #undef  CAM_VIDEO_CONTROL
     //#define DNG_SUPPORT                 1
-    //#define CAM_HAS_JOGDIAL             1
+    #define CAM_HAS_JOGDIAL             1
 
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1       // ToDo
 
