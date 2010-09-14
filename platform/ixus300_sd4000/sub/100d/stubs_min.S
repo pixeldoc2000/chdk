@@ -41,7 +41,7 @@ DEF(enabled_refresh_physical_screen, 0x92CC)    // ROM:FFA1339C or ROM:FFA13570,
 DEF(FlashParamsTable, 0xFFC00624)    // referenced at ROM:FFAC96B8
 
 // ROM:FF890234, in function StartRecModeMenu() or eventproc_StartRecModeMenu()
-DEF(canon_menu_active, 0x3040)   // 0x303C + 4 ?!?
+DEF(canon_menu_active, 0x3040)   // 0x303C + 4 ?!!
 
 // ROM:FF8A3280, in taskcreate_DSITask()
 DEF(canon_shoot_menu_active, 0x3D550)   // ?!?
@@ -51,6 +51,7 @@ DEF(levent_table, 0xFFB9F59C)
 
 // ROM:FF96A780 ?!?
 DEF(movie_status, 0x6A14)   // 0x69D8 + 0x3C ?!?
+//DEF(movie_status, 0x6A18)   // 0x69D8 + 0x40 ?!?
 
 // ROM:FF99D340
 DEF(recreview_hold, 0x780E)   // 0x780C + 2 ?!?
