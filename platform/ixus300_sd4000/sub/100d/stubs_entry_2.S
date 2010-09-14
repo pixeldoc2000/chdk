@@ -159,5 +159,5 @@ NHSTUB(strrchr, 0xFF814008)                          // OK
 
 
 // Special Stuff
-NHSTUB(UnlockAndRefresh, 0xFFA13398)   // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC
-NHSTUB(LockAndRefresh, 0xFFA13354)    // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98
+NHSTUB(UnlockAndRefresh, 0xFFA13398)   // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC, search "Window Instance"
+NHSTUB(LockAndRefresh, 0xFFA13354)    // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98, search "Window Instance"
