@@ -21,7 +21,9 @@ static int shoot_counter=0;
 #define DELAY_TIMEOUT 10000
 
 #define KEYS_MASK0 (0x0000090F)
-#define KEYS_MASK1 (0x000000F0)
+//#define KEYS_MASK1 (0x000000F0)   // 0xF0 = override keys only
+// override key and feather bits to avoid feather osd messing up chdk display in ALT mode
+#define KEYS_MASK1 (0x00000FF0)     // override 0xF0 (keys) + 0xF00 (feather)
 #define KEYS_MASK2 (0x00000000)
 //static long alt_mode_key_mask = 0x00000000;   // we use two Keys, no need to override
 
