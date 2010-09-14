@@ -469,6 +469,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
 };    //#fe
 
 // ROM:FF861B68
+// actually Task Name is task_RotarySw() not task_JogDial()
 void __attribute__((naked,noinline)) JogDial_task_my() {
     asm volatile (
             "STMFD   SP!, {R4-R11,LR}\n"
@@ -506,6 +507,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "LDRNE   R0, =0xFF861E8C\n"          // compiler does not like ADRNE
             "BLNE    sub_FF81EB14\n"             // DebugAssert()
 
+            // disable JodDial Task in ALT mode
             // like G11
             //------------------  added code ---------------------
         "labelA:\n"
