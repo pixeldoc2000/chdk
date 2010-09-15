@@ -21,8 +21,8 @@ void shutdown() {
 #define LED_DEBUG 0xc0220134    // Red Led (backside)
 //#define LED_DEBUG 0xC0223030    // Red AF Led (front)
 
-//#define DEBUG_LED_DELAY 2500000    // use beforce change CPU speed in boot.c
-#define DEBUG_LED_DELAY 50000000    // use after change CPU speed in boot.c
+#define DEBUG_LED_DELAY 2500000    // use beforce change CPU speed in boot.c
+//#define DEBUG_LED_DELAY 50000000    // use after change CPU speed in boot.c
 
 void debug_led(int state) {
     volatile long *p=(void*)LED_DEBUG;
@@ -71,7 +71,7 @@ void vid_bitmap_refresh() {
     extern int enabled_refresh_physical_screen;
     extern int full_screen_refresh;
 
-    // i've tried refreshphysical screen (screen unlock) and that caused the canon and
+    // asm1989: i've tried refreshphysical screen (screen unlock) and that caused the canon and
     // function menu to not display at all. This seems to work and is called in a similar
     // way in other places where original OSD should be refreshed.
     extern void _LockAndRefresh();   // wrapper function for screen lock
@@ -85,10 +85,16 @@ void vid_bitmap_refresh() {
     _UnlockAndRefresh();
 }
 
+// ROM:FFB9FA10 DCD aRotatejogdialright ; "RotateJogDialRight"
+// ROM:FFB9FA14 DCD 0x876
+// ROM:FFB9FA18 DCD 2
 void JogDial_CW(void) {
     _PostLogicalEventForNotPowerType(0x876, 2);  // RotateJogDialRight at levent_table
 }
 
+// ROM:FFB9FA1C DCD aRotatejogdialleft  ; "RotateJogDialLeft"
+// ROM:FFB9FA20 DCD 0x877
+// ROM:FFB9FA24 DCD 2
 void JogDial_CCW(void) {
     _PostLogicalEventForNotPowerType(0x877, 2);  // RotateJogDialLeft at levent_table
 }
