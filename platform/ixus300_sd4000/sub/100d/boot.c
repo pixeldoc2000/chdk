@@ -288,8 +288,8 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
     asm volatile (
             //"BL      sub_FF834434\n"           // taskcreate_PhySw()
             "BL      taskcreate_PhySw_my\n"      // +
-            "BL      sub_FF8379F8\n"             // task_ShootSeqTask()
-            //"BL      task_ShootSeqTask_my\n"   // +
+            //"BL      sub_FF8379F8\n"           // task_ShootSeqTask()
+            "BL      task_ShootSeqTask_my\n"     // +
 
             "BL      sub_FF83C0DC\n"
             //"BL      sub_FF8316A8\n"           // nullsub_201\n"
@@ -397,11 +397,10 @@ void __attribute__((naked,noinline)) sub_FF87D668_my() {    //#fs
             "BL      sub_FF83A1DC\n"             // LOCATION: KernelMisc.c:55
             "STR     R0, [R4,#8]\n"
             "MOV     R3, #0\n"
-            //"STR     R3, [SP,#0x10+var_10]\n"
             "STR     R3, [SP]\n"   // +
 
-            "LDR     R3, =0xFF87D2D8\n"      // LOCATION: SsShootTask.c:13
-            //"LDR     R3, =task_CaptSeqTask_my\n"    // + ToDo
+            //"LDR     R3, =0xFF87D2D8\n"      // LOCATION: SsShootTask.c:13
+            "LDR     R3, =task_CaptSeqTask_my\n"    // + ToDo
 
             //"ADR     R0, sub_FF87D900\n"       // "CaptSeqTask"
             "LDR     R0, =0xFF87D900\n"          // compiler does not like ADR
@@ -424,10 +423,10 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             "STR     R3, [SP]\n"
 
             //"ADR     R3, FF834400\n"           // task_PhySw()
-            //"LDR     R3, =0xFF834400\n"           // compiler does not like ADR
-            "LDR     R3, =mykbd_task\n"        // +
+            //"LDR     R3, =0xFF834400\n"        // compiler does not like ADR
+            "LDR     R3, =mykbd_task\n"          // +
             //"MOV     R2, #0x800\n"
-            "MOV     R2, #0x2000\n"            // + stack size for new task_PhySw so we don't have to do stack switch
+            "MOV     R2, #0x2000\n"              // + stack size for new task_PhySw so we don't have to do stack switch
 
             "MOV     R1, #0x17\n"
             //"ADR     R0, 0xFF83464C\n"         // "PhySw"
@@ -534,7 +533,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "BNE     loc_FF861BC0\n"
             "CMP     R4, #0\n"
             "LDRNE   R1, =0x30E\n"
-            //"ADRNE   R0, =0xFF861E8C\n"          // "JogDial.c"
+            //"ADRNE   R0, =0xFF861E8C\n"        // "JogDial.c"
             "LDRNE   R0, =0xFF861E8C\n"          // compiler does not like ADRNE
             "BLNE    sub_FF81EB14\n"             // DebugAssert()
             "LDR     R2, =0xFFB5F7EC\n"
@@ -589,7 +588,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "LDR     R5, =0x24DC\n"
             "LDR     R0, [R5,R4,LSL#2]\n"
             "BL      sub_FF83A8E4\n"
-            //"ADR     R2, sub_FF861ADC\n"         // JogDial.c:824
+            //"ADR     R2, sub_FF861ADC\n"       // JogDial.c:824
             "LDR     R2, =0xFF861ADC\n"          // compiler does not like ADR
             "MOV     R1, R2\n"
             "ORR     R3, R4, #0x300\n"
@@ -668,7 +667,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "LDR     R5, =0x24DC\n"
             "LDR     R0, [R5,R4,LSL#2]\n"
             "BL      sub_FF83A8E4\n"
-            //"ADR     R2, sub_FF861ADC\n"         // LOCATION: JogDial.c:824
+            //"ADR     R2, sub_FF861ADC\n"       // LOCATION: JogDial.c:824
             "LDR     R2, =0xFF861ADC\n"          // compiler does not like ADR
             "MOV     R1, R2\n"
             "ORR     R3, R4, #0x300\n"
@@ -680,7 +679,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "BEQ     loc_FF861E34\n"
             "MOV     R1, #0x2E8\n"
         "loc_FF861E2C:\n"
-            //"ADR     R0, =0xFF861E8C\n"          // "JogDial.c"
+            //"ADR     R0, =0xFF861E8C\n"        // "JogDial.c"
             "LDR     R0, =0xFF861E8C\n"          // compiler does not like ADR
             "BL      sub_FF81EB14\n"             // DebugAssert()
         "loc_FF861E34:\n"
@@ -704,7 +703,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "BEQ     loc_FF861BC0\n"
             "LDR     R1, =0x2F3\n"
         "loc_FF861E7C:\n"
-            //"ADR     R0, =0xFF861E8C\n"          // "JogDial.c"
+            //"ADR     R0, =0xFF861E8C\n"        // "JogDial.c"
             "LDR     R0, =0xFF861E8C\n"          // compiler does not like ADR
             "BL      sub_FF81EB14\n"             // DebugAssert()
             "B       loc_FF861BC0\n"
@@ -721,7 +720,7 @@ void __attribute__((naked,noinline)) JogDial_task_my() {
             "LDR     R0, [R8,R4,LSL#2]\n"
             "CMP     R0, #0\n"
             "MOVEQ   R1, #0x300\n"
-            //"ADREQ   R0, =0xFF861E8C\n"          // "JogDial.c"
+            //"ADREQ   R0, =0xFF861E8C\n"        // "JogDial.c"
             "LDREQ   R0, =0xFF861E8C\n"          // compiler does not like ADREQ
             "BLEQ    sub_FF81EB14\n"             // DebugAssert()
             "ADD     R0, R4, R4,LSL#1\n"
