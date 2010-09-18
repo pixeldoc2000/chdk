@@ -18,22 +18,22 @@ NHSTUB(SetScriptMode, 0xFF810F6C)                    // OK, like SX210
 NHSTUB(UnlockAF, 0xFF83831C)                         // OK, like SX210
 NHSTUB(DoAFLock, 0xFF8382E4)                         // OK, like SX210
 NHSTUB(GiveSemaphore, 0xFF839E38)                    // OK, not in use?
+NHSTUB(GetDrive_FreeClusters, 0xFF871E90)            // OK, like SX210, UI does show free space
+NHSTUB(PT_PlaySound, 0xFF8840B8)                     // OK, like SX210, plays sound on CHDK startup
+NHSTUB(rename, 0xFF83669C)                           // maybe OK, like SX210
+NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210
 
 
 // --- NULLSTUBS
 NHSTUB(EnterToCompensationEVF, 0xFF810B1C)           // ToDo: nullsub_1
 NHSTUB(ExitFromCompensationEVF, 0xFF810B1C)          // ToDo: nullsub_1
 NHSTUB(GetCurrentAvValue, 0xFF810B1C)                // ToDo: nullsub_1
-NHSTUB(GetDrive_FreeClusters, 0xFF810B1C)            // ToDo: nullsub_1, there are some simular functions around ROM:FF871DCC
 NHSTUB(GetZoomLensCurrentPoint, 0xFF810B1C)          // ToDo: nullsub_1
 NHSTUB(GetZoomLensCurrentPosition, 0xFF810B1C)       // ToDo: nullsub_1
-NHSTUB(PT_PlaySound, 0xFF810B1C)                     // ToDo: nullsub_1
 NHSTUB(TurnOffBackLight, 0xFF810B1C)                 // ToDo: nullsub_1
 NHSTUB(TurnOnBackLight, 0xFF810B1C)                  // ToDo: nullsub_1
-NHSTUB(qsort, 0xFF810B1C)                            // ToDo: nullsub_1, not found yet
-NHSTUB(rename, 0xFF810B1C)                           // ToDo: nullsub_1, not found yet
 NHSTUB(PostLEDMessage, 0xFF810B1C)                   // ToDo: nullsub_1, not found yet
-NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // ToDo: nullsub_1
+NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // ToDo: nullsub_1, maybe not available since canon firmware allow Zoom for Movie
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
 NHSTUB(PutInNdFilter, 0xFF810B1C)                    // ToDo: nullsub_1
 NHSTUB(PutOutNdFilter, 0xFF810B1C)                   // ToDo: nullsub_1
@@ -74,7 +74,7 @@ NHSTUB(ExecuteEventProcedure, 0xFF88B948)            // OK
 //NHSTUB(GetFocusLensSubjectDistance, 0xff9629b8)    // maybe ok
 //NHSTUB(GetFocusLensSubjectDistanceFromLens, 0xff962d40) // maybe ok
 //NHSTUB(GetOpticalTemperature, 0xff865314)          // maybe ok
-//NHSTUB(GetParameterData, 0xff9975f4)               // maybe ok
+//NHSTUB(GetParameterData, 0xff9975f4)               // OK, like SX210
 //NHSTUB(GetPropertyCase, 0xff88f660)                // OK
 //NHSTUB(GetSystemTime, 0xffab8d48)                  // OK!
 //NHSTUB(IsStrobeChargeCompleted, 0xff8da44c)
