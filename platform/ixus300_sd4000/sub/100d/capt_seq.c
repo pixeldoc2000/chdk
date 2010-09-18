@@ -7,8 +7,7 @@ static long *nrflag = (long*)0x6DB0;    // ?!? ROM:FF970AA0 at taskcreate_Shutte
 #include "../../../generic/capt_seq.c"
 
 // ROM:FF87D2D8 task_CaptSeqTask()
-//void __attribute__((naked,noinline)) capt_seq_task() {
-void __attribute__((naked,noinline)) task_CaptSeqTask_my() {
+void __attribute__((naked,noinline)) capt_seq_task() {
     asm volatile (
             "STMFD   SP!, {R3-R9,LR}\n"
             "LDR     R6, =0x2C7C\n"
