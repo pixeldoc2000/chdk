@@ -49,17 +49,21 @@ DEF(canon_shoot_menu_active, 0x3D550)   // ?!?
 // search for string "PressRightButton"
 DEF(levent_table, 0xFFB9F59C)
 
+/*
 // ROM:FF96A780 
 // ToDo: no valid data at any RAM address related to task_MovieRecord()
 // movie_status > 1 = recording video
 DEF(movie_status, 0x6A14)   // 0x69D8 + 0x3C ?!?
 //DEF(movie_status, 0x6A18)   // 0x69D8 + 0x40 ?!?
+*/
+// maybe ROM:FFA43140, 0x99F8 + 4, LOCATION: CDSGain.c:116 ?!?
+DEF(movie_status, 0x99FC)   // found with Memory Browser, 0x3 = Movie Mode, 0x0 = other Modes
 
 // ROM:FF99D340
 DEF(recreview_hold, 0x780E)   // 0x780C + 2 ?!?
 
 // ROM:FF965978
-DEF(zoom_busy, 0x9DC0)  // 0x68EC + 0x1C ?!?
+DEF(zoom_busy, 0x6908)  // 0x68EC + 0x1C ?!?
 
 // ROM:FF961C50
 DEF(focus_busy, 0x67F0) //  0x67E8 + 0x8 ?!?
