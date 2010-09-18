@@ -5,29 +5,44 @@
 
 const char * const new_sa = &_end;
 
-extern long wrs_kernel_bss_start;
-extern long wrs_kernel_bss_end;
+#define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
 // Forward declarations
-void CreateTask_spytask();
 void JogDial_task_my(void);
-void boot();
 
+/*
+// old Task Hook stuff
 void taskCreateHook(int *p) {
     p-=17;
-    // if(p[0]==0x)  p[0]=(int)capt_seq_task;
+    // if(p[0]==0x0)  p[0]=(int)capt_seq_task;
     //if(p[0]==0xFF96BD30) p[0]=(int)movie_record_task;
     // task_InitFileModules
     if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
     if(p[0]==0xFF861B68) p[0]=(int)JogDial_task_my;
 }
-
 // like SX10
 void taskCreateHook2(int *p) {
     p-=17;
     if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
 }
+*/
 
+void taskHook(context_t **context) {    //#fs
+    task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
+    if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
+    if(!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
+    if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
+    if(!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
+    if(!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
+    if(!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
+}    //#fe
+
+void CreateTask_spytask() {    //#fs
+    _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
+}    //#fe
+
+/*
+// old
 void boot() {    //#fs
     long *canon_data_src = (void*)0xFFC206D4;    // ROM:FF810130
     long *canon_data_dst = (void*)0x1900;        // ROM:FF810134
@@ -69,8 +84,110 @@ void boot() {    //#fs
     //asm volatile("B      sub_FF810354\n");
     asm volatile("B      sub_FF810354_my\n");    // +
 }; //#fe
+*/
+
+// ROM:FF81000C
+void __attribute__((naked,noinline)) boot() {
+    asm volatile (
+            "LDR     R1, =0xC0410000\n"
+            "MOV     R0, #0\n"
+            "STR     R0, [R1]\n"
+            "MOV     R1, #0x78\n"
+            "MCR     p15, 0, R1,c1,c0\n"
+            "MOV     R1, #0\n"
+            "MCR     p15, 0, R1,c7,c10, 4\n"
+            "MCR     p15, 0, R1,c7,c5\n"
+            "MCR     p15, 0, R1,c7,c6\n"
+            "MOV     R0, #0x3D\n"
+            "MCR     p15, 0, R0,c6,c0\n"
+            "MOV     R0, #0xC000002F\n"
+            "MCR     p15, 0, R0,c6,c1\n"
+            "MOV     R0, #0x35\n"
+            "MCR     p15, 0, R0,c6,c2\n"
+            "MOV     R0, #0x40000035\n"
+            "MCR     p15, 0, R0,c6,c3\n"
+            "MOV     R0, #0x80000017\n"
+            "MCR     p15, 0, R0,c6,c4\n"
+            "LDR     R0, =0xFF80002D\n"
+            "MCR     p15, 0, R0,c6,c5\n"
+            "MOV     R0, #0x34\n"
+            "MCR     p15, 0, R0,c2,c0\n"
+            "MOV     R0, #0x34\n"
+            "MCR     p15, 0, R0,c2,c0, 1\n"
+            "MOV     R0, #0x34\n"
+            "MCR     p15, 0, R0,c3,c0\n"
+            "LDR     R0, =0x3333330\n"
+            "MCR     p15, 0, R0,c5,c0, 2\n"
+            "LDR     R0, =0x3333330\n"
+            "MCR     p15, 0, R0,c5,c0, 3\n"
+            "MRC     p15, 0, R0,c1,c0\n"
+            "ORR     R0, R0, #0x1000\n"
+            "ORR     R0, R0, #4\n"
+            "ORR     R0, R0, #1\n"
+            "MCR     p15, 0, R0,c1,c0\n"
+            "MOV     R1, #0x80000006\n"
+            "MCR     p15, 0, R1,c9,c1\n"
+            "MOV     R1, #6\n"
+            "MCR     p15, 0, R1,c9,c1, 1\n"
+            "MRC     p15, 0, R1,c1,c0\n"
+            "ORR     R1, R1, #0x50000\n"
+            "MCR     p15, 0, R1,c1,c0\n"
+            "LDR     R2, =0xC0200000\n"
+            "MOV     R1, #1\n"
+            "STR     R1, [R2,#0x10C]\n"
+            "MOV     R1, #0xFF\n"
+            "STR     R1, [R2,#0xC]\n"
+            "STR     R1, [R2,#0x1C]\n"
+            "STR     R1, [R2,#0x2C]\n"
+            "STR     R1, [R2,#0x3C]\n"
+            "STR     R1, [R2,#0x4C]\n"
+            "STR     R1, [R2,#0x5C]\n"
+            "STR     R1, [R2,#0x6C]\n"
+            "STR     R1, [R2,#0x7C]\n"
+            "STR     R1, [R2,#0x8C]\n"
+            "STR     R1, [R2,#0x9C]\n"
+            "STR     R1, [R2,#0xAC]\n"
+            "STR     R1, [R2,#0xBC]\n"
+            "STR     R1, [R2,#0xCC]\n"
+            "STR     R1, [R2,#0xDC]\n"
+            "STR     R1, [R2,#0xEC]\n"
+            "STR     R1, [R2,#0xFC]\n"
+            "LDR     R1, =0xC0400008\n"
+            "LDR     R2, =0x430005\n"
+            "STR     R2, [R1]\n"
+            "MOV     R1, #1\n"
+            "LDR     R2, =0xC0243100\n"
+            "STR     R2, [R1]\n"
+            "LDR     R2, =0xC0242010\n"
+            "LDR     R1, [R2]\n"
+            "ORR     R1, R1, #1\n"
+            "STR     R1, [R2]\n"
+            "LDR     R0, =0xFFC206D4\n"          // canon_data_src
+            "LDR     R1, =0x1900\n"              // MEMBASEADDR
+            "LDR     R3, =0xF244\n"
+        "loc_FF81013C:\n"
+            "CMP     R1, R3\n"
+            "LDRCC   R2, [R0],#4\n"
+            "STRCC   R2, [R1],#4\n"
+            "BCC     loc_FF81013C\n"
+            "LDR     R1, =0x14B394\n"            // MEMISOSTART
+            "MOV     R2, #0\n"
+        "loc_FF810154:\n"
+            "CMP     R3, R1\n"
+            "STRCC   R2, [R3],#4\n"
+            "BCC     loc_FF810154\n"
+            //"B       sub_FF810354\n"
+            "B       sub_FF810354_my\n"          // +
+    );
+}    //#fe
+
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
+    // from SX210
+    *(int*)0x1934=(int)taskHook;   //was 1934 in sx200 if 1938 hangs
+    *(int*)0x1938=(int)taskHook;
+    *(int*)(0x24B8)= (*(int*)0xC022010C)&1 ? 0x400000 : 0x200000;    // ROM:FF861138
+
     asm volatile (
             "LDR     R0, =0xFF8103CC\n"
             "MOV     R1, #0\n"
@@ -400,8 +517,8 @@ void __attribute__((naked,noinline)) sub_FF87D668_my() {    //#fs
             "MOV     R3, #0\n"
             "STR     R3, [SP]\n"   // +
 
-            //"LDR     R3, =0xFF87D2D8\n"      // LOCATION: SsShootTask.c:13
-            "LDR     R3, =task_CaptSeqTask_my\n"    // + ToDo
+            //"LDR     R3, =0xFF87D2D8\n"        // LOCATION: SsShootTask.c:13
+            "LDR     R3, =capt_seq_task\n"    // +
 
             //"ADR     R0, sub_FF87D900\n"       // "CaptSeqTask"
             "LDR     R0, =0xFF87D900\n"          // compiler does not like ADR
@@ -917,9 +1034,4 @@ void __attribute__((naked,noinline)) sub_FF87185C_my() {    //#fs
             "ORR     R1, R1, #4\n"
             "B       loc_FF87196C\n"
     );
-};    //#fe
-
-// looks generic
-void CreateTask_spytask() {    //#fs
-    _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 };    //#fe
