@@ -1,6 +1,7 @@
 #include "lolevel.h"
 #include "platform.h"
 #include "core.h"
+#include "dryos31.h"
 
 const char * const new_sa = &_end;
 
