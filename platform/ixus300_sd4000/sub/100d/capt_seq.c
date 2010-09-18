@@ -96,7 +96,7 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() {
         "loc_FF87D3A4:\n"                        // jumptable FF87D324 entry 0
             "BL      sub_FF87DC9C\n"             // SsPrepareSeq.c
 
-            //"BL      shooting_expo_param_override\n"  // +
+            "BL      shooting_expo_param_override\n"  // +
             "BL      sub_FF87AD78\n"
 
             // copied over from SX10 don't know if we need it yet
@@ -382,8 +382,8 @@ void __attribute__((naked,noinline)) sub_FF970A8C_my() {
             "BL      sub_FF973794\n"
 
             //"BL      wait_until_remote_button_is_released\n"  // +
-            //"BL      capt_seq_hook_set_nr\n"  // +
-            "B       sub_FF970B40\n"            // continue in canon firmware
+            "BL      capt_seq_hook_set_nr\n"  // +
+            "B       sub_FF970B40\n"            // + continue in canon firmware
 
             /*
             "LDR     R0, [R4,#0x1C]\n"
