@@ -96,8 +96,14 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() {
         "loc_FF87D3A4:\n"                        // jumptable FF87D324 entry 0
             "BL      sub_FF87DC9C\n"             // SsPrepareSeq.c
 
-            "BL      sub_FF87AD78\n"
             //"BL      shooting_expo_param_override\n"  // +
+            "BL      sub_FF87AD78\n"
+
+            // copied over from SX10 don't know if we need it yet
+            // this code added to avoid some incorrect behavior if overrides are used.
+            // but it can cause some unexpected side effects. In this case, remove this code!
+            //"MOV     R0, #0\n"
+            //"STR     R0, [R4,#0x24]\n"  // fixes overrides  behavior at short shutter press
 
             "LDR     R0, [R4,#0x24]\n"
             "CMP     R0, #0\n"
@@ -324,13 +330,13 @@ void __attribute__((naked,noinline)) task_CaptSeqTask_my() {
      );
 }
 
-// ROM:FF970A8C taskcreate_ShutterSoundTask()
+// ROM:FF970A8C taskcreate_ShutterSoundTask(), LOCATION: SsCaptureSeq.c:0
 void __attribute__((naked,noinline)) sub_FF970A8C_my() {
     asm volatile (
             "STMFD   SP!, {R0-R8,LR}\n"
             "MOV     R4, R0\n"
             "BL      sub_FF971B78\n"             // LOCATION: SsShootEvent.c:76
-            "MVN     R1, #0\n"
+            "MVN     R1, #0\n"                   // ?!?
             "BL      sub_FF887418\n"
             "LDR     R5, =0x6DB0\n"
             "LDR     R0, [R5,#0xC]\n"
@@ -374,6 +380,12 @@ void __attribute__((naked,noinline)) sub_FF970A8C_my() {
             "LDRSH   R2, [R6,#0xC]\n"
             "SUB     R3, R3, #8\n"
             "BL      sub_FF973794\n"
+
+            //"BL      wait_until_remote_button_is_released\n"  // +
+            //"BL      capt_seq_hook_set_nr\n"  // +
+            "B       sub_FF970B40\n"            // continue in canon firmware
+
+            /*
             "LDR     R0, [R4,#0x1C]\n"
             "CMP     R0, #0\n"
             "MOVNE   R0, #1\n"
@@ -506,6 +518,7 @@ void __attribute__((naked,noinline)) sub_FF970A8C_my() {
         "loc_FF970CEC:\n"
             "ADD     SP, SP, #0x10\n"
             "LDMFD   SP!, {R4-R8,PC}\n"
+            */
     );
 }
 
