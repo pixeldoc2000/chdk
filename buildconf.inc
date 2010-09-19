@@ -1,6 +1,6 @@
 #!build time optional components - comment out the features you dont want to have in your build
-#OPT_LUA_IOLIB=1
-#OPT_LUA_OSLIB=1
+OPT_LUA_IOLIB=1
+OPT_LUA_OSLIB=1
 OPT_GAME_REVERSI=0
 OPT_GAME_SOKOBAN=0
 OPT_GAME_CONNECT4=0
