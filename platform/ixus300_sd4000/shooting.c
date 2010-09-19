@@ -94,31 +94,32 @@ Movie: 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 6
 */
 // PROPCASE 49
 // Mapping between camera mode and PROPCASE_SHOOTING_MODE (modelist.h)
-// Smart Shutter 33321
 // fish eye 33323
 // miniatur 33324
 static const CapturemodeMap modemap[] = {
-    { MODE_AUTO,               32768 }, // OK
-    { MODE_P,                  32772 }, // OK
-    { MODE_TV,                 32771 }, // OK
-    { MODE_AV,                 32770 }, // OK
+    { MODE_AUTO,               32768 },
+    { MODE_P,                  32772 },
+    { MODE_TV,                 32771 },
+    { MODE_AV,                 32770 },
     { MODE_VIDEO_SPEED,        33288 }, // Highspeed Burst ?!?
-    { MODE_VIDEO_STD,          2612  }, // OK
+    { MODE_VIDEO_STD,          2612  },
     //{ MODE_VIDEO_SLOWMOTION,   2617  }, // OK
-    { MODE_VIDEO_COLOR_SWAP,   2611  }, // OK
-    { MODE_VIDEO_COLOR_ACCENT, 2610  }, // OK
-    { MODE_STITCH,             33292 }, // OK
-    { MODE_SCN_FOLIAGE,        32789 }, // OK
-    { MODE_SCN_SNOW,           32790 }, // OK
-    { MODE_SCN_BEACH,          32791 }, // OK
-    { MODE_SCN_FIREWORK,       32792 }, // OK
-    { MODE_INDOOR,             32787 }, // OK
-    { MODE_KIDS_PETS,          32786 }, // OK
-    { MODE_NIGHT_SNAPSHOT,     32781 }, // OK
-    { MODE_PORTRAIT,           32783 }, // OK
-    { MODE_LOWLIGHT,           32801 }, // OK
-    { MODE_COLOR_ACCENT,       33309 }, // OK
-    { MODE_COLOR_SWAP,         33310 }, // OK
+    { MODE_VIDEO_COLOR_SWAP,   2611  },
+    { MODE_VIDEO_COLOR_ACCENT, 2610  },
+    { MODE_STITCH,             33292 },
+    { MODE_SCN_FOLIAGE,        32789 },
+    { MODE_SCN_SNOW,           32790 },
+    { MODE_SCN_BEACH,          32791 },
+    { MODE_SCN_FIREWORK,       32792 },
+    { MODE_INDOOR,             32787 },
+    { MODE_KIDS_PETS,          32786 },
+    { MODE_NIGHT_SNAPSHOT,     32781 },
+    { MODE_PORTRAIT,           32783 },
+    { MODE_LOWLIGHT,           32801 },
+    { MODE_COLOR_ACCENT,       33309 },
+    { MODE_COLOR_SWAP,         33310 },
+    //{ MODE_SMART_SHUTTER,      33321 }, // mode does not exist in chdk
+    //{ MODE_HIGHSPEED_BURST,    32248 }, // mode does not exist in chdk
 };
 
 #include "../generic/shooting.c"
