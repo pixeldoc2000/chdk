@@ -2244,41 +2244,48 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus300_sd4000)
-    #define CAM_PROPSET                 3   // ?!?
+    #define CAM_PROPSET                 3        // ?!?
     #define CAM_DRYOS                   1
-    #define CAM_DRYOS_2_3_R39           1   // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
+    #define CAM_DRYOS_2_3_R39           1        // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
-    #undef  CAM_BITMAP_PALETTE              // shut up compiler
-    #define CAM_BITMAP_PALETTE          2   // fix wrong CHDK ui colors (video buffer) ?!?
+    #undef  CAM_BITMAP_PALETTE                   // shut up compiler
+    #define CAM_BITMAP_PALETTE          2        // fix CHDK UI colors (video buffer) ?!?
 
-    #undef CAM_UNCACHED_BIT             // shut up compiler
+    #undef  CAM_UNCACHED_BIT                     // shut up compiler
     #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
 
-    #define CAM_RAW_ROWPIX              3336   // ?!?
-    #define CAM_RAW_ROWS                2480   // ?!?
-    #undef CAM_HAS_ERASE_BUTTON
-    #undef CAM_REMOTE
-    #undef CAM_SYNCH
+    #define CAM_RAW_ROWPIX              3336     // ?!?
+    #define CAM_RAW_ROWS                2480     // ?!?
+    #undef  CAM_HAS_ERASE_BUTTON
+    #undef  CAM_REMOTE
+    #undef  CAM_SYNCH
     #define CAM_HAS_ND_FILTER           1
-    #undef CAM_HAS_IRIS_DIAPHRAGM
+    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #undef  CAM_HAS_MANUAL_FOCUS
+    #undef  CAM_CAN_SD_OVERRIDE
     #undef  CAM_USE_ZOOM_FOR_MF
+    #undef  CAM_HAS_USER_TV_MODES
     //#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     //#define CAM_EV_IN_VIDEO             1
     #undef  CAM_VIDEO_CONTROL
     //#define DNG_SUPPORT                 1
     #define CAM_HAS_JOGDIAL             1
+    #define CAM_FEATURE_FEATHER         1
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1        // ?!?
 
-    //#define CAM_ADJUSTABLE_ALT_BUTTON   1       // ToDo
+    //#define CAM_ADJUSTABLE_ALT_BUTTON   1      // ToDo
+
+    #define PARAM_CAMERA_NAME           4        // parameter number for GetParameterData to get camera name
 
     // pattern ?!?
-    #define cam_CFAPattern 0x01000201   // Green  Blue  Red  Green
+    #define cam_CFAPattern 0x01000201            // Green  Blue  Red  Green
     // color ?!?
     #define CAM_COLORMATRIX1                               \
       640019, 1000000, -220031, 1000000, -96241, 1000000,  \
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
-    #define cam_CalibrationIlluminant1 1 // Daylight ?!?
+    #define cam_CalibrationIlluminant1  1 // Daylight ?!?
     // cropping ?!?
     #define CAM_JPEG_WIDTH  3264
     #define CAM_JPEG_HEIGHT 2448
