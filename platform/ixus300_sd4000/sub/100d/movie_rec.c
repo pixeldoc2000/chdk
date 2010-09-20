@@ -13,7 +13,7 @@ void  set_quality(int *x) { // -17 highest; +12 lowest
     if (conf.video_mode) *x=12-((conf.video_quality-1)*(12+17)/(99-1));
 }
 
-// ROM:FF96BD30 task_MovieRecord ()
+// ROM:FF96BD30 movie_record_task() aka. task_MovieRecord()
 void __attribute__((naked,noinline)) movie_record_task() {
     asm volatile (
             "STMFD   SP!, {R2-R8,LR}\n"
