@@ -24,7 +24,7 @@ NHSTUB(rename, 0xFF83669C)                           // maybe OK, like SX210
 NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210
 
 
-// --- NULLSTUBS
+// --- NULLSTUBS (not found by finsig)
 NHSTUB(EnterToCompensationEVF, 0xFF810B1C)           // ToDo: nullsub_1
 NHSTUB(ExitFromCompensationEVF, 0xFF810B1C)          // ToDo: nullsub_1
 NHSTUB(GetCurrentAvValue, 0xFF810B1C)                // ToDo: nullsub_1
@@ -155,9 +155,9 @@ NHSTUB(strrchr, 0xFF814008)                          // OK
 
 
 // --- DEBUG Stuff
-//NHSTUB(GetLogToFile, 0xFF975780)
+NHSTUB(GetLogToFile, 0xFF975780)
 
 
-// Special Stuff
+// video buffer stuff
 NHSTUB(UnlockAndRefresh, 0xFFA13398)   // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC, search "Window Instance"
 NHSTUB(LockAndRefresh, 0xFFA13354)    // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98, search "Window Instance"
