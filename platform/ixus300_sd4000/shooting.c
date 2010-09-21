@@ -6,20 +6,27 @@
 
 #include "platform.h"
 
+// ToDo
+// PropertyCase 23 ?!?
 const ApertureSize aperture_sizes_table[] = {
-    {  9, 283, "2.8" },
-    { 10, 320, "3.2" },
-    { 11, 352, "3.5" },
-    { 12, 384, "4.0" },
-    { 13, 416, "4.5" },
-    { 14, 448, "5.0" },
-    { 15, 480, "5.6" },
-    { 16, 512, "6.3" },
-    { 17, 544, "7.1" },
-    { 18, 576, "8.0" },
+    // ?, PropertyCase value, osd value)
+    {  8, 200, "2.0" },
+    {  9, 232, "2.2" },
+    {  9, 240, "2.5" },
+    {  9, 280, "2.8" },
+    { 10, 300, "3.2" },
+    { 11, 340, "3.5" },
+    { 12, 375, "4.0 ND" },
+    { 13, 400, "4.5 ND" },
+    { 14, 448, "5.0 ND" },  // ?!?
+    { 15, 480, "5.6 ND" },  // ?!?
+    { 16, 512, "6.3 ND" },  // ?!?
+    { 17, 544, "7.1 ND" },  // ?!?
+    { 18, 576, "8.0 ND" },  // ?!?
 };
 
 // ROM:FFC15ED0
+// ToDo
 const ShutterSpeed shutter_speeds_table[] = {
     { -12, -384, "15", 15000000 },
     { -11, -352, "13", 13000000 },
@@ -66,32 +73,28 @@ const ShutterSpeed shutter_speeds_table[] = {
     {  30,  960, "1/1000", 1000 },
     {  31,  992, "1/1250",  800 },
     {  32, 1021, "1/1600",  625 },
-    {  33, 1053, "1/2000",  500 },
+    {  33, 1053, "1/2000",  500 },   // Canon Website says max. 1/2000
+    //{  34, ????, "1/2500",  ??? },   // Manual says max. 1/2500 ?!?
 };
 
+// Propertycase 149
 const ISOTable iso_table[] = {
-    { -1,    1,   "HI", -1},
     {  0,    0, "Auto", -1},
-    {  1,   80,   "80", -1},
-    {  2,  100,  "100", -1},
-    {  3,  200,  "200", -1},
-    {  4,  400,  "400", -1},
-    {  5,  800,  "800", -1},
-    {  6, 1600, "1600", -1},
-    {  7, 3200, "3200", -1},
+    {  1,  125,  "125", -1},
+    {  2,  200,  "200", -1},
+    {  3,  400,  "400", -1},
+    {  4,  800,  "800", -1},
+    {  5, 1600, "1600", -1},
+    {  6, 3200, "3200", -1},
 };
 
 /*
-http://www.usa.canon.com/consumer/controller?act=ModelInfoAct&fcategoryid=221&modelid=15657#ModelTechSpecsAct
-
-Shooting Modes
-    Auto, P, Av, Tv, M, Portrait, Landscape,
-    Special Scene
-        (Foliage, Snow, Beach, Fireworks, Night Scene, Aquarium, Underwater),
-    Indoor, Kids & Pets, Night Snapshot, Stitch Assist, Movie
-Movie: 640 x 480 (30 fps/30 fps LP), 320 x 240 (30 fps) available up to 4GB or 60 minutes, 160 x 120 (3 minutes at 15 fps)
-
+http://www.usa.canon.com/cusa/consumer/products/cameras/digital_cameras/powershot_sd4000_is?selectedName=Specifications
+Shooting Modes:
+Auto*, Av, Tv, P, Portrait, Night Snapshot, Kids & Pets, Indoor, Smart Shutter, High-Speed Burst, Low Light, Color Accent, Color Swap, Fisheye Effect, Miniature Effect, Beach, Foliage, Snow, Fireworks, Stitch Assist
+Movie: 1280 x 720(30 fps), 640 x 480 (30 fps/), 320 x 240 (30 fps), 320 x 240 (240 fps, Super Slow Motion Movie)
 */
+
 // PROPCASE 49
 // Mapping between camera mode and PROPCASE_SHOOTING_MODE (modelist.h)
 // fish eye 33323
