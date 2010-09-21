@@ -2316,14 +2316,13 @@
     #undef  CAM_REMOTE
     #undef  CAM_SYNCH
     #define CAM_HAS_ND_FILTER           1
-    #undef  CAM_HAS_IRIS_DIAPHRAGM
+    #define  CAM_HAS_IRIS_DIAPHRAGM     1
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_CAN_SD_OVERRIDE
     #undef  CAM_USE_ZOOM_FOR_MF
-    #undef  CAM_HAS_USER_TV_MODES
+    #define CAM_HAS_USER_TV_MODES       1
     //#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     //#define CAM_EV_IN_VIDEO             1
-    //#undef  CAM_VIDEO_CONTROL
     #define CAM_VIDEO_CONTROL           1
     //#define DNG_SUPPORT                 1
     #define CAM_HAS_JOGDIAL             1
