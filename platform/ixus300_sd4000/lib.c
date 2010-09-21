@@ -51,8 +51,7 @@ int get_flash_params_count(void){
 }
 
 /*
-// Force Screen to refresh like original Firmware
-// ToDo: canon firmware and osd still has redraw issus
+// redraw issus, Canon Menu does not show and display does not refresh properly
 void vid_bitmap_refresh() {
     extern int enabled_refresh_physical_screen;
 
@@ -62,6 +61,26 @@ void vid_bitmap_refresh() {
     //*(int*)0x926C=2;    // ?!?
     *(int*)0x926C=1;    // better than 3
     _RefreshPhysicalScreen(1);
+}
+*/
+
+/*
+// like ixus870_sd880, cause massiv redraw issus
+void vid_bitmap_refresh() {
+    extern int enabled_refresh_physical_screen; // screen lock counter
+    int old_val = enabled_refresh_physical_screen;
+    if ( old_val == 0 ) {
+        _ScreenLock(); // make sure code is called at least once
+    } else {
+        enabled_refresh_physical_screen=1; // forces actual redraw
+    }
+    _RefreshPhysicalScreen(1); // unlock/refresh
+
+    // restore original situation
+    if ( old_val > 0 ) {
+        _ScreenLock();
+        enabled_refresh_physical_screen = old_val;
+    }
 }
 */
 
@@ -84,6 +103,22 @@ void vid_bitmap_refresh() {
 
     _UnlockAndRefresh();
 }
+
+/*
+// make redraw issus worse
+void vid_turn_off_updates() {
+    //_ScreenLock();
+    _LockAndRefresh();
+}
+*/
+
+/*
+// make redraw issus worse
+void vid_turn_on_updates() {
+    //_RefreshPhysicalScreen(1);
+    _UnlockAndRefresh(1);
+}
+*/
 
 // ROM:FFB9FA10 DCD aRotatejogdialright ; "RotateJogDialRight"
 // ROM:FFB9FA14 DCD 0x876
