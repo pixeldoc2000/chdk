@@ -8,11 +8,12 @@
 
 // ToDo
 // PropertyCase 23 ?!?
+// watch PropertyCase Value with "Debug data display" and compare with F value
 const ApertureSize aperture_sizes_table[] = {
     // ?, PropertyCase value, osd value)
-    {  8, 200, "2.0" },
-    {  9, 232, "2.2" },
-    {  9, 240, "2.5" },
+    {  6, 200, "2.0" },
+    {  7, 232, "2.2" },
+    {  8, 240, "2.5" },
     {  9, 280, "2.8" },
     { 10, 300, "3.2" },
     { 11, 340, "3.5" },
