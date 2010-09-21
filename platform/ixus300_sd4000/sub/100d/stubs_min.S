@@ -38,7 +38,7 @@ DEF(enabled_refresh_physical_screen, 0x92CC)    // ROM:FFA1339C or ROM:FFA13570,
 // ROM:FFAC96B8                 LDR     R1, =FlashParamsTable
 // ROM:FFAC96BC                 LDR     R0, [R1,R0,LSL#2]
 // ROM:FFAC96C0                 BX      LR
-DEF(FlashParamsTable, 0xFFC00624)    // referenced at ROM:FFAC96B8
+DEF(FlashParamsTable, 0xFFC00624)   // referenced at ROM:FFAC96B8
 
 // ROM:FF890234, in function StartRecModeMenu() or eventproc_StartRecModeMenu()
 DEF(canon_menu_active, 0x3040)   // 0x303C + 4 ?!!
@@ -49,7 +49,7 @@ DEF(canon_shoot_menu_active, 0x3D550)   // ?!?
 // search for string "PressRightButton"
 DEF(levent_table, 0xFFB9F59C)
 
-// ROM:FF96B418 or ROM:FF96A780, found in task_MovieRecord()
+// ROM:FF96B418 or ROM:FF96A780 or ROM:FF96B0F8, found in task_MovieRecord()
 DEF(movie_status, 0x6A14)   // 0x69D8 + 0x3C
 
 // ROM:FF99D340
@@ -67,7 +67,10 @@ DEF(zoom_status, 0x315B)   // ?!?
 // ROM:FFA114FC, called by RefreshPhysicalScreen()
 DEF(full_screen_refresh, 0x926C)
 
+// ROM:FF96F398, like SX210 and SD990
+DEF(some_flag_for_af_scan, 0x6DD8)
+
+
 // --- ToDo
-DEF(some_flag_for_af_scan, 0x0)
-DEF(some_f_for_dng, 0x0)
-DEF(second_ext_for_dng, 0x0)
+DEF(some_f_for_dng, 0xDEAD)          // ??? TODO NOT FOUND!
+DEF(second_ext_for_dng, 0xDEAD)      // ??? TODO NOT FOUND!
