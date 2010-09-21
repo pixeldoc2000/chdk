@@ -48,52 +48,53 @@ NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exis
 
 
 // --- stubs_entry.S (auto sig finder)
-//NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK
+// ROM:FF96CBFC register libc function
+//NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK!
+//NHSTUB(AllocateMemory, 0xFF814100)                 // is the actual function, other are just jumps
 //NHSTUB(AllocateUncacheableMemory, 0xff83a41c)      // OK!
-//NHSTUB(Close, 0xff836db8)                          // OK, eventproc
-//NHSTUB(Close, 0xFF81AA94)                          // close ?!?
-//NHSTUB(CreateTask, 0xff81e83c)                     // OK, eventproc
-//NHSTUB(DeleteFile_Fut, 0xff836730)                 // OK
-//NHSTUB(ExecuteEventProcedure, 0xff88b9c0)          // maybe ok, there are two simular functions
-NHSTUB(ExecuteEventProcedure, 0xFF88B948)            // OK
-//NHSTUB(ExitTask, 0xff81eacc)                       // OK
-//NHSTUB(Fclose_Fut, 0xff8368ac)                     // OK
+//NHSTUB(Close, 0xff836db8)                          // OK!!, eventproc
+//NHSTUB(CreateTask, 0xff81e83c)                     // OK!, eventproc
+//NHSTUB(DeleteFile_Fut, 0xff836730)                 // OK!
+//NHSTUB(ExecuteEventProcedure, 0xFF88B9C0)          // sigfinder, tstcallf.lua does cause shutdown, referens from FactoryMode Stuff and eventproc_export_ExecuteEventProcedure(), should be correct
+//NHSTUB(ExecuteEventProcedure, 0xFF88B948)          // tstcallf.lua returns error
+//NHSTUB(ExitTask, 0xff81eacc)                       // OK!, eventproc
+//NHSTUB(Fclose_Fut, 0xff8368ac)                     // OK!, eventproc
 //NHSTUB(Feof_Fut, 0xff836a98)                       // OK!
-//NHSTUB(Fflush_Fut, 0xff836ad4)                     // OK!
-//NHSTUB(Fgets_Fut, 0xff836a00)                      // OK
-//NHSTUB(Fopen_Fut, 0xff83686c)                      // OK
-//NHSTUB(Fread_Fut, 0xff836958)                      // OK
-//NHSTUB(FreeMemory, 0xffab8ce8)                     // maybe ok
-//NHSTUB(FreeUncacheableMemory, 0xff83a45c)          // OK!
-//NHSTUB(Fseek_Fut, 0xff836a4c)                      // OK
-//NHSTUB(Fwrite_Fut, 0xff8369ac)                     // OK
-//NHSTUB(GetBatteryTemperature, 0xff8652a0)          // maybe ok
-//NHSTUB(GetCCDTemperature, 0xff86522c)              // maybe ok
+//NHSTUB(Fflush_Fut, 0xff836ad4)                     // OK!!
+//NHSTUB(Fgets_Fut, 0xff836a00)                      // OK!
+//NHSTUB(Fopen_Fut, 0xff83686c)                      // OK!, eventproc
+//NHSTUB(Fread_Fut, 0xff836958)                      // OK!, eventproc
+//NHSTUB(FreeMemory, 0xffab8ce8)                     // OK!, eventproc
+//NHSTUB(FreeUncacheableMemory, 0xff83a45c)          // OK!!
+//NHSTUB(Fseek_Fut, 0xff836a4c)                      // OK!, eventproc
+//NHSTUB(Fwrite_Fut, 0xff8369ac)                     // OK!, eventproc
+//NHSTUB(GetBatteryTemperature, 0xff8652a0)          // OK
+//NHSTUB(GetCCDTemperature, 0xff86522c)              // OK
 //NHSTUB(GetDrive_ClusterSize, 0xff871e30)           // maybe ok
 //NHSTUB(GetDrive_TotalClusters, 0xff871e64)         // maybe ok
 //NHSTUB(GetFocusLensSubjectDistance, 0xff9629b8)    // maybe ok
 //NHSTUB(GetFocusLensSubjectDistanceFromLens, 0xff962d40) // maybe ok
 //NHSTUB(GetOpticalTemperature, 0xff865314)          // maybe ok
-//NHSTUB(GetParameterData, 0xff9975f4)               // OK, like SX210
-//NHSTUB(GetPropertyCase, 0xff88f660)                // OK
-//NHSTUB(GetSystemTime, 0xffab8d48)                  // OK!
+//NHSTUB(GetParameterData, 0xff9975f4)               // OK!, like SX210
+//NHSTUB(GetPropertyCase, 0xff88f660)                // OK!
+//NHSTUB(GetSystemTime, 0xffab8d48)                  // OK!!, eventproc
 //NHSTUB(IsStrobeChargeCompleted, 0xff8da44c)
 NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)          // maybe ok
-//NHSTUB(LocalTime, 0xff88923c)
-//NHSTUB(LockMainPower, 0xff895b78)                  // OK
-//NHSTUB(MakeDirectory_Fut, 0xff8367a4)              // maybe ok
+//NHSTUB(LocalTime, 0xff88923c)                      // OK
+//NHSTUB(LockMainPower, 0xff895b78)                  // OK!
+//NHSTUB(MakeDirectory_Fut, 0xff8367a4)              // OK, like SD990
 //NHSTUB(MoveFocusLensToDistance, 0xffb228b0)
 NHSTUB(MoveFocusLensToDistance, 0xFFB2289C)          // ?!?
 //NHSTUB(MoveZoomLensWithPoint, 0xffab6b64)          // maybe ok
 //NHSTUB(NewTaskShell, 0xff88f06c)                   // OK
 //NHSTUB(Open, 0xff86f13c)                           // sigfinder, WRONG ?
 //NHSTUB(Open, 0xFF81A9E4)                           // open, don't cause shutdown
-//NHSTUB(Open, 0xFF836D4C)                           // like SX210, cause shutdown
-//NHSTUB(PostLogicalEventForNotPowerType, 0xff893948) // OK!
-//NHSTUB(PostLogicalEventToUI, 0xff893994)           // OK
-//NHSTUB(Read, 0xff81ac7c)                           // OK!
-//NHSTUB(RenameFile_Fut, 0xff836868)                 // WRONG, not found yet
-NHSTUB(RenameFile_Fut, 0xFF810B1C)                   // ToDo: nullsub_1
+//NHSTUB(Open, 0xFF836D4C)                           // eventproc, like SX210, cause shutdown
+//NHSTUB(PostLogicalEventForNotPowerType, 0xff893948) // OK!!, eventproc
+//NHSTUB(PostLogicalEventToUI, 0xff893994)           // OK!, eventproc
+//NHSTUB(Read, 0xff81ac7c)                           // OK!!
+//NHSTUB(RenameFile_Fut, 0xff836868)                 // sigfinder, WRONG!, does not point to function start
+NHSTUB(RenameFile_Fut, 0xFF83669C)                   // maybe ok, like SD990
 //NHSTUB(SetAutoShutdownTime, 0xff895bec)            // OK
 //NHSTUB(SetCurrentCaptureModeType, 0xff89e550)      // OK
 //NHSTUB(SetFileTimeStamp, 0xff9514c0)               // maybe ok
@@ -106,15 +107,14 @@ NHSTUB(RenameFile_Fut, 0xFF810B1C)                   // ToDo: nullsub_1
 //NHSTUB(UpdateMBROnFlash, 0xff813f98)               // WRONG
 NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(VbattGet, 0xff8330d8)                       // maybe ok
-//NHSTUB(Write, 0xff836e48)                          // OK eventproc
 //NHSTUB(_log, 0xffb5b348)
 //NHSTUB(_log10, 0xffb59fd4)
 //NHSTUB(_pow, 0xffb5a144)
 //NHSTUB(_sqrt, 0xffb5cf50)
-//NHSTUB(close, 0xff81aa94)                          // OK!
+//NHSTUB(close, 0xff81aa94)                          // OK!!!
 //NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
 NHSTUB(closedir, 0xFFA95C40)                         // OK, like SX210
-//NHSTUB(closefastdir, 0xffa95e28)                   // same as closedir
+//NHSTUB(closefastdir, 0xffa95e28)                   // sigfinder, WRONG!
 NHSTUB(closefastdir, 0xFFA95C40)                     // aka. closedir
 //NHSTUB(free, 0xff81415c)                           // OK
 //NHSTUB(kbd_p1_f, 0xff83484c)                       // OK
@@ -123,12 +123,12 @@ NHSTUB(closefastdir, 0xFFA95C40)                     // aka. closedir
 //NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK
 //NHSTUB(lseek, 0xff836ee0)                          // does not point to function start
 NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
-//NHSTUB(malloc, 0xff814100)                         // OK!
-//NHSTUB(memcmp, 0xff82066c)                         // OK
-//NHSTUB(memcpy, 0xff83fae8)                         // OK
-//NHSTUB(memset, 0xffa15ddc)                         // OK
-//NHSTUB(mkdir, 0xff837254)                          // OK
-//NHSTUB(mktime_ext, 0xff8ac9f0)
+//NHSTUB(malloc, 0xff814100)                         // OK!, referens from AllocateUncacheableMemory
+//NHSTUB(memcmp, 0xff82066c)                         // OK!, eventproc
+//NHSTUB(memcpy, 0xff83fae8)                         // OK!, eventproc
+//NHSTUB(memset, 0xffa15ddc)                         // OK!, eventproc
+//NHSTUB(mkdir, 0xff837254)                          // OK!, like SX210
+//NHSTUB(mktime_ext, 0xff8ac9f0)                     // OK, like SD990
 //NHSTUB(open, 0xff81a9e4)                           // OK!!
 //NHSTUB(opendir, 0xffa95c90)                        // looks OK
 //NHSTUB(rand, 0xff820774)                           // OK
@@ -138,24 +138,25 @@ NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
 NHSTUB(stat, 0xff836f1c)                             // maybe ok
 //NHSTUB(strcat, 0xff813f5c)                         // WRONG
 NHSTUB(strcat, 0xFF8AC1AC)                           // OK
-//NHSTUB(strchr, 0xff813fe4)                         // OK
+//NHSTUB(strchr, 0xff813fe4)                         // OK!
 //NHSTUB(strcmp, 0xff820628)                         // OK
 //NHSTUB(strcpy, 0xff820610)                         // OK
 //NHSTUB(strftime, 0xff8ac3f8)                       // maybe ok
 //NHSTUB(strlen, 0xff814030)                         // OK
 //NHSTUB(strncmp, 0xff813f98)                        // OK
 //NHSTUB(strncpy, 0xff813f5c)                        // OK!
-//NHSTUB(strrchr, 0xff83fac0)
-NHSTUB(strrchr, 0xFF814008)                          // OK
+//NHSTUB(strrchr, 0xff83fac0)                        // sigfinder, WRONG!
+NHSTUB(strrchr, 0xFF814008)                          // OK!
 //NHSTUB(strtol, 0xff83fdc8)                         // OK
 //NHSTUB(strtolx, 0xff83fbcc)                        // OK
 //NHSTUB(time, 0xff88981c)                           // looks simular to A720
 //NHSTUB(vsprintf, 0xff8205d4)                       // OK!
-//NHSTUB(write, 0xff81acdc)                          // OK
+//NHSTUB(write, 0xff81acdc)                          // maybe OK, like SD990
+//NHSTUB(Write, 0xff836e48)                          // maybe OK, eventproc, like SX210
 
 
 // --- DEBUG Stuff
-NHSTUB(GetLogToFile, 0xFF975780)
+//NHSTUB(GetLogToFile, 0xFF975780)
 
 
 // video buffer stuff
