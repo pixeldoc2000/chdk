@@ -4,32 +4,34 @@
 
 // Description from SD890
 
-// ?!?
-// found in taskcreate_ImageSensorTask
-//ROM:FF84E1F4                 STMFD   SP!, {R3-R9,LR}
-//ROM:FF84E1F8                 LDR     R4, =0x1FC4 <---
-//ROM:FF84E1FC                 MOV     R5, R0
-//ROM:FF84E200                 LDR     R0, [R4]
-void *hook_raw_fptr() {
-    //return (void*)0;
-    return (void*)0x1FC4;
-}
+// sensor size for camera.h (like SX210)
+// ROM:FFB292D0 0xF32880 = 15935616 (hook_raw_size)
+// 15935616 / 12 * 8 =  10623744    (12 Bit RAW)
+// ROM:FFB28EEC 0xEE8 = 3816 pixel
+// ROM:FFB28EF4 0xAE0 = 2784 pixel
+// 3816 * 2784 = 10623744
 
-// ?!?
-void *hook_raw_ret_addr() {
-    return (void*)0;         // DUMMY
-}
-
-// ?!?
+/*
+// ROM:FFB29270, like SX210
+// search String "CRAW BUFF"
 char *hook_raw_image_addr() {
-    //return (char*)0x10F6C860;
-    return (char*)0;         // DUMMY
+    return (char*)0x40AFF8A0;         // second address
+}
+*/
+
+// ROM:FFB2926C 0x4132C0A0 First RAW address
+// ROM:FFB60E70 Table contains first RAW address mentioned in SD990
+// function ROM:FF87ED4C referens the table with first RAW address (SsImgProcBuf.c)
+// ROM:FF87ED50 0x2CCC
+// ROM:FF87ED7C 0xC
+char *hook_raw_image_addr() {
+    return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
 }
 
-// ROM:FFAAFF70
+// ROM:FFB292D0, like SX210
 // search String "CRAW BUFF SIZE"
 long hook_raw_size() {
-    return 0x1574D00;
+    return 0xF32880;
 }
 
 // ?!?
