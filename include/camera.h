@@ -2254,8 +2254,6 @@
     #undef  CAM_UNCACHED_BIT                     // shut up compiler
     #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
 
-    #define CAM_RAW_ROWPIX              3336     // ?!?
-    #define CAM_RAW_ROWS                2480     // ?!?
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_REMOTE
     #undef  CAM_SYNCH
@@ -2267,11 +2265,12 @@
     #undef  CAM_HAS_USER_TV_MODES
     //#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     //#define CAM_EV_IN_VIDEO             1
-    #undef  CAM_VIDEO_CONTROL
+    //#undef  CAM_VIDEO_CONTROL
+    #define CAM_VIDEO_CONTROL           1
     //#define DNG_SUPPORT                 1
     #define CAM_HAS_JOGDIAL             1
     #define CAM_FEATURE_FEATHER         1
-    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1        // ?!?
+    #define CAM_SHOW_OSD_IN_SHOOT_MENU  1        // enables CHDK OSD in record mode
 
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1      // ToDo
 
@@ -2285,16 +2284,19 @@
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
-    #define cam_CalibrationIlluminant1  1 // Daylight ?!?
+    #define cam_CalibrationIlluminant1  1        // Daylight ?!?
+    #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
+    #define CAM_RAW_ROWS                2784     // ROM:FFB28EF4
     // cropping ?!?
-    #define CAM_JPEG_WIDTH  3264
-    #define CAM_JPEG_HEIGHT 2448
-    #define CAM_ACTIVE_AREA_X1 10
-    #define CAM_ACTIVE_AREA_Y1 8
-    #define CAM_ACTIVE_AREA_X2 3302
-    #define CAM_ACTIVE_AREA_Y2 2474
-    // camera name ?!?
-    #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
+    #define CAM_JPEG_WIDTH              3648
+    #define CAM_JPEG_HEIGHT             2736
+    // use dng4ps2 for active area search http://chdk.setepontos.com/index.php/topic,3410.msg31974.html#msg31974
+    #define CAM_ACTIVE_AREA_X1          10       // ToDo, just guesswork
+    #define CAM_ACTIVE_AREA_Y1          8        // ToDo, just guesswork
+    #define CAM_ACTIVE_AREA_X2          3600     // ToDo, just guesswork
+    #define CAM_ACTIVE_AREA_Y2          2750     // ToDo, just guesswork
+
+    #define PARAM_CAMERA_NAME 4 // parameter number (index) for GetParameterData to get Camera Nam
     #define DNG_EXT_FROM ".CR2"
 
     /*
