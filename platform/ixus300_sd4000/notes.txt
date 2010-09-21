@@ -23,7 +23,7 @@ Remember to reformat your sd-card and copy fresh files to avoid strange error / 
 also delete chdk config file may help
 ##############################################################################################################################
 
-Thanks to reyalp for his support.
+Thanks to reyalp and asm1989 for their support.
 
 
 --- Links -----------------------------------------------------------
@@ -36,13 +36,18 @@ Thanks to reyalp for his support.
 * Rom Start address: 0xFF810000
 * NEED_ENCODED_DISKBOOT=4 (DISKBOOT Encoding)
 * KEYSYS=d4a (Dancing Bits)
-* camera has ND-Filter
+* camera has ND-Filter and probably real IRIS
 * camera has IS
-* Propset ?
+* Propset 4 (not shure yet)
+* OS: DRYOS version 2.3, release #0043
+* Iris type aperture (used with ND filter)
 
 * camera does not support ver.req and vers.req
 * udumper "NewDryOs" (CardTricks) does not support 2010 cameras
 * Canon Basic dumper works
+
+http://www.canon.com.my/p/EN/114-Digital-Cameras/203-IXUS/1556-Digital-IXUS-300-HS/
+
 
 --- Hardware address
 physw_status[2] 0x20000  SD-Card Status (locked / unlocked) ?!?
