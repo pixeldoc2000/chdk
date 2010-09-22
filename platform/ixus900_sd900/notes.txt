@@ -3,6 +3,7 @@ Camera:     Canon Powershot SD900 (North America/outside Europe) / IXUS 900 Ti (
 Firmware:   1.00C
 Author:     pixel::doc (http://pixeldoc.kicks-ass.net/)
 P-ID:       0x3115 (12565)
+OS:         VxWorks
 Based on Canon IXUS 850IS / SD800 source from chdk trunk.
 
 
@@ -20,6 +21,12 @@ Product and Company names mentioned herein may be the trademarks of their respec
 --- Links -----------------------------------------------------------
 * http://chdk.wikia.com/
 * http://chdk.wikia.com/wiki/SD900
+
+
+--- Developer Stuff --------------------------------------------------
+* Rom Start address: 0xFF810000
+* CPU: Juno - ARM946ES (ARM)
+* OS: VxWorks
 
 
 --- Changelog -------------------------------------------------------
