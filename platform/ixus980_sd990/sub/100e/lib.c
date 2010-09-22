@@ -14,11 +14,11 @@ void *hook_raw_ret_addr()
 }
 #endif
 
+// similar to a560, searched for first raw address in a table with others (ROM:FFAE8E3C), get variable from functions that use table (ROM:FF86734C and ROM:FF8673C4)
 char *hook_raw_image_addr()
 {
 //    return (char*)0x40EBAFA0; // seach on CRAW BUFF
  	return (char*) (*(int*)(0x5520 + 0x18)? 0x42CFB780 : 0x40EBAFA0); 
-	// similar to a560, searched for first raw address in a table with others, get variable from functions that use table
 }
 
 long hook_raw_size()
