@@ -1,4 +1,4 @@
-#define PARAM_FILE_COUNTER      0x34   // ??? 0x34 , 0x37 count of available camera params ?
+#define PARAM_FILE_COUNTER      0x6D   // 109, count of available camera params
 
 #include "platform.h"
 
