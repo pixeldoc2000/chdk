@@ -57,6 +57,11 @@ ROM:FF8E41DC                 ADD     R3, R3, #0x8700   ; <---
 
 ROM:FF8E41EC                 MOV     R2, R7
 ROM:FF8E41F0                 ADD     R3, R3, #0x58     ; <---
+
+or
+
+ROM:FFB15300                 MOV     R1, 0xC58758
+ROM:FFB1530C                 LDR     R0, =aCrawBuffSizeP ; "CRAW BUFF SIZE  %p"
 ***********/
 long hook_raw_size() {
     return 0xC58758;   // 0xC50000 + 0x8700 + 0x58
