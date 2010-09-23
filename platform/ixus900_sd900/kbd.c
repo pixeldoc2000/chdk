@@ -140,9 +140,9 @@ void wait_until_remote_button_is_released(void) {
 }
 
 static void __attribute__((noinline)) mykbd_task_proceed() {
-    while (physw_run){
+    while (physw_run) {
        _SleepTask(10);
-       if (wrap_kbd_p1_f() == 1) {   // loop
+       if (wrap_kbd_p1_f() == 1) {   // Readout key state via camera function
            _kbd_p2_f();
        }
     }
@@ -189,6 +189,7 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
     asm volatile(
         "STMFD   SP!, {R4-R7,LR}\n"
         "SUB     SP, SP, #0xC\n"
+        "BL      _kbd_read_keys\n"   // replacement for kbd_fetch_data()
         "BL      my_kbd_read_keys\n"
         "B       _kbd_p1_f_cont\n"
     );
@@ -201,28 +202,18 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
     int touch_keys_sema_stored;
 #endif
 
-//extern void touch_wheel_print_on();
-//extern void touch_wheel_print_off();
-
-
-// ToDo: test SD4000 methode without kbd_fetch_data()
 void my_kbd_read_keys() {
     //debug_led(1);
-    kbd_prev_state[0] = kbd_new_state[0];
+    //kbd_prev_state[0] = kbd_new_state[0];   // nothing to override
     kbd_prev_state[1] = kbd_new_state[1];
     kbd_prev_state[2] = kbd_new_state[2];
 
-    _kbd_pwr_on();
-
-    kbd_fetch_data(kbd_new_state);
+    //kbd_new_state[0] = physw_status[0];
+    kbd_new_state[1] = physw_status[1];
+    kbd_new_state[2] = physw_status[2];
 
     if (kbd_process() == 0) {
-        // leave it alone...
-        physw_status[0] = kbd_new_state[0];
-        physw_status[1] = kbd_new_state[1];
-        physw_status[2] = kbd_new_state[2];
-        //physw_status[1] |= alt_mode_key_mask;
-
+        // nothing to override
         #if CAM_FEATURE_FEATHER
             if (*touch_keys_sema == 0) {
                 *touch_keys_sema = touch_keys_sema_stored;
@@ -230,14 +221,9 @@ void my_kbd_read_keys() {
         #endif
     } else {
         // override keys
-        physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) |
-              (kbd_mod_state[0] & KEYS_MASK0);
-
-        physw_status[1] = (kbd_new_state[1] & (~KEYS_MASK1)) |
-              (kbd_mod_state[1] & KEYS_MASK1);
-
-        physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) |
-              (kbd_mod_state[2] & KEYS_MASK2);
+        //physw_status[0] = (kbd_new_state[0] & (~KEYS_MASK0)) | (kbd_mod_state[0] & KEYS_MASK0);
+        physw_status[1] = (kbd_new_state[1] & (~KEYS_MASK1)) | (kbd_mod_state[1] & KEYS_MASK1);
+        physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) | (kbd_mod_state[2] & KEYS_MASK2);
 
         #if CAM_FEATURE_FEATHER
             if (*touch_keys_sema != 0) {
@@ -251,8 +237,6 @@ void my_kbd_read_keys() {
         #endif
     }
 
-    _kbd_read_keys_r2(physw_status);
-
     remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
     if (remote_key) 
         remote_count += 1;
@@ -265,8 +249,6 @@ void my_kbd_read_keys() {
     }
     else
         physw_status[2] = physw_status[2] & ~SD_READONLY_FLAG;
-
-    _kbd_pwr_off();
 }
 
 int get_usb_power(int edge) {
@@ -294,6 +276,7 @@ void kbd_key_press(long key) {
     int i;
     for (i=0;keymap[i].hackkey;i++) {
         if (keymap[i].hackkey == key) {
+            //kbd_mod_state &= ~keymap[i].canonkey;
             kbd_mod_state[keymap[i].grp] &= ~keymap[i].canonkey;
             return;
         }
@@ -304,6 +287,7 @@ void kbd_key_release(long key) {
     int i;
     for (i=0;keymap[i].hackkey;i++) {
         if (keymap[i].hackkey == key) {
+            //kbd_mod_state |= keymap[i].canonkey;
             kbd_mod_state[keymap[i].grp] |= keymap[i].canonkey;
             return;
         }
@@ -440,16 +424,6 @@ static KeyMap keymap[] = {
     {2, KEY_DISPLAY       , 0x00000400},
     {2, KEY_PRINT         , 0x00000800},
     //{2, KEY_DUMMY         , 0x00000800},
-    {0, 0}
+    {0, 0, 0}
 };
 
-// ROM:FF8291B4 (SD800: ROM:FF829288)
-void kbd_fetch_data(long *dst) {
-    volatile long *mmio0 = (void*)0xc0220200;
-    volatile long *mmio1 = (void*)0xc0220204;
-    volatile long *mmio2 = (void*)0xc0220208;
-
-    dst[0] = *mmio0;
-    dst[1] = *mmio1;
-    dst[2] = *mmio2 & 0xffff;
-}
