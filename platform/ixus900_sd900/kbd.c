@@ -211,6 +211,7 @@ void my_kbd_read_keys() {
     //kbd_new_state[0] = physw_status[0];
     kbd_new_state[1] = physw_status[1];
     kbd_new_state[2] = physw_status[2];
+<<<<<<< HEAD
 
     #if CAM_FEATURE_FEATHER
         static int taskFeatherID = 0;
@@ -220,6 +221,8 @@ void my_kbd_read_keys() {
             //printf("taskFeatherID:%x\n", taskFeatherID);
         }
     #endif
+=======
+>>>>>>> 7fba619... ixus900_sd900 keyboard stuff changed (using kbd_read_keys() from canon firmware)
 
     if (kbd_process() == 0) {
         // nothing to override
