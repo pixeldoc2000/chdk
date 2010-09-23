@@ -104,7 +104,7 @@ void wait_until_remote_button_is_released(void) {
                     }
                     while(nSW<20);
                 }
-            }   // continuous-shooting mode 
+            }   // continuous-shooting mode
             else {   //nomal mode
                 shoot_counter=0;
                 if(conf.bracket_type>2) {
@@ -212,12 +212,19 @@ void my_kbd_read_keys() {
     kbd_new_state[1] = physw_status[1];
     kbd_new_state[2] = physw_status[2];
 
+    #if CAM_FEATURE_FEATHER
+        static int taskFeatherID = 0;
+        extern int taskNameToId(char*);
+        if (taskFeatherID == 0) {
+            taskFeatherID = _taskNameToId("tFeather");
+            //printf("taskFeatherID:%x\n", taskFeatherID);
+        }
+    #endif
+
     if (kbd_process() == 0) {
         // nothing to override
         #if CAM_FEATURE_FEATHER
-            if (*touch_keys_sema == 0) {
-                *touch_keys_sema = touch_keys_sema_stored;
-            }
+            _taskResume(taskFeatherID);
         #endif
     } else {
         // override keys
@@ -226,24 +233,21 @@ void my_kbd_read_keys() {
         physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) | (kbd_mod_state[2] & KEYS_MASK2);
 
         #if CAM_FEATURE_FEATHER
-            if (*touch_keys_sema != 0) {
-                touch_keys_sema_stored = *touch_keys_sema;
-                *touch_keys_sema = 0;
-            }
-            // We still need this sema when simulating key presses
-            if (/*kbd_mod_state[0] != KEYS_MASK0 || kbd_mod_state[1] != KEYS_MASK1 || */kbd_mod_state[2] != KEYS_MASK2) {
-                *touch_keys_sema = touch_keys_sema_stored;
-            }
+            _taskSuspend(taskFeatherID);   // suspend Feather Task to avoid canon firmware from overdraw CHDK menu
+            //if (kbd_mod_state != KEY_MASK) {
+            //    _taskResume(taskFeatherID);
+            //}
         #endif
     }
 
     remote_key = (physw_status[2] & USB_MASK)==USB_MASK;
-    if (remote_key) 
+    if (remote_key)
         remote_count += 1;
     else if (remote_count) {
         usb_power = remote_count;
         remote_count = 0;
     }
+
     if (conf.remote_enable) {
         physw_status[2] = physw_status[2] & ~(SD_READONLY_FLAG | USB_MASK);
     }
