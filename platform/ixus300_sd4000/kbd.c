@@ -66,12 +66,12 @@ long __attribute__((naked,noinline)) wrap_kbd_p1_f() {
 void my_kbd_read_keys() {
     kbd_prev_state[0] = kbd_new_state[0];
     kbd_prev_state[1] = kbd_new_state[1];
-    kbd_prev_state[2] = kbd_new_state[2];
+    //kbd_prev_state[2] = kbd_new_state[2];   // nothing to override
 
     // The following three lines replace the call to kbd_fetch_data()
     kbd_new_state[0] = physw_status[0];
     kbd_new_state[1] = physw_status[1];
-    kbd_new_state[2] = physw_status[2];
+    //kbd_new_state[2] = physw_status[2];
 
     if (kbd_process() == 0) {
         // we read keyboard state with _kbd_read_keys()
@@ -81,7 +81,7 @@ void my_kbd_read_keys() {
         // override keys
         physw_status[0] = (kbd_new_state[0] | KEYS_MASK0) & (~KEYS_MASK0 | kbd_mod_state[0]);
         physw_status[1] = (kbd_new_state[1] | KEYS_MASK1) & (~KEYS_MASK1 | kbd_mod_state[1]);
-        physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]);
+        //physw_status[2] = (kbd_new_state[2] | KEYS_MASK2) & (~KEYS_MASK2 | kbd_mod_state[2]);
 
         if ((jogdial_stopped==0) && !state_kbd_script_run) {
             jogdial_stopped=1;
