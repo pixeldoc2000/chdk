@@ -2325,7 +2325,7 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus300_sd4000)
-    #define CAM_PROPSET                 3        // ?!?
+    #define CAM_PROPSET                 4        // ?!?
     #define CAM_DRYOS                   1
     #define CAM_DRYOS_2_3_R39           1        // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
@@ -2379,7 +2379,8 @@
     #define PARAM_CAMERA_NAME 4 // parameter number (index) for GetParameterData to get Camera Nam
     #define DNG_EXT_FROM ".CR2"
 
-    /*
+    #define CAM_HAS_VARIABLE_ASPECT     1        // ?!? like SX1
+
     // ---------------------> from SX200IS <------------------------------
     //nandoide sept-2009
     #undef CAM_USES_ASPECT_CORRECTION
@@ -2392,8 +2393,8 @@
     // values need to be better documented
     // reyalp - I guess these are bitmap ?
     //default mappings
-    #undef ASPECT_XCORRECTION
-    #define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )   //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
+    //#undef ASPECT_XCORRECTION
+    //#define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )   //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
 
     //grids
     #undef ASPECT_GRID_XCORRECTION
@@ -2422,6 +2423,7 @@
     #undef ASPECT_GAMES_YCORRECTION
     #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
+    /*
     //zebra letterbox for saving memory
     #undef ZEBRA_HMARGIN0
     #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
