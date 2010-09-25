@@ -365,8 +365,8 @@ case TOKENIZER_IS_PRESSED:
     r = 2;
     #elif CAM_PROPSET == 3
     r = 3;
-    #elif CAM_PROPSET == 3
-    r = 3;
+    #elif CAM_PROPSET == 4
+    r = 3;      // ?!?
     #endif
    break;
   case TOKENIZER_GET_TV96:
