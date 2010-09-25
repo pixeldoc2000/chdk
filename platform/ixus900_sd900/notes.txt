@@ -30,6 +30,15 @@ Product and Company names mentioned herein may be the trademarks of their respec
 
 
 --- Changelog -------------------------------------------------------
+* Beta v24 (2010-09-26)
+    * trunk: #946
+    * version: 0.9.9
+    * keyboard stuff changed (using kbd_read_keys() from canon firmware)
+    * kbd.c added feather task suspend (now feather task is disabled in ALT mode -> does not overdraw chdk anymore)
+    * shooting.c PARAM_FILE_COUNTER fixed
+    * camera.h updated (SD override reenabled)
+    * minor improvments
+
 * Beta v23 (2010-08-17)
     * trunk: #920
     * version: 0.9.9
