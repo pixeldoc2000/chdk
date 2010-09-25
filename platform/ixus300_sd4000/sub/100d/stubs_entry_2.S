@@ -22,17 +22,17 @@ NHSTUB(GetDrive_FreeClusters, 0xFF871E90)            // OK, like SX210, UI does 
 NHSTUB(PT_PlaySound, 0xFF8840B8)                     // OK, like SX210, plays sound on CHDK startup
 NHSTUB(rename, 0xFF83669C)                           // maybe OK, like SX210
 NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210
+NHSTUB(EnterToCompensationEVF, 0xFF8383E4)           // like SX210
+NHSTUB(ExitFromCompensationEVF, 0xFF838428)          // like SX210
+NHSTUB(PostLEDMessage, 0xFF860C6C)                   // like SX210
+NHSTUB(TurnOffBackLight, 0xFF8A4980)                 // very likely
+NHSTUB(TurnOnBackLight, 0xFF8A4968)                  // very likely
+NHSTUB(GetZoomLensCurrentPoint, 0xFF965E54)          // like SX210
+NHSTUB(GetZoomLensCurrentPosition, 0xFFAA9298)       // like SX210
+NHSTUB(GetCurrentAvValue, 0xFF9644F8)                // like SX210
 
 
 // --- NULLSTUBS (not found by finsig)
-NHSTUB(EnterToCompensationEVF, 0xFF810B1C)           // ToDo: nullsub_1
-NHSTUB(ExitFromCompensationEVF, 0xFF810B1C)          // ToDo: nullsub_1
-NHSTUB(GetCurrentAvValue, 0xFF810B1C)                // ToDo: nullsub_1
-NHSTUB(GetZoomLensCurrentPoint, 0xFF810B1C)          // ToDo: nullsub_1
-NHSTUB(GetZoomLensCurrentPosition, 0xFF810B1C)       // ToDo: nullsub_1
-NHSTUB(TurnOffBackLight, 0xFF810B1C)                 // ToDo: nullsub_1
-NHSTUB(TurnOnBackLight, 0xFF810B1C)                  // ToDo: nullsub_1
-NHSTUB(PostLEDMessage, 0xFF810B1C)                   // ToDo: nullsub_1, not found yet
 NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // ToDo: nullsub_1, maybe not available since canon firmware allow Zoom for Movie
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
 NHSTUB(PutInNdFilter, 0xFF810B1C)                    // ToDo: nullsub_1
@@ -79,7 +79,8 @@ NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exis
 //NHSTUB(GetPropertyCase, 0xff88f660)                // OK!
 //NHSTUB(GetSystemTime, 0xffab8d48)                  // OK!!, eventproc
 //NHSTUB(IsStrobeChargeCompleted, 0xff8da44c)
-NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)          // maybe ok
+//NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)          // maybe ok
+NHSTUB(IsStrobeChargeCompleted, 0xFF8DA44C)          // like SX210
 //NHSTUB(LocalTime, 0xff88923c)                      // OK
 //NHSTUB(LockMainPower, 0xff895b78)                  // OK!
 //NHSTUB(MakeDirectory_Fut, 0xff8367a4)              // OK, like SD990
