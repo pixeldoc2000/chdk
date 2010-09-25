@@ -34,7 +34,9 @@
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_STITCH || \
                             ((m)&MODE_SHOOTING_MASK)==MODE_VIDEO_MANUAL)
 /* propcase ID constants. These are in their own header files for easier sed processing */
-#if CAM_PROPSET == 3 
+#if CAM_PROPSET == 4
+ #include "propset4.h"
+#elif CAM_PROPSET == 3
  #include "propset3.h"
 #elif CAM_PROPSET == 2     // most digic3 cameras
  #include "propset2.h"
