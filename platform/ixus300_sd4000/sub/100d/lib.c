@@ -11,14 +11,13 @@
 // ROM:FFB28EF4 0xAE0 = 2784 pixel
 // 3816 * 2784 = 10623744
 
-/*
 // ROM:FFB29270, like SX210
 // search String "CRAW BUFF"
 char *hook_raw_image_addr() {
-    return (char*)0x40AFF8A0;         // second address
+    return (char*)0x40AFF8A0;         // second RAW buffer address
 }
-*/
 
+/*
 // ROM:FFB2926C 0x4132C0A0 First RAW address
 // ROM:FFB60E70 Table contains first RAW address mentioned in SD990
 // function ROM:FF87ED4C referens the table with first RAW address (SsImgProcBuf.c)
@@ -27,6 +26,7 @@ char *hook_raw_image_addr() {
 char *hook_raw_image_addr() {
     return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
 }
+*/
 
 // ROM:FFB292D0, like SX210
 // search String "CRAW BUFF SIZE"
