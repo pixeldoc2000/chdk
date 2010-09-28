@@ -2358,34 +2358,29 @@
 
     #define CAM_HAS_VARIABLE_ASPECT     1        // ?!? like SX1
 
-    // ---------------------> from SX200IS <------------------------------
-    //nandoide sept-2009
     #undef CAM_USES_ASPECT_CORRECTION
     #define CAM_USES_ASPECT_CORRECTION  1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized
     #undef CAM_USES_ASPECT_YCORRECTION
     #define CAM_USES_ASPECT_YCORRECTION  0  //only uses mappings on x coordinate
 
-    // reyalp TODO not sure this stuff belongs in camera.h there will probably only be a few different setups
-    // maybe we can just have one CAM_ options that picks what to use ?
-    // values need to be better documented
-    // reyalp - I guess these are bitmap ?
-    //default mappings
-    //#undef ASPECT_XCORRECTION
-    //#define ASPECT_XCORRECTION(x)  ( ( ((x)<<3) + (x) )  >>2 )   //correction x*screen_buffer_width/screen_width = x*720/320 = x*9/4 = (x<<3 + x)>>2
+    // default mappings
+    #undef ASPECT_XCORRECTION
+    #define ASPECT_XCORRECTION(x)  (((x)<<1))   //correction x*screen_buffer_width/screen_width = x*960/480 = x*2/1
 
-    //grids
+    // grids
     #undef ASPECT_GRID_XCORRECTION
-    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/9  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9
+    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/8  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9  ,  8 is the right value for sx210
     #undef ASPECT_GRID_YCORRECTION
     #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
 
-    //viewport
+    // viewport
     #undef ASPECT_VIEWPORT_XCORRECTION
     #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x) //viewport is 360x240 and screen 320x240, we need x*320/360=x*8/9, equal than grids, used by edgeoverlay
     #undef ASPECT_VIEWPORT_YCORRECTION
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
+
     #undef EDGE_HMARGIN
-    #define EDGE_HMARGIN 20
+    #define EDGE_HMARGIN 10   // 10 fits video mode of sx210
 
     //games mappings
     #undef GAMES_SCREEN_WIDTH
@@ -2393,8 +2388,8 @@
     #define GAMES_SCREEN_WIDTH 360
     #define GAMES_SCREEN_HEIGHT 240
     #undef ASPECT_GAMES_XCORRECTION
-    // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer wirh another resolution
-    // used by gui.c that configures the draw environment (trhough new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
+    // 720/360=2 same aspect than grids and viewport but another approach: there is a lot of corrections to do in game's code, and we decide to paint directly on display buffer with another resolution
+    // used by gui.c that configures the draw environment (through new draw_gui function) depending on gui_mode: we have then 360x240 for games (but deformed output:circles are not circles) and 320x240 for
     // other modes in perfect aspect ratio 4/3: slightly better visualization: file menus more readable, ...
     #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
     #undef ASPECT_GAMES_YCORRECTION
@@ -2403,8 +2398,8 @@
     #define CAM_ZEBRA_ACPECT_ADJUST     1
 
     //zebra letterbox for saving memory
-    #undef ZEBRA_HMARGIN0
-    #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+    //#undef ZEBRA_HMARGIN0
+    //#define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
 //----------------------------------------------------------
 
 
