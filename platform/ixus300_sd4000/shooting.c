@@ -1,4 +1,5 @@
-#define PARAM_FILE_COUNTER      0x93    // 0x93 = 147, count of available Camera Parameter (use "Debug Paramenters -> Debug data display -> Params" to view number of Parameters)
+#define PARAM_FILE_COUNTER      0x34    // 0x37 ?!?
+//#define PARAM_FILE_COUNTER      0x93    // 0x93 = 147, count of available Camera Parameter (use "Debug Paramenters -> Debug data display -> Params" to view number of Parameters)
 
 // DRYOS-Notes:
 // propertycase
