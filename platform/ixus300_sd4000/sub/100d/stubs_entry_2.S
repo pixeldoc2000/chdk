@@ -117,7 +117,7 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 NHSTUB(closedir, 0xFFA95C40)                         // OK, like SX210
 //NHSTUB(closefastdir, 0xffa95e28)                   // sigfinder, WRONG!
 NHSTUB(closefastdir, 0xFFA95C40)                     // aka. closedir
-//NHSTUB(free, 0xff81415c)                           // OK
+//NHSTUB(free, 0xff81415c)                           // OK!
 //NHSTUB(kbd_p1_f, 0xff83484c)                       // OK
 //NHSTUB(kbd_p1_f_cont, 0xff834858)                  // OK
 //NHSTUB(kbd_p2_f, 0xff8340d0)                       // maybe ok
@@ -156,10 +156,19 @@ NHSTUB(strrchr, 0xFF814008)                          // OK!
 //NHSTUB(Write, 0xff836e48)                          // maybe OK, eventproc, like SX210
 
 
-// --- DEBUG Stuff
+// DEBUG Stuff
 //NHSTUB(GetLogToFile, 0xFF975780)
 
 
 // video buffer stuff
 NHSTUB(UnlockAndRefresh, 0xFFA13398)   // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC, search "Window Instance"
 NHSTUB(LockAndRefresh, 0xFFA13354)    // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98, search "Window Instance"
+
+
+// PTP
+NHSTUB(initialise_ptp_handlers_data, 0xFFA4E898)
+NHSTUB(get_ptp_handler, 0xFFA4EC7C)
+NHSTUB(add_ptp_handler, 0xFFA4EABC)
+NHSTUB(remove_ptp_handler, 0xFFA4EBB0)
+NHSTUB(get_task_lists, 0xFF83544C)
+NHSTUB(get_task_info, 0xFF813A38)
