@@ -3,40 +3,41 @@
 // ROM addresses
 
 // --- not found by finsig
-NHSTUB(Lseek, 0xFF836ED4)                            // maybe ok, same as lseek
-NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // maybe ok, search String "ScreenUnLock"
-NHSTUB(ScreenLock, 0xFFA1356C)                       // search String "ScreenLock"
-NHSTUB(ScreenUnLock, 0xFFA12124)                     // aka. RefreshPhysicalScreen, search String "ScreenUnLock"
-NHSTUB(Remove, 0xFF836DEC)                           // OK
-NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!
-NHSTUB(openfastdir, 0xFFA95C90)                      // maybe ok, looks simular to A720
-NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720
+NHSTUB(Lseek, 0xFF836ED4)                            // OK, same as lseek, like G11
+NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // OK, search String "ScreenUnLock", like G11
+NHSTUB(ScreenLock, 0xFFA1356C)                       // search String "ScreenLock", G11 is different
+NHSTUB(ScreenUnLock, 0xFFA12124)                     // aka. RefreshPhysicalScreen, search String "ScreenUnLock", G11 is different
+NHSTUB(Remove, 0xFF836DEC)                           // OK!, like G11
+NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!!
+NHSTUB(openfastdir, 0xFFA95C90)                      // OK, looks simular to A720, like G11
+NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720, G11 is different but referens is same
 NHSTUB(ReadFastDir, 0xFFA95DE4)                      // aka. readfastdir
-NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK eventproc
-//NHSTUB(SetScriptMode, 0xFF895904)                    // ?!?
-NHSTUB(SetScriptMode, 0xFF810F6C)                    // OK, like SX210
-NHSTUB(UnlockAF, 0xFF83831C)                         // OK, like SX210
-NHSTUB(DoAFLock, 0xFF8382E4)                         // OK, like SX210
-NHSTUB(GiveSemaphore, 0xFF839E38)                    // OK, not in use?
-NHSTUB(GetDrive_FreeClusters, 0xFF871E90)            // OK, like SX210, UI does show free space
-NHSTUB(PT_PlaySound, 0xFF8840B8)                     // OK, like SX210, plays sound on CHDK startup
-NHSTUB(rename, 0xFF83669C)                           // maybe OK, like SX210
-NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210
-NHSTUB(EnterToCompensationEVF, 0xFF8383E4)           // like SX210
-NHSTUB(ExitFromCompensationEVF, 0xFF838428)          // like SX210
+NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK!, eventproc
+//NHSTUB(SetScriptMode, 0xFF895904)                    // eventproc
+NHSTUB(SetScriptMode, 0xFF810F6C)                    // OK!, like SX210 and G11
+NHSTUB(UnlockAF, 0xFF83831C)                         // OK!, like SX210 and G11
+NHSTUB(DoAFLock, 0xFF8382E4)                         // OK!, like SX210 and G11
+NHSTUB(GiveSemaphore, 0xFF839E38)                    // OK!!, eventproc, like G11
+NHSTUB(GetDrive_FreeClusters, 0xFF871E90)            // OK!, like SX210 and G11, UI does show free space
+NHSTUB(PT_PlaySound, 0xFF8840B8)                     // OK!, like SX210 and G11, plays sound on CHDK startup
+//NHSTUB(rename, 0xFF83669C)                           // maybe OK, like SX210
+NHSTUB(rename, 0xFF836E94)                           // maybe OK, like G11
+NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210, G11 is different but referens is same
+NHSTUB(EnterToCompensationEVF, 0xFF8383E4)           // OK, like SX210 and G11
+NHSTUB(ExitFromCompensationEVF, 0xFF838428)          // OK, like SX210 and G11
 NHSTUB(PostLEDMessage, 0xFF860C6C)                   // like SX210
-NHSTUB(TurnOffBackLight, 0xFF8A4980)                 // very likely
-NHSTUB(TurnOnBackLight, 0xFF8A4968)                  // very likely
-NHSTUB(GetZoomLensCurrentPoint, 0xFF965E54)          // like SX210
-NHSTUB(GetZoomLensCurrentPosition, 0xFFAA9298)       // like SX210
-NHSTUB(GetCurrentAvValue, 0xFF9644F8)                // like SX210
+NHSTUB(TurnOffBackLight, 0xFF8A4980)                 // OK, like G11
+NHSTUB(TurnOnBackLight, 0xFF8A4968)                  // OK, like G11
+NHSTUB(GetZoomLensCurrentPoint, 0xFF965E54)          // OK, like SX210, G11 is different but referens is same
+NHSTUB(GetZoomLensCurrentPosition, 0xFFAA9298)       // OK, like SX210, G11 is different but referens is same
+NHSTUB(GetCurrentAvValue, 0xFF9644F8)                // OK, like SX210, G11 is different but referens is same
+NHSTUB(PutInNdFilter, 0xFFB2056C)                    // very likely, like G11
+NHSTUB(PutOutNdFilter, 0xFFB205A4)                   // very likely, like G11
 
 
 // --- NULLSTUBS (not found by finsig)
-NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // ToDo: nullsub_1, maybe not available since canon firmware allow Zoom for Movie
+NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // nullsub_1, does not exist since canon firmware allow Zoom for Movie
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
-NHSTUB(PutInNdFilter, 0xFF810B1C)                    // ToDo: nullsub_1
-NHSTUB(PutOutNdFilter, 0xFF810B1C)                   // ToDo: nullsub_1
 
 
 // --- Those aren't used or don't exist in DryOS (like A720)
@@ -49,11 +50,11 @@ NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exis
 
 // --- stubs_entry.S (auto sig finder)
 // ROM:FF96CBFC register libc function
-//NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK!
-//NHSTUB(AllocateMemory, 0xFF814100)                 // is the actual function, other are just jumps
-//NHSTUB(AllocateUncacheableMemory, 0xff83a41c)      // OK!
-//NHSTUB(Close, 0xff836db8)                          // OK!!, eventproc
-//NHSTUB(CreateTask, 0xff81e83c)                     // OK!, eventproc
+//NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK!! (malloc)
+//NHSTUB(AllocateMemory, 0xFF814100)                 // malloc, is the actual function, other are just jumps
+//NHSTUB(AllocateUncacheableMemory, 0xff83a41c)      // OK!!
+//NHSTUB(Close, 0xff836db8)                          // OK!!!, eventproc
+//NHSTUB(CreateTask, 0xff81e83c)                     // OK!!, eventproc
 //NHSTUB(DeleteFile_Fut, 0xff836730)                 // OK!
 //NHSTUB(ExecuteEventProcedure, 0xFF88B9C0)          // sigfinder, tstcallf.lua does cause shutdown, referens from FactoryMode Stuff and eventproc_export_ExecuteEventProcedure(), should be correct
 //NHSTUB(ExecuteEventProcedure, 0xFF88B948)          // tstcallf.lua returns error
@@ -95,10 +96,11 @@ NHSTUB(MoveFocusLensToDistance, 0xFFB2289C)          // ?!?
 //NHSTUB(PostLogicalEventToUI, 0xff893994)           // OK!, eventproc
 //NHSTUB(Read, 0xff81ac7c)                           // OK!!
 //NHSTUB(RenameFile_Fut, 0xff836868)                 // sigfinder, WRONG!, does not point to function start
-NHSTUB(RenameFile_Fut, 0xFF83669C)                   // maybe ok, like SD990
+NHSTUB(RenameFile_Fut, 0xFF83669C)                   // OK, like SD990 and G11
 //NHSTUB(SetAutoShutdownTime, 0xff895bec)            // OK
 //NHSTUB(SetCurrentCaptureModeType, 0xff89e550)      // OK
-//NHSTUB(SetFileTimeStamp, 0xff9514c0)               // maybe ok
+//NHSTUB(SetFileTimeStamp, 0xff9514c0)               // sigfinder, WRONG!, does not point to function start
+NHSTUB(SetFileTimeStamp, 0xFF837054)                 // maybe ok, like G11
 //NHSTUB(SetLogicalEventActive, 0xff8958b4)          // OK
 //NHSTUB(SetParameterData, 0xff997564)               // maybe ok
 //NHSTUB(SetPropertyCase, 0xff88f530)                // maybe ok
@@ -106,8 +108,8 @@ NHSTUB(RenameFile_Fut, 0xFF83669C)                   // maybe ok, like SD990
 //NHSTUB(TakeSemaphore, 0xff839d68)                  // OK eventproc
 //NHSTUB(UnlockMainPower, 0xff895acc)                // OK eventproc
 //NHSTUB(UpdateMBROnFlash, 0xff813f98)               // WRONG
-NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
-//NHSTUB(VbattGet, 0xff8330d8)                       // maybe ok
+NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK!
+//NHSTUB(VbattGet, 0xff8330d8)                       // OK, eventproc
 //NHSTUB(_log, 0xffb5b348)
 //NHSTUB(_log10, 0xffb59fd4)
 //NHSTUB(_pow, 0xffb5a144)
@@ -115,15 +117,15 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK
 //NHSTUB(close, 0xff81aa94)                          // OK!!!
 //NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
 NHSTUB(closedir, 0xFFA95C40)                         // OK, like SX210
-//NHSTUB(closefastdir, 0xffa95e28)                   // sigfinder, WRONG!
+//NHSTUB(closefastdir, 0xffa95e28)                   // sigfinder, WRONG!, does not point to function start
 NHSTUB(closefastdir, 0xFFA95C40)                     // aka. closedir
 //NHSTUB(free, 0xff81415c)                           // OK!
 //NHSTUB(kbd_p1_f, 0xff83484c)                       // OK
 //NHSTUB(kbd_p1_f_cont, 0xff834858)                  // OK
 //NHSTUB(kbd_p2_f, 0xff8340d0)                       // maybe ok
-//NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK
-//NHSTUB(lseek, 0xff836ee0)                          // does not point to function start
-NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
+//NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK!
+//NHSTUB(lseek, 0xff836ee0)                          // sigfinder, WRONG!, does not point to function start
+NHSTUB(lseek, 0xFF836ED4)                            // OK, same as Lseek
 //NHSTUB(malloc, 0xff814100)                         // OK!, referens from AllocateUncacheableMemory
 //NHSTUB(memcmp, 0xff82066c)                         // OK!, eventproc
 //NHSTUB(memcpy, 0xff83fae8)                         // OK!, eventproc
@@ -135,34 +137,35 @@ NHSTUB(lseek, 0xFF836ED4)                            // maybe ok, same as Lseek
 //NHSTUB(rand, 0xff820774)                           // OK
 //NHSTUB(read, 0xff81ac7c)                           // OK!
 //NHSTUB(srand, 0xff820768)                          // OK
-//NHSTUB(stat, 0xFF810B1C)                           // ToDo: nullsub_1
-NHSTUB(stat, 0xff836f1c)                             // maybe ok
-//NHSTUB(strcat, 0xff813f5c)                         // WRONG
-NHSTUB(strcat, 0xFF8AC1AC)                           // OK
+//NHSTUB(stat, 0xff836f1c)                           // OK, like G11
+//NHSTUB(strcat, 0xff813f5c)                         // WRONG, does point to strncpy
+NHSTUB(strcat, 0xFF8AC1AC)                           // OK!, like G11
 //NHSTUB(strchr, 0xff813fe4)                         // OK!
 //NHSTUB(strcmp, 0xff820628)                         // OK
 //NHSTUB(strcpy, 0xff820610)                         // OK
-//NHSTUB(strftime, 0xff8ac3f8)                       // maybe ok
+//NHSTUB(strftime, 0xff8ac3f8)                       // OK, like G11
 //NHSTUB(strlen, 0xff814030)                         // OK
 //NHSTUB(strncmp, 0xff813f98)                        // OK
 //NHSTUB(strncpy, 0xff813f5c)                        // OK!
 //NHSTUB(strrchr, 0xff83fac0)                        // sigfinder, WRONG!
-NHSTUB(strrchr, 0xFF814008)                          // OK!
+NHSTUB(strrchr, 0xFF814008)                          // OK!, like G11
 //NHSTUB(strtol, 0xff83fdc8)                         // OK
 //NHSTUB(strtolx, 0xff83fbcc)                        // OK
 //NHSTUB(time, 0xff88981c)                           // looks simular to A720
 //NHSTUB(vsprintf, 0xff8205d4)                       // OK!
 //NHSTUB(write, 0xff81acdc)                          // maybe OK, like SD990
 //NHSTUB(Write, 0xff836e48)                          // maybe OK, eventproc, like SX210
-
+//NHSTUB(Restart, 0xff83bbfc)                        // maybe OK, like G11
 
 // DEBUG Stuff
-//NHSTUB(GetLogToFile, 0xFF975780)
+NHSTUB(GetLogToFile, 0xFF975780)                     // this is where Event Procedure does jump (native call does shutdown camera), like G11
+//NHSTUB(GetLogToFile, 0xFF975444)                   // directly points to function like A720
+NHSTUB(dumpMemoryToFile, 0xFF836004)                 // writes a portion of memory into a file (char* filename, 0, (void*) src, int length)
 
 
 // video buffer stuff
-NHSTUB(UnlockAndRefresh, 0xFFA13398)   // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC, search "Window Instance"
-NHSTUB(LockAndRefresh, 0xFFA13354)    // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98, search "Window Instance"
+NHSTUB(UnlockAndRefresh, 0xFFA13398)                 // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC, search "Window Instance"
+NHSTUB(LockAndRefresh, 0xFFA13354)                   // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98, search "Window Instance"
 
 
 // PTP
