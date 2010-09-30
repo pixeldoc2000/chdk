@@ -39,9 +39,11 @@ NHSTUB(Lseek,                    0xFF835A9C) // same address as lseek
 NHSTUB(rename,                   0xFF835A5C) 
 NHSTUB(RenameFile_Fut,           0xFF835278)
 NHSTUB(Restart,                  0xFF83AB40)
+NHSTUB(UpdateMBROnFlash,         0xFF86FAB0) // pixel::doc
 
 // nullsubs
 NHSTUB(kbd_pwr_on, 0xFF810B04) // nullsub
+NHSTUB(kbd_pwr_off, 0xFF810B04) // nullsub
 NHSTUB(rewinddir,  0xFF810B04)  // nullsub
 NHSTUB(Unmount_FileSystem, 0xFF810B04)  // nullsub
 NHSTUB(Mount_FileSystem,   0xFF810B04)  // nullsub
