@@ -4,7 +4,7 @@ P-ID:       12791 (0x31F7)
 Firmware:   1.00d
 Author:     pixel::doc (http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/)
 OS:         DRYOS version 2.3, release #0043
-Port is based on A720 & SD990 & SX210
+Port is based on A720 & SD990 & SX210 & G11
 
 
 --- Note ------------------------------------------------------------
@@ -65,6 +65,13 @@ physw_status[0] = 0x32E94   // 0xC0220200 ?
 physw_status[1] = 0x32E98   // 0xC0220204 ?
 physw_status[2] = 0x32E9C   // 0xC0220208 ?
 
+--- PropertyCase
+Number   Name                       Location
+57       Compression                ROM:FF8689EC
+95       DigitalZoomPosition        ROM:FF868A24
+138      HSCapture                  ROM:FF868A8C
+149      ISOSpeed                   ROM:FF868A5C
+220      Resolution                 ROM:FF8689C4
+
 
 ?!? or ToDo means i'm unshure about it
-
