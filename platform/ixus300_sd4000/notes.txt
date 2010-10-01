@@ -50,7 +50,6 @@ http://www.canon.com.my/p/EN/114-Digital-Cameras/203-IXUS/1556-Digital-IXUS-300-
 
 
 --- Hardware address
-physw_status[2] 0x20000  SD-Card Status (locked / unlocked) ?!?
 0xC0220130  Green Led (backside)
 0xc0220134  Red Led (backside)
 0xC0223030  Red AF Led (front)
@@ -64,6 +63,8 @@ physw_status[2] 0x20000  SD-Card Status (locked / unlocked) ?!?
 physw_status[0] = 0x32E94   // 0xC0220200 ?
 physw_status[1] = 0x32E98   // 0xC0220204 ?
 physw_status[2] = 0x32E9C   // 0xC0220208 ?
+physw_status[2] = 0x20000   // SD_READONLY_FLAG = SD-Card Status (locked / unlocked)
+physw_status[2] = 0x80000   // USB_MASK = USB-Power (triggered around 3,5V)
 
 --- PropertyCase
 Number   Name                       Location            String
