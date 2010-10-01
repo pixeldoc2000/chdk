@@ -40,6 +40,7 @@ NHSTUB(rename,                   0xFF835A5C)
 NHSTUB(RenameFile_Fut,           0xFF835278)
 NHSTUB(Restart,                  0xFF83AB40)
 NHSTUB(UpdateMBROnFlash,         0xFF86FAB0) // pixel::doc
+NHSTUB(dumpMemoryToFile,         0xFF834BE0) // pixel::doc
 
 // nullsubs
 NHSTUB(kbd_pwr_on, 0xFF810B04) // nullsub
