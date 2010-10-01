@@ -11,13 +11,17 @@
 // ROM:FFB28EF4 0xAE0 = 2784 pixel
 // 3816 * 2784 = 10623744
 
+/*
 // ROM:FFB29270, like SX210
 // search String "CRAW BUFF"
 char *hook_raw_image_addr() {
-    return (char*)0x40AFF8A0;         // second RAW buffer address
+    return (char*)0x4132C0A0;           // first RAW buffer address
+    //return (char*)0x40AFF8A0;         // second RAW buffer address
+    //return (char*)0x44CF6800;         // third RAW buffer address
 }
+*/
 
-/*
+
 // ROM:FFB2926C 0x4132C0A0 First RAW address
 // ROM:FFB60E70 Table contains first RAW address mentioned in SD990
 // function ROM:FF87ED4C referens the table with first RAW address (SsImgProcBuf.c)
@@ -26,7 +30,6 @@ char *hook_raw_image_addr() {
 char *hook_raw_image_addr() {
     return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
 }
-*/
 
 // ROM:FFB292D0, like SX210
 // search String "CRAW BUFF SIZE"
@@ -34,11 +37,15 @@ long hook_raw_size() {
     return 0xF32880;
 }
 
+void *vid_get_viewport_live_fb() {
+    return (void*)0;
+}
+
+/*
 // ?!?
 // Live picture buffer (shoot not pressed)
 // ROM:FF84FB50 ?!?
 void *vid_get_viewport_live_fb() {
-    return (void*)0;
     //void **fb=(void **)0x21E8;      // ?!?
     //void **fb=(void **)0x21EC;      // ?!?
     void **fb=(void **)0x21F8;      // ROM:FF85078C ?!? more or less guesswork
@@ -51,6 +58,7 @@ void *vid_get_viewport_live_fb() {
     }
     return fb[buff];
 }
+*/
 
 // OSD buffer
 // like SX10
