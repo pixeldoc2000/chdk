@@ -2330,7 +2330,6 @@
     #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
 
     #undef  CAM_HAS_ERASE_BUTTON
-    #undef  CAM_REMOTE
     #undef  CAM_SYNCH
     #define CAM_HAS_ND_FILTER           1
     #define  CAM_HAS_IRIS_DIAPHRAGM     1
