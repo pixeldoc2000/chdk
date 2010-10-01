@@ -380,9 +380,9 @@ void __attribute__((naked,noinline)) sub_FF970A8C_my() {
             "SUB     R3, R3, #8\n"
             "BL      sub_FF973794\n"
 
-            //"BL      wait_until_remote_button_is_released\n"  // +
-            "BL      capt_seq_hook_set_nr\n"  // +
-            "B       sub_FF970B40\n"            // + continue in canon firmware
+            "BL      wait_until_remote_button_is_released\n"   // +
+            "BL      capt_seq_hook_set_nr\n"     // +
+            "B       sub_FF970B40\n"             // + continue in canon firmware
 
             /*
             "LDR     R0, [R4,#0x1C]\n"
