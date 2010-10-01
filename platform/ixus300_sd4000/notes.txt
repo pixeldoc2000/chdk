@@ -66,12 +66,17 @@ physw_status[1] = 0x32E98   // 0xC0220204 ?
 physw_status[2] = 0x32E9C   // 0xC0220208 ?
 
 --- PropertyCase
-Number   Name                       Location
+Number   Name                       Location            String
+23       PCH_AV_EFFECTIVE           ROM:FF869490
+26       PCH_AV_SETTING             ROM:FF869440
+49       PCH_CAPTURE_MODE           ROM:FF8693F4        Current Capture Setting
 57       Compression                ROM:FF8689EC
-95       DigitalZoomPosition        ROM:FF868A24
+95       DigitalZoomPos             ROM:FF868A24
 138      HSCapture                  ROM:FF868A8C
 149      ISOSpeed                   ROM:FF868A5C
 220      Resolution                 ROM:FF8689C4
+264      PCH_TV_EFFECTIVE           ROM:FF869614
+26x?     PCH_TV_SETTING             ROM:FF869464
 
 
 ?!? or ToDo means i'm unshure about it
