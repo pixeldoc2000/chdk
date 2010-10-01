@@ -2330,7 +2330,8 @@
     #define CAM_DRYOS_2_3_R39           1        // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
     #undef  CAM_BITMAP_PALETTE                   // shut up compiler
-    #define CAM_BITMAP_PALETTE          2        // fix CHDK UI colors (video buffer) ?!?
+    //#define CAM_BITMAP_PALETTE          2        // fix CHDK UI colors (video buffer) ?!?
+    #define CAM_BITMAP_PALETTE          5        // looks like no existing palette does fit in record mode
 
     #undef  CAM_UNCACHED_BIT                     // shut up compiler
     #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
@@ -2363,6 +2364,9 @@
       640019, 1000000, -220031, 1000000, -96241, 1000000,  \
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
+
+    #undef  CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12       // ?!?
 
     #define cam_CalibrationIlluminant1  1        // Daylight ?!?
     #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
