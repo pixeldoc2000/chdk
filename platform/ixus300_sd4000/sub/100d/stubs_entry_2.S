@@ -2,25 +2,25 @@
 
 // ROM addresses
 
-// --- not found by finsig
+// --- not found by sigfinder
 NHSTUB(Lseek, 0xFF836ED4)                            // OK, same as lseek, like G11
 NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // OK, search String "ScreenUnLock", like G11
 NHSTUB(ScreenLock, 0xFFA1356C)                       // search String "ScreenLock", G11 is different
 NHSTUB(ScreenUnLock, 0xFFA12124)                     // aka. RefreshPhysicalScreen, search String "ScreenUnLock", G11 is different
-NHSTUB(Remove, 0xFF836DEC)                           // OK!, like G11
+NHSTUB(Remove, 0xFF836DEC)                           // OK!, like G11, SX200 is different but referens is same, llibtst.lua os.remove pass on file but fail on directory, wrong ?!?
 NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!!
 NHSTUB(openfastdir, 0xFFA95C90)                      // OK, looks simular to A720, like G11
 NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720, G11 is different but referens is same
 NHSTUB(ReadFastDir, 0xFFA95DE4)                      // aka. readfastdir
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK!, eventproc
-//NHSTUB(SetScriptMode, 0xFF895904)                    // eventproc
+//NHSTUB(SetScriptMode, 0xFF895904)                  // eventproc
 NHSTUB(SetScriptMode, 0xFF810F6C)                    // OK!, like SX210 and G11
 NHSTUB(UnlockAF, 0xFF83831C)                         // OK!, like SX210 and G11
 NHSTUB(DoAFLock, 0xFF8382E4)                         // OK!, like SX210 and G11
 NHSTUB(GiveSemaphore, 0xFF839E38)                    // OK!!, eventproc, like G11
 NHSTUB(GetDrive_FreeClusters, 0xFF871E90)            // OK!, like SX210 and G11, UI does show free space
 NHSTUB(PT_PlaySound, 0xFF8840B8)                     // OK!, like SX210 and G11, plays sound on CHDK startup
-//NHSTUB(rename, 0xFF83669C)                           // maybe OK, like SX210
+//NHSTUB(rename, 0xFF83669C)                         // maybe OK, like SX210
 NHSTUB(rename, 0xFF836E94)                           // maybe OK, like G11
 NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210, G11 is different but referens is same
 NHSTUB(EnterToCompensationEVF, 0xFF8383E4)           // OK, like SX210 and G11
@@ -35,12 +35,12 @@ NHSTUB(PutInNdFilter, 0xFFB2056C)                    // very likely, like G11
 NHSTUB(PutOutNdFilter, 0xFFB205A4)                   // very likely, like G11
 
 
-// --- NULLSTUBS (not found by finsig)
+// --- NULLSTUBS (not found by sigfinder)
 NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // nullsub_1, does not exist since canon firmware allow Zoom for Movie
 NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
 
 
-// --- Those aren't used or don't exist in DryOS (like A720)
+// --- Those aren't used or don't exist in DryOS (like A720 and other)
 NHSTUB(Mount_FileSystem, 0xFF810B1C)                 // nullsub_1
 NHSTUB(Unmount_FileSystem, 0xFF810B1C)               // nullsub_1
 NHSTUB(rewinddir, 0xFF810B1C)                        // nullsub_1
@@ -48,7 +48,7 @@ NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // nullsub_1, does not exis
 NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exist, like SD990
 
 
-// --- stubs_entry.S (auto sig finder)
+// --- stubs_entry.S (sigfinder)
 // ROM:FF96CBFC register libc function
 //NHSTUB(AllocateMemory, 0xffab8cf0)                 // OK!! (malloc)
 //NHSTUB(AllocateMemory, 0xFF814100)                 // malloc, is the actual function, other are just jumps
@@ -80,7 +80,7 @@ NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exis
 //NHSTUB(GetPropertyCase, 0xff88f660)                // OK!
 //NHSTUB(GetSystemTime, 0xffab8d48)                  // OK!!, eventproc
 //NHSTUB(IsStrobeChargeCompleted, 0xff8da44c)
-//NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)          // maybe ok
+//NHSTUB(IsStrobeChargeCompleted, 0xFF8DA424)        // maybe ok
 NHSTUB(IsStrobeChargeCompleted, 0xFF8DA44C)          // like SX210
 //NHSTUB(LocalTime, 0xff88923c)                      // OK
 //NHSTUB(LockMainPower, 0xff895b78)                  // OK!
@@ -100,7 +100,7 @@ NHSTUB(RenameFile_Fut, 0xFF83669C)                   // OK, like SD990 and G11
 //NHSTUB(SetAutoShutdownTime, 0xff895bec)            // OK
 //NHSTUB(SetCurrentCaptureModeType, 0xff89e550)      // OK
 //NHSTUB(SetFileTimeStamp, 0xff9514c0)               // sigfinder, WRONG!, does not point to function start
-NHSTUB(SetFileTimeStamp, 0xFF837054)                 // maybe ok, like G11
+NHSTUB(SetFileTimeStamp, 0xFF837054)                 // maybe ok, like G11 and SX210
 //NHSTUB(SetLogicalEventActive, 0xff8958b4)          // OK
 //NHSTUB(SetParameterData, 0xff997564)               // maybe ok
 //NHSTUB(SetPropertyCase, 0xff88f530)                // maybe ok
@@ -130,8 +130,8 @@ NHSTUB(lseek, 0xFF836ED4)                            // OK, same as Lseek
 //NHSTUB(memcmp, 0xff82066c)                         // OK!, eventproc
 //NHSTUB(memcpy, 0xff83fae8)                         // OK!, eventproc
 //NHSTUB(memset, 0xffa15ddc)                         // OK!, eventproc
-//NHSTUB(mkdir, 0xff837254)                          // OK!, like SX210
-//NHSTUB(mktime_ext, 0xff8ac9f0)                     // OK, like SD990
+//NHSTUB(mkdir, 0xff837254)                          // OK!, like SX210 and G11
+//NHSTUB(mktime_ext, 0xff8ac9f0)                     // OK!, like SD990 and G11
 //NHSTUB(open, 0xff81a9e4)                           // OK!!
 //NHSTUB(opendir, 0xffa95c90)                        // looks OK
 //NHSTUB(rand, 0xff820774)                           // OK
@@ -153,9 +153,10 @@ NHSTUB(strrchr, 0xFF814008)                          // OK!, like G11
 //NHSTUB(strtolx, 0xff83fbcc)                        // OK
 //NHSTUB(time, 0xff88981c)                           // looks simular to A720
 //NHSTUB(vsprintf, 0xff8205d4)                       // OK!
-//NHSTUB(write, 0xff81acdc)                          // maybe OK, like SD990
-//NHSTUB(Write, 0xff836e48)                          // maybe OK, eventproc, like SX210
+//NHSTUB(write, 0xff81acdc)                          // OK, like SD990 and G11
+//NHSTUB(Write, 0xff836e48)                          // OK, eventproc, like SX210 and G11
 //NHSTUB(Restart, 0xff83bbfc)                        // maybe OK, like G11
+
 
 // DEBUG Stuff
 NHSTUB(GetLogToFile, 0xFF975780)                     // this is where Event Procedure does jump (native call does shutdown camera), like G11
