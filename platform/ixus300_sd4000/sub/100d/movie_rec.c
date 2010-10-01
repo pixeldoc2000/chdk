@@ -62,7 +62,7 @@ void __attribute__((naked,noinline)) movie_record_task() {
             "STR     R0, [R4,#0xA8]\n"
             //"ADR     R0, =0xFF96BA00\n"
             //"LDR     R0, =0xFF96BA00\n"         // compiler does not like ADR
-            "LDR     R0, =sub_FF96BA00_my\n"         // compiler does not like ADR
+            "LDR     R0, =sub_FF96BA00_my\n"      // +
             "STR     R0, [R4,#0xAC]\n"
             "LDR     R0, =0xFF96AD2C\n"
             "LDR     R2, =0xFF96AC48\n"
