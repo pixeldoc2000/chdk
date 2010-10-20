@@ -198,7 +198,7 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
         "loc_FF87A440:\n"
             "MOV     R0, #0\n"
 
-            //"B       loc_FF87A4D0\n"   // gcc: loc_FF87A4D0 not found
+            //"B       loc_FF87A4D0\n"   // original
             "B       sub_FF87A4D0\n"   // +
 
         "loc_FF87A448:\n"
@@ -210,9 +210,9 @@ void __attribute__((naked,noinline)) sub_FF87A3A0_my() {
             "MOV     R0, R6\n"
 
             //"BL      sub_FF879B30\n"   // original
-            "STMFD   SP!, {R4-R11,LR}\n"   // save registers to stack
+            "STMFD   SP!, {R4-R11,LR}\n"   // + save registers to stack
             "BL      mbr_read\n"    // + --->
-            "LDMFD   SP!, {R4-R11,LR}\n"   // restore registers from stack
+            "LDMFD   SP!, {R4-R11,LR}\n"   // + restore registers from stack
 
             "MOV     R4, R0\n"
             "MOV     R0, #3\n"

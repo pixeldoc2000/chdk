@@ -121,7 +121,7 @@ void my_kbd_read_keys() {
     if (kbd_process() == 0) {
         // nothing to override
         #if CAM_FEATURE_FEATHER
-            _taskResume(taskFeatherID);
+            _taskResume(taskFeatherID);   // resume Feather Task
         #endif
     } else {
         // override keys
@@ -130,7 +130,7 @@ void my_kbd_read_keys() {
         physw_status[2] = (kbd_new_state[2] & (~KEYS_MASK2)) | (kbd_mod_state[2] & KEYS_MASK2);
 
         #if CAM_FEATURE_FEATHER
-            _taskSuspend(taskFeatherID);   // suspend Feather Task to avoid canon firmware from overdraw CHDK menu
+            _taskSuspend(taskFeatherID);   // suspend Feather Task (disable canon firmware "Touch Icons" display which overdraw CHDK)
             //if (kbd_mod_state != KEY_MASK) {
             //    _taskResume(taskFeatherID);
             //}

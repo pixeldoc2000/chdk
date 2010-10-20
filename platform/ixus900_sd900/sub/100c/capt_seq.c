@@ -51,13 +51,13 @@ void __attribute__((naked,noinline)) capt_seq_task() {
 
         "loc_FF992BAC:\n"
         "BL      sub_FF9931C0\n"   // jumptable FF992B44 case 0
-        "BL      shooting_expo_param_override\n"   // from SD800
+        "BL      shooting_expo_param_override\n"   // + from SD800
         "BL      sub_FF9906E0\n"
         "B       loc_FF992C8C\n"
 
         "loc_FF992BB8:\n"
         //"BL      sub_FF9925E4\n"   // jumptable FF992B44 case 1
-        "BL       sub_FF9925E4_my\n"   // like SD800
+        "BL       sub_FF9925E4_my\n"   // + like SD800
         "B       loc_FF992C8C\n"
 
         "loc_FF992BC0:\n"
@@ -153,7 +153,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
         "MOV     R1, #0x4E0\n"     // switch default
         "LDR     R0, =0xFF9920E4\n"   // aShoottask_c
         "ADD     R1, R1, #7\n"
-        "BL      sub_FF813D70\n"   // DebugAssert
+        "BL      sub_FF813D70\n"   // DebugAssert()
 
         "loc_FF992C8C:\n"
         "LDR     R2, [SP]\n"
@@ -162,7 +162,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
         "LDR     R3, =0x76CBC\n"   // jumptable FF992B44 case 23
         "LDR     R1, [R2,#4]\n"
         "LDR     R0, [R3]\n"
-        "BL      sub_FF820CE0\n"   // SetEventFlag
+        "BL      sub_FF820CE0\n"   // SetEventFlag()
         "LDR     R0, [SP]\n"
         "BL      sub_FF9921D4\n"
 
@@ -177,8 +177,8 @@ void __attribute__((naked,noinline)) capt_seq_task() {
         "MOV     R1, #0x410\n"
         "LDR     R0, =0xFF9920E4\n"   // aShoottask_c
         "ADD     R1, R1, #9\n"
-        "BL      sub_FF813D70\n"   // DebugAssert
-        "BL      sub_FF822954\n"   // ExitTask
+        "BL      sub_FF813D70\n"   // DebugAssert()
+        "BL      sub_FF822954\n"   // ExitTask()
         "ADD     SP, SP, #4\n"
         "LDMFD   SP!, {R4,PC}\n"
     );
@@ -299,8 +299,8 @@ void __attribute__((naked,noinline)) sub_FF9925E4_my(long p) {
         "BL      sub_FF9963A4\n"
         "MOV     R0, R4\n"
         //"BL      sub_FF995A50\n"   // original
-        "BL      sub_FF995A50_my\n"   // from SD800
-        "BL      capt_seq_hook_raw_here\n"   // from SD800
+        "BL      sub_FF995A50_my\n"   // + from SD800
+        "BL      capt_seq_hook_raw_here\n"   // + from SD800
         "MOV     R1, #1\n"
         "MOV     R2, R4\n"
         "BL      sub_FF990BD8\n"
@@ -338,7 +338,7 @@ void __attribute__((naked,noinline)) sub_FF995A50_my(long p) {
         "ADD     R0, R0, #2\n"
         "ADD     R1, SP, #4\n"
         "MOV     R2, #4\n"
-        "BL      sub_FF8258C8\n"   // GetPropertyCase
+        "BL      sub_FF8258C8\n"   // GetPropertyCase()
         "TST     R0, #1\n"
         "BEQ     loc_FF995A90\n"
         "LDR     R0, =0xFF9958CC\n"   // aCaptureseq_c
@@ -353,8 +353,8 @@ void __attribute__((naked,noinline)) sub_FF995A50_my(long p) {
         "BL      sub_FF8B0C2C\n"   // nullsub_28()
         "MOV     R0, R4\n"
         "BL      sub_FF995850\n"
-        "BL      wait_until_remote_button_is_released\n"   // from SD800
-        "BL      capt_seq_hook_set_nr\n"   // from SD800
+        "BL      wait_until_remote_button_is_released\n"   // + from SD800
+        "BL      capt_seq_hook_set_nr\n"   // + from SD800
         "LDR     R3, =0x6B7C\n"
         "LDR     R0, [R3]\n"
         "B       sub_FF995AB4\n"   // branche to original function

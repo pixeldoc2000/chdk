@@ -58,13 +58,13 @@ void __attribute__((naked,noinline)) movie_record_task() {
         "B       loc_FF984F40\n"
 
         "loc_FF984F04:\n"
-        "BL      unlock_optical_zoom\n"   // from SD800
+        "BL      unlock_optical_zoom\n"   // + like SD800
         "BL      sub_FF985194\n"
         "B       loc_FF984F40\n"
 
         "loc_FF984F0C:\n"
         //"BL      sub_FF98565C\n"   // original
-        "BL      sub_FF98565C_my\n"   // + ---> from SD800
+        "BL      sub_FF98565C_my\n"   // + like SD800
         "B       loc_FF984F40\n"
 
         "loc_FF984F14:\n"
@@ -209,7 +209,7 @@ void __attribute__((naked,noinline)) sub_FF98565C_my() {
         "MOV     R2, R4\n"
         "STR     R3, [R12]\n"
         //"BL      sub_FF98650C\n"   // original
-        "BL      sub_FF98650C_my\n"   // + ---> like SD800
+        "BL      sub_FF98650C_my\n"   // + like SD800
         "B       loc_FF9857D8\n"
 
         "loc_FF9857D4:\n"
@@ -316,9 +316,9 @@ void __attribute__((naked,noinline)) sub_FF98650C_my(){
 
         "loc_FF9865C0:\n"
         //"CMP     R1, #0xE\n"   // original
-        "CMP     R1, #0x1A\n"   // + from SD800
+        "CMP     R1, #0x1A\n"   // + like SD800
         //"MOVGE   R1, #0xE\n"   // original
-        "MOVGE   R1, #0x1A\n"   // + from SD800
+        "MOVGE   R1, #0x1A\n"   // + like SD800
         "B       loc_FF986604\n"
 
         "loc_FF9865CC:\n"
@@ -351,10 +351,10 @@ void __attribute__((naked,noinline)) sub_FF98650C_my(){
         "loc_FF986620:\n"
         "LDR     R3, =0x764F8\n"
         //"LDR     R1, =0x6AFC\n"   // original
-        "LDR     R1, =video_mode\n"   // + from SD800
+        "LDR     R1, =video_mode\n"   // + like SD800
         "LDR     R0, [R3]\n"
         //"LDR     R2, =0xFF986318\n"   // original
-        "LDR     R2, =CompressionRateTable\n"
+        "LDR     R2, =CompressionRateTable\n"   // +
         "LDR     R12, [R1]\n"
         "LDR     R12, [R12]\n"   // from SD800
         "LDR     LR, [R2,R0,LSL#2]\n"
@@ -362,10 +362,10 @@ void __attribute__((naked,noinline)) sub_FF98650C_my(){
         "CMP     R12, #1\n"
         "STR     R7, [R3]\n"
         "STR     LR, [R6]\n"
-        //"MOVEQ   R3, #0xB\n"   // from SD800
-        "LDREQ   R3, =video_quality\n"   // + from SD800
-        "LDREQ   R3, [R3]\n"   // from SD800
-        "LDREQ   R3, [R3]\n"   // from SD800
+        //"MOVEQ   R3, #0xB\n"   // like SD800
+        "LDREQ   R3, =video_quality\n"   // + like SD800
+        "LDREQ   R3, [R3]\n"   // + like SD800
+        "LDREQ   R3, [R3]\n"   // + like SD800
         "STREQ   R3, [R6]\n"
         "LDMFD   SP!, {R4-R7,PC}\n"
     );

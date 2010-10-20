@@ -117,7 +117,7 @@ ROM:FF8BB138                 BL      loc_FF88E5D4
 ***********/
 void *vid_get_viewport_live_fb() {   // live picture buffer (shoot not pressed)
     //return (void*)0x106E64B0;   // 0x1065B130 + 0x8B380
-    void **fb=(void **)0x55BC;
+    void **fb = (void **)0x55BC;
     unsigned char buff = *((unsigned char*)0x55D4);
     if (buff == 0) {
         buff = 2;

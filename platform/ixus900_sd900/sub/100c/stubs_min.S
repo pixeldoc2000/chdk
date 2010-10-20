@@ -206,11 +206,11 @@ DEF(recreview_hold, 0x7EB0)   // ROM:FF9E1F18 after function string "AR:Snd:0x%0
 
 
 //DEF(zoom_status, 0x7DB0)   // from SD800 ROM:FF9EAADC ?
-DEF(zoom_status, 0x7F70)   // ???
+DEF(zoom_status, 0x7F70)
 
 
 //DEF(movie_status, 0x8BC00)   // from SD800 ROM:FF98BE98 ?
-DEF(movie_status, 0x76410)   // ??? ROM:FF985994 maybe
+DEF(movie_status, 0x76410)
 
 
 //DEF(some_flag_for_af_scan, 0x6AE0)   // from SD800 ROM:FF99923C or ROM:FF99B358 ?
@@ -240,4 +240,5 @@ DEF(InvertData, 0x0000FB90)
 DEF(GpioStatus, 0x0000FBA0)
 DEF(SwitchStatus, 0x0000FBB0)
 
+// Logical Event Table
 DEF(levent_table,0xFF9A1124)   // search for "DCD aPressrightbutton" and look above
