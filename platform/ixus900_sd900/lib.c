@@ -49,3 +49,16 @@ void ubasic_set_led(int led, int state, int bright) {
     else
         p[0]=0x44;
 }
+
+// Save canon ROM log
+void save_rom_log() {
+    asm volatile(
+        "MOV R0, #0\n"
+        "MOV R1, #1\n"
+        "STMDB SP!, {R0, R1, LR}\n"
+        "MOV R0, SP\n"
+        "MOV LR, PC\n"   // ToDo: required ?
+        "BL _GetLogToFile\n"
+        "LDMIA SP!, {R0, R1, LR}\n"
+    );
+}
