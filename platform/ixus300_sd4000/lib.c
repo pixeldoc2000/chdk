@@ -57,8 +57,8 @@ void vid_bitmap_refresh() {
 
     _ScreenLock();
     enabled_refresh_physical_screen=1;
-    //*(int*)0x926C=3;    // ROM:FFA114FC, like SX210
-    //*(int*)0x926C=2;    // ?!?
+    // *(int*)0x926C=3;    // ROM:FFA114FC, like SX210
+    // *(int*)0x926C=2;    // ?!?
     *(int*)0x926C=1;    // better than 3
     _RefreshPhysicalScreen(1);
 }
