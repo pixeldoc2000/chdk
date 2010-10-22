@@ -62,12 +62,14 @@ int rec_switch_state(void) {
 }
 */
 
+// Battery default min. Voltage
 long get_vbatt_min() {
-    return 2300;
+    return 3200;    // ToDo: use real value, this is just a guess
 }
 
+// Battery default max. Voltage
 long get_vbatt_max() {
-    return 2550;
+    return 4100;    // ToDo: use real value, this is just a guess
 }
 
 // NEXT: platform/ixus300_sd4000/sub/100d/boot.c boot()
