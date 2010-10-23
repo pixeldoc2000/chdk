@@ -2303,7 +2303,8 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus300_sd4000)
-    #define CAM_PROPSET                 4        // ?!?
+    //#define CAM_PROPSET                 4        // ?!?
+    #define CAM_PROPSET                 3        // for now PropSet 3 else lua scripts does not work
     #define CAM_DRYOS                   1
     #define CAM_DRYOS_2_3_R39           1        // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
