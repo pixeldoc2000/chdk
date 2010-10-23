@@ -2332,6 +2332,8 @@
 
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1      // ToDo
 
+    #define  CAM_CHDK_PTP               1        // include CHDK PTP support
+
     #define PARAM_CAMERA_NAME           4        // parameter number for GetParameterData to get camera name
 
     // pattern ?!?
