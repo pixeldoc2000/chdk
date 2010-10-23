@@ -133,3 +133,26 @@ void JogDial_CW(void) {
 void JogDial_CCW(void) {
     _PostLogicalEventForNotPowerType(0x877, 2);  // RotateJogDialLeft at levent_table
 }
+
+/*
+// PTP stuff
+extern void _set_control_event(int);
+extern void _PB2Rec();
+extern void _Rec2PB();
+int switch_mode_usb(int mode)
+{
+  if ( mode == 0 )
+  {
+    _Rec2PB();
+    _set_control_event(0x80000902); // 0x10A5 ConnectUSBCable
+  } else if ( mode == 1 )
+  {
+    _set_control_event(0x902); // 0x10A6 DisconnectUSBCable
+    _PB2Rec();
+  } else {
+    return 0;
+  }
+
+  return 1;
+}
+*/
