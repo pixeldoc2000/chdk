@@ -169,10 +169,14 @@ NHSTUB(UnlockAndRefresh, 0xFFA13398)                 // SX20 102: ROM:FFA0498C, 
 NHSTUB(LockAndRefresh, 0xFFA13354)                   // SX20 102: ROM:FFA048E8, SX210: ROM:FFA1ED98, search "Window Instance"
 
 
-// PTP
-NHSTUB(initialise_ptp_handlers_data, 0xFFA4E898)
+// PTP stuff
+//NHSTUB(initialise_ptp_handlers_data, 0xFFA4E898)
 NHSTUB(get_ptp_handler, 0xFFA4EC7C)
-NHSTUB(add_ptp_handler, 0xFFA4EABC)
+//NHSTUB(add_ptp_handler, 0xFFA4EABC)                // sigfinder address ok
 NHSTUB(remove_ptp_handler, 0xFFA4EBB0)
 NHSTUB(get_task_lists, 0xFF83544C)
 NHSTUB(get_task_info, 0xFF813A38)
+NHSTUB(PB2Rec, 0xFF898B40)                           // search String "AC:PB2Rec"
+NHSTUB(Rec2PB, 0xFF897590)                           // search String "AC:Rec2PB"
+NHSTUB(set_control_event, 0xFF8955C4)                // via eventproc_export_IsControlEventActive (last call), levent_table contains control event id's (Logical Event Table)
+//NHSTUB(reboot_fw_update, 0xffa9b228)               // sigfinder address ok
