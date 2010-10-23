@@ -8,7 +8,7 @@ NSTUB(Close, 0xff836db8)
 NSTUB(CreateTask, 0xff81e83c)
 NSTUB(DeleteFile_Fut, 0xff836730)
 // ERROR: EnterToCompensationEVF is not found!
-NSTUB(ExecuteEventProcedure, 0xff88b9c0)
+NSTUB(ExecuteEventProcedure, 0xff88b948)
 // ERROR: ExitFromCompensationEVF is not found!
 // Best match: 57%
 NSTUB(ExitTask, 0xff81eacc)
@@ -106,6 +106,7 @@ NSTUB(_log, 0xffb5b348)
 NSTUB(_log10, 0xffb59fd4)
 NSTUB(_pow, 0xffb5a144)
 NSTUB(_sqrt, 0xffb5cf50)
+NSTUB(add_ptp_handler, 0xffa4eabc)
 NSTUB(close, 0xff81aa94)
 // Best match: 71%
 NSTUB(closedir, 0xffa95e28)
@@ -142,6 +143,8 @@ NSTUB(opendir, 0xffa95c90)
 NSTUB(rand, 0xff820774)
 NSTUB(read, 0xff81ac7c)
 // ERROR: readfastdir is not found!
+// Best match: 82%
+NSTUB(reboot_fw_update, 0xffa9b228)
 // ERROR: rename is not found!
 // Best match: 95%
 NSTUB(srand, 0xff820768)
