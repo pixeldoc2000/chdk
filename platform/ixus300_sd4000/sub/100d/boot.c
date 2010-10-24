@@ -183,10 +183,13 @@ void __attribute__((naked,noinline)) boot() {
 
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
-    // from SX210
+    // ToDo: verify the Hooks are working, like SX210
     *(int*)0x1934=(int)taskHook;   //was 1934 in sx200 if 1938 hangs
     *(int*)0x1938=(int)taskHook;
-    *(int*)(0x24B8)= (*(int*)0xC022010C)&1 ? 0x400000 : 0x200000;    // ROM:FF861138
+
+    // Power Button detection (short press = playback mode, long press = record mode)
+    // replacement for sub_FF834580
+    *(int*)(0x24B8)= (*(int*)0xC0220110)&1 ? 0x400000 : 0x200000;    // ROM:FF861138, value 0x200000 and 0x400000 must be in reverse order, else detection is reversed too
 
     asm volatile (
             "LDR     R0, =0xFF8103CC\n"
@@ -348,7 +351,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
         "loc_FF81FB30:\n"
             "B       loc_FF81FB30\n"
         "loc_FF81FB34:\n"
-            //"BL      sub_FF834580\n"           // + removed for correct power-on on 'on/off' button (SD990)
+            //"BL      sub_FF834580\n"           // + disabled for correct Power Button detection
             //"BL      j_nullsub_214\n"
             "BL      sub_FF839F18\n"
             "LDR     R1, =0x3CE000\n"
