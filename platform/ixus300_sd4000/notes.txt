@@ -81,3 +81,9 @@ Number   Name                       Location            String
 
 
 ?!? or ToDo means i'm unshure about it
+
+
+--- ToDo
+* Multi Partition support
+* Make bootable does not work (WriteSDCard address wrong?)
+* "Debug Parameters -> Create card with two partitions" does cause shutdown (WriteSDCard address wrong?)
