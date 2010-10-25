@@ -34,6 +34,13 @@ NHSTUB(GetCurrentAvValue, 0xFF9644F8)                // OK, like SX210, G11 is d
 NHSTUB(PutInNdFilter, 0xFFB2056C)                    // very likely, like G11
 NHSTUB(PutOutNdFilter, 0xFFB205A4)                   // very likely, like G11
 
+// Multi Partition Support
+//NHSTUB(ReadSDCard, 0xFF9522B0)                     // probably, like SD990
+// "Make bootable" does nothing, "Debug Parameters -> Create card with two partitions" cause shutdown (create_partitions())
+NHSTUB(WriteSDCard, 0xFF952494)                      // shutdown
+//NHSTUB(WriteSDCard, 0xFF9522B0)                    // shutdown
+//NHSTUB(WriteSDCard, 0xFF95266C)                    // shutdown
+
 
 // --- NULLSTUBS (not found by sigfinder)
 NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // nullsub_1, does not exist since canon firmware allow Zoom for Movie

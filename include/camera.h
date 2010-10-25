@@ -2345,6 +2345,7 @@
     #define CAM_HAS_JOGDIAL             1
     #define CAM_FEATURE_FEATHER         1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1        // enables CHDK OSD in record mode
+    #define CAM_MULTIPART               1        // ToDo: test if its working
 
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1      // ToDo
 

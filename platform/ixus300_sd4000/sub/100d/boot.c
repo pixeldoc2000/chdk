@@ -224,8 +224,12 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
 
             //"BL      sub_FF811198\n"           // original
             "BL      sub_FF811198_my\n"          // +
+            //"B       sub_FF811198_my\n"          // Todo: B instead of BL ?!?
+
+            // ToDo: shouldn't we continue with original function ?!? Most other Port does not...
+            //asm volatile ("B      sub_FF8103CC\n");
     );
-} //#fe
+}    //#fe
 
 void __attribute__((naked,noinline)) sub_FF811198_my() { //#fs
     asm volatile (
@@ -382,7 +386,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
             "BL      sub_FF81650C\n"             // taskcreate_ClockSave()
             "BL      sub_FF835674\n"
             "BL      sub_FF833808\n"
-            "BL      sub_FF83BD30\n"             // j_nullsub_217\n"
+            "BL      sub_FF83BD30\n"             // j_nullsub_217
             "BL      sub_FF83BF1C\n"
 
             //"BL      sub_FF83BDC4\n"           // original: StartSdInit() -> StartDiskboot()
@@ -399,18 +403,12 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
             "BL      sub_FF83BF4C\n"
             "BL      sub_FF8396BC\n"
             "BL      sub_FF83C0C4\n"
-    );
 
-    //CreateTask_PhySw();                        // + not here, next call does this and jogdial
+            "BL      sub_FF834434\n"             // taskcreate_PhySw()
+            //"BL      taskcreate_PhySw_my\n"      // +
 
-    //debug_led(1);
-    //debug_led(0);
-
-    asm volatile (
-            //"BL      sub_FF834434\n"           // taskcreate_PhySw()
-            "BL      taskcreate_PhySw_my\n"      // +
-            //"BL      sub_FF8379F8\n"           // task_ShootSeqTask()
-            "BL      task_ShootSeqTask_my\n"     // +
+            "BL      sub_FF8379F8\n"             // task_ShootSeqTask()
+            //"BL      task_ShootSeqTask_my\n"     // +
 
             "BL      sub_FF83C0DC\n"
             //"BL      sub_FF8316A8\n"           // nullsub_201\n"
@@ -426,6 +424,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
     );
 }; //#fe
 
+/*
 void __attribute__((naked,noinline)) task_ShootSeqTask_my() {    //#fs
     asm volatile (
             "STMFD   SP!, {R4,LR}\n"
@@ -531,7 +530,9 @@ void __attribute__((naked,noinline)) sub_FF87D668_my() {    //#fs
             "LDMFD   SP!, {R3-R5,PC}\n"
     );
 };    //#fe
+*/
 
+/*
 // ROM:FF834434
 void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
     asm volatile (
@@ -565,6 +566,7 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             "LDMFD   SP!, {R3-R5,PC}\n"
     );
 };    //#fe
+*/
 
 // ROM:FF8995E0
 void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
@@ -900,11 +902,11 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
             "MOV     R0, R6\n"
             "BL      sub_FF8712CC\n"
             "MOV     R0, R6\n"
-            "BL      sub_FF87162C\n"
+            //"BL      sub_FF87162C\n"
+            "BL      sub_FF87162C_my\n"          // +
             "MOV     R5, R0\n"
             "MOV     R0, R6\n"
-            //"BL      sub_FF87185C\n"           // LOCATION: Mounter.c:0
-            "BL      sub_FF87185C_my\n"          // + correct sub ?!?, is different to SD990
+            "BL      sub_FF87185C\n"             // LOCATION: Mounter.c:0
             "LDR     R6, [R4,#0x3C]\n"
             "AND     R7, R5, R0\n"
             "CMP     R6, #0\n"
@@ -939,102 +941,198 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
     );
 };    //#fe
 
-void __attribute__((naked,noinline)) sub_FF87185C_my() {    //#fs
+void __attribute__((naked,noinline)) sub_FF87162C_my() {    //#fs
     asm volatile (
-            "STMFD   SP!, {R3-R9,LR}\n"
+            "STMFD   SP!, {R4-R6,LR}\n"
             "MOV     R5, R0\n"
-            //"ADR     R0, unk_FF871AEC\n"
-            "LDR     R0, =0xFF871AEC\n"          // compiler does not like ADR
-            "LDR     R0, [R0]\n"
-            "LDR     R9, =0x384C8\n"
-            "STR     R0, [SP]\n"
-            "ADD     R4, R9, R5,LSL#7\n"
+            "LDR     R0, =0x384C8\n"
+            "ADD     R4, R0, R5,LSL#7\n"
             "LDR     R0, [R4,#0x6C]\n"
-            "TST     R0, #4\n"
+            "TST     R0, #2\n"
             "MOVNE   R0, #1\n"
-            "BNE     locret_FF8718C8\n"
-            "LDR     R0, [R4,#0x3C]\n"
-            "LDR     R6, =0x2A18\n"
-            "CMP     R0, #6\n"
-            "MOV     R8, #1\n"
-            "MOV     R7, #0\n"
-            "ADDLS   PC, PC, R0,LSL#2\n"
-            "B       loc_FF871928\n"
-        "loc_FF8718A4:\n"
-            "B       loc_FF8718C0\n"
-        "loc_FF8718A8:\n"
-            "B       loc_FF8718CC\n"
-        "loc_FF8718AC:\n"
-            "B       loc_FF8718CC\n"
-        "loc_FF8718B0:\n"
-            "B       loc_FF8718CC\n"
-        "loc_FF8718B4:\n"
-            "B       loc_FF8718CC\n"
-        "loc_FF8718B8:\n"
-            "B       loc_FF8718E4\n"
-        "loc_FF8718BC:\n"
-            "B       loc_FF8718CC\n"
-        "loc_FF8718C0:\n"
-            //jumptable FF87189C entry 0
-            "MOV     R0, #0\n"
-            "STR     R7, [R4,#0x6C]\n"
-            "locret_FF8718C8:\n"
-            "LDMFD   SP!, {R3-R9,PC}\n"
-        "loc_FF8718CC:\n"
-            //jumptable FF87189C entries 1-4,6
+            "LDMNEFD SP!, {R4-R6,PC}\n"
             "LDR     R0, [R4,#0x38]\n"
-            "BL      sub_FF870DB4\n"
+            "MOV     R1, R5\n"
+            //"BL      sub_FF87134C\n"           // LOCATION: Mounter.c:0
+            "BL      sub_FF87134C_my\n"          // +
             "CMP     R0, #0\n"
-            "STREQ   R7, [R6,#0x10]\n"
-            "STRNE   R8, [R6,#0x10]\n"
-            "B       loc_FF871934\n"
-        "loc_FF8718E4:\n"
-            //jumptable FF87189C entry 5
+            "LDRNE   R0, [R4,#0x38]\n"
+            "MOVNE   R1, R5\n"
+            "BLNE    sub_FF8714E8\n"             // LOCATION: Mounter.c:0
+            "LDR     R2, =0x38548\n"
+            "ADD     R1, R5, R5,LSL#4\n"
+            "LDR     R1, [R2,R1,LSL#2]\n"
+            "CMP     R1, #4\n"
+            "BEQ     loc_FF87168C\n"
+            "CMP     R0, #0\n"
+            "LDMEQFD SP!, {R4-R6,PC}\n"
+            "MOV     R0, R5\n"
+            "BL      sub_FF870E44\n"
+        "loc_FF87168C:\n"
+            "CMP     R0, #0\n"
+            "LDRNE   R1, [R4,#0x6C]\n"
+            "ORRNE   R1, R1, #2\n"
+            "STRNE   R1, [R4,#0x6C]\n"
+            "LDMFD   SP!, {R4-R6,PC}\n"
+    );
+};    //#fe
+
+void __attribute__((naked,noinline)) sub_FF87134C_my() {    //#fs
+    asm volatile (
+            "STMFD   SP!, {R4-R10,LR}\n"
+            "MOV     R9, R0\n"
+            "LDR     R0, =0x384C8\n"
+            "MOV     R8, #0\n"
+            "ADD     R5, R0, R1,LSL#7\n"
+            "LDR     R0, [R5,#0x3C]\n"
+            "MOV     R7, #0\n"
+            "CMP     R0, #7\n"
+            "MOV     R6, #0\n"
+            "ADDLS   PC, PC, R0,LSL#2\n"
+            "B       loc_FF8714A4\n"
+        "loc_FF871378:\n"
+            "B       loc_FF8713B0\n"
+        "loc_FF87137C:\n"
+            //"B       loc_FF871398\n"
+            "B       sub_FF871398\n"
+        "loc_FF871380:\n"
+            //"B       loc_FF871398\n"
+            "B       sub_FF871398\n"
+        "loc_FF871384:\n"
+            //"B       loc_FF871398\n"
+            "B       sub_FF871398\n"
+        "loc_FF871388:\n"
+            //"B       loc_FF871398\n"
+            "B       sub_FF871398\n"
+        "loc_FF87138C:\n"
+            "B       loc_FF87149C\n"
+        "loc_FF871390:\n"
+            //"B       loc_FF871398\n"
+            "B       sub_FF871398\n"
+        "loc_FF871394:\n"
+            //"B       loc_FF871398\n"             // jumptable FF871370 entries 1-4,6,7
+            "B       sub_FF871398\n"
             "MOV     R2, #0\n"
-            "MOV     R1, #0x8000\n"
+            "MOV     R1, #0x200\n"
+            "MOV     R0, #2\n"
+            "BL      sub_FF889FD0\n"             // ExMem.AllocUncacheable()
+            "MOVS    R4, R0\n"
+            "BNE     loc_FF8713B8\n"
+        "loc_FF8713B0:\n"                        // jumptable FF871370 entry 0
             "MOV     R0, #0\n"
-            "STR     R8, [R6,#0x10]\n"
-            "BL      sub_FF889FD0\n"
+            "LDMFD   SP!, {R4-R10,PC}\n"
+        "loc_FF8713B8:\n"
+            "LDR     R12, [R5,#0x50]\n"
+            "MOV     R3, R4\n"
+            "MOV     R2, #1\n"
+            "MOV     R1, #0\n"
+            "MOV     R0, R9\n"
+            "BLX     R12\n"
+            "CMP     R0, #1\n"
+            "BNE     loc_FF8713E4\n"
+            "MOV     R0, #2\n"
+            "BL      sub_FF88A11C\n"             // ExMemMan.c:0
+            "B       loc_FF8713B0\n"
+        "loc_FF8713E4:\n"
+            "LDR     R1, [R5,#0x64]\n"
+            "MOV     R0, R9\n"
+            "BLX     R1\n"
+
+        // FAT32 Partition support
+            "MOV   R1, R4\n"                     // pointer to MBR in R1
+            "BL    mbr_read_dryos\n"             // total sectors count in R0 before and after call
+                                                 // requires "define CAM_MULTIPART 1", else you get undefined reference compiler error ;-)
+
+        // Start of DataGhost's FAT32 autodetection code
+            // Policy: If there is a partition which has type W95 FAT32, use the first one of those for image storage
+            // According to the code below, we can use R1, R2, R3 and R12.
+            // LR wasn't really used anywhere but for storing a part of the partition signature. This is the only thing
+            // that won't work with an offset, but since we can load from LR+offset into LR, we can use this to do that :)
+            "MOV     R12, R4\n"                    // Copy the MBR start address so we have something to work with
+            "MOV     LR, R4\n"                     // Save old offset for MBR signature
+            "MOV     R1, #1\n"                     // Note the current partition number
+            "B       dg_sd_fat32_enter\n"          // We actually need to check the first partition as well, no increments yet!
+        "dg_sd_fat32:\n"
+            "CMP     R1, #4\n"                     // Did we already see the 4th partition?
+            "BEQ     dg_sd_fat32_end\n"            // Yes, break. We didn't find anything, so don't change anything.
+            "ADD     R12, R12, #0x10\n"            // Second partition
+            "ADD     R1, R1, #1\n"                 // Second partition for the loop
+        "dg_sd_fat32_enter:\n"
+            "LDRB    R2, [R12, #0x1BE]\n"          // Partition status
+            "LDRB    R3, [R12, #0x1C2]\n"          // Partition type (FAT32 = 0xB)
+            "CMP     R3, #0xB\n"                   // Is this a FAT32 partition?
+            "CMPNE   R3, #0xC\n"                   // Not 0xB, is it 0xC (FAT32 LBA) then?
+            "BNE     dg_sd_fat32\n"                // No, it isn't. Loop again.
+            "CMP     R2, #0x00\n"                  // It is, check the validity of the partition type
+            "CMPNE   R2, #0x80\n"
+            "BNE     dg_sd_fat32\n"                // Invalid, go to next partition
+                                                   // This partition is valid, it's the first one, bingo!
+            "MOV     R4, R12\n"                    // Move the new MBR offset for the partition detection.
+        "dg_sd_fat32_end:\n"
+        // End of DataGhost's FAT32 autodetection code
+
+            "LDRB    R1, [R4,#0x1C9]\n"
+            "LDRB    R3, [R4,#0x1C8]\n"
+            "LDRB    R12, [R4,#0x1CC]\n"
+            "MOV     R1, R1,LSL#24\n"
+            "ORR     R1, R1, R3,LSL#16\n"
+            "LDRB    R3, [R4,#0x1C7]\n"
+            "LDRB    R2, [R4,#0x1BE]\n"
+            "LDRB    LR, [R4,#0x1FF]\n"
+            "ORR     R1, R1, R3,LSL#8\n"
+            "LDRB    R3, [R4,#0x1C6]\n"
+            "CMP     R2, #0\n"
+            "CMPNE   R2, #0x80\n"
+            "ORR     R1, R1, R3\n"
+            "LDRB    R3, [R4,#0x1CD]\n"
+            "MOV     R3, R3,LSL#24\n"
+            "ORR     R3, R3, R12,LSL#16\n"
+            "LDRB    R12, [R4,#0x1CB]\n"
+            "ORR     R3, R3, R12,LSL#8\n"
+            "LDRB    R12, [R4,#0x1CA]\n"
+            "ORR     R3, R3, R12\n"
+
+            //"LDRB    R12, [R4,#0x1FE]\n"       // original
+            "LDRB    R12, [LR,#0x1FE]\n"         // + First MBR signature byte (0x55), LR is original offset.
+            "LDRB    LR, [LR,#0x1FF]\n"          // + Last MBR signature byte (0xAA), LR is original offset.
+            //"MOV     R4, #0\n"                 // ToDo: required ?
+
+            "BNE     loc_FF871470\n"
+            "CMP     R0, R1\n"
+            "BCC     loc_FF871470\n"
+            "ADD     R2, R1, R3\n"
+            "CMP     R2, R0\n"
+            "CMPLS   R12, #0x55\n"
+            "CMPEQ   LR, #0xAA\n"
+            "MOVEQ   R7, R1\n"
+            "MOVEQ   R6, R3\n"
+            "MOVEQ   R4, #1\n"
+            "BEQ     loc_FF871474\n"
+        "loc_FF871470:\n"
+            "MOV     R4, R8\n"
+        "loc_FF871474:\n"
+            "MOV     R0, #2\n"
+            "BL      sub_FF88A11C\n"             // ExMemMan.c:0
+            "CMP     R4, #0\n"
+            "BNE     loc_FF8714B0\n"
+            "LDR     R1, [R5,#0x64]\n"
+            "MOV     R7, #0\n"
+            "MOV     R0, R9\n"
+            "BLX     R1\n"
             "MOV     R6, R0\n"
-            "MOV     R2, R4\n"
-            "MOV     R1, #0x8000\n"
-            "BL      sub_FF951714\n"             // LOCATION: RamDisk.c:396
-            "LDR     R0, [R9,R5,LSL#7]\n"
-            "MOV     R1, R6\n"
-            "STR     R0, [R4,#0x50]\n"
-            "LDR     R0, [R4,#4]\n"
-            "STR     R0, [R4,#0x54]\n"
-            "MOV     R0, R5\n"
-            "BL      sub_FF870EF8\n"
-            "B       loc_FF871934\n"
-        "loc_FF871928:\n"
-            //jumptable FF87189C default entry
-            "LDR     R1, =0x6A6\n"
-            //"ADR     R0, 0xFF8714C4\n"         // "Mounter.c"
-            "LDR     R0, =0xFF8714C4\n"          // compiler does not like ADR
+            "B       loc_FF8714B0\n"
+        "loc_FF87149C:\n"                        // jumptable FF871370 entry 5
+            "MOV     R6, #0x40\n"
+            "B       loc_FF8714B0\n"
+        "loc_FF8714A4:\n"                        // jumptable FF871370 default entry
+            "LDR     R1, =0x597\n"
+            //"ADR     R0, aMounter_c\n"         // "Mounter.c"
+            "LDR     R0, =0xFF8714C4\n"          // Compilter does not like ADR
             "BL      sub_FF81EB14\n"             // DebugAssert()
-        "loc_FF871934:\n"
-            "MOV     R0, R5\n"
-            "BL      sub_FF870B54\n"             // LOCATION: DriveLetterManager.c:147
-            "STRB    R0, [SP]\n"
-            "MOV     R0, R5\n"
-            "MOV     R1, SP\n"
-            "BL      sub_FF87172C\n"
-            "CMN     R0, #1\n"
-            "BNE     loc_FF871974\n"
-            "LDR     R1, =0x38548\n"
-            "ADD     R0, R5, R5,LSL#4\n"
-            "STR     R7, [R1,R0,LSL#2]\n"
-            "LDR     R1, [R4,#0x6C]\n"
-            "MOV     R0, #0\n"
-            "BIC     R1, R1, #6\n"
-        "loc_FF87196C:\n"
-            "STR     R1, [R4,#0x6C]\n"
-            "LDMFD   SP!, {R3-R9,PC}\n"
-        "loc_FF871974:\n"
-            "LDR     R1, [R4,#0x6C]\n"
+        "loc_FF8714B0:\n"
+            "STR     R7, [R5,#0x44]!\n"
+            "STMIB   R5, {R6,R8}\n"
             "MOV     R0, #1\n"
-            "ORR     R1, R1, #4\n"
-            "B       loc_FF87196C\n"
+            "LDMFD   SP!, {R4-R10,PC}\n"
     );
 };    //#fe
