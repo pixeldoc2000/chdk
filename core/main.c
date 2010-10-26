@@ -132,7 +132,7 @@ void core_spytask()
             if (((cnt++) & 3) == 0)
                 gui_redraw();
 
-            //histogram_process();          // <---------------- SHUTDOWN
+            histogram_process();
             #ifdef OPT_EDGEOVERLAY
                 if(conf.edge_overlay_thresh && conf.edge_overlay_enable) edge_overlay();
             #endif
