@@ -134,7 +134,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
                "BL      sub_FF87A91C\n"
                "MOV     R0, R5\n"
 
-             //"BL      sub_FF9686A8\n" // -
+             //"BL      sub_FF9686A8\n" // - taskcreate_ShutterSoundTask()
 			   "BL      sub_FF9686A8_my\n" //-------->
 			   "BL      capt_seq_hook_raw_here\n"      // +
                "TST     R0, #1\n"
