@@ -1,11 +1,10 @@
-#define PARAM_FILE_COUNTER      0x34    // 0x37 ?!?
-//#define PARAM_FILE_COUNTER      0x93    // 0x93 = 147, count of available Camera Parameter (use "Debug Paramenters -> Debug data display -> Params" to view number of Parameters)
-
-// DRYOS-Notes:
-// propertycase
-//   196 - overall brightness (of viewport?)
-
 #include "platform.h"
+
+// Camera Parameter Number of Image Filenumber
+// wrong PARAM_FILE_COUNTER cause camera shutdown if RAW is enabled or wrong number in RAW filename (for example always CRW_0001.CRW)
+// use "Debug Paramenters -> Debug data display -> Params" to verify
+// 0x93 = 147, count of available Camera Parameter
+#define PARAM_FILE_COUNTER      0x3A
 
 // ToDo
 // PropertyCase 23 ?!?
