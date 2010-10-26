@@ -2,7 +2,7 @@
 #include "platform.h"
 #include "core.h"
 
-static long *nrflag = (long*)0x6DB0;    // ?!? ROM:FF970AA0 at taskcreate_ShutterSoundTask()
+static long *nrflag = (long*)0x6DB0;    // ROM:FF970AA0 at taskcreate_ShutterSoundTask(), above String "ShutterSoundTask"
 
 #include "../../../generic/capt_seq.c"
 
@@ -181,7 +181,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
             "LDR     R0, [SP]\n"
 
             //"BL      sub_FF87D754\n"
-            "BL      sub_FF87D754_my\n"
+            "BL      sub_FF87D754_my\n"          // +
 
         "loc_FF87D4B4:\n"
             "STR     R7, [R4,#0x24]\n"
@@ -335,7 +335,9 @@ void __attribute__((naked,noinline)) sub_FF970A8C_my() {
             "STMFD   SP!, {R0-R8,LR}\n"
             "MOV     R4, R0\n"
             "BL      sub_FF971B78\n"             // LOCATION: SsShootEvent.c:76
-            "MVN     R1, #0\n"                   // ?!?
+            "MVN     R1, #0\n"                   // original ?!?
+            //"MOV     R1, #0xFFFFFFFF\n"
+            //"LDR    R1,=0xFFFFFFFF\n"          // like G11
             "BL      sub_FF887418\n"
             "LDR     R5, =0x6DB0\n"
             "LDR     R0, [R5,#0xC]\n"
@@ -382,6 +384,7 @@ void __attribute__((naked,noinline)) sub_FF970A8C_my() {
 
             "BL      wait_until_remote_button_is_released\n"   // +
             "BL      capt_seq_hook_set_nr\n"     // +
+
             "B       sub_FF970B40\n"             // + continue in canon firmware
 
             /*
