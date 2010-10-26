@@ -11,37 +11,58 @@
 // ROM:FFB28EF4 0xAE0 = 2784 pixel
 // 3816 * 2784 = 10623744
 
+// First RAW Address
+// ROM:FF93B998                 LDR     R1, =0x4132C0A0 <---
+// ROM:FF93B9A0                 ADR     R0, aCrwaddressLxCr ; " CrwAddress %lx, CrwSize H %ld V %ld\r"
+
 // ROM:FFB29270, like SX210
-// search String "CRAW BUFF"
+// search String "CRAW BUFF" (IDA Name: aCrawBuffP)
+// like G11
 char *hook_raw_image_addr() {
-    return (char*)0x4132C0A0;           // first RAW buffer address
+    //return (char*)0x4132C0A0;           // first RAW buffer address (looks like we get gargabe)
     //return (char*)0x40AFF8A0;         // second RAW buffer address
     //return (char*)0x44CF6800;         // third RAW buffer address
+
+    //return (char*)0x420F7932;         // ROM:FFB60E74
+    return (char*)0x46DCB892;         // ROM:FFB60E74
 }
 
 /*
 // ROM:FFB2926C 0x4132C0A0 First RAW address
-// ROM:FFB60E70 Table contains first RAW address mentioned in SD990
+// ROM:FFB60E70 RAW address Table
 // function ROM:FF87ED4C referens the table with first RAW address (SsImgProcBuf.c)
 // ROM:FF87ED50 0x2CCC
 // ROM:FF87ED7C 0xC
+// like SD990
 char *hook_raw_image_addr() {
-    return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
+    //return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
+    return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);
 }
 */
 
-// ROM:FFB292D0, like SX210
-// search String "CRAW BUFF SIZE"
+/*** RAW buffer size
+ROM:FFB292D0     LDR     R1, =0xF32880   <---
+ROM:FFB292D4     ADR     R0, aCrawBuffSizeP ; "CRAW BUFF SIZE  %p"
+***/
 long hook_raw_size() {
     return 0xF32880;
 }
 
-void *vid_get_viewport_live_fb() {
-    return (void*)0;
-}
-
+// ToDo: ?!?
+/*** Live picture buffer (shoot not pressed)
+ROM:FFB25ED8                 LDR     R1, =0x40587700   <---
+ROM:FFB25EDC                 LDR     R0, =0x54600   <---
+...
+ROM:FFB25EE8                 ADR     R0, aVramAddressP ; "VRAM Address  : %p\r"
+***/
 /*
-// ?!?
+void *vid_get_viewport_live_fb() {
+    //return (void*)0;
+    return (void*)0x405DBD00;   // 0x40587700 + 0x54600
+}
+*/
+
+// ToDo: ?!?
 // Live picture buffer (shoot not pressed)
 // ROM:FF84FB50 ?!?
 void *vid_get_viewport_live_fb() {
@@ -57,7 +78,6 @@ void *vid_get_viewport_live_fb() {
     }
     return fb[buff];
 }
-*/
 
 // OSD buffer
 // like SX10
@@ -95,9 +115,13 @@ void *vid_get_bitmap_fb() {
     return (void*)0x40471000;    // ROM:FF919AD4 or ROM:FFA347DC or ROM:FF85B154
 }
 
-// Live picture buffer (shoot half-pressed)
-// search for String "VRAM Address" (like SX10)
-// or search for String "MaxY %ld MinY %ld" and look below
+/*** Live picture buffer (shoot half-pressed)
+search for String "VRAM Address" (like SX10)
+or search for String "MaxY %ld MinY %ld" and look below
+ROM:FFB25ED8                 LDR     R1, =0x40587700    <---
+...
+ROM:FFB25EE8                 ADR     R0, aVramAddressP ; "VRAM Address  : %p\r"
+***/
 void *vid_get_viewport_fb() {
     return (void*)0x40587700;    // ROM:FFB25ED8 or ROM:FFB25DFC
 }
@@ -134,14 +158,9 @@ int vid_get_viewport_width() {
 //long vid_get_viewport_height() { return 240; }
 long vid_get_viewport_height() { return 270; }
 
-// ?!?
-// search for String "9999" (like SX10) and SD990
-//ROM:FFA04F74                 SUBS    R12, R5, #0x2700
-//ROM:FFA04F78                 SUBCSS  R12, R12, #0xF
-//ROM:FFA04F7C                 BCC     loc_FFA04F90
-//ROM:FFA04F80                 LDR     R0, =0xA15B8 <---
-//ROM:FFA04F84                 ADR     R1, a9999       ; "9999"
-//ROM:FFA04F88                 BL      eventproc_export_sprintf
+// search for String "9999" (IDA Name: a9999)
+// ROM:FFA04F80                 LDR     R0, =0xA15B8    ; <---
+// ROM:FFA04F84                 ADR     R1, a9999       ; "9999"
 char *camera_jpeg_count_str() {
     return (char*)0xA15B8;
 }
