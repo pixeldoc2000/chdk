@@ -13,25 +13,21 @@
 static int raw_need_postprocess;
 static volatile int spytask_can_start;
 
-void core_hook_task_create(void *tcb)
-{
+void core_hook_task_create(void *tcb) {
 }
 
-void core_hook_task_delete(void *tcb)
-{
+void core_hook_task_delete(void *tcb) {
 char *name = (char*)(*(long*)((char*)tcb+0x34));
  if (strcmp(name,"tInitFileM")==0) core_spytask_can_start();
 }
 
 
-long core_get_noise_reduction_value()
-{
+long core_get_noise_reduction_value() {
     return conf.raw_nr;
 }
 
 
-void dump_memory()
-{
+void dump_memory() {
     int fd;
     static int cnt=1;
     static char fn[32];
@@ -59,8 +55,7 @@ void dump_memory()
 static volatile long raw_data_available;
 
 /* called from another process */
-void core_rawdata_available()
-{
+void core_rawdata_available() {
     raw_data_available = 1;
 }
 
@@ -68,8 +63,7 @@ void core_spytask_can_start() {
         spytask_can_start = 1;
 }
 
-void core_spytask()
-{
+void core_spytask() {
     int cnt = 1;
     int i=0;
 
@@ -77,9 +71,9 @@ void core_spytask()
 
     spytask_can_start=0;
 
-#ifdef CAM_CHDK_PTP
-	init_chdk_ptp_task();
-#endif
+    #ifdef CAM_CHDK_PTP
+        init_chdk_ptp_task();
+    #endif
 
     while((i++<400) && !spytask_can_start) msleep(10);
 
@@ -113,7 +107,7 @@ void core_spytask()
     #endif
     auto_started = 0;
 
-    if (conf.script_startup==1) script_autostart();				// remote autostart
+    if (conf.script_startup==1) script_autostart();    // remote autostart
     if (conf.script_startup==2) {
         conf.script_startup=0;
         conf_save();
@@ -121,7 +115,7 @@ void core_spytask()
     }
 
     while (1){
-        if (raw_data_available){
+        if (raw_data_available) {
             raw_need_postprocess = raw_savefile();
             hook_raw_save_complete();
             raw_data_available = 0;
