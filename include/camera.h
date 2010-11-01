@@ -2323,6 +2323,7 @@
     #undef  CAM_USE_ZOOM_FOR_MF
     #define CAM_HAS_USER_TV_MODES       1
     //#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
+    #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO    // canon firmware allow optical zoom while recording movie
     //#define CAM_EV_IN_VIDEO             1
     #define CAM_VIDEO_CONTROL           1
     //#define DNG_SUPPORT                 1
