@@ -20,20 +20,15 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         char *dst = dst_void;
         const char *src = src_void;
 
-        if (src < dst && dst < src + length)
-        {
+        if (src < dst && dst < src + length) {
             // Have to copy backwards
             src += length;
             dst += length;
-            while (length--)
-            {
+            while (length--) {
                 *--dst = *--src;
             }
-        }
-        else
-        {
-            while (length--)
-            {
+        } else {
+            while (length--) {
                 *dst++ = *src++;
             }
         }
@@ -97,7 +92,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         : : "r"(dst_void) : "memory","r0","r1","r2","r3","r4"
     );
 
-        while(1);
+    while(1);
 }
 
 // NEXT: core/entry.S -> platform/ixus300_sd400/main.c startup()
