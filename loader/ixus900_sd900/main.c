@@ -9,10 +9,10 @@ extern long blob_copy_and_reset_size;
 #define LED_PR 0xc02200C4
 
 void __attribute__((noreturn)) my_restart() {
-    void __attribute__((noreturn)) (*copy_and_restart)(char *dst, char *src, long length);
+    void __attribute__((noreturn))(*copy_and_restart)(char *dst, char *src, long length);
     int i;
 
-    for (i=0;i<(blob_copy_and_reset_size/sizeof(long));i++) {
+    for(i=0; i<(blob_copy_and_reset_size/sizeof(long)); i++) {
         ((long*)(RESTARTSTART))[i] = blob_copy_and_reset[i];
     }
     copy_and_restart = (void*)RESTARTSTART;
@@ -35,16 +35,16 @@ static void __attribute__((noreturn)) shutdown() {
 static void __attribute__((noreturn)) panic(int cnt) {
     volatile long *p=(void*)LED_PR;
     int i;
-    for(;cnt>0;cnt--) {
+    for(; cnt>0; cnt--) {
         p[0]=0x46;
-        for(i=0;i<0x200000;i++) {
-            asm ("nop\n");
-            asm ("nop\n");
+        for(i=0; i<0x200000; i++) {
+            asm("nop\n");
+            asm("nop\n");
         }
         p[0]=0x44;
-        for(i=0;i<0x200000;i++) {
-            asm ("nop\n");
-            asm ("nop\n");
+        for(i=0; i<0x200000; i++) {
+            asm("nop\n");
+            asm("nop\n");
         }
     }
     shutdown();
