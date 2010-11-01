@@ -2377,6 +2377,13 @@
     #define CAM_ACTIVE_AREA_X2          3600     // ToDo, just guesswork
     #define CAM_ACTIVE_AREA_Y2          2750     // ToDo, just guesswork
 
+    #undef  CAM_SENSOR_BITS_PER_PIXEL
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
+    #undef  CAM_WHITE_LEVEL
+    #define CAM_WHITE_LEVEL             ((1<<CAM_SENSOR_BITS_PER_PIXEL)-1)
+    #undef  CAM_BLACK_LEVEL
+    #define CAM_BLACK_LEVEL             127
+
     #define PARAM_CAMERA_NAME 4 // parameter number (index) for GetParameterData to get Camera Nam
     #define DNG_EXT_FROM ".CR2"
 
