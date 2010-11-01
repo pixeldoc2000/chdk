@@ -137,7 +137,7 @@ long get_file_next_counter() {
 
 long get_target_file_num() {
     long n;
-    
+
     n = get_file_next_counter();
     n = (n>>4)&0x3FFF;
     return n;
@@ -145,7 +145,7 @@ long get_target_file_num() {
 
 long get_target_dir_num() {
     long n;
-    
+
     n = get_file_next_counter();
     n = (n>>18)&0x3FF;
     return n;

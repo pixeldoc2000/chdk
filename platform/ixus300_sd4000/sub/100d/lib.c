@@ -72,8 +72,7 @@ void *vid_get_viewport_live_fb() {
     unsigned char buff = *((unsigned char*)0x204C);   // ROM:FF850904
     if (buff == 0) {
         buff = 2;
-    }
-    else {
+    } else {
         buff--;
     }
     return fb[buff];
@@ -138,16 +137,22 @@ void *vid_get_viewport_fb_d() {
 // SD990 ROM:FF83CFC8 ?!?
 //long vid_get_bitmap_screen_width() { return 320; }
 //long vid_get_bitmap_screen_width() { return 360; }
-long vid_get_bitmap_screen_width() { return 480; }
+long vid_get_bitmap_screen_width() {
+    return 480;
+}
 //long vid_get_bitmap_screen_width() { return 720; }
 //long vid_get_bitmap_screen_width() { return 960; }
 
-long vid_get_bitmap_screen_height() { return 240; }
+long vid_get_bitmap_screen_height() {
+    return 240;
+}
 //long vid_get_bitmap_screen_height() { return 270; }
 //long vid_get_bitmap_screen_height() { return 360; }
 
 //int vid_get_viewport_width() { return 360; }    // viewport is still 360, even though live view is 720 (from SD990)
-int vid_get_viewport_width() { return 480; }
+int vid_get_viewport_width() {
+    return 480;
+}
 
 /*
 int vid_get_viewport_width() {
@@ -156,7 +161,9 @@ int vid_get_viewport_width() {
 */
 
 //long vid_get_viewport_height() { return 240; }
-long vid_get_viewport_height() { return 270; }
+long vid_get_viewport_height() {
+    return 270;
+}
 
 // search for String "9999" (IDA Name: a9999)
 // ROM:FFA04F80                 LDR     R0, =0xA15B8    ; <---
@@ -168,8 +175,12 @@ char *camera_jpeg_count_str() {
 // if buffer width was to small, Logo was shown as distorted "row" on Display
 //long vid_get_bitmap_buffer_width() { return 360; }
 //long vid_get_bitmap_buffer_width() { return 720; }
-long vid_get_bitmap_buffer_width() { return 960; }      // working
+long vid_get_bitmap_buffer_width() {
+    return 960;    // working
+}
 
 //long vid_get_bitmap_buffer_height() { return 240; }
-long vid_get_bitmap_buffer_height() { return 270; }
+long vid_get_bitmap_buffer_height() {
+    return 270;
+}
 //long vid_get_bitmap_buffer_height() { return 360; }

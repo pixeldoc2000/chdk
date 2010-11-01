@@ -9,8 +9,7 @@ extern long link_bss_end;
 extern void boot();
 
 
-void startup()
-{
+void startup() {
     long *bss = &link_bss_start;
     long *ptr;
 
