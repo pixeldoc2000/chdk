@@ -936,7 +936,8 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
             "LDMEQFD SP!, {R4-R8,LR}\n"
             //"ADREQ   R0, =0xFF871B00\n"        // "EMEM MOUNT ERROR!!!""
             "LDREQ   R0, =0xFF871B00\n"          // compiler does not like ADREQ
-            "BEQ     0xFF81177C\n"               // qPrintf()
+            //"BEQ     0xFF81177C\n"               // qPrintf()
+            "BEQ     sub_FF81177C\n"               // fix gcc 4.5.1 compiler error
             "LDMFD   SP!, {R4-R8,PC}\n"
     );
 };    //#fe
