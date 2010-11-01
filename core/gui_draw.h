@@ -187,6 +187,70 @@
 #define COLOR_HISTO_B_PLAY  COLOR_HISTO_B
 #define COLOR_HISTO_BG_PLAY COLOR_BLUE_LT
 #define COLOR_HISTO_RG_PLAY COLOR_YELLOW
+#elif CAM_BITMAP_PALETTE==7 //(ixus900_sd900)
+#define COLOR_TRANSPARENT   0x00    // OK
+#define COLOR_WHITE         0x11    // OK
+//#define COLOR_RED           0x22    // OK
+#define COLOR_RED           0x66    //
+#define COLOR_GREY          0x3F    // OK
+#define COLOR_GREEN         0x55    // OK
+#define COLOR_BLUE_LT       0x79    // OK
+#define COLOR_BLUE          0x7A    // OK
+#define COLOR_YELLOW        0x66    // OK
+#define COLOR_BLACK         0xFF    // OK
+#define COLOR_BG            0x44    // ?!?
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0xD4    // ?!?
+#define COLOR_SPLASH_RED    0x2E    // OK
+#define COLOR_SPLASH_PINK   0x21    // OK
+#define COLOR_SPLASH_GREY   0x1F    // OK
+// colors for blended histo
+#define COLOR_HISTO_R       COLOR_RED
+#define COLOR_HISTO_R_PLAY  COLOR_RED
+#define COLOR_HISTO_B       COLOR_BLUE
+#define COLOR_HISTO_G       COLOR_GREEN
+#define COLOR_HISTO_G_PLAY  COLOR_GREEN
+#define COLOR_HISTO_BG      COLOR_BLUE_LT
+#define COLOR_HISTO_RG      COLOR_YELLOW
+#define COLOR_HISTO_RB      0x66    // ?!?
+#define COLOR_HISTO_RB_PLAY 0xE2    // ?!?
+#define COLOR_HISTO_B_PLAY  0xCC    // ?!?
+#define COLOR_HISTO_BG_PLAY 0x99    // ?!?
+#define COLOR_HISTO_RG_PLAY 0x66    // ?!?
+#elif CAM_BITMAP_PALETTE==8 //(ixus300_sd4000)
+#define COLOR_TRANSPARENT   0x00    // OK
+#define COLOR_WHITE         0x01    // OK
+#define COLOR_RED           0x66    // Playback = orange (red not available), Record = red
+#define COLOR_GREY          0x20    // Playback = lighter grey, Record = darker grey
+#define COLOR_GREEN         0x5F    // Playback = brown (0x9F is green), Record OK
+#define COLOR_BLUE_LT       0x61    // Playback = brown (blue not available), Record OK
+#define COLOR_BLUE          0x67    // Playback = orange (blue not available), Record OK
+//#define COLOR_YELLOW        0x90    // OK
+#define COLOR_YELLOW        0x60    // Playback = orange, Record = bright yellow
+#define COLOR_BLACK         0xFF    // OK
+#define COLOR_BG            0x44    // Playback = dark grey, Record = orange
+#define COLOR_FG            COLOR_WHITE
+#define COLOR_SELECTED_BG   COLOR_RED
+#define COLOR_SELECTED_FG   COLOR_WHITE
+#define COLOR_ALT_BG        0x22    // Playback = light grey, Record = darker grey
+#define COLOR_SPLASH_RED    COLOR_RED
+#define COLOR_SPLASH_PINK   0x50    // Playback = lighter orange (pink is not available), Record = transparent white
+#define COLOR_SPLASH_GREY   0x1F    // Playback = light grey, Record = darker grey
+// colors for blended histo
+#define COLOR_HISTO_R       COLOR_RED
+#define COLOR_HISTO_R_PLAY  COLOR_RED
+#define COLOR_HISTO_B       COLOR_BLUE
+#define COLOR_HISTO_G       COLOR_GREEN
+#define COLOR_HISTO_G_PLAY  COLOR_GREEN
+#define COLOR_HISTO_BG      COLOR_BLUE_LT
+#define COLOR_HISTO_RG      COLOR_YELLOW
+#define COLOR_HISTO_RB      COLOR_WHITE    // ToDo
+#define COLOR_HISTO_RB_PLAY COLOR_WHITE    // ToDo
+#define COLOR_HISTO_B_PLAY  COLOR_WHITE    // ToDo
+#define COLOR_HISTO_BG_PLAY COLOR_WHITE    // ToDo
+#define COLOR_HISTO_RG_PLAY COLOR_WHITE    // ToDo
 #else
 #error CAM_BITMAP_PALETTE not defined
 #endif
