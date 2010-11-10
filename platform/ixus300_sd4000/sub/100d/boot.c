@@ -52,8 +52,6 @@ void boot() {    //#fs
     long *canon_bss_start = (void*)0xF244;       // ROM:FF810138 just after data
     long canon_bss_len = 0x14B394 - 0xF244;      // ROM:FF81014C
 
-    long i;
-
     //debug_led(1);
     //debug_led(0);
 
@@ -66,18 +64,9 @@ void boot() {    //#fs
         "MCR     p15, 0, R0,c1,c0\n"
     :::"r0");
 
-    for(i=0;i<canon_data_len/4;i++)
-        canon_data_dst[i]=canon_data_src[i];
-
-    for(i=0;i<canon_bss_len/4;i++)
-        canon_bss_start[i]=0;
-
     // see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
     *(int*)0x1938=(int)taskCreateHook;           // ROM:FF810698
     *(int*)0x193C=(int)taskCreateHook2;          // ROM:FF8106D8
-
-    // ROM:FF861134 similar to SX10, G11
-    *(int*)(0x24B8)=(*(int*)0xC0220110)&1 ? 0x400000 : 0x200000;   // replacement for correct power-on ?!?
 
     //debug_led(1);
     //debug_led(0);
