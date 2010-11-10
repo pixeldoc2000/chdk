@@ -19,7 +19,7 @@ DEF(physw_run, 0x1C34)    // ROM:FF834400, in task_PhySw() 0x1C28 + 0xC = 0x1C34
 // ROM:FF860888                 LDMFD   SP!, {R4,PC}
 DEF(led_table, 0x24AC)    // R0 -> 0x24A4 + 0x8
 
-DEF(playrec_mode,0x2D78)    // ROM:FF838AE4 (ROM:FF882328) search for String "MenuIn" 0x2D74 + 4, play: 0x3, rec: 0x2
+DEF(playrec_mode,0x2D78)    // ROM:FF838AE4 (ROM:FF882328) search for String "MenuIn" 0x2D74 + 4, OK, play: 0x3, rec: 0x2
 
 // like SX210
 // ROM:FFA1356C ScreenLock                              ; CODE XREF: sub_FFA121C0
@@ -50,7 +50,7 @@ DEF(canon_shoot_menu_active, 0x3D550)   // ?!?
 DEF(levent_table, 0xFFB9F59C)
 
 // ROM:FF96B418 or ROM:FF96A780 or ROM:FF96B0F8, found in task_MovieRecord()
-DEF(movie_status, 0x6A14)   // 0x69D8 + 0x3C
+DEF(movie_status, 0x6A14)   // 0x69D8 + 0x3C, OK
 
 // ROM:FF99D340
 DEF(recreview_hold, 0x780E)   // 0x780C + 2 ?!?
