@@ -20,11 +20,11 @@
 // like G11
 char *hook_raw_image_addr() {
     //return (char*)0x4132C0A0;           // first RAW buffer address (looks like we get gargabe)
-    //return (char*)0x40AFF8A0;         // second RAW buffer address
+    return (char*)0x40AFF8A0;         // second RAW buffer address
     //return (char*)0x44CF6800;         // third RAW buffer address
 
     //return (char*)0x420F7932;         // ROM:FFB60E74
-    return (char*)0x46DCB892;         // ROM:FFB60E74
+    //return (char*)0x46DCB892;         // ROM:FFB60E74
 }
 
 /*
