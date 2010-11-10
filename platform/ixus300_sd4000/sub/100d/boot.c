@@ -39,6 +39,12 @@ void taskHook(context_t **context) {    //#fs
     if(!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
 }    //#fe
 
+void taskHook2(context_t **context) {    //#fs
+    task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
+    if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
+    if(!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
+}    //#fe
+
 void CreateTask_spytask() {    //#fs
     _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }    //#fe
@@ -176,8 +182,13 @@ void boot() {    //#fs
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
     // ToDo: verify the Hooks are working, like SX210
-    *(int*)0x1934=(int)taskHook;   //was 1934 in sx200 if 1938 hangs
-    *(int*)0x1938=(int)taskHook;
+    //*(int*)0x1930=(int)taskHook;               // does not work
+    //*(int*)0x1930=(int)taskHook2;
+    //*(int*)0x1934=(int)taskHook;                 // 0x1934 not used in firmware elseware
+    //*(int*)0x1938=(int)taskHook;
+    *(int*)0x1938=(int)taskHook;                 // ROM:FF810698
+    *(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
+    //*(int*)0x19A0=(int)taskHook;               // maybe correct IRQ is 0x19A0 (ROM:FF816634) ?
 
     // Power Button detection (short press = playback mode, long press = record mode)
     // replacement for sub_FF834580 for correct power-on
