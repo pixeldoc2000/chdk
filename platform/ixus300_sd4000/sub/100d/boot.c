@@ -34,7 +34,7 @@ void taskHook(context_t **context) {    //#fs
     if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
     if(!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
     if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
-    if(!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;
+    if(!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;   // ToDo: working?
     if(!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
     if(!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
 }    //#fe
@@ -167,7 +167,8 @@ void boot() {    //#fs
         "CMP     R3, R1\n"
         "STRCC   R2, [R3],#4\n"
         "BCC     loc_FF810154\n"
-        //"B       sub_FF810354\n"
+
+        //"B       sub_FF810354\n"           // original
         "B       sub_FF810354_my\n"          // +
     );
 }    //#fe
@@ -179,7 +180,7 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
     *(int*)0x1938=(int)taskHook;
 
     // Power Button detection (short press = playback mode, long press = record mode)
-    // replacement for sub_FF834580
+    // replacement for sub_FF834580 for correct power-on
     *(int*)(0x24B8)= (*(int*)0xC0220110)&1 ? 0x400000 : 0x200000;    // ROM:FF861138, value 0x200000 and 0x400000 must be in reverse order, else detection is reversed too
 
     asm volatile (
