@@ -8,7 +8,9 @@ const char * const new_sa = &_end;
 #define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
 // Forward declarations
+void CreateTask_spytask();
 void JogDial_task_my(void);
+void boot();
 
 /*
 // old Task Hook stuff
@@ -87,7 +89,7 @@ void boot() {    //#fs
 */
 
 // ROM:FF81000C
-void __attribute__((naked,noinline)) boot() {
+void boot() {    //#fs
     asm volatile (
         "LDR     R1, =0xC0410000\n"
         "MOV     R0, #0\n"
