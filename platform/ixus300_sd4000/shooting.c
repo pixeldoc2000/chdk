@@ -98,18 +98,11 @@ Movie: 1280 x 720(30 fps), 640 x 480 (30 fps/), 320 x 240 (30 fps), 320 x 240 (2
 
 // PROPCASE 49
 // Mapping between camera mode and PROPCASE_SHOOTING_MODE (modelist.h)
-// fish eye 33323
-// miniatur 33324
 static const CapturemodeMap modemap[] = {
     { MODE_AUTO,               32768 },
     { MODE_P,                  32772 },
     { MODE_TV,                 32771 },
     { MODE_AV,                 32770 },
-    { MODE_VIDEO_SPEED,        33288 }, // Highspeed Burst ?!?
-    { MODE_VIDEO_STD,          2612  },
-    //{ MODE_VIDEO_SLOWMOTION,   2617  }, // OK
-    { MODE_VIDEO_COLOR_SWAP,   2611  },
-    { MODE_VIDEO_COLOR_ACCENT, 2610  },
     { MODE_STITCH,             33292 },
     { MODE_SCN_FOLIAGE,        32789 },
     { MODE_SCN_SNOW,           32790 },
@@ -123,7 +116,14 @@ static const CapturemodeMap modemap[] = {
     { MODE_COLOR_ACCENT,       33309 },
     { MODE_COLOR_SWAP,         33310 },
     //{ MODE_SMART_SHUTTER,      33321 }, // mode does not exist in chdk
-    //{ MODE_HIGHSPEED_BURST,    32248 }, // mode does not exist in chdk
+    //{ MODE_FISHEYE,            33323 }, // mode does not exist in chdk
+    //{ MODE_MINIATURE,          33324 },
+    //{ MODE_HIGHSPEED_BURST,    32288 }, // mode does not exist in chdk
+    { MODE_VIDEO_STD,          2612  },
+    { MODE_VIDEO_SLOWMOTION,   2617  },
+    //{ MODE_VIDEO_SPEED,        2617 },
+    { MODE_VIDEO_COLOR_SWAP,   2611  },
+    { MODE_VIDEO_COLOR_ACCENT, 2610  },
 };
 
 #include "../generic/shooting.c"
