@@ -3,8 +3,6 @@ Camera:     Canon Powershot SD4000 IS (USA) / IXUS 300HS (Europe) / IXY 30S (Jap
 P-ID:       12791 (0x31F7)
 Firmware:   1.00d
 Author:     pixel::doc (http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/)
-OS:         DRYOS version 2.3, release #0043
-Port is based on A720 & SD990 & SX210 & G11
 
 
 --- Note ------------------------------------------------------------
@@ -38,9 +36,10 @@ Thanks to reyalp and asm1989 for their support.
 * KEYSYS=d4a (Dancing Bits)
 * camera has ND-Filter and probably real IRIS
 * camera has IS
-* Propset 4 (not shure yet)
+* Propset 4 (some props are different to Propset 3)
 * OS: DRYOS version 2.3, release #0043
 * Iris type aperture (used with ND filter)
+* Port is based on A720 & SD990 & SX210 & G11 & D10
 
 * camera does not support ver.req and vers.req
 * udumper "NewDryOs" (CardTricks) does not support 2010 cameras
@@ -54,10 +53,12 @@ http://www.canon.com.my/p/EN/114-Digital-Cameras/203-IXUS/1556-Digital-IXUS-300-
 0xc0220134  Red Led (backside)
 0xC0223030  Red AF Led (front)
 
+
 --- JogDiag ?!?
 0xC0220114
 0xC0220118
 0xC022011C
+
 
 --- Keyboard Status (physw_status)
 physw_status[0] = 0x32E94   // 0xC0220200 ?
@@ -65,6 +66,7 @@ physw_status[1] = 0x32E98   // 0xC0220204 ?
 physw_status[2] = 0x32E9C   // 0xC0220208 ?
 physw_status[2] = 0x20000   // SD_READONLY_FLAG = SD-Card Status (locked / unlocked)
 physw_status[2] = 0x80000   // USB_MASK = USB-Power (triggered around 3,5V)
+
 
 --- PropertyCase
 Number   Name                       Location            String
@@ -87,3 +89,4 @@ Number   Name                       Location            String
 * Multi Partition support
 * Make bootable does not work (WriteSDCard address wrong?)
 * "Debug Parameters -> Create card with two partitions" does cause shutdown (WriteSDCard address wrong?)
+* RAW files are invalid (filename ok, filedate ok)
