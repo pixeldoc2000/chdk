@@ -2,18 +2,30 @@
 
 // RAM addresses
 
-// Description from SD890
+/*
+RAW Address
+ROM:FF93B994    LDR     R2, =3816       ; RAW H Pixel
+ROM:FF93B998    LDR     R1, =0x4132C0A0
+ROM:FF93B99C    MOV     R3, #2784       ; RAW V Pixel
+ROM:FF93B9A0    ADR     R0, aCrwaddressLxCr ; " CrwAddress %lx, CrwSize H %ld V %ld\r"
 
-// sensor size for camera.h (like SX210)
-// ROM:FFB292D0 0xF32880 = 15935616 (hook_raw_size)
-// 15935616 / 12 * 8 =  10623744    (12 Bit RAW)
-// ROM:FFB28EEC 0xEE8 = 3816 pixel
-// ROM:FFB28EF4 0xAE0 = 2784 pixel
-// 3816 * 2784 = 10623744
+called by Getcaptureinfodata() (ROM:FFB28F14)
+ROM:FFB28EAC sub_FFB28EAC
+ROM:FFB28EEC    LDR     R0, =3816       ; RAW H Pixel
+ROM:FFB28EF0    STR     R0, [R1]
+ROM:FFB28EF4    MOV     R0, #2784       ; RAW V Pixel
+ROM:FFB28EF8    STR     R0, [R1,#4]
+ROM:FFB28EFC    MOV     R0, #3648       ; JPEG H Pixel
+ROM:FFB28F00    STR     R0, [R1,#8]
+ROM:FFB28F04    MOV     R0, #2736       ; JPEG V Pixel
 
-// First RAW Address
-// ROM:FF93B998                 LDR     R1, =0x4132C0A0 <---
-// ROM:FF93B9A0                 ADR     R0, aCrwaddressLxCr ; " CrwAddress %lx, CrwSize H %ld V %ld\r"
+sensor size for camera.h (like SX210)
+ROM:FFB292D0    0xF32880 = 15935616 (hook_raw_size)
+15935616 / 12 * 8 =  10623744    (12 Bit RAW)
+ROM:FFB28EEC    0xEE8 = 3816 pixel
+ROM:FFB28EF4    0xAE0 = 2784 pixel
+3816 * 2784 = 10623744
+*/
 
 // ROM:FFB29270, like SX210
 // search String "CRAW BUFF" (IDA Name: aCrawBuffP)
@@ -41,8 +53,8 @@ char *hook_raw_image_addr() {
 */
 
 /*** RAW buffer size
-ROM:FFB292D0     LDR     R1, =0xF32880   <---
-ROM:FFB292D4     ADR     R0, aCrawBuffSizeP ; "CRAW BUFF SIZE  %p"
+ROM:FFB292D0    LDR     R1, =0xF32880   <---
+ROM:FFB292D4    ADR     R0, aCrawBuffSizeP ; "CRAW BUFF SIZE  %p"
 ***/
 long hook_raw_size() {
     return 0xF32880;
@@ -50,10 +62,10 @@ long hook_raw_size() {
 
 // ToDo: ?!?
 /*** Live picture buffer (shoot not pressed)
-ROM:FFB25ED8                 LDR     R1, =0x40587700   <---
-ROM:FFB25EDC                 LDR     R0, =0x54600   <---
+ROM:FFB25ED8    LDR     R1, =0x40587700   <---
+ROM:FFB25EDC    LDR     R0, =0x54600   <---
 ...
-ROM:FFB25EE8                 ADR     R0, aVramAddressP ; "VRAM Address  : %p\r"
+ROM:FFB25EE8    ADR     R0, aVramAddressP ; "VRAM Address  : %p\r"
 ***/
 /*
 void *vid_get_viewport_live_fb() {
@@ -81,35 +93,14 @@ void *vid_get_viewport_live_fb() {
 // OSD buffer
 // like SX10
 // search dispcon* functions and BmpDDev.c
-// ROM:FF919A78                 STMFD   SP!, {R4-R8,LR}
-// ROM:FF919A7C                 LDR     R8, =0x59F0
-// ROM:FF919A80                 MOV     R4, R0
-// ROM:FF919A84                 LDR     R0, [R8,#0x10]
-// ROM:FF919A88                 MOV     R5, R1
-// ROM:FF919A8C                 CMP     R0, #1
-// ROM:FF919A90                 LDREQ   R1, =0x13F
-// ROM:FF919A94                 ADREQ   R0, aBmpddev_c  ; "BmpDDev.c"
-// ROM:FF919A98                 MOV     R7, R3
-// ROM:FF919A9C                 MOV     R6, R2
-// ROM:FF919AA0                 BLEQ    DebugAssert
-// ROM:FF919AA4                 CMP     R4, #0
-// ROM:FF919AA8                 CMPNE   R5, #0
-// ROM:FF919AAC                 CMPNE   R6, #0
-// ROM:FF919AB0                 CMPNE   R7, #0
-// ROM:FF919AB4                 LDREQ   R1, =0x142
-// ROM:FF919AB8                 ADREQ   R0, aBmpddev_c  ; "BmpDDev.c"
-// ROM:FF919ABC                 BLEQ    DebugAssert
-// ROM:FF919AC0                 LDR     R1, =0x10E
-// ROM:FF919AC4                 MOV     R0, #0x3C0
-// ROM:FF919AC8                 STR     R0, [R4]
-// ROM:FF919ACC                 STR     R1, [R5]
-// ROM:FF919AD0                 STR     R0, [R6]
-// ROM:FF919AD4                 LDR     R0, =0x40471000 <---
-// ROM:FF919AD8                 STR     R0, [R7]
-// ROM:FF919ADC                 MOV     R0, #1
-// ROM:FF919AE0                 STR     R0, [R8,#0x10]
-// ROM:FF919AE4                 MOV     R0, #0
-// ROM:FF919AE8                 LDMFD   SP!, {R4-R8,PC}
+// ROM:FF919AB8    ADREQ   R0, aBmpddev_c  ; "BmpDDev.c"
+// ROM:FF919ABC    BLEQ    DebugAssert
+// ROM:FF919AC0    LDR     R1, =0x10E
+// ROM:FF919AC4    MOV     R0, #0x3C0
+// ROM:FF919AC8    STR     R0, [R4]
+// ROM:FF919ACC    STR     R1, [R5]
+// ROM:FF919AD0    STR     R0, [R6]
+// ROM:FF919AD4    LDR     R0, =0x40471000 <---
 void *vid_get_bitmap_fb() {
     return (void*)0x40471000;    // ROM:FF919AD4 or ROM:FFA347DC or ROM:FF85B154
 }
@@ -117,9 +108,9 @@ void *vid_get_bitmap_fb() {
 /*** Live picture buffer (shoot half-pressed)
 search for String "VRAM Address" (like SX10)
 or search for String "MaxY %ld MinY %ld" and look below
-ROM:FFB25ED8                 LDR     R1, =0x40587700    <---
+ROM:FFB25ED8    LDR     R1, =0x40587700    <---
 ...
-ROM:FFB25EE8                 ADR     R0, aVramAddressP ; "VRAM Address  : %p\r"
+ROM:FFB25EE8    ADR     R0, aVramAddressP ; "VRAM Address  : %p\r"
 ***/
 void *vid_get_viewport_fb() {
     return (void*)0x40587700;    // ROM:FFB25ED8 or ROM:FFB25DFC
@@ -128,7 +119,7 @@ void *vid_get_viewport_fb() {
 // ?!?
 // possible future use
 void *vid_get_viewport_fb_d() {
-    return (void*)(*(int*)0x2AA4);         // ROM:FF874770 0x2A50 + 0x54
+    return (void*)(*(int*)0x2AA4);    // ROM:FF874770 0x2A50 + 0x54
 }
 
 // vid_* stuff is related to BmpDDev() stuff (ROM:FF919A78 and other) and LiveImage.c
@@ -166,8 +157,8 @@ long vid_get_viewport_height() {
 }
 
 // search for String "9999" (IDA Name: a9999)
-// ROM:FFA04F80                 LDR     R0, =0xA15B8    ; <---
-// ROM:FFA04F84                 ADR     R1, a9999       ; "9999"
+// ROM:FFA04F80    LDR     R0, =0xA15B8    ; <---
+// ROM:FFA04F84    ADR     R1, a9999       ; "9999"
 char *camera_jpeg_count_str() {
     return (char*)0xA15B8;
 }
