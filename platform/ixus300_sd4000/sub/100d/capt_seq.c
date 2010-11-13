@@ -595,7 +595,7 @@ void __attribute__((naked,noinline)) sub_FF87D754_my() {
 
             "MOV     R6, R0\n"
 
-            "BL      capt_seq_hook_raw_here\n"   // +
+            //"BL      capt_seq_hook_raw_here\n"   // +
 
             "B       loc_FF87D85C\n"
         "loc_FF87D84C:\n"
@@ -604,6 +604,8 @@ void __attribute__((naked,noinline)) sub_FF87D754_my() {
             "CMP     R0, #0\n"
             "MOVNE   R6, #0x1D\n"
         "loc_FF87D85C:\n"
+            "BL      capt_seq_hook_raw_here\n"   // + (like D10)
+
             "BL      sub_FF8808E0\n"
             "BL      sub_FF880928\n"
             "BL      sub_FF880968\n"
