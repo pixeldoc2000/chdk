@@ -9,6 +9,9 @@ ROM:FF93B998    LDR     R1, =0x4132C0A0
 ROM:FF93B99C    MOV     R3, #2784       ; RAW V Pixel
 ROM:FF93B9A0    ADR     R0, aCrwaddressLxCr ; " CrwAddress %lx, CrwSize H %ld V %ld\r"
 
+ROM:FFB60E70 RAW Buffer Table
+ROM:FF87ED4C referens the table with first RAW address (SsImgProcBuf.c)
+
 called by Getcaptureinfodata() (ROM:FFB28F14)
 ROM:FFB28EAC sub_FFB28EAC
 ROM:FFB28EEC    LDR     R0, =3816       ; RAW H Pixel
@@ -27,30 +30,29 @@ ROM:FFB28EF4    0xAE0 = 2784 pixel
 3816 * 2784 = 10623744
 */
 
+// ToDo: RAW files are still unreadable (maybe because sensor date changed with new 2010 camera models?)
 // ROM:FFB29270, like SX210
 // search String "CRAW BUFF" (IDA Name: aCrawBuffP)
 // like G11
 char *hook_raw_image_addr() {
-    //return (char*)0x4132C0A0;           // first RAW buffer address (looks like we get gargabe)
-    return (char*)0x40AFF8A0;         // second RAW buffer address
+   // RAW single buffer
+    return (char*)0x4132C0A0;           // first RAW buffer address
+    //return (char*)0x40AFF8A0;         // second RAW buffer address
     //return (char*)0x44CF6800;         // third RAW buffer address
 
     //return (char*)0x420F7932;         // ROM:FFB60E74
     //return (char*)0x46DCB892;         // ROM:FFB60E74
-}
 
-/*
-// ROM:FFB2926C 0x4132C0A0 First RAW address
-// ROM:FFB60E70 RAW address Table
-// function ROM:FF87ED4C referens the table with first RAW address (SsImgProcBuf.c)
-// ROM:FF87ED50 0x2CCC
-// ROM:FF87ED7C 0xC
-// like SD990
-char *hook_raw_image_addr() {
+    // RAW multi buffer
+    // like SD990 & SD900
+    // ROM:FF87ED50 0x2CCC
+    // ROM:FF87ED7C 0xC
     //return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
-    return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);
+    //return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);
+    //return (char*) (*(int*)(0x2CCC + 0xC)? 0x4132C0A0 : 0x46000000);
+    //return (char*) (*(int*)(0x2CCC + 0x8)? 0x4132C0A0 : 0x46000000);
+    //return (char*) (*(int*)0x2CCC ? 0x4132C0A0 : 0x46000000);
 }
-*/
 
 /*** RAW buffer size
 ROM:FFB292D0    LDR     R1, =0xF32880   <---
