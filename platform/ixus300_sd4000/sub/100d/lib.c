@@ -60,6 +60,8 @@ long hook_raw_size() {
     return 0xF32880;
 }
 
+// vid_* stuff is related to BmpDDev() stuff (ROM:FF919A78 and other) and LiveImage.c
+
 // ToDo: ?!?
 /*** Live picture buffer (shoot not pressed)
 ROM:FFB25ED8    LDR     R1, =0x40587700   <---
@@ -122,38 +124,44 @@ void *vid_get_viewport_fb_d() {
     return (void*)(*(int*)0x2AA4);    // ROM:FF874770 0x2A50 + 0x54
 }
 
-// vid_* stuff is related to BmpDDev() stuff (ROM:FF919A78 and other) and LiveImage.c
-
 // ROM:FF9013D8 0x2D0 = 720 ?!?
 // SD990 ROM:FF83CFC8 ?!?
-//long vid_get_bitmap_screen_width() { return 320; }
-//long vid_get_bitmap_screen_width() { return 360; }
 long vid_get_bitmap_screen_width() {
+    //return 320;
+    //return 360;
     return 480;
+    //return 720;
+    //return 960;
 }
-//long vid_get_bitmap_screen_width() { return 720; }
-//long vid_get_bitmap_screen_width() { return 960; }
 
 long vid_get_bitmap_screen_height() {
     return 240;
+    //return 270;
+    //return 360;
 }
-//long vid_get_bitmap_screen_height() { return 270; }
-//long vid_get_bitmap_screen_height() { return 360; }
 
-//int vid_get_viewport_width() { return 360; }    // viewport is still 360, even though live view is 720 (from SD990)
 int vid_get_viewport_width() {
+    //return 360;    // viewport is still 360, even though live view is 720 (from SD990)
     return 480;
+    //return ((mode_get()&MODE_MASK) == MODE_PLAY)?480:360;     // return different width in PLAYBACK/RECORD mode
 }
 
-/*
-int vid_get_viewport_width() {
-    return ((mode_get()&MODE_MASK) == MODE_PLAY)?480:360;
-}
-*/
-
-//long vid_get_viewport_height() { return 240; }
 long vid_get_viewport_height() {
+    //return 240;
     return 270;
+}
+
+// if buffer width was to small, CHDK Logo was shown as distorted "row" on Display
+long vid_get_bitmap_buffer_width() {
+    //return 360;
+    //return 720;
+    return 960;    // working
+}
+
+long vid_get_bitmap_buffer_height() {
+    //return 240;
+    return 270;
+    //return 360;
 }
 
 // search for String "9999" (IDA Name: a9999)
@@ -162,16 +170,3 @@ long vid_get_viewport_height() {
 char *camera_jpeg_count_str() {
     return (char*)0xA15B8;
 }
-
-// if buffer width was to small, Logo was shown as distorted "row" on Display
-//long vid_get_bitmap_buffer_width() { return 360; }
-//long vid_get_bitmap_buffer_width() { return 720; }
-long vid_get_bitmap_buffer_width() {
-    return 960;    // working
-}
-
-//long vid_get_bitmap_buffer_height() { return 240; }
-long vid_get_bitmap_buffer_height() {
-    return 270;
-}
-//long vid_get_bitmap_buffer_height() { return 360; }
