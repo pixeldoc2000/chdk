@@ -2,6 +2,9 @@
 
 // ROM addresses
 
+// used to point non existing or not found functions to empty sub
+#define NULLSUB 0xFF810B1C
+
 // --- not found by sigfinder
 NHSTUB(Lseek, 0xFF836ED4)                            // OK, same as lseek, like G11
 NHSTUB(RefreshPhysicalScreen, 0xFFA12124)            // OK, search String "ScreenUnLock", like G11
@@ -31,8 +34,8 @@ NHSTUB(TurnOnBackLight, 0xFF8A4968)                  // OK, like G11
 NHSTUB(GetZoomLensCurrentPoint, 0xFF965E54)          // OK, like SX210, G11 is different but referens is same
 NHSTUB(GetZoomLensCurrentPosition, 0xFFAA9298)       // OK, like SX210, G11 is different but referens is same
 NHSTUB(GetCurrentAvValue, 0xFF9644F8)                // OK, like SX210, G11 is different but referens is same
-NHSTUB(PutInNdFilter, 0xFFB2056C)                    // very likely, like G11
-NHSTUB(PutOutNdFilter, 0xFFB205A4)                   // very likely, like G11
+NHSTUB(PutInNdFilter, 0xFFB2056C)                    // OK, like G11, referens from Function Table (ROM:FFC2AE64)
+NHSTUB(PutOutNdFilter, 0xFFB205A4)                   // OK, like G11, referens from Function Table (ROM:FFC2AE5C)
 
 // Multi Partition Support
 //NHSTUB(ReadSDCard, 0xFF9522B0)                     // probably, like SD990
@@ -43,16 +46,16 @@ NHSTUB(WriteSDCard, 0xFF952494)                      // shutdown
 
 
 // --- NULLSTUBS (not found by sigfinder)
-NHSTUB(UnsetZoomForMovie, 0xFF810B1C)                // nullsub_1, does not exist since canon firmware allow Zoom for Movie
-NHSTUB(SetZoomActuatorSpeedPercent, 0xFF810B1C)      // ToDo: nullsub_1
+NHSTUB(UnsetZoomForMovie, NULLSUB)                // nullsub_1, does not exist since canon firmware allow Zoom for Movie
+NHSTUB(SetZoomActuatorSpeedPercent, NULLSUB)      // ToDo: nullsub_1
 
 
 // --- Those aren't used or don't exist in DryOS (like A720 and other)
-NHSTUB(Mount_FileSystem, 0xFF810B1C)                 // nullsub_1
-NHSTUB(Unmount_FileSystem, 0xFF810B1C)               // nullsub_1
-NHSTUB(rewinddir, 0xFF810B1C)                        // nullsub_1
-NHSTUB(kbd_pwr_off, 0xFF810B1C)                      // nullsub_1, does not exist, like SD990
-NHSTUB(kbd_pwr_on, 0xFF810B1C)                       // nullsub_1, does not exist, like SD990
+NHSTUB(Mount_FileSystem, NULLSUB)                 // nullsub_1
+NHSTUB(Unmount_FileSystem, NULLSUB)               // nullsub_1
+NHSTUB(rewinddir, NULLSUB)                        // nullsub_1
+NHSTUB(kbd_pwr_off, NULLSUB)                      // nullsub_1, does not exist, like SD990
+NHSTUB(kbd_pwr_on, NULLSUB)                       // nullsub_1, does not exist, like SD990
 
 
 // --- stubs_entry.S (sigfinder)
@@ -169,7 +172,7 @@ NHSTUB(strrchr, 0xFF814008)                          // OK!, like G11
 NHSTUB(GetLogToFile, 0xFF975780)                     // this is where Event Procedure does jump (native call does shutdown camera), like G11
 //NHSTUB(GetLogToFile, 0xFF975444)                   // directly points to function like A720
 NHSTUB(dumpMemoryToFile, 0xFF836004)                 // writes a portion of memory into a file (char* filename, 0, (void*) src, int length)
-
+NHSTUB(LogPrintf,0xFF88C920)                         // like D10
 
 // video buffer stuff
 NHSTUB(UnlockAndRefresh, 0xFFA13398)                 // SX20 102: ROM:FFA0498C, SX210: ROM:FFA1EDDC, search "Window Instance"
