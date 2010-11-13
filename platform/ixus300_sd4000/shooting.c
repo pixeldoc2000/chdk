@@ -121,7 +121,7 @@ static const CapturemodeMap modemap[] = {
     //{ MODE_HIGHSPEED_BURST,    32288 }, // mode does not exist in chdk
     { MODE_VIDEO_STD,          2612  },
     //{ MODE_VIDEO_SLOWMOTION,   2617  },
-    //{ MODE_VIDEO_SPEED,        2617  },
+    { MODE_VIDEO_SPEED,        2617  }, // "Super Slow Motion Movie"
     { MODE_VIDEO_COLOR_SWAP,   2611  },
     { MODE_VIDEO_COLOR_ACCENT, 2610  },
 };
