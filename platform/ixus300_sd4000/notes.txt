@@ -90,3 +90,4 @@ Number   Name                       Location            String
 * Make bootable does not work (WriteSDCard address wrong?)
 * "Debug Parameters -> Create card with two partitions" does cause shutdown (WriteSDCard address wrong?)
 * RAW files are invalid (filename ok, filedate ok)
+* PTP doesn't support mode switching
