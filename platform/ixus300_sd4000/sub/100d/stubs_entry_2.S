@@ -12,20 +12,23 @@ NHSTUB(ScreenLock, 0xFFA1356C)                       // search String "ScreenLoc
 NHSTUB(ScreenUnLock, 0xFFA12124)                     // aka. RefreshPhysicalScreen, search String "ScreenUnLock", G11 is different
 NHSTUB(Remove, 0xFF836DEC)                           // OK!, like G11, SX200 is different but referens is same, llibtst.lua os.remove pass on file but fail on directory, wrong ?!?
 NHSTUB(kbd_read_keys, 0xFF8347D4)                    // OK!!
-NHSTUB(openfastdir, 0xFFA95C90)                      // OK, looks simular to A720, like G11
+NHSTUB(openfastdir, 0xFFA95C90)                      // OK, AKA. opendir, looks simular to A720, like G11
 NHSTUB(readfastdir, 0xFFA95DE4)                      // maybe ok, looks simular to A720, G11 is different but referens is same
 NHSTUB(ReadFastDir, 0xFFA95DE4)                      // aka. readfastdir
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF984AB4)         // OK!, eventproc
 //NHSTUB(SetScriptMode, 0xFF895904)                  // eventproc
 NHSTUB(SetScriptMode, 0xFF810F6C)                    // OK!, like SX210 and G11
-NHSTUB(UnlockAF, 0xFF83831C)                         // OK!, like SX210 and G11
-NHSTUB(DoAFLock, 0xFF8382E4)                         // OK!, like SX210 and G11
+//NHSTUB(UnlockAF, 0xFF83831C)                         // OK!, like SX210 and G11
+NHSTUB(UnlockAF, 0xFF87A920)                         // PT_UnlockAF, like D10
+//NHSTUB(DoAFLock, 0xFF8382E4)                         // OK!, like SX210 and G11
+NHSTUB(DoAFLock, 0xFF87A910)                         // PT_DoAFLock, like D10
+
 NHSTUB(GiveSemaphore, 0xFF839E38)                    // OK!!, eventproc, like G11
 NHSTUB(GetDrive_FreeClusters, 0xFF871E90)            // OK!, like SX210 and G11, UI does show free space
 NHSTUB(PT_PlaySound, 0xFF8840B8)                     // OK!, like SX210 and G11, plays sound on CHDK startup
 //NHSTUB(rename, 0xFF83669C)                         // maybe OK, like SX210
 NHSTUB(rename, 0xFF836E94)                           // maybe OK, like G11
-NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210, G11 is different but referens is same
+NHSTUB(qsort, 0xFFB0B1F8)                            // maybe OK, like SX210, G11 and D10 are different but referens is same
 NHSTUB(EnterToCompensationEVF, 0xFF8383E4)           // OK, like SX210 and G11
 NHSTUB(ExitFromCompensationEVF, 0xFF838428)          // OK, like SX210 and G11
 NHSTUB(PostLEDMessage, 0xFF860C6C)                   // like SX210
@@ -66,7 +69,7 @@ NHSTUB(kbd_pwr_on, NULLSUB)                       // nullsub_1, does not exist, 
 //NHSTUB(Close, 0xff836db8)                          // OK!!!, eventproc
 //NHSTUB(CreateTask, 0xff81e83c)                     // OK!!, eventproc
 //NHSTUB(DeleteFile_Fut, 0xff836730)                 // OK!
-//NHSTUB(ExecuteEventProcedure, 0xFF88B9C0)          // sigfinder, tstcallf.lua does cause shutdown, referens from FactoryMode Stuff and eventproc_export_ExecuteEventProcedure(), should be correct
+//NHSTUB(ExecuteEventProcedure, 0xFF88B9C0)          // sigfinder, tstcallf.lua does cause shutdown, referens from FactoryMode Stuff and eventproc_export_ExecuteEventProcedure(), should be correct, like D10
 //NHSTUB(ExecuteEventProcedure, 0xFF88B948)          // tstcallf.lua returns error
 //NHSTUB(ExitTask, 0xff81eacc)                       // OK!, eventproc
 //NHSTUB(Fclose_Fut, 0xff8368ac)                     // OK!, eventproc
@@ -81,7 +84,7 @@ NHSTUB(kbd_pwr_on, NULLSUB)                       // nullsub_1, does not exist, 
 //NHSTUB(Fwrite_Fut, 0xff8369ac)                     // OK!, eventproc
 //NHSTUB(GetBatteryTemperature, 0xff8652a0)          // OK
 //NHSTUB(GetCCDTemperature, 0xff86522c)              // OK
-//NHSTUB(GetDrive_ClusterSize, 0xff871e30)           // maybe ok
+//NHSTUB(GetDrive_ClusterSize, 0xff871e30)           // maybe ok, like D10
 //NHSTUB(GetDrive_TotalClusters, 0xff871e64)         // maybe ok
 //NHSTUB(GetFocusLensSubjectDistance, 0xff9629b8)    // maybe ok
 //NHSTUB(GetFocusLensSubjectDistanceFromLens, 0xff962d40) // maybe ok
@@ -124,7 +127,7 @@ NHSTUB(UpdateMBROnFlash, 0xFF871CB0)                 // OK!
 //NHSTUB(_log10, 0xffb59fd4)
 //NHSTUB(_pow, 0xffb5a144)
 //NHSTUB(_sqrt, 0xffb5cf50)
-//NHSTUB(close, 0xff81aa94)                          // OK!!!
+//NHSTUB(close, 0xff81aa94)                          // OK!!!, like D10
 //NHSTUB(closedir, 0xffa95e28)                       // does not point to function start
 NHSTUB(closedir, 0xFFA95C40)                         // OK, like SX210
 //NHSTUB(closefastdir, 0xffa95e28)                   // sigfinder, WRONG!, does not point to function start
@@ -136,29 +139,29 @@ NHSTUB(closefastdir, 0xFFA95C40)                     // aka. closedir
 //NHSTUB(kbd_read_keys_r2, 0xff86122c)               // OK!
 //NHSTUB(lseek, 0xff836ee0)                          // sigfinder, WRONG!, does not point to function start
 NHSTUB(lseek, 0xFF836ED4)                            // OK, same as Lseek
-//NHSTUB(malloc, 0xff814100)                         // OK!, referens from AllocateUncacheableMemory
-//NHSTUB(memcmp, 0xff82066c)                         // OK!, eventproc
-//NHSTUB(memcpy, 0xff83fae8)                         // OK!, eventproc
+//NHSTUB(malloc, 0xff814100)                         // OK!, referens from AllocateUncacheableMemory, D10 is different
+//NHSTUB(memcmp, 0xff82066c)                         // OK!!, eventproc, like D10
+//NHSTUB(memcpy, 0xff83fae8)                         // OK!!, eventproc, like D10
 //NHSTUB(memset, 0xffa15ddc)                         // OK!, eventproc
 //NHSTUB(mkdir, 0xff837254)                          // OK!, like SX210 and G11
 //NHSTUB(mktime_ext, 0xff8ac9f0)                     // OK!, like SD990 and G11
-//NHSTUB(open, 0xff81a9e4)                           // OK!!
-//NHSTUB(opendir, 0xffa95c90)                        // looks OK
+//NHSTUB(open, 0xff81a9e4)                           // OK!!!, like D10
+//NHSTUB(opendir, 0xffa95c90)                        // looks OK, AKA openfastdir, D10 is different
 //NHSTUB(rand, 0xff820774)                           // OK
 //NHSTUB(read, 0xff81ac7c)                           // OK!
 //NHSTUB(srand, 0xff820768)                          // OK
 //NHSTUB(stat, 0xff836f1c)                           // OK, like G11
 //NHSTUB(strcat, 0xff813f5c)                         // WRONG, does point to strncpy
-NHSTUB(strcat, 0xFF8AC1AC)                           // OK!, like G11
-//NHSTUB(strchr, 0xff813fe4)                         // OK!
+NHSTUB(strcat, 0xFF8AC1AC)                           // OK!!, like G11 and D10
+//NHSTUB(strchr, 0xff813fe4)                         // OK!!, like D10
 //NHSTUB(strcmp, 0xff820628)                         // OK
 //NHSTUB(strcpy, 0xff820610)                         // OK
 //NHSTUB(strftime, 0xff8ac3f8)                       // OK, like G11
 //NHSTUB(strlen, 0xff814030)                         // OK
-//NHSTUB(strncmp, 0xff813f98)                        // OK
+//NHSTUB(strncmp, 0xff813f98)                        // OK!, like D10
 //NHSTUB(strncpy, 0xff813f5c)                        // OK!
 //NHSTUB(strrchr, 0xff83fac0)                        // sigfinder, WRONG!
-NHSTUB(strrchr, 0xFF814008)                          // OK!, like G11
+NHSTUB(strrchr, 0xFF814008)                          // OK!!, like G11 and D10
 //NHSTUB(strtol, 0xff83fdc8)                         // OK
 //NHSTUB(strtolx, 0xff83fbcc)                        // OK
 //NHSTUB(time, 0xff88981c)                           // looks simular to A720
