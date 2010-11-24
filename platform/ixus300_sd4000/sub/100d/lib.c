@@ -35,23 +35,25 @@ ROM:FFB28EF4    0xAE0 = 2784 pixel
 // search String "CRAW BUFF" (IDA Name: aCrawBuffP)
 // like G11
 char *hook_raw_image_addr() {
-   // RAW single buffer
+    // RAW single buffer
     return (char*)0x4132C0A0;           // first RAW buffer address
     //return (char*)0x40AFF8A0;         // second RAW buffer address
     //return (char*)0x44CF6800;         // third RAW buffer address
 
     //return (char*)0x420F7932;         // ROM:FFB60E74
     //return (char*)0x46DCB892;         // ROM:FFB60E74
+    //return (char*)0x47209000;         // ROM:FFB29258    // cause shutdown
 
     // RAW multi buffer
     // like SD990 & SD900
     // ROM:FF87ED50 0x2CCC
     // ROM:FF87ED7C 0xC
-    //return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);
-    //return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);
+    //return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);    // with DNG on camera Camera Image is mostly Cyan
+    //return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);    // with DNG on camera Camera Image is mostly Blue/Cyan
     //return (char*) (*(int*)(0x2CCC + 0xC)? 0x4132C0A0 : 0x46000000);
     //return (char*) (*(int*)(0x2CCC + 0x8)? 0x4132C0A0 : 0x46000000);
-    //return (char*) (*(int*)0x2CCC ? 0x4132C0A0 : 0x46000000);
+    //return (char*) (*(int*)0x2CCC ? 0x4132C0A0 : 0x46000000);    // with DNG on camera Camera Image is mostly Cyan
+    //return (char*) (*(int*)0x2CCC ? 0x46000000 : 0x4132C0A0);    // with DNG on camera Camera Image is mostly Cyan
 }
 
 /*** RAW buffer size
