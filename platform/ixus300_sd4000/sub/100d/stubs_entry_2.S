@@ -193,3 +193,5 @@ NHSTUB(PB2Rec, 0xFF898B40)                           // search String "AC:PB2Rec
 NHSTUB(Rec2PB, 0xFF897590)                           // search String "AC:Rec2PB"
 NHSTUB(set_control_event, 0xFF8955C4)                // via eventproc_export_IsControlEventActive (last call), levent_table contains control event id's (Logical Event Table)
 //NHSTUB(reboot_fw_update, 0xffa9b228)               // sigfinder address ok
+
+NHSTUB(taskResume, 0xFF8955C4)                       // maybe
