@@ -2302,7 +2302,6 @@
 //----------------------------------------------------------
 
 #elif defined (CAMERA_ixus300_sd4000)
-    //#define CAM_PROPSET                 4        // ?!?
     #define CAM_PROPSET                 3        // for now PropSet 3 else lua scripts does not work
     #define CAM_DRYOS                   1
     #define CAM_DRYOS_2_3_R39           1        // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
@@ -2316,7 +2315,7 @@
     #undef  CAM_HAS_ERASE_BUTTON
     #undef  CAM_SYNCH
     #define CAM_HAS_ND_FILTER           1
-    #define  CAM_HAS_IRIS_DIAPHRAGM     1
+    #define CAM_HAS_IRIS_DIAPHRAGM      1
     #undef  CAM_HAS_MANUAL_FOCUS
     #undef  CAM_CAN_SD_OVERRIDE
     #undef  CAM_USE_ZOOM_FOR_MF
@@ -2325,7 +2324,7 @@
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO    // canon firmware allow optical zoom while recording movie
     //#define CAM_EV_IN_VIDEO             1
     #define CAM_VIDEO_CONTROL           1
-    //#define DNG_SUPPORT                 1
+    #define DNG_SUPPORT                 1
     #define CAM_HAS_JOGDIAL             1
     #define CAM_FEATURE_FEATHER         1
     #define CAM_SHOW_OSD_IN_SHOOT_MENU  1        // enables CHDK OSD in record mode
@@ -2337,9 +2336,11 @@
 
     #define PARAM_CAMERA_NAME           4        // parameter number for GetParameterData to get camera name
 
-    // pattern ?!?
-    #define cam_CFAPattern 0x01000201            // Green  Blue  Red  Green
-    // color ?!?
+    // ToDo
+    #define cam_CFAPattern 0x02010100            // Red  Green  Green  Blue
+    //#define cam_CFAPattern 0x01000201            // Green  Blue  Red  Green
+
+    // ToDo
     #define CAM_COLORMATRIX1                               \
       640019, 1000000, -220031, 1000000, -96241, 1000000,  \
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
@@ -2367,34 +2368,34 @@
     #undef  CAM_BLACK_LEVEL
     #define CAM_BLACK_LEVEL             127
 
-    #define PARAM_CAMERA_NAME 4 // parameter number (index) for GetParameterData to get Camera Nam
+    #define PARAM_CAMERA_NAME 4    // parameter number (index) for GetParameterData to get Camera Name
     #define DNG_EXT_FROM ".CR2"
 
     #define CAM_HAS_VARIABLE_ASPECT     1        // ?!? like SX1
 
     #undef CAM_USES_ASPECT_CORRECTION
-    #define CAM_USES_ASPECT_CORRECTION  1  //camera uses the modified graphics primitives to map screens an viewports to buffers more sized
+    #define CAM_USES_ASPECT_CORRECTION  1    // camera uses the modified graphics primitives to map screens an viewports to buffers more sized
     #undef CAM_USES_ASPECT_YCORRECTION
-    #define CAM_USES_ASPECT_YCORRECTION  0  //only uses mappings on x coordinate
+    #define CAM_USES_ASPECT_YCORRECTION  0    // only uses mappings on x coordinate
 
     // default mappings
     #undef ASPECT_XCORRECTION
-    #define ASPECT_XCORRECTION(x)  (((x)<<1))   //correction x*screen_buffer_width/screen_width = x*960/480 = x*2/1
+    #define ASPECT_XCORRECTION(x)  (((x)<<1))    // correction x*screen_buffer_width/screen_width = x*960/480 = x*2/1
 
     // grids
     #undef ASPECT_GRID_XCORRECTION
-    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/8  )  //grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9  ,  8 is the right value for sx210
+    #define ASPECT_GRID_XCORRECTION(x)  ( ((x)<<3)/8  )    // grids are designed on a 360x240 basis and screen is 320x240, we need x*320/360=x*8/9  ,  8 is the right value for sx210
     #undef ASPECT_GRID_YCORRECTION
-    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       //y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
+    #define ASPECT_GRID_YCORRECTION(y)  ( (y) )       // y correction for grids  made on a 360x240 As the buffer is 720x240 we have no correction here.
 
     // viewport
     #undef ASPECT_VIEWPORT_XCORRECTION
-    #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x) //viewport is 360x240 and screen 320x240, we need x*320/360=x*8/9, equal than grids, used by edgeoverlay
+    #define ASPECT_VIEWPORT_XCORRECTION(x) ASPECT_GRID_XCORRECTION(x)    // viewport is 360x240 and screen 320x240, we need x*320/360=x*8/9, equal than grids, used by edgeoverlay
     #undef ASPECT_VIEWPORT_YCORRECTION
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
 
     #undef EDGE_HMARGIN
-    #define EDGE_HMARGIN 10   // 10 fits video mode of sx210
+    #define EDGE_HMARGIN 10    // 10 fits video mode of sx210
 
     //games mappings
     #undef GAMES_SCREEN_WIDTH
@@ -2413,7 +2414,7 @@
 
     //zebra letterbox for saving memory
     //#undef ZEBRA_HMARGIN0
-    //#define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+    //#define ZEBRA_HMARGIN0  30    //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
 //----------------------------------------------------------
 
 
