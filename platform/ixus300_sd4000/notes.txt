@@ -70,16 +70,16 @@ physw_status[2] = 0x80000   // USB_MASK = USB-Power (triggered around 3,5V)
 
 --- PropertyCase
 Number   Name                       Location            String
-23       PCH_AV_EFFECTIVE           ROM:FF869490
-26       PCH_AV_SETTING             ROM:FF869440
-49       PCH_CAPTURE_MODE           ROM:FF8693F4        Current Capture Setting
+23       PCH_AV_EFFECTIVE           ROM:FF869490        PROPCASE_AV
+26       PCH_AV_SETTING             ROM:FF869440        PROPCASE_USER_AV
+49       PCH_CAPTURE_MODE           ROM:FF8693F4        PROPCASE_SHOOTING_MODE
 57       Compression                ROM:FF8689EC
-95       DigitalZoomPos             ROM:FF868A24
+95       DigitalZoomPos             ROM:FF868A24        PROPCASE_DIGITAL_ZOOM_POSITION
 138      HSCapture                  ROM:FF868A8C
-149      ISOSpeed                   ROM:FF868A5C
-220      Resolution                 ROM:FF8689C4
-264      PCH_TV_EFFECTIVE           ROM:FF869614
-26x?     PCH_TV_SETTING             ROM:FF869464
+149      ISOSpeed                   ROM:FF868A5C        PROPCASE_ISO_MODE
+220      Resolution                 ROM:FF8689C4        PROPCASE_RESOLUTION
+264      PCH_TV_EFFECTIVE           ROM:FF869614        PROPCASE_TV
+266      PCH_TV_SETTING             ROM:FF869464        PROPCASE_USER_TV
 
 
 ?!? or ToDo means i'm unshure about it
