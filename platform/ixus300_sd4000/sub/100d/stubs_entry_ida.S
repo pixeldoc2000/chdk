@@ -41,12 +41,6 @@ NSTUB(eventproc_export_Write, 0xff836e48)
 NSTUB(eventproc_export_Lseek, 0xff836ed4)
 NSTUB(eventproc_export_OpenForScrip, 0xff836ef4)
 
-NSTUB(eventproc_export_StartCameraLog, 0xff8372a8)
-NSTUB(eventproc_export_ShowCameraLog, 0xff8372ac)
-NSTUB(eventproc_export_ShowCameraLogInfo, 0xff8372b0)
-NSTUB(eventproc_export_StopCameraLog, 0xff8372b4)
-NSTUB(eventproc_export_PutsCameraLogEvent, 0xff8372b8)
-
 NSTUB(eventproc_export_NewTaskShell, 0xff837320)
 
 NSTUB(eventproc_export_ExMem, 0xff837338)
@@ -84,6 +78,14 @@ NSTUB(eventproc_export_UnLoadScript, 0xff888920)
 NSTUB(eventproc_export_LoadScript, 0xff888a1c)
 
 NSTUB(eventproc_export_GetTimeOfSystem, 0xff8898cc)
+
+NSTUB(eventproc_export_PutsCameraLogEvent, 0xff88c5fc)
+NSTUB(eventproc_export_ShowCameraLogInfo, 0xff88c640)
+
+NSTUB(eventproc_export_ShowCameraLog, 0xff88c6ac)
+NSTUB(eventproc_export_StartCameraLog, 0xff88c6fc)
+
+NSTUB(eventproc_export_StopCameraLog, 0xff88c8c0)
 
 NSTUB(eventproc_export_OpLog_Stop, 0xff88cf5c)
 
@@ -186,19 +188,13 @@ NSTUB(eventproc_export_IsHvSensorExist, 0xff96c7f4)
 
 NSTUB(eventproc_export_GetDateAndTime, 0xff96ca8c)
 
-NSTUB(eventproc_export_MonSelEvent, 0xff96cb34)
-NSTUB(eventproc_export_MemoryChecker, 0xff96cb38)
-NSTUB(eventproc_export_VerifyByte, 0xff96cb3c)
 NSTUB(eventproc_export_EraseSignature, 0xff96cb40)
-NSTUB(eventproc_export_SDump, 0xff96cb50)
 
 NSTUB(eventproc_export_Dump32, 0xff96cb64)
 NSTUB(eventproc_export_Poke32, 0xff96cb78)
 NSTUB(eventproc_export_Poke16, 0xff96cb88)
 NSTUB(eventproc_export_Poke8, 0xff96cb98)
-NSTUB(eventproc_export_Peek32, 0xff96cba8)
-NSTUB(eventproc_export_Peek16, 0xff96cbac)
-NSTUB(eventproc_export_Peek8, 0xff96cbb0)
+
 NSTUB(eventproc_export_Wait, 0xff96cbb4)
 
 NSTUB(eventproc_export_ShowAllTaskInfo, 0xff96cbc8)
@@ -224,7 +220,7 @@ NSTUB(eventproc_export_UIFS_MoveZoomTo, 0xff96d810)
 NSTUB(eventproc_export_UIFS_StopPostingUIEvent, 0xff96d814)
 NSTUB(eventproc_export_UIFS_RestartPostingUIEvent, 0xff96d818)
 NSTUB(eventproc_export_UIFS_PostModeDial, 0xff96d81c)
-NSTUB(eventproc_export_UIFS_Capture, 0xff96d844)
+
 NSTUB(eventproc_export_UIFS_CaptureNoneStop, 0xff96d848)
 NSTUB(eventproc_export_UIFS_StartMovieRecord, 0xff96d84c)
 NSTUB(eventproc_export_UIFS_StopMovieRecord, 0xff96d850)
@@ -250,13 +246,27 @@ NSTUB(eventproc_export_UIFS_GetNumberOfDisplayedImage, 0xff96dc58)
 
 NSTUB(eventproc_export_UI_ShowStateOfRecMode, 0xff96e650)
 
+NSTUB(eventproc_export_GetLogToFile, 0xff975780)
 NSTUB(eventproc_export_EraseLogSector, 0xff9757a8)
 
 NSTUB(eventproc_export_FmtMenu_ExecuteQuickFormat, 0xff988e54)
 
 NSTUB(eventproc_export_ExecuteResetFactoryWithRomWrite, 0xff997924)
 
+NSTUB(eventproc_export_UIFS_Capture, 0xff99dc88)
+
 NSTUB(eventproc_export_memset, 0xffa15ddc)
 
 NSTUB(eventproc_export_sscanf, 0xffa15f10)
+
+NSTUB(eventproc_export_MemoryChecker, 0xffab8858)
+NSTUB(eventproc_export_VerifyByte, 0xffab88e8)
+
+NSTUB(eventproc_export_SDump, 0xffab8ac8)
+
+NSTUB(eventproc_export_Peek32, 0xffab8d10)
+NSTUB(eventproc_export_Peek16, 0xffab8d18)
+NSTUB(eventproc_export_Peek8, 0xffab8d20)
+
+NSTUB(eventproc_export_MonSelEvent, 0xffab8dd0)
 
