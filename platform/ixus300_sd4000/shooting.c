@@ -26,8 +26,8 @@ const ApertureSize aperture_sizes_table[] = {
     { 18, 576, "8.0 ND" },  // ?!?
 };
 
-// ROM:FFC15ED0
 // ToDo
+// ROM:FFC15ED0
 const ShutterSpeed shutter_speeds_table[] = {
     { -12, -384, "15", 15000000 },
     { -11, -352, "13", 13000000 },
@@ -151,4 +151,7 @@ long get_target_dir_num() {
     return n;
 }
 
+// ToDo
+// Required for correct DOF calculation
+// http://www.dofmaster.com/digital_coc.html#coccalculator
 int circle_of_confusion = 5;
