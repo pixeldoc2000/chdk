@@ -2323,7 +2323,8 @@
     #define CAM_DRYOS_2_3_R39           1        // ROM:FFB5E1C0, actually its DRYOS version 2.3, release #0043
 
     #undef  CAM_BITMAP_PALETTE                   // shut up compiler
-    #define CAM_BITMAP_PALETTE          8        // canon palette does not contain all colors anymore like on vxworks and palette is different in playback/record modus
+    //#define CAM_BITMAP_PALETTE          8        // canon palette does not contain all colors anymore like on vxworks and palette is different in playback/record modus
+    #define CAM_BITMAP_PALETTE          5        // ToDo
 
     #undef  CAM_UNCACHED_BIT                     // shut up compiler
     #define CAM_UNCACHED_BIT            0x40000000   // ROM:FF88A248 via ExMem.FreeCacheable()
