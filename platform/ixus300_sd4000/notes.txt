@@ -17,8 +17,8 @@ Product and Company names mentioned herein may be the trademarks of their respec
 
 ##############################################################################################################################
 Camera did shutdown cause by messed up filessystem on SD-Card
-Remember to reformat your sd-card and copy fresh files to avoid strange error / crash / shutdown or check filesystem
-also delete chdk config file may help
+Remember to reformat your sd-card and copy fresh files to avoid strange error / crash / shutdown or check filesystem.
+Remember to delete chdk config file sometimes after messing around ("Reset options to default").
 ##############################################################################################################################
 
 Thanks to reyalp and asm1989 for their support.
@@ -28,15 +28,16 @@ Thanks to reyalp and asm1989 for their support.
 * http://chdk.wikia.com/
 * http://chdk.wikia.com/wiki/SD4000IS
 * http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/
+* http://www.canon.com.my/p/EN/114-Digital-Cameras/203-IXUS/1556-Digital-IXUS-300-HS/
 
 
---- Developer Stuff --------------------------------------------------
+--- Developer Stuff -------------------------------------------------
 * Rom Start address: 0xFF810000
 * NEED_ENCODED_DISKBOOT=4 (DISKBOOT Encoding)
 * KEYSYS=d4a (Dancing Bits)
 * camera has ND-Filter and probably real IRIS
 * camera has IS
-* Propset 4 (some props are different to Propset 3)
+* Propset 3 (but some props are different)
 * OS: DRYOS version 2.3, release #0043
 * Iris type aperture (used with ND filter)
 * Port is based on A720 & SD990 & SX210 & G11 & D10
@@ -45,8 +46,7 @@ Thanks to reyalp and asm1989 for their support.
 * udumper "NewDryOs" (CardTricks) does not support 2010 cameras
 * Canon Basic dumper works
 
-http://www.canon.com.my/p/EN/114-Digital-Cameras/203-IXUS/1556-Digital-IXUS-300-HS/
-
+* call_event_proc("SystemEventInit") is not available anymore, newest cameras (DryOS rel 43 and later) only have System.Create()
 
 --- Hardware address
 0xC0220130  Green Led (backside)
@@ -82,12 +82,35 @@ Number   Name                       Location            String
 266      PCH_TV_SETTING             ROM:FF869464        PROPCASE_USER_TV
 
 
-?!? or ToDo means i'm unshure about it
+--- Changelog -------------------------------------------------------
+* 18.08.2010 - I've dumped Firmware 1.00d with CBasic Dumper by reyalP
+* 21.08.2010 - CHDK / Camera does start not after flashing LED
+* 24.08.2010 - CHDK / Camera does start without any Task Hooks but does still crash
+* 26.08.2010 - Source is available on http://github.com/pixeldoc2000/chdk/commits/ixus300_sd4000/
+* 12.09.2010 - Beta v1 is available
+* 20.09.2010 - Beta v2 is available
+* 20.09.2010 - Beta v3 is available
+* 02.10.2010 - Beta v4 is available
+* 06.10.2010 - Beta v5 is available
+* 30.10.2010 - Beta v6 is available
 
 
---- ToDo
-* Multi Partition support
+--- ToDo ------------------------------------------------------------
 * Make bootable does not work (WriteSDCard address wrong?)
 * "Debug Parameters -> Create card with two partitions" does cause shutdown (WriteSDCard address wrong?)
-* RAW files are invalid (filename ok, filedate ok)
-* PTP doesn't support mode switching
+* PTP doesn't support mode switching (otherwise works very good with ptpcam)
+* tweak Color Palette (CAM_BITMAP_PALETTE), CHDK OSD Colors does not fit and are different in playback/record mode
+* Check Propcase, at least one Propcase has changed (maybe it time for propcase4.h)
+* os.remove() does delete files but fail to delete directory (like SX210, G11 and other new cameras too), tested with llibtst.lua
+* Video Bitrate Override does not work (only Video Quality Override does work)
+
+* Edge Overlay does not show correctly
+* Histogram works, but Color Palette does not have required colors for correct display
+* Zebra does not work (shows some shatterd pixel with left offset)
+
+* RAW files are unreadable, but with "dummy" badpixel.bin DNG is readable but has some weird colored pixels all over the place
+* badpixel.lua cause camera shutdown
+
+* test "shoot_full" & "shoot_half" commands behave like they should
+
+* probably more stuff to fix
