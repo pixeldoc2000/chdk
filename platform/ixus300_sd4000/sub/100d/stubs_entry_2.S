@@ -69,8 +69,8 @@ NHSTUB(kbd_pwr_on, NULLSUB)                       // nullsub_1, does not exist, 
 //NHSTUB(Close, 0xff836db8)                          // OK!!!, eventproc
 //NHSTUB(CreateTask, 0xff81e83c)                     // OK!!, eventproc
 //NHSTUB(DeleteFile_Fut, 0xff836730)                 // OK!
-//NHSTUB(ExecuteEventProcedure, 0xFF88B9C0)          // sigfinder, tstcallf.lua does cause shutdown, referens from FactoryMode Stuff and eventproc_export_ExecuteEventProcedure(), should be correct, like D10
-//NHSTUB(ExecuteEventProcedure, 0xFF88B948)          // tstcallf.lua returns error
+//NHSTUB(ExecuteEventProcedure, 0xFF88B9C0)          // cause shutdown, referens from FactoryMode Stuff and eventproc_export_ExecuteEventProcedure()
+//NHSTUB(ExecuteEventProcedure, 0xFF88B948)          // sigfinder, like SD990, OK
 //NHSTUB(ExitTask, 0xff81eacc)                       // OK!, eventproc
 //NHSTUB(Fclose_Fut, 0xff8368ac)                     // OK!, eventproc
 //NHSTUB(Feof_Fut, 0xff836a98)                       // OK!
