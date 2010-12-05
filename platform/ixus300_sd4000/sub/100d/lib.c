@@ -34,9 +34,10 @@ ROM:FFB28EF4    0xAE0 = 2784 pixel
 // ROM:FFB29270, like SX210
 // search String "CRAW BUFF" (IDA Name: aCrawBuffP)
 // like G11
+// DNG colors are incorrect if cam_CFAPattern is wrong
 char *hook_raw_image_addr() {
-    // RAW single buffer
-    return (char*)0x4132C0A0;           // first RAW buffer address
+    // RAW single buffer (if one address always have valid image)
+    //return (char*)0x4132C0A0;         // first RAW buffer address, first shoot is invalid, second shoot is good, further shoots are ofter invalid
     //return (char*)0x40AFF8A0;         // second RAW buffer address
     //return (char*)0x44CF6800;         // third RAW buffer address
 
@@ -48,12 +49,12 @@ char *hook_raw_image_addr() {
     // like SD990 & SD900
     // ROM:FF87ED50 0x2CCC
     // ROM:FF87ED7C 0xC
-    //return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);    // with DNG on camera Camera Image is mostly Cyan
-    //return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);    // with DNG on camera Camera Image is mostly Blue/Cyan
+    return (char*) (*(int*)(0x2CCC + 0xC)? 0x46000000 : 0x4132C0A0);    // looks like every RAW is valid
+    //return (char*) (*(int*)(0x2CCC + 0x18)? 0x46000000 : 0x4132C0A0);
     //return (char*) (*(int*)(0x2CCC + 0xC)? 0x4132C0A0 : 0x46000000);
     //return (char*) (*(int*)(0x2CCC + 0x8)? 0x4132C0A0 : 0x46000000);
-    //return (char*) (*(int*)0x2CCC ? 0x4132C0A0 : 0x46000000);    // with DNG on camera Camera Image is mostly Cyan
-    //return (char*) (*(int*)0x2CCC ? 0x46000000 : 0x4132C0A0);    // with DNG on camera Camera Image is mostly Cyan
+    //return (char*) (*(int*)0x2CCC ? 0x4132C0A0 : 0x46000000);
+    //return (char*) (*(int*)0x2CCC ? 0x46000000 : 0x4132C0A0);
 }
 
 /*** RAW buffer size
