@@ -2333,13 +2333,12 @@
 
     //#define CAM_ADJUSTABLE_ALT_BUTTON   1      // ToDo
 
-    #define  CAM_CHDK_PTP               1        // include CHDK PTP support
+    #define  CAM_CHDK_PTP               1
 
     #define PARAM_CAMERA_NAME           4        // parameter number for GetParameterData to get camera name
 
-    // ToDo
-    #define cam_CFAPattern 0x02010100            // Red  Green  Green  Blue
-    //#define cam_CFAPattern 0x01000201            // Green  Blue  Red  Green
+    // colors are messed up in DNG if not correct
+    #define cam_CFAPattern 0x02010100            // Red  Green  Green  Blue, OK
 
     // ToDo
     #define CAM_COLORMATRIX1                               \
@@ -2348,7 +2347,7 @@
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
     #undef  CAM_SENSOR_BITS_PER_PIXEL
-    #define CAM_SENSOR_BITS_PER_PIXEL   12       // ?!?
+    #define CAM_SENSOR_BITS_PER_PIXEL   12
 
     #define cam_CalibrationIlluminant1  1        // Daylight ?!?
     #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
