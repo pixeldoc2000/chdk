@@ -7,7 +7,7 @@
 
 void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_void, long length) {
     // DEBUG LED STUFF
-    //#define DEBUG_LED (void*)0xC0220130    // Greed Led at th Backside
+    //#define DEBUG_LED 0xC0220130    // Greed Led at the Backside
     //#define DEBUG_LED_DELAY 10000000
     //volatile long *pDebugLed = (void*)DEBUG_LED;
     //int DebugLedCounter;
@@ -38,10 +38,10 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
     //DebugLedCounter = DEBUG_LED_DELAY; *pDebugLed = 0x46;  while (DebugLedCounter--) { asm("nop\n nop\n"); };
     //DebugLedCounter = DEBUG_LED_DELAY; *pDebugLed = 0x44;  while (DebugLedCounter--) { asm("nop\n nop\n"); };
 
-    // DEBUG: jump to regular firmware-boot (causing a boot loop)
+    // DEBUG: jump to canon firmware (causing a boot loop)
     //dst_void = (void*) 0xFF810000;
 
-    // ROM:FF83BBFC resetcode here:
+    // ROM:FF83BBFC
     // search for "0x12345678"
     // same as G11
     asm volatile (
@@ -85,7 +85,7 @@ void __attribute__((noreturn)) copy_and_restart(void *dst_void, const void *src_
         "LDR     R0, =0x12345678\n"
         "MOV     R1, #0x80000000\n"
         "STR     R0, [R1,#0xFFC]\n"
-        //"LDR     R0, =0xFF810000\n"   // original jump-vector (causing a boot loop too)
+        //"LDR     R0, =0xFF810000\n"   // canon jump-vector (causing a boot loop too)
         "MOV     R0, %0\n"              // + new jump-vector
         "LDMFD   SP!, {R4,LR}\n"
         "BX      R0\n"
