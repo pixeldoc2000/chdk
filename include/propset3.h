@@ -42,7 +42,11 @@ The build uses tools/gen_propset_lua.sed to generate propset3.lua from this file
 #define PROPCASE_FLASH_SYNC_CURTAIN              64
 #define PROPCASE_METERING_MODE                   155
 #define PROPCASE_WB_ADJ                          271
-#define PROPCASE_ASPECT_RATIO                    294
+#if defined (CAMERA_sx210) || defined(CAMERA_ixus300_sd4000)
+    #define PROPCASE_ASPECT_RATIO                215
+#else
+    #define PROPCASE_ASPECT_RATIO                294
+#endif
 #define PROPCASE_TIMER_MODE                      225
 #define PROPCASE_OPTICAL_ZOOM_POSITION           197
 
