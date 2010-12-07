@@ -6,7 +6,6 @@ extern long *blob_copy_and_reset;
 extern long blob_chdk_core_size;
 extern long blob_copy_and_reset_size;
 
-
 void __attribute__((noreturn)) my_restart() {
     void __attribute__((noreturn)) (*copy_and_restart)(char *dst, char *src, long length);
 
@@ -19,11 +18,11 @@ void __attribute__((noreturn)) my_restart() {
     copy_and_restart((void*)MEMISOSTART, (char*)blob_chdk_core, blob_chdk_core_size);
 }
 
+// ToDo: should probably use LED at the Backside
 // #define LED_PR 0xC0220130    // Green Led
 #define LED_PR 0xC0223030    // AF Led
 static void __attribute__((noreturn)) shutdown() {
-    //volatile long *p = (void*)0xc02200a0;       // what does this LED? Powe
-    volatile long *p = (void*)LED_PR;       // turned off later, so assumed to be power
+    volatile long *p = (void*)LED_PR;
 
     asm(
         "MRS     R1, CPSR\n"
@@ -33,16 +32,15 @@ static void __attribute__((noreturn)) shutdown() {
         :::"r1","r0"
     );
 
-    *p = 0x44;  // led off.
+    *p = 0x44;    // led off.
 
     while(1);
 }
 
-
 static void __attribute__((noreturn)) panic(int cnt) {
     volatile long *p=(void*)LED_PR;
-    int i;
 
+    int i;
     for(; cnt>0; cnt--) {
         p[0]=0x46;
 
@@ -56,5 +54,6 @@ static void __attribute__((noreturn)) panic(int cnt) {
             asm ("nop\n");
         }
     }
+
     shutdown();
 }
