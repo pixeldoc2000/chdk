@@ -158,3 +158,14 @@ int switch_mode_usb(int mode) {
   return 1;
 }
 */
+
+// ToDo: from ../generic/lib.c
+void __attribute__((weak)) camera_set_led(int led, int state, int bright) {
+    int leds[] = {12,16,4,8,4,0,4};
+    if(led < 4 || led > 10 || led == 6) return;
+    volatile long *p=(void*)LED_AF + leds[led-4];
+    if (state)
+        p[0]=0x46;
+    else
+        p[0]=0x44;
+}
