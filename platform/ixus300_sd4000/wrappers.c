@@ -8,12 +8,12 @@ long lens_get_focus_pos_from_lens() {
     return _GetFocusLensSubjectDistanceFromLens();
 }
 
-
 long lens_get_target_distance() {
     return _GetCurrentTargetDistance();
 }
 
-
+//#ifdef OPT_UBASIC
+// ToDo: copied from A720 ?
 void ubasic_set_led(int led, int state, int bright) {
     struct led_control led_c;
     char convert_table[11]= {0,1,2,3,0,2,3,1,8,10,10}; // s3 to a710 (and a720) convert table
@@ -33,5 +33,4 @@ void ubasic_set_led(int led, int state, int bright) {
     led_c.blink_count=255;
     _PostLEDMessage(&led_c);
 }
-
-
+//#endif
