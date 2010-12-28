@@ -2410,7 +2410,7 @@
     #undef ASPECT_GAMES_YCORRECTION
     #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
 
-    #define CAM_ZEBRA_ACPECT_ADJUST     1
+    #define CAM_ZEBRA_ASPECT_ADJUST     1
 
     //zebra letterbox for saving memory
     //#undef ZEBRA_HMARGIN0
