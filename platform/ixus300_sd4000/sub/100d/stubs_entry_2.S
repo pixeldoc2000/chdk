@@ -195,3 +195,6 @@ NHSTUB(set_control_event, 0xFF8955C4)                // via eventproc_export_IsC
 //NHSTUB(reboot_fw_update, 0xffa9b228)               // sigfinder address ok
 
 NHSTUB(taskResume, 0xFF8955C4)                       // maybe
+
+NHSTUB(GetImageFolder, 0xFF94337C)                   // ToDo, like S95 and SD4500, function before 'GetCameraObjectTmpPath' string http://chdk.setepontos.com/index.php?topic=5641.msg58970#msg58970
+//NHSTUB(GetImageFolder, 0xFF94345C)                   // ToDo
