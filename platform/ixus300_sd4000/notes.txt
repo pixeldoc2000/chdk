@@ -2,7 +2,7 @@
 Camera:     Canon Powershot SD4000 IS (USA) / IXUS 300HS (Europe) / IXY 30S (Japan)
 P-ID:       12791 (0x31F7)
 Firmware:   1.00d
-Author:     pixel::doc (http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/)
+Developer:  pixel::doc (http://pixeldoc.kicks-ass.net/)
 
 
 --- Note ------------------------------------------------------------
@@ -21,7 +21,7 @@ Remember to reformat your sd-card and copy fresh files to avoid strange error / 
 Remember to delete chdk config file sometimes after messing around ("Reset options to default").
 ##############################################################################################################################
 
-Thanks to reyalp and asm1989 for their support.
+Thanks to reyalp, asm1989 and some other guys for their support.
 
 
 --- Links -----------------------------------------------------------
@@ -35,12 +35,12 @@ Thanks to reyalp and asm1989 for their support.
 * Rom Start address: 0xFF810000
 * NEED_ENCODED_DISKBOOT=4 (DISKBOOT Encoding)
 * KEYSYS=d4a (Dancing Bits)
-* camera has ND-Filter and probably real IRIS
 * camera has IS
 * Propset 3 (but some props are different)
 * OS: DRYOS version 2.3, release #0043
 * Iris type aperture (used with ND filter)
 * Port is based on A720 & SD990 & SX210 & G11 & D10
+* Sensor: 12 Bit, RGGB Color Palette
 
 * camera does not support ver.req and vers.req
 * udumper "NewDryOs" (CardTricks) does not support 2010 cameras
@@ -48,16 +48,14 @@ Thanks to reyalp and asm1989 for their support.
 
 * call_event_proc("SystemEventInit") is not available anymore, newest cameras (DryOS rel 43 and later) only have System.Create()
 
+
 --- Hardware address
 0xC0220130  Green Led (backside)
 0xc0220134  Red Led (backside)
 0xC0223030  Red AF Led (front)
-
-
---- JogDiag ?!?
-0xC0220114
-0xC0220118
-0xC022011C
+0xC0220114  JogDiag ?!?
+0xC0220118  JogDiag ?!?
+0xC022011C  JogDiag ?!?
 
 
 --- Keyboard Status (physw_status)
@@ -93,6 +91,7 @@ Number   Name                       Location            String
 * 02.10.2010 - Beta v4 is available
 * 06.10.2010 - Beta v5 is available
 * 30.10.2010 - Beta v6 is available
+* 18.12.2010 - Beta v7 is available
 
 
 --- ToDo ------------------------------------------------------------
@@ -102,15 +101,16 @@ Number   Name                       Location            String
 * tweak Color Palette (CAM_BITMAP_PALETTE), CHDK OSD Colors does not fit and are different in playback/record mode
 * Check Propcase, at least one Propcase has changed (maybe it time for propcase4.h)
 * os.remove() does delete files but fail to delete directory (like SX210, G11 and other new cameras too), tested with llibtst.lua
-* Video Bitrate Override does not work (only Video Quality Override does work)
+* only Video Quality Override does work, Video Bitrate Override does nothing (affects more DryOS Cameras?)
 
-* Edge Overlay does not show correctly
-* Histogram works, but Color Palette does not have required colors for correct display
-* Zebra does not work (shows some shatterd pixel with left offset)
+* Edge Overlay in correct only in Widescreen Setting ("Recording pixels"), else Edge Overleft has left offset
+* Histogram works, but Canon Color Palette does not have required colors for correct display
+* Zebra does not work (shows some shatterd dark (grey) pixel)
 
-* RAW files are unreadable, but with "dummy" badpixel.bin DNG is readable but has some weird colored pixels all over the place
+* RAW files are unreadable, but DNG with "dummy" badpixel.bin from SX210 is useable
+
 * badpixel.lua cause camera shutdown
-
 * test "shoot_full" & "shoot_half" commands behave like they should
+* Problems with some Scripts
 
-* probably more stuff to fix
+* probably more stuff to fix ;-)
