@@ -140,7 +140,7 @@ Number   Name                       Location            String
 210                                                     ExpMode.c
 218                                                     ShootSeqCommon.c
 219
-220      Resolution                 ROM:FF8689C4        PROPCASE_RESOLUTION
+220      Resolution                 ROM:FF8689C4        PROPCASE_RESOLUTION     (0=L, 1=M1, 2=M2, 3=M3, 4=S, 8=Widescreen)
 221      RotationAngle              ROM:FF93EFF8        GetRotationAngleResult                 PROPCASE_ORIENTATION_SENSOR
 222                                                     PrepareFlash.c  PreFlash.c
 223                                                     ExpMode.c
@@ -156,6 +156,7 @@ Number   Name                       Location            String
 264      Tv                         ROM:FF93EAF4        GetTvResult
 266      PCH_TV_SETTING             ROM:FF869464        PROPCASE_USER_TV
 269                                                     WBDrv.c ???
+271
 279                                                     ExpMode.c
 280                                                     Sensitive.c ???
 
@@ -177,6 +178,23 @@ Number   Name                       Location            String
 341
 
 ToDo: searched for Property Case till ROM:FF91EAB4
+
+
+--- Memory Map (like SX30) ------------------------------------------
+ToDo
+0001900     MEMBASEADDR             start of data - used for initialized vars
+???????                             end of inited data
+???????                             start of bss - used for zeroed/uninited vars
+???????                             end of bss
+014B394     MEMISOSTART             start of our data / bss
+
+0400000                             raw buffers
+83FFFFF ???                         end of raw buffers
+
+C0xxxxxx                            I/O
+
+FF810000    ROMBASEADDR             start of rom
+FFFFFFFF                            end of rom
 
 
 --- Changelog -------------------------------------------------------
