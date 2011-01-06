@@ -12,14 +12,14 @@ WARNING:
 #define PROPCASE_FLASH_MANUAL_OUTPUT        141
 #define PROPCASE_FLASH_ADJUST_MODE          121
 #define PROPCASE_USER_TV                    266     // SD4000
-#define PROPCASE_TV                         264
+#define PROPCASE_TV                         264     // SD4000
 #define PROPCASE_USER_AV                    26      // SD4000
-#define PROPCASE_AV                         23
+#define PROPCASE_AV                         23      // SD4000
 #define PROPCASE_MIN_AV                     25
-#define PROPCASE_SV                         249
+#define PROPCASE_SV                         249     // SD4000 249 = SvFix, 248 = SV
 #define PROPCASE_DELTA_SV                   79
 #define PROPCASE_SV_MARKET                  248
-#define PROPCASE_BV                         34
+#define PROPCASE_BV                         34      // SD4000
 #define PROPCASE_SUBJECT_DIST1              247
 #define PROPCASE_SUBJECT_DIST2              65
 #define PROPCASE_ISO_MODE                   149     // SD4000
