@@ -198,3 +198,5 @@ NHSTUB(taskResume, 0xFF8955C4)                       // maybe
 
 NHSTUB(GetImageFolder, 0xFF94337C)                   // ToDo, like S95 and SD4500, function before 'GetCameraObjectTmpPath' string http://chdk.setepontos.com/index.php?topic=5641.msg58970#msg58970
 //NHSTUB(GetImageFolder, 0xFF94345C)                   // ToDo
+
+NHSTUB(exmem_alloc, 0xFF88A17C)                      // = ExMem.AllocCacheable ?, experimental alternate memory allocation http://chdk.setepontos.com/index.php?topic=5980.0
