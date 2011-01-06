@@ -129,60 +129,6 @@ void *vid_get_viewport_fb_d() {
     return (void*)(*(int*)0x2AA4);    // ROM:FF874770 0x2A50 + 0x54
 }
 
-// Bitmap Pixel Size
-// ROM:FF919AC4   0x3C0 = 960 pixel
-// ROM:FF919AC0   0x10E = 270 pixel
-// ROM:FF9013D8   0x2D0 = 720 pixel
-// ROM:FF9013E0   0xF0  = 240 pixel
-// ROM:FF85B138 #240
-// ROM:FF85B148 #480
-// ROM:FF85B160 #720
-// ROM:FF85B174 #960
-
-// http://chdk.setepontos.com/index.php?topic=3410.msg32043#msg32043
-
-// ROM:FF9013D8 0x2D0 = 720 ?!?
-// SD990 ROM:FF83CFC8 ?!?
-long vid_get_bitmap_screen_width() {
-    //return 320;
-    //return 360;
-    return 480;
-    //return 720;
-    //return 960;
-}
-
-long vid_get_bitmap_screen_height() {
-    return 240;
-    //return 270;
-    //return 360;
-}
-
-int vid_get_viewport_width() {
-    //return 360;    // viewport is still 360, even though live view is 720 (from SD990)
-    return 480;
-    //return ((mode_get()&MODE_MASK) == MODE_PLAY)?480:360;     // return different width in PLAYBACK/RECORD mode
-}
-
-long vid_get_viewport_height() {
-    //return 240;
-    return 270;
-}
-
-// if buffer width was to small, CHDK Logo was shown as distorted "row" on Display
-long vid_get_bitmap_buffer_width() {
-    //return 360;
-    //return 480;
-    //return 720;
-    return 960;    // working
-}
-
-long vid_get_bitmap_buffer_height() {
-    //return 240;
-    return 270;
-    //return 360;
-    //return 480;
-}
-
 // search for String "9999" (IDA Name: a9999)
 // ROM:FFA04F80    LDR     R0, =0xA15B8    ; <---
 // ROM:FFA04F84    ADR     R1, a9999       ; "9999"
