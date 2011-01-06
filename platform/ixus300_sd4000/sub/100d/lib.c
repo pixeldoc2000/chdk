@@ -129,6 +129,18 @@ void *vid_get_viewport_fb_d() {
     return (void*)(*(int*)0x2AA4);    // ROM:FF874770 0x2A50 + 0x54
 }
 
+// Bitmap Pixel Size
+// ROM:FF919AC4   0x3C0 = 960 pixel
+// ROM:FF919AC0   0x10E = 270 pixel
+// ROM:FF9013D8   0x2D0 = 720 pixel
+// ROM:FF9013E0   0xF0  = 240 pixel
+// ROM:FF85B138 #240
+// ROM:FF85B148 #480
+// ROM:FF85B160 #720
+// ROM:FF85B174 #960
+
+// http://chdk.setepontos.com/index.php?topic=3410.msg32043#msg32043
+
 // ROM:FF9013D8 0x2D0 = 720 ?!?
 // SD990 ROM:FF83CFC8 ?!?
 long vid_get_bitmap_screen_width() {
@@ -159,6 +171,7 @@ long vid_get_viewport_height() {
 // if buffer width was to small, CHDK Logo was shown as distorted "row" on Display
 long vid_get_bitmap_buffer_width() {
     //return 360;
+    //return 480;
     //return 720;
     return 960;    // working
 }
@@ -167,6 +180,7 @@ long vid_get_bitmap_buffer_height() {
     //return 240;
     return 270;
     //return 360;
+    //return 480;
 }
 
 // search for String "9999" (IDA Name: a9999)
