@@ -182,6 +182,9 @@ void __attribute__((weak)) camera_set_led(int led, int state, int bright) {
 
 // http://chdk.setepontos.com/index.php?topic=3410.msg32043#msg32043
 
+// Viewport and Bitmap values that shouldn't change across firmware versions.
+// Values that may change are in lib.c for each firmware version.
+
 // ROM:FF9013D8 0x2D0 = 720 ?!?
 // SD990 ROM:FF83CFC8 ?!?
 long vid_get_bitmap_screen_width() {
@@ -198,17 +201,6 @@ long vid_get_bitmap_screen_height() {
     //return 360;
 }
 
-int vid_get_viewport_width() {
-    //return 360;    // viewport is still 360, even though live view is 720 (from SD990)
-    return 480;
-    //return ((mode_get()&MODE_MASK) == MODE_PLAY)?480:360;     // return different width in PLAYBACK/RECORD mode
-}
-
-long vid_get_viewport_height() {
-    //return 240;
-    return 270;
-}
-
 // if buffer width was to small, CHDK Logo was shown as distorted "row" on Display
 long vid_get_bitmap_buffer_width() {
     //return 360;
@@ -222,4 +214,31 @@ long vid_get_bitmap_buffer_height() {
     return 270;
     //return 360;
     //return 480;
+}
+
+int vid_get_viewport_width() {
+    //return 360;    // viewport is still 360, even though live view is 720 (from SD990)
+    return 480;
+    //return ((mode_get()&MODE_MASK) == MODE_PLAY)?480:360;     // return different width in PLAYBACK/RECORD mode
+}
+
+/*
+long vid_get_viewport_height() {
+    //return 240;
+    return 270;
+}
+*/
+
+// from SX30, suggested by philmoz
+long vid_get_viewport_height() {
+    if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 1)    // Wide screen top & bottom 30 pixels not used in viewport
+        return 180;
+    return 240;
+}
+
+// from SX30, suggested by philmoz
+int vid_get_viewport_yoffset() {
+    if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 1)    // Wide screen top & bottom 30 pixels not used in viewport
+        return 30;
+    return 0;
 }
