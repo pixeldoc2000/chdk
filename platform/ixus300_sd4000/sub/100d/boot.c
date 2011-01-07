@@ -12,23 +12,6 @@ void CreateTask_spytask();
 void JogDial_task_my(void);
 void boot();
 
-/*
-// old Task Hook stuff
-void taskCreateHook(int *p) {
-    p-=17;
-    // if(p[0]==0x0)  p[0]=(int)capt_seq_task;
-    //if(p[0]==0xFF96BD30) p[0]=(int)movie_record_task;
-    // task_InitFileModules
-    if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
-    if(p[0]==0xFF861B68) p[0]=(int)JogDial_task_my;
-}
-// like SX10
-void taskCreateHook2(int *p) {
-    p-=17;
-    if(p[0]==0xFF8995E0) p[0]=(int)init_file_modules_task;
-}
-*/
-
 void taskHook(context_t **context) {    //#fs
     task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
     if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
@@ -48,40 +31,6 @@ void taskHook2(context_t **context) {    //#fs
 void CreateTask_spytask() {    //#fs
     _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }    //#fe
-
-/*
-// old
-void boot() {    //#fs
-    long *canon_data_src = (void*)0xFFC206D4;    // ROM:FF810130
-    long *canon_data_dst = (void*)0x1900;        // ROM:FF810134
-    long canon_data_len = 0xF244 - 0x1900;       // ROM:FF810138 data_end - data_start
-    long *canon_bss_start = (void*)0xF244;       // ROM:FF810138 just after data
-    long canon_bss_len = 0x14B394 - 0xF244;      // ROM:FF81014C
-
-    //debug_led(1);
-    //debug_led(0);
-
-    // Code taken from VxWorks CHDK. Change CPU speed!
-    asm volatile (
-        "MRC     p15, 0, R0,c1,c0\n"
-        "ORR     R0, R0, #0x1000\n"
-        "ORR     R0, R0, #4\n"
-        "ORR     R0, R0, #1\n"
-        "MCR     p15, 0, R0,c1,c0\n"
-    :::"r0");
-
-    // see http://chdk.setepontos.com/index.php/topic,2972.msg30712.html#msg30712
-    *(int*)0x1938=(int)taskCreateHook;           // ROM:FF810698
-    *(int*)0x193C=(int)taskCreateHook2;          // ROM:FF8106D8
-
-    //debug_led(1);
-    //debug_led(0);
-
-    // jump to init-sequence that follows the data-copy-routine
-    //asm volatile("B      sub_FF810354\n");
-    asm volatile("B      sub_FF810354_my\n");    // +
-}; //#fe
-*/
 
 // ROM:FF81000C
 void boot() {    //#fs
@@ -431,114 +380,6 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
         "B       sub_FF81662C\n"             // "MLHClock.c:992"
     );
 }; //#fe
-
-/*
-void __attribute__((naked,noinline)) task_ShootSeqTask_my() {    //#fs
-    asm volatile (
-            "STMFD   SP!, {R4,LR}\n"
-            "MOV     R1, #0\n"
-            "MOV     R0, #0\n"
-            "BL      sub_FF83A1B8\n"             // LOCATION: KernelMisc.c:43
-            "LDR     R4, =0x1C80\n"
-            "STR     R0, [R4,#0x10]\n"
-            "BL      sub_FF8822DC\n"
-            "BL      sub_FF883B38\n"             // taskcreate_SsTask()
-            "BL      sub_FF881468\n"
-            //"BL      sub_FF87BE2C\n"
-            "BL      sub_FF87BE2C_my\n"          // +
-            "BL      sub_FF8825C0\n"
-            "LDR     R0, [R4,#0x10]\n"
-            "LDMFD   SP!, {R4,LR}\n"
-            "MOV     R1, #0x1000\n"
-            "B       sub_FF8873E4\n"
-    );
-};    //#fe
-
-void __attribute__((naked,noinline)) sub_FF87BE2C_my() {    //#fs
-    asm volatile (
-            "STMFD   SP!, {R4,LR}\n"
-            "LDR     R4, =0x2C28\n"
-            "LDR     R0, [R4,#0x20]\n"
-            "CMP     R0, #0\n"
-            "BNE     loc_FF87BEA8\n"
-            //"BL      nullsub_204\n"
-            "MOV     R1, #1\n"
-            "MOV     R0, #0\n"
-            "BL      sub_FF83A1DC\n"             // LOCATION: KernelMisc.c:55
-            "STR     R0, [R4,#0x18]\n"
-            "MOV     R0, #0\n"
-            "MOV     R1, #1\n"
-            "BL      sub_FF83A1DC\n"             // LOCATION: KernelMisc.c:55
-            "STR     R0, [R4,#4]\n"
-            "MOV     R0, #0\n"
-            "MOV     R1, #8\n"
-            "BL      sub_FF83A1B8\n"             // LOCATION: KernelMisc.c:43
-            "STR     R0, [R4,#0x1C]\n"
-            "BL      sub_FF87C114\n"
-            "BL      sub_FF87C89C\n"
-            "MOV     R0, #0\n"
-            "STR     R0, [R4,#0x14]\n"
-            "ADD     R0, R4, #0x24\n"
-            "MOV     R1, #0\n"
-            "STR     R1, [R0],#4\n"
-            "STR     R1, [R0]\n"
-            //"BL      loc_FF87CAAC\n"
-            "BL      sub_FF87CAAC\n"
-            "BL      sub_FF8827C0\n"
-            "BL      sub_FF87FDCC\n"
-            //"BL      sub_FF87D668\n"           // taskcreate_CaptSeqTask()
-            "BL      sub_FF87D668_my\n"          // +
-            "BL      sub_FF87E7EC\n"
-        "loc_FF87BEA8:\n"
-            "MOV     R0, #1\n"
-            "STR     R0, [R4,#0x20]\n"
-            "LDMFD   SP!, {R4,PC}\n"
-    );
-};    //#fe
-
-void __attribute__((naked,noinline)) sub_FF87D668_my() {    //#fs
-    asm volatile (
-            "STMFD   SP!, {R3-R5,LR}\n"
-            "LDR     R2, =0x395F8\n"
-            "MOV     R0, #0\n"
-            "MOV     R1, #0\n"
-        "loc_FF87D678:\n"
-            "ADD     R3, R2, R0,LSL#4\n"
-            "ADD     R0, R0, #1\n"
-            "CMP     R0, #5\n"
-            "STR     R1, [R3,#8]\n"
-            "BCC     loc_FF87D678\n"
-            "BL      sub_FF87E230\n"
-            //"BL      nullsub_208\n"
-            "BL      sub_FF971AF4\n"
-            "MOV     R1, #5\n"
-            "MOV     R0, #0\n"
-            "BL      sub_FF83A194\n"             // LOCATION: KernelMisc.c:31
-            "LDR     R4, =0x2C7C\n"
-            "LDR     R1, =0x101DFF\n"
-            "STR     R0, [R4,#4]\n"
-            "MOV     R0, #0\n"
-            "BL      sub_FF83A1B8\n"             // LOCATION: KernelMisc.c:43
-            "STR     R0, [R4]\n"
-            "MOV     R0, #0\n"
-            "MOV     R1, #1\n"
-            "BL      sub_FF83A1DC\n"             // LOCATION: KernelMisc.c:55
-            "STR     R0, [R4,#8]\n"
-            "MOV     R3, #0\n"
-            "STR     R3, [SP]\n"   // +
-
-            //"LDR     R3, =0xFF87D2D8\n"        // LOCATION: SsShootTask.c:13
-            "LDR     R3, =capt_seq_task\n"    // +
-
-            //"ADR     R0, sub_FF87D900\n"       // "CaptSeqTask"
-            "LDR     R0, =0xFF87D900\n"          // compiler does not like ADR
-            "MOV     R2, #0x1000\n"
-            "MOV     R1, #0x17\n"
-            "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
-            "LDMFD   SP!, {R3-R5,PC}\n"
-    );
-};    //#fe
-*/
 
 /*
 // ROM:FF834434
