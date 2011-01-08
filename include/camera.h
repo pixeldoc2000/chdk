@@ -2394,8 +2394,9 @@
     #undef ASPECT_VIEWPORT_YCORRECTION
     #define ASPECT_VIEWPORT_YCORRECTION(y) ( (y) )
 
-    #undef EDGE_HMARGIN
-    #define EDGE_HMARGIN 10    // 10 fits video mode of sx210
+    // Not required
+    //#undef EDGE_HMARGIN
+    //#define EDGE_HMARGIN 10    // 10 fits video mode of sx210
 
     //games mappings
     #undef GAMES_SCREEN_WIDTH
