@@ -218,29 +218,7 @@ void __attribute__((naked,noinline)) sub_FF811198_my() { //#fs
         //"LDR     R1, =sub_FF815E58\n"        // original uHwSetup()
         "LDR     R1, =uHwSetup_my\n"           // +
 
-        "STR     R0, [SP,#0x20]\n"
-        "MOV     R0, #0x96\n"
-        "STR     R0, [SP,#0x24]\n"
-        "MOV     R0, #0x78\n"
-        "STR     R0, [SP,#0x28]\n"
-        "MOV     R0, #0x64\n"
-        "STR     R0, [SP,#0x2C]\n"
-        "MOV     R0, #0\n"
-        "STR     R0, [SP,#0x30]\n"
-        "STR     R0, [SP,#0x34]\n"
-        "MOV     R0, #0x10\n"
-        "STR     R0, [SP,#0x5C]\n"
-        "MOV     R0, #0x800\n"
-        "STR     R0, [SP,#0x60]\n"
-        "MOV     R0, #0xA0\n"
-        "STR     R0, [SP,#0x64]\n"
-        "MOV     R0, #0x280\n"
-        "STR     R0, [SP,#0x68]\n"
-        "MOV     R0, SP\n"
-        "MOV     R2, #0\n"
-        "BL      sub_FF813404\n"
-        "ADD     SP, SP, #0x74\n"
-        "LDR     PC, [SP],#4\n"
+        "B       sub_FF8111EC\n"              // Continue in firmware
     );
 };    //#fe
 
@@ -326,13 +304,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() { //#fs
         //"LDR     R3, =0xFF81FA8C\n"        // compiler does not like ADR
         "LDR     R3, =task_Startup_my\n"     // +
 
-        "MOV     R2, #0\n"
-        "MOV     R1, #0x19\n"
-        //"ADR     R0, =0xFF81FB7C\n"        // "Startup"
-        "LDR     R0, =0xFF81FB7C\n"          // compiler does not like ADR
-        "BL      sub_FF81E83C\n"             // eventproc_export_CreateTask() KerTask.c:163
-        "MOV     R0, #0\n"
-        "LDMFD   SP!, {R12,PC}\n"
+        "B       sub_FF81FB5C\n"             // Continue in firmware
     );
 }; //#fe
 
@@ -367,17 +339,7 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
         "BL      sub_FF8379F8\n"             // task_ShootSeqTask()
         //"BL      task_ShootSeqTask_my\n"     // +
 
-        "BL      sub_FF83C0DC\n"
-        //"BL      sub_FF8316A8\n"           // nullsub_201\n"
-        "BL      sub_FF833254\n"             // "Battery.c:0\n"
-        "BL      sub_FF83BAC8\n"             // taskcreate_Bye()
-        "BL      sub_FF8337BC\n"
-        "BL      sub_FF8331F0\n"             // taskcreate_BatteryTask()
-        "BL      sub_FF832318\n"
-        "BL      sub_FF83CB24\n"             // taskcreate_FactoryModeController()
-        "BL      sub_FF8331C8\n"             // taskcreate_Ui()
-        "LDMFD   SP!, {R4,LR}\n"
-        "B       sub_FF81662C\n"             // "MLHClock.c:992"
+        "B       sub_FF81FAC4\n"             // Continue in firmware
     );
 }; //#fe
 
@@ -399,20 +361,7 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             //"MOV     R2, #0x800\n"
             "MOV     R2, #0x2000\n"              // + stack size for new task_PhySw so we don't have to do stack switch
 
-            "MOV     R1, #0x17\n"
-            //"ADR     R0, 0xFF83464C\n"         // "PhySw"
-            "LDR     R0, =0xFF83464C\n"          // compiler does not like ADR
-            "BL      sub_FF83A160\n"             // KernelCreateTask() LOCATION: KernelMisc.c:19
-            "STR     R0, [R4,#0x10]\n"
-        "loc_FF834468:\n"
-            "BL      sub_FF861F04\n"             // taskcreate_RotarySw()
-            "BL      sub_FF88DA70\n"
-            "BL      sub_FF835CE4\n"             // IsFactoryMode()
-            "CMP     R0, #0\n"
-            "LDREQ   R1, =0x32EA0\n"
-            "LDMEQFD SP!, {R3-R5,LR}\n"
-            "BEQ     sub_FF88D9F8\n"             // eventproc_export_OpLog.Start()
-            "LDMFD   SP!, {R3-R5,PC}\n"
+            "B       sub_FF834458\n"             // Continue in Firmware
     );
 };    //#fe
 */
@@ -427,15 +376,12 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
         "MOVNE   R1, #0\n"
         "MOVNE   R0, R5\n"
         "BLNE    sub_FF893994\n"             // eventproc_export_PostLogicalEventToUI()
+
         //"BL      sub_FF88FF58\n"
         "BL      sub_FF88FF58_my\n"          // +
         "BL      core_spytask_can_start\n"   // + safe to start CHDK SpyTask
-        "CMP     R4, #0\n"
-        "MOVEQ   R0, R5\n"
-        "LDMEQFD SP!, {R4-R6,LR}\n"
-        "MOVEQ   R1, #0\n"
-        "BEQ     sub_FF893994\n"             // eventproc_export_PostLogicalEventToUI()
-        "LDMFD   SP!, {R4-R6,PC}\n"
+
+        "B       sub_FF899600\n"             // Continue in Firmware
     );
 };    //#fe
 
@@ -708,23 +654,11 @@ void __attribute__((naked,noinline)) sub_FF88FF58_my() {    //#fs
     asm volatile (
         "STMFD   SP!, {R4,LR}\n"
         "MOV     R0, #3\n"
+
         //"BL      sub_FF871A04\n"           // LOCATION: Mounter.c:0
         "BL      sub_FF871A04_my\n"          // +
-        //"BL      nullsub_84\n"
-        "LDR     R4, =0x3034\n"
-        "LDR     R0, [R4,#4]\n"
-        "CMP     R0, #0\n"
-        "BNE     loc_FF88FF90\n"
-        "BL      sub_FF870C4C\n"
-        "BL      sub_FF9426C4\n"
-        "BL      sub_FF870C4C\n"
-        "BL      sub_FF86D070\n"
-        "BL      sub_FF870B4C\n"
-        "BL      sub_FF942760\n"
-        "loc_FF88FF90:\n"
-        "MOV     R0, #1\n"
-        "STR     R0, [R4]\n"
-        "LDMFD   SP!, {R4,PC}\n"
+
+        "B       sub_FF88FF64\n"             // Continue in firmware
     );
 };    //#fe
 
@@ -753,41 +687,8 @@ void __attribute__((naked,noinline)) sub_FF871A04_my() {    //#fs
         "MOV     R0, R6\n"
         //"BL      sub_FF87162C\n"
         "BL      sub_FF87162C_my\n"          // +
-        "MOV     R5, R0\n"
-        "MOV     R0, R6\n"
-        "BL      sub_FF87185C\n"             // LOCATION: Mounter.c:0
-        "LDR     R6, [R4,#0x3C]\n"
-        "AND     R7, R5, R0\n"
-        "CMP     R6, #0\n"
-        "LDR     R1, [R4,#0x38]\n"
-        "MOVEQ   R0, #0x80000001\n"
-        "MOV     R5, #0\n"
-        "BEQ     loc_FF871AB4\n"
-        "MOV     R0, R1\n"
-        "BL      sub_FF870DB4\n"
-        "CMP     R0, #0\n"
-        "MOVNE   R5, #4\n"
-        "CMP     R6, #5\n"
-        "ORRNE   R0, R5, #1\n"
-        "BICEQ   R0, R5, #1\n"
-        "CMP     R7, #0\n"
-        "BICEQ   R0, R0, #2\n"
-        "ORREQ   R0, R0, #0x80000000\n"
-        "BICNE   R0, R0, #0x80000000\n"
-        "ORRNE   R0, R0, #2\n"
-        "loc_FF871AB4:\n"
-        "CMP     R8, #7\n"
-        "STR     R0, [R4,#0x40]\n"
-        "LDMNEFD SP!, {R4-R8,PC}\n"
-        "MOV     R0, R8\n"
-        "BL      sub_FF8719D4\n"
-        "CMP     R0, #0\n"
-        "LDMEQFD SP!, {R4-R8,LR}\n"
-        //"ADREQ   R0, =0xFF871B00\n"        // "EMEM MOUNT ERROR!!!""
-        "LDREQ   R0, =0xFF871B00\n"          // compiler does not like ADREQ
-        //"BEQ     0xFF81177C\n"               // qPrintf()
-        "BEQ     sub_FF81177C\n"               // fix gcc 4.5.1 compiler error
-        "LDMFD   SP!, {R4-R8,PC}\n"
+
+        "B       sub_FF871A5C\n"             // Continue in firmware
     );
 };    //#fe
 
@@ -803,27 +704,11 @@ void __attribute__((naked,noinline)) sub_FF87162C_my() {    //#fs
         "LDMNEFD SP!, {R4-R6,PC}\n"
         "LDR     R0, [R4,#0x38]\n"
         "MOV     R1, R5\n"
+
         //"BL      sub_FF87134C\n"           // LOCATION: Mounter.c:0
         "BL      sub_FF87134C_my\n"          // +
-        "CMP     R0, #0\n"
-        "LDRNE   R0, [R4,#0x38]\n"
-        "MOVNE   R1, R5\n"
-        "BLNE    sub_FF8714E8\n"             // LOCATION: Mounter.c:0
-        "LDR     R2, =0x38548\n"
-        "ADD     R1, R5, R5,LSL#4\n"
-        "LDR     R1, [R2,R1,LSL#2]\n"
-        "CMP     R1, #4\n"
-        "BEQ     loc_FF87168C\n"
-        "CMP     R0, #0\n"
-        "LDMEQFD SP!, {R4-R6,PC}\n"
-        "MOV     R0, R5\n"
-        "BL      sub_FF870E44\n"
-        "loc_FF87168C:\n"
-        "CMP     R0, #0\n"
-        "LDRNE   R1, [R4,#0x6C]\n"
-        "ORRNE   R1, R1, #2\n"
-        "STRNE   R1, [R4,#0x6C]\n"
-        "LDMFD   SP!, {R4-R6,PC}\n"
+
+        "B       sub_FF871658\n"             // Continue in firmware
     );
 };    //#fe
 
