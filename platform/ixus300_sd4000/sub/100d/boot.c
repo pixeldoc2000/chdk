@@ -8,14 +8,16 @@ const char * const new_sa = &_end;
 #define offsetof(TYPE, MEMBER) ((int) &((TYPE *)0)->MEMBER)
 
 // Forward declarations
+void CreateTask_PhySw();
 void CreateTask_spytask();
+extern volatile int jogdial_stopped;
 void JogDial_task_my(void);
 void boot();
 
 void taskHook(context_t **context) {    //#fs
     task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
 
-    if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
+    //if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;    // cause crash with large scripts because we hook task without increased stack size
     if(!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
     if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
     if(!_strcmp(tcb->name, "MovieRecord"))     tcb->entry = (void*)movie_record_task;   // ToDo: working?
@@ -311,36 +313,31 @@ void __attribute__((naked,noinline)) task_Startup_my() { //#fs
         "STMFD   SP!, {R4,LR}\n"
         "BL      sub_FF81650C\n"             // taskcreate_ClockSave()
         "BL      sub_FF835674\n"
-        "BL      sub_FF833808\n"
-        "BL      sub_FF83BD30\n"             // j_nullsub_217
-        "BL      sub_FF83BF1C\n"
+        "BL      sub_FF833808\n"             // taskcreate_ClkEnabler()
+        //"BL      sub_FF83BD30\n"           // j_nullsub_217
+        "BL      sub_FF83BF1C\n"             // taskcreate_ADCScn()
+
+        "BL      CreateTask_spytask\n"       // +
 
         //"BL      sub_FF83BDC4\n"           // original: StartSdInit() -> StartDiskboot()
-    );
-
-    CreateTask_spytask();                        // +
-
-    //debug_led(1);
-    //debug_led(0);
-
-    asm volatile (
         "BL      sub_FF83C0C0\n"
         "BL      sub_FF8322E4\n"
-        "BL      sub_FF83BF4C\n"
-        "BL      sub_FF8396BC\n"
-        "BL      sub_FF83C0C4\n"
+        "BL      sub_FF83BF4C\n"             // taskcreate_WDT()
+        "BL      sub_FF8396BC\n"             // ErrorStuff
+        "BL      sub_FF83C0C4\n"             // taskcreate_?
 
-        "BL      sub_FF834434\n"             // taskcreate_PhySw()
-        //"BL      taskcreate_PhySw_my\n"      // +
+        //"BL      CreateTask_spytask\n"       // + slow startup
+
+        //"BL      sub_FF834434\n"           // taskcreate_PhySw()
+        "BL      taskcreate_PhySw_my\n"      // +
 
         "BL      sub_FF8379F8\n"             // task_ShootSeqTask()
-        //"BL      task_ShootSeqTask_my\n"     // +
+        //"BL      task_ShootSeqTask_my\n"   // +
 
         "B       sub_FF81FAC4\n"             // Continue in firmware
     );
 }; //#fe
 
-/*
 // ROM:FF834434
 void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
     asm volatile (
@@ -348,20 +345,19 @@ void __attribute__((naked,noinline)) taskcreate_PhySw_my() {    //#fs
             "LDR     R4, =0x1C28\n"
             "LDR     R0, [R4,#0x10]\n"
             "CMP     R0, #0\n"
-            "BNE     loc_FF834468\n"
+            "BNE     sub_FF834468\n"
             "MOV     R3, #0\n"
             "STR     R3, [SP]\n"
 
             //"ADR     R3, FF834400\n"           // task_PhySw()
             //"LDR     R3, =0xFF834400\n"        // compiler does not like ADR
             "LDR     R3, =mykbd_task\n"          // +
-            //"MOV     R2, #0x800\n"
-            "MOV     R2, #0x2000\n"              // + stack size for new task_PhySw so we don't have to do stack switch
+            //"MOV     R2, #0x800\n"             // original stack size is to small
+            "MOV     R2, #0x2000\n"              // + increase stack size for our task_PhySw so we don't have to do stack switch, if stack is too small large scripts may cause crash !!!
 
             "B       sub_FF834458\n"             // Continue in Firmware
     );
 };    //#fe
-*/
 
 // ROM:FF8995E0
 void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
