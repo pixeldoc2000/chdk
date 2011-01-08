@@ -73,7 +73,6 @@ void my_kbd_read_keys() {
 
     if (kbd_process() == 0) {
         // we read keyboard state with _kbd_read_keys()
-
         jogdial_stopped=0;
     } else {
         // override keys
@@ -134,7 +133,7 @@ void kbd_key_release(long key) {
 void kbd_key_release_all() {
     kbd_mod_state[0] |= KEYS_MASK0;
     kbd_mod_state[1] |= KEYS_MASK1;
-    kbd_mod_state[2] |= KEYS_MASK2;
+    //kbd_mod_state[2] |= KEYS_MASK2;
 }
 
 long kbd_is_key_pressed(long key) {
@@ -209,6 +208,7 @@ long kbd_get_autoclicked_key() {
     }
 }
 
+// ToDo
 #ifdef CAM_USE_ZOOM_FOR_MF
 long kbd_use_zoom_as_mf() {
     static long v;
