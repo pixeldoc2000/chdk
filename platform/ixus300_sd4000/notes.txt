@@ -138,6 +138,7 @@ Number   Name                       Location            String
 208                                                     ExpMode.c
 209      RealExposureCompensation   ROM:FF93EC8C        GetRealExposureCompensationResult
 210                                                     ExpMode.c
+215
 218                                                     ShootSeqCommon.c
 219
 220      Resolution                 ROM:FF8689C4        PROPCASE_RESOLUTION     (0=L, 1=M1, 2=M2, 3=M3, 4=S, 8=Widescreen)
