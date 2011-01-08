@@ -14,6 +14,7 @@ void boot();
 
 void taskHook(context_t **context) {    //#fs
     task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
+
     if(!_strcmp(tcb->name, "PhySw"))           tcb->entry = (void*)mykbd_task;
     if(!_strcmp(tcb->name, "CaptSeqTask"))     tcb->entry = (void*)capt_seq_task;
     if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
@@ -22,18 +23,12 @@ void taskHook(context_t **context) {    //#fs
     if(!_strcmp(tcb->name, "RotarySw"))        tcb->entry = (void*)JogDial_task_my;
 }    //#fe
 
-void taskHook2(context_t **context) {    //#fs
-    task_t *tcb=(task_t*)((char*)context-offsetof(task_t, context));
-    if(!_strcmp(tcb->name, "InitFileModules")) tcb->entry = (void*)init_file_modules_task;
-    if(!_strcmp(tcb->name, "ExpDrvTask"))      tcb->entry = (void*)exp_drv_task;
-}    //#fe
-
 void CreateTask_spytask() {    //#fs
     _CreateTask("SpyTask", 0x19, 0x2000, core_spytask, 0);
 }    //#fe
 
 // ROM:FF81000C
-void boot() {    //#fs
+void __attribute__((naked,noinline)) boot() {    //#fs
     asm volatile (
         "LDR     R1, =0xC0410000\n"
         "MOV     R0, #0\n"
@@ -130,6 +125,7 @@ void boot() {    //#fs
 
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
+    // Hook Canon Firmware Tasks, http://chdk.setepontos.com/index.php/topic,4194.0.html
     // ToDo: verify all Hooks are working
     //*(int*)0x1930=(int)taskHook;               // does not work
     //*(int*)0x1930=(int)taskHook2;
@@ -140,7 +136,8 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
 
     // CHDK fast startup
     *(int*)0x1938=(int)taskHook;                 // ROM:FF810698
-    *(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
+    //*(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
+    //*(int*)0x193C=(int)taskHook2;                 // ROM:FF8106D8
 
     //*(int*)0x19A0=(int)taskHook;               // maybe correct IRQ is 0x19A0 (ROM:FF816634) ?
 
@@ -377,7 +374,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {    //#fs
         "MOVNE   R0, R5\n"
         "BLNE    sub_FF893994\n"             // eventproc_export_PostLogicalEventToUI()
 
-        //"BL      sub_FF88FF58\n"
+        //"BL      sub_FF88FF58\n"           // original
         "BL      sub_FF88FF58_my\n"          // +
         "BL      core_spytask_can_start\n"   // + safe to start CHDK SpyTask
 
