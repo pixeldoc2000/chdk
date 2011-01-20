@@ -127,7 +127,7 @@ Number   Name                       Location            String
 145                                                     SsISIF.c ExpMode.c
 149      ISOSpeed                   ROM:FF868A5C        PROPCASE_ISO_MODE
 166                                                     ShootSeqCommon.c
-169                                                     ShootSeqCommon.c ExpMode.c
+169                                                     ShootSeqCommon.c ExpMode.c             Resolution Video ?
 170                                                     ShootSeqCommon.c
 186
 194                                                     ExpMode.c
