@@ -23,7 +23,7 @@ WARNING:
 #define PROPCASE_SUBJECT_DIST1              247
 #define PROPCASE_SUBJECT_DIST2              65
 #define PROPCASE_ISO_MODE                   149     // SD4000
-#define PROPCASE_SHOOTING                   208
+#define PROPCASE_SHOOTING                   208     // https://github.com/emlyn/chdk/issues#issue/11 maybe PropSet 96 ?!?
 #define PROPCASE_IS_FLASH_READY             210     // SD4000
 #define PROPCASE_OVEREXPOSURE               103
 #define PROPCASE_SHOOTING_MODE              49      // SD4000
