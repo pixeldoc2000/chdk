@@ -736,10 +736,12 @@ short shooting_get_drive_mode()
 	defined (CAMERA_a480) || \
 	defined (CAMERA_s90) || \
 	defined (CAMERA_sx20) || \
-	defined (CAMERA_d10)
+	defined (CAMERA_d10) || \
+	defined (CAMERA_ixus300_sd4000)
    short n;
    // unlike other cameras, sx200 does set PROPCASE_DRIVE_MODE when in custom timer mode
    // SX 200 IS 0,1,2,3,4=Off, 2 Second, Custom, Face Detection
+   // SD4000: 0,1,2,3 = Off, 2 Seconds, Custom timer
    _GetPropertyCase(PROPCASE_TIMER_MODE, &n, sizeof(n));
    // note we return this only in custom mode.
    // Other cameras would return 3 if any timer mode is set (?) even if it doesn't do multiple exposures
