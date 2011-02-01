@@ -30,7 +30,7 @@ ROM:FFB28EF4    0xAE0 = 2784 pixel
 3816 * 2784 = 10623744
 */
 
-// ToDo: RAW files are still unreadable (maybe because sensor date changed with new 2010 camera models?)
+// Note: RAW files are only readable if Program support SD4000 RAW (very unlikely because RAW has not defined File Format because it's RAW sensor data). Use DNG!
 // ROM:FFB29270, like SX210
 // search String "CRAW BUFF" (IDA Name: aCrawBuffP)
 // like G11
@@ -62,7 +62,7 @@ ROM:FFB292D0    LDR     R1, =0xF32880   <---
 ROM:FFB292D4    ADR     R0, aCrawBuffSizeP ; "CRAW BUFF SIZE  %p"
 ***/
 long hook_raw_size() {
-    return 0xF32880;
+    return 0xF32880;    // 15935616
 }
 
 // vid_* stuff is related to BmpDDev() stuff (ROM:FF919A78 and other) and LiveImage.c
