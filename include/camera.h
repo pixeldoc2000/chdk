@@ -2347,9 +2347,6 @@
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
-    #undef  CAM_SENSOR_BITS_PER_PIXEL
-    #define CAM_SENSOR_BITS_PER_PIXEL   12
-
     #define cam_CalibrationIlluminant1  1        // Daylight ?!?
     #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
     #define CAM_RAW_ROWS                2784     // ROM:FFB28EF4
