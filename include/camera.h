@@ -2318,9 +2318,9 @@
     #undef  CAM_SYNCH
     #define CAM_HAS_ND_FILTER           1
     #define CAM_HAS_IRIS_DIAPHRAGM      1
-    #undef  CAM_HAS_MANUAL_FOCUS
-    #undef  CAM_CAN_SD_OVERRIDE
-    #undef  CAM_USE_ZOOM_FOR_MF
+    //#undef  CAM_HAS_MANUAL_FOCUS                  // ToDo: test if its working
+    //#undef  CAM_CAN_SD_OVERRIDE                   // ToDo: looks like always cause ASSERT Error "FocusLensController.c Line 714" on CaptSeqTask
+    //#undef  CAM_USE_ZOOM_FOR_MF                   // ToDo: test if its working
     #define CAM_HAS_USER_TV_MODES       1
     //#define CAM_AF_SCAN_DURING_VIDEO_RECORD 1
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO    // canon firmware allow optical zoom while recording movie
