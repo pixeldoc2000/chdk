@@ -134,33 +134,6 @@ void JogDial_CCW(void) {
     _PostLogicalEventForNotPowerType(0x877, 2);  // RotateJogDialLeft at levent_table
 }
 
-// ToDo: switch_mode_usb() does not work, used by PTPcam chdk cli "mode" command
-// PTP stuff
-extern void _set_control_event(int);
-extern void _PB2Rec();
-extern void _Rec2PB();
-int switch_mode_usb(int mode) {
-  if ( mode == 0 ) {
-    _Rec2PB();
-    _set_control_event(0x1003);    // PressPBButton
-    //_PostLogicalEventForNotPowerType(0x1003, 0);    // PressPBButton ROM:FFBA0124
-    //_set_control_event(0x80000902);    // 0x10A5 ConnectUSBCable
-    //_set_control_event(0x10A5);    // 0x10A5 ConnectUSBCable
-    //_PostLogicalEventForNotPowerType(0x10A5, 2);    // ConnectUSBCable at levent_table
-  } else if ( mode == 1 ) {
-    _set_control_event(0x1001);    // PressRecButton
-    //_PostLogicalEventForNotPowerType(0x1001, 0);    // PressRecButton ROM:FFBA0100
-    //_set_control_event(0x902);     // 0x10A6 DisconnectUSBCable
-    //_set_control_event(0x10A6);    // 0x10A6 DisconnectUSBCable
-    //_PostLogicalEventForNotPowerType(0x10A6, 2);    // DisconnectUSBCable at levent_table
-    _PB2Rec();
-  } else {
-    return 0;
-  }
-
-  return 1;
-}
-
 // ToDo: from ../generic/lib.c
 void __attribute__((weak)) camera_set_led(int led, int state, int bright) {
     int leds[] = {12,16,4,8,4,0,4};
