@@ -2348,16 +2348,19 @@
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
     #define cam_CalibrationIlluminant1  1        // Daylight ?!?
+
     #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
     #define CAM_RAW_ROWS                2784     // ROM:FFB28EF4
-    // cropping ?!?
+
     #define CAM_JPEG_WIDTH              3648
     #define CAM_JPEG_HEIGHT             2736
-    // use dng4ps2 for active area search http://chdk.setepontos.com/index.php/topic,3410.msg31974.html#msg31974
-    #define CAM_ACTIVE_AREA_X1          10       // ToDo, just guesswork
-    #define CAM_ACTIVE_AREA_Y1          8        // ToDo, just guesswork
-    #define CAM_ACTIVE_AREA_X2          3600     // ToDo, just guesswork
-    #define CAM_ACTIVE_AREA_Y2          2750     // ToDo, just guesswork
+
+    // use exiftool -activearea="22 120 2763 3784" to change values till DNG fit (http://chdk.setepontos.com/index.php?topic=6122.0)
+    // or dng4ps2 (http://chdk.setepontos.com/index.php/topic,3410.msg31974.html#msg31974)
+    #define CAM_ACTIVE_AREA_X1          120      // x offset (right)
+    #define CAM_ACTIVE_AREA_Y1          22       // y offset (down)
+    #define CAM_ACTIVE_AREA_X2          3784
+    #define CAM_ACTIVE_AREA_Y2          2763
 
     #undef  CAM_SENSOR_BITS_PER_PIXEL
     #define CAM_SENSOR_BITS_PER_PIXEL   12
@@ -2366,8 +2369,8 @@
     #undef  CAM_BLACK_LEVEL
     #define CAM_BLACK_LEVEL             127
 
-    #define PARAM_CAMERA_NAME 4    // parameter number (index) for GetParameterData to get Camera Name
-    #define DNG_EXT_FROM ".CR2"
+    #define PARAM_CAMERA_NAME           4    // parameter number (index) for GetParameterData to get Camera Name
+    #define DNG_EXT_FROM                ".CR2"
 
     //#define CAM_HAS_VARIABLE_ASPECT     1        // ?!? like SX1
 
