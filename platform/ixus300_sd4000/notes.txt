@@ -26,7 +26,8 @@ Thanks to reyalp, asm1989 and some other guys for their support.
 
 --- Links -----------------------------------------------------------
 * http://chdk.wikia.com/
-* http://chdk.wikia.com/wiki/SD4000IS
+* http://chdk.wikia.com/wiki/SD4000
+* http://chdk.setepontos.com/index.php?topic=5574.0 - Int. Forum SD4000 Porting Thread
 * http://pixeldoc.kicks-ass.net/projects/chdk/ixus300_sd4000/
 * http://www.canon.com.my/p/EN/114-Digital-Cameras/203-IXUS/1556-Digital-IXUS-300-HS/
 
@@ -40,13 +41,14 @@ Thanks to reyalp, asm1989 and some other guys for their support.
 * OS: DRYOS version 2.3, release #0043
 * Iris type aperture (used with ND filter)
 * Port is based on A720 & SD990 & SX210 & G11 & D10
-* Sensor: 12 Bit, RGGB Color Palette
+* Sensor: 10 MP, 12 Bit, RGGB Color Palette
+* UART Serial Connection to access Event Shell and DryOS Shell (http://chdk.wikia.com/wiki/SD4000#UART), 3.3V Voltage Level, 115200/8/N/1
 
 * camera does not support ver.req and vers.req
 * udumper "NewDryOs" (CardTricks) does not support 2010 cameras
 * Canon Basic dumper works
 
-* call_event_proc("SystemEventInit") is not available anymore, newest cameras (DryOS rel 43 and later) only have System.Create()
+* Event Procedure SystemEventInit() is not available anymore, newest cameras (DryOS rel 43 and later) only have System.Create()
 
 
 --- Hardware address
@@ -210,28 +212,35 @@ FFFFFFFF                            end of rom
 * 06.10.2010 - Beta v5 is available
 * 30.10.2010 - Beta v6 is available
 * 18.12.2010 - Beta v7 is available
+* 30.01.2011 - UART pinout discovered (http://chdk.setepontos.com/index.php?topic=5574.msg60426#msg60426)
+* 31.01.2011 - Beta v8 is available
+  * Fixed crash with script (hooked mykbd_task() without increased stack size)
+  * Added Continous Bracketing fix from chdk2011
+* 01.02.2011 - Beta v9 is available
 
 
 --- ToDo ------------------------------------------------------------
 * Make bootable does not work (WriteSDCard address wrong?)
 * "Debug Parameters -> Create card with two partitions" does cause shutdown (WriteSDCard address wrong?)
-* PTP doesn't support mode switching (otherwise works very good with ptpcam)
 * tweak Color Palette (CAM_BITMAP_PALETTE), CHDK OSD Colors does not fit and are different in playback/record mode
 * Check Propcase, at least one Propcase has changed (maybe it time for propcase4.h)
 * os.remove() does delete files but fail to delete directory (like SX210, G11 and other new cameras too), tested with llibtst.lua
 * only Video Quality Override does work, Video Bitrate Override does nothing (affects more DryOS Cameras?)
-
 * Edge Overlay in correct only in Widescreen Setting ("Recording pixels"), else Edge Overleft has left offset
 * Histogram works, but Canon Color Palette does not have required colors for correct display
 * Zebra does not work (shows some shatterd dark (grey) pixel) - http://chdk.setepontos.com/index.php?topic=3410.msg32043#msg32043
 * find PROPCASE_ASPECT_RATIO to fix Zebra & co (and Y-Correction Fix like SX30 suggested by philmoz)
-
 * RAW files are unreadable, but DNG with "dummy" badpixel.bin from SX210 is useable
-
-* badpixel.lua cause camera shutdown
 * test "shoot_full" & "shoot_half" commands behave like they should
-
-* Problems with some Scripts
 * sometimes Exception (Vector 0x04) on exiting ALT Mode after script execution
+* Problems with some Scripts (probaly fixed since Stack Size commit)
+* Multi Partition Support (Autoboot CHDK with 2 Partitions on SD-Card)
 
 * probably more stuff to fix ;-)
+
+
+--- Tested CHDK Functions ------------------------------------------
+* CHDK PTP with ptpcam
+  * Mode Switch (Playback / Record) does work
+  * All functions seems to work
+* create badpixel for DNG without script does work
