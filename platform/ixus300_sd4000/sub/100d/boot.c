@@ -128,19 +128,11 @@ void __attribute__((naked,noinline)) boot() {    //#fs
 
 void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
     // Hook Canon Firmware Tasks, http://chdk.setepontos.com/index.php/topic,4194.0.html
-    // ToDo: verify all Hooks are working
+    // ToDo: verify all Hooks are working, is hooking to Software IRQ's required like other cameras?
     //*(int*)0x1930=(int)taskHook;               // does not work
-    //*(int*)0x1930=(int)taskHook2;
-
-    // CHDK slow startup
-    //*(int*)0x1934=(int)taskHook;                 // 0x1934 not used in firmware elseware
-    //*(int*)0x1938=(int)taskHook;
-
-    // CHDK fast startup
+    //*(int*)0x1934=(int)taskHook;                 // 0x1934 not used in firmware
     *(int*)0x1938=(int)taskHook;                 // ROM:FF810698
-    //*(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
-    //*(int*)0x193C=(int)taskHook2;                 // ROM:FF8106D8
-
+    *(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
     //*(int*)0x19A0=(int)taskHook;               // maybe correct IRQ is 0x19A0 (ROM:FF816634) ?
 
     // Power Button detection (short press = playback mode, long press = record mode)
