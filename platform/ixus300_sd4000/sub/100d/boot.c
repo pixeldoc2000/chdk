@@ -132,7 +132,8 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
     //*(int*)0x1930=(int)taskHook;               // does not work
     //*(int*)0x1934=(int)taskHook;                 // 0x1934 not used in firmware
     *(int*)0x1938=(int)taskHook;                 // ROM:FF810698
-    *(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
+    // 0x1938=taskHook and 0x193C=taskHook together cause ASSERT in SpyTask on CHDK autostart
+    //*(int*)0x193C=(int)taskHook;                 // ROM:FF8106D8
     //*(int*)0x19A0=(int)taskHook;               // maybe correct IRQ is 0x19A0 (ROM:FF816634) ?
 
     // Power Button detection (short press = playback mode, long press = record mode)
