@@ -2349,7 +2349,6 @@
 
     #define cam_CalibrationIlluminant1  1        // Daylight ?!?
 
-/*
     #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
     #define CAM_RAW_ROWS                2784     // ROM:FFB28EF4
 
@@ -2361,18 +2360,19 @@
     #define CAM_ACTIVE_AREA_X1          120      // x offset (right)
     #define CAM_ACTIVE_AREA_Y1          22       // y offset (down)
     #define CAM_ACTIVE_AREA_X2          3784
-    #define CAM_ACTIVE_AREA_Y2          2763
-*/
+    #define CAM_ACTIVE_AREA_Y2          2764     // use even numbers!
 
+/*
+    // suggestion from Lebau: http://chdk.setepontos.com/index.php?topic=6122.msg61806#msg61806
     #define CAM_RAW_ROWPIX             3816
     #define CAM_RAW_ROWS                2784
     // cropping
-    #define CAM_JPEG_WIDTH  3648
-    #define CAM_JPEG_HEIGHT 2736
     #define CAM_ACTIVE_AREA_X1 116
     #define CAM_ACTIVE_AREA_Y1 14
     #define CAM_ACTIVE_AREA_X2 3788
     #define CAM_ACTIVE_AREA_Y2 2766
+    // Dark Frame is visible with DNG (left 4px, top 9px and right 4px)
+*/
 
     #undef  CAM_SENSOR_BITS_PER_PIXEL
     #define CAM_SENSOR_BITS_PER_PIXEL   12
