@@ -130,10 +130,10 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {    //#fs
     // Hook Canon Firmware Tasks, http://chdk.setepontos.com/index.php/topic,4194.0.html
     // ToDo: verify all Hooks are working, is hooking to Software IRQ's required like other cameras?
     //*(int*)0x1930=(int)taskHook;               // does not work
-    *(int*)0x1934=(int)taskHook;                 // 0x1934 not used in firmware
+    //*(int*)0x1934=(int)taskHook;                 // 0x1934 not used in firmware
     *(int*)0x1938=(int)taskHook;                 // ROM:FF810698
     // 0x1938=taskHook and 0x193C=taskHook together cause ASSERT in SpyTask on CHDK autostart
-    //*(int*)0x193C=(int)taskHook;               // ROM:FF8106D8
+    *(int*)0x193C=(int)taskHook;               // ROM:FF8106D8
     //*(int*)0x19A0=(int)taskHook;               // maybe correct IRQ is 0x19A0 (ROM:FF816634) ?
 
     // Power Button detection (short press = playback mode, long press = record mode)
@@ -755,11 +755,19 @@ void __attribute__((naked,noinline)) sub_FF87134C_my() {    //#fs
         "BL      sub_FF88A11C\n"             // ExMemMan.c:0
         "B       loc_FF8713B0\n"
         "loc_FF8713E4:\n"
-        "LDR     R1, [R5,#0x64]\n"
+       // "LDR     R1, [R5,#0x64]\n"
         "MOV     R0, R9\n"
-        "BLX     R1\n"
+        //"BLX     R1\n"
+        "BL      sub_mbr\n"
 
+        "sub_mbr:\n"
         // FAT32 Partition support
+        "LDR     R1, =0x94AD0\n"                 // ROM:FF951C00 or ROM:FF951E78
+        "ADD     R0, R0, R0,LSL#3\n"
+        "ADD     R0, R1, R0,LSL#2\n"
+        "LDR     R0, [R0,#0x18]\n"
+        "BX      LR\n"
+
         "MOV   R1, R4\n"                     // pointer to MBR in R1
         "BL    mbr_read_dryos\n"             // total sectors count in R0 before and after call
         // requires "define CAM_MULTIPART 1", else you get undefined reference compiler error ;-)
@@ -816,7 +824,7 @@ void __attribute__((naked,noinline)) sub_FF87134C_my() {    //#fs
         //"LDRB    R12, [R4,#0x1FE]\n"       // original
         "LDRB    R12, [LR,#0x1FE]\n"         // + First MBR signature byte (0x55), LR is original offset.
         "LDRB    LR, [LR,#0x1FF]\n"          // + Last MBR signature byte (0xAA), LR is original offset.
-        //"MOV     R4, #0\n"                 // ToDo: required ?
+        "MOV     R4, #0\n"                   // ToDo: required ?
 
         "BNE     loc_FF871470\n"
         "CMP     R0, R1\n"
