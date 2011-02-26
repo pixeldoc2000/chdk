@@ -143,13 +143,23 @@ long get_target_file_num() {
     return n;
 }
 
-long get_target_dir_num() {
-    long n;
+// Save RAW in correct (JPG) Folder
+#if defined(CAM_DATE_FOLDER_NAMING)
+    void get_target_dir_name(char *out) {
+        extern void _GetImageFolder(char*,int,int,int);
+        out[0] = 'A';
+        _GetImageFolder(out+1,get_file_next_counter(),0x400,time(NULL));
+        out[15] = '\0';
+    }
+#else
+    long get_target_dir_num() {
+        long n;
 
-    n = get_file_next_counter();
-    n = (n>>18)&0x3FF;
-    return n;
-}
+        n = get_file_next_counter();
+        n = (n>>18)&0x3FF;
+        return n;
+    }
+#endif
 
 // ToDo
 // Required for correct DOF calculation
