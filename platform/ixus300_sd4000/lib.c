@@ -134,15 +134,10 @@ void JogDial_CCW(void) {
     _PostLogicalEventForNotPowerType(0x877, 2);  // RotateJogDialLeft at levent_table
 }
 
-// ToDo: from ../generic/lib.c
-void __attribute__((weak)) camera_set_led(int led, int state, int bright) {
-    int leds[] = {12,16,4,8,4,0,4};
-    if(led < 4 || led > 10 || led == 6) return;
-    volatile long *p=(void*)LED_AF + leds[led-4];
-    if (state)
-        p[0]=0x46;
-    else
-        p[0]=0x44;
+// ToDo
+void camera_set_led(int led, int state, int bright) {
+    static char led_table[7]={0,1,2,3,9,14,15};
+    _LEDDrive(led_table[led%sizeof(led_table)], state<=1 ? !state : state);
 }
 
 // Bitmap Pixel Size
