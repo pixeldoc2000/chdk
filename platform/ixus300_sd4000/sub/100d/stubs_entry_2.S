@@ -40,6 +40,7 @@ NHSTUB(GetCurrentAvValue, 0xFF9644F8)                // OK, like SX210, G11 is d
 NHSTUB(PutInNdFilter, 0xFFB2056C)                    // OK, like G11, referens from Function Table (ROM:FFC2AE64)
 NHSTUB(PutOutNdFilter, 0xFFB205A4)                   // OK, like G11, referens from Function Table (ROM:FFC2AE5C)
 
+
 // Multi Partition Support
 //NHSTUB(ReadSDCard, 0xFF9522B0)                     // probably, like SD990
 // "Make bootable" does nothing, "Debug Parameters -> Create card with two partitions" cause shutdown (create_partitions())
@@ -195,9 +196,12 @@ NHSTUB(Rec2PB, 0xFF897590)                           // search String "AC:Rec2PB
 //NHSTUB(set_control_event, 0xff895504)              // sigfinder ok (ptpcam --chdk mode command does work)
 //NHSTUB(reboot_fw_update, 0xffa9b228)               // sigfinder address ok
 
+
 NHSTUB(taskResume, 0xFF8955C4)                       // maybe
 
 NHSTUB(GetImageFolder, 0xFF94337C)                   // ToDo, like S95 and SD4500, function before 'GetCameraObjectTmpPath' string http://chdk.setepontos.com/index.php?topic=5641.msg58970#msg58970
 //NHSTUB(GetImageFolder, 0xFF94345C)                   // ToDo
 
 NHSTUB(exmem_alloc, 0xFF88A17C)                      // = ExMem.AllocCacheable ?, experimental alternate memory allocation http://chdk.setepontos.com/index.php?topic=5980.0
+
+NHSTUB(LEDDrive, 0xFF860C6C)                         // camera_set_led()
