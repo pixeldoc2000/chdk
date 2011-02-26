@@ -217,6 +217,7 @@ FFFFFFFF                            end of rom
   * Fixed crash with script (hooked mykbd_task() without increased stack size)
   * Added Continous Bracketing fix from chdk2011
 * 01.02.2011 - Beta v9 is available
+* 15.02.2011 - Beta v10 is available
 
 
 --- ToDo ------------------------------------------------------------
@@ -235,6 +236,10 @@ FFFFFFFF                            end of rom
 * sometimes Exception (Vector 0x04) on exiting ALT Mode after script execution
 * Problems with some Scripts (probaly fixed since Stack Size commit)
 * Multi Partition Support (Autoboot CHDK with 2 Partitions on SD-Card)
+* Aperture Override aperture not working ?
+* ND Filter State not working ?
+* Remote Function does continuous mode only after second "Remote Shutter" (what is correct behavior on other Cameras?)
+* Override Subj. Dist. Value (MF) not working ?
 
 * probably more stuff to fix ;-)
 
