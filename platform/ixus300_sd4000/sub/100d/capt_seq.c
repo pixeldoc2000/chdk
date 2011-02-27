@@ -93,6 +93,7 @@ void __attribute__((naked,noinline)) capt_seq_task() {
         //"loc_FF87D3A0:\n"
             "B       loc_FF87D638\n"
         "loc_FF87D3A4:\n"                        // jumptable FF87D324 entry 0
+            //"BL      shooting_expo_param_override\n"  // +, ToDo: required to make Canon OSD reflect Overrides like SD1000 (http://chdk.setepontos.com/index.php?topic=5574.msg61888#msg61888) ?
             "BL      sub_FF87DC9C\n"             // SsPrepareSeq.c
 
             "BL      shooting_expo_param_override\n"  // +
