@@ -43,5 +43,5 @@ WARNING:
 #define PROPCASE_ASPECT_RATIO               294     // probably changed or not existing on SD4000, should this change if Widescreen resolution is in use ?!?
 //#define PROPCASE_ASPECT_RATIO               215
 #define PROPCASE_TIMER_MODE                 225     // SD4000 (Self Timer: 1 = Off, 2 = 10 Sec., 1 = 2 Sec., 3 = Custom Timer)
-#define PROPCASE_OPTICAL_ZOOM_POSITION      197     // SD4000 (0 - 63)
+#define PROPCASE_OPTICAL_ZOOM_POSITION      197     // SD4000 (0 - 63, 0 = 1.0, 63 = 3.8x)
 #endif
