@@ -6,24 +6,24 @@
 // 0x93 = 147, count of available Camera Parameter
 #define PARAM_FILE_COUNTER      0x3A
 
-// ToDo
-// PropertyCase 23 ?!?
-// watch PropertyCase Value with "Debug data display" and compare with F value
+// PropertyCase 23 (and PROPCASE_USER_AV 26)
+// Set AV Value in Canon Menu and watch PropertyCase Value with "Debug data display"
+// ToDo: must id start from 1 because id = 0 is off ?
 const ApertureSize aperture_sizes_table[] = {
-    // ?, PropertyCase value, osd value)
-    {  6, 200, "2.0" },
-    {  7, 232, "2.2" },
-    {  8, 240, "2.5" },
-    {  9, 280, "2.8" },
-    { 10, 300, "3.2" },
-    { 11, 340, "3.5" },
-    { 12, 375, "4.0 ND" },
-    { 13, 400, "4.5 ND" },
-    { 14, 448, "5.0 ND" },  // ?!?
-    { 15, 480, "5.6 ND" },  // ?!?
-    { 16, 512, "6.3 ND" },  // ?!?
-    { 17, 544, "7.1 ND" },  // ?!?
-    { 18, 576, "8.0 ND" },  // ?!?
+    // id, PropertyCase value, osd value)
+    {  0, 200, "2.0" },
+    {  1, 224, "2.2" },
+    {  2, 256, "2.5" },
+    {  3, 288, "2.8" },
+    {  4, 320, "3.2" },
+    {  5, 352, "3.5" },
+    {  6, 384, "4.0" },
+    {  7, 416, "4.5" },
+    {  8, 448, "5.0" },
+    {  9, 480, "5.6" },
+    { 10, 512, "6.3" },
+    { 11, 544, "7.1" },
+    { 12, 576, "8.0" },
 };
 
 // ToDo
