@@ -186,19 +186,43 @@ long vid_get_bitmap_buffer_height() {
     //return 480;
 }
 
+/*
 int vid_get_viewport_width() {
     //return 360;    // viewport is still 360, even though live view is 720 (from SD990)
     return 480;
     //return ((mode_get()&MODE_MASK) == MODE_PLAY)?480:360;     // return different width in PLAYBACK/RECORD mode
 }
+*/
 
-/*
+// http://chdk.setepontos.com/index.php?topic=6037.msg62190#msg62190
+int vid_get_viewport_width() {
+    if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 0)    // On 16:9 (Widescreen) resolution PROPCASE_ASPECT_RATIO = 0
+        return 480;
+    else
+        return 360;
+}
+
+int vid_get_viewport_xoffset() {
+    if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 0)
+        return 0;
+    else
+        return 60;
+}
+
+int vid_get_viewport_image_offset() {
+    return (vid_get_viewport_yoffset() * vid_get_viewport_buffer_width() + vid_get_viewport_xoffset()) * 3;
+}
+
+int vid_get_viewport_row_offset() {
+    return (vid_get_viewport_buffer_width() - vid_get_viewport_width()) * 3;
+}
+
 long vid_get_viewport_height() {
     //return 240;
     return 270;
 }
-*/
 
+/*
 // from SX30, suggested by philmoz
 long vid_get_viewport_height() {
     if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 1)    // Wide screen top & bottom 30 pixels not used in viewport
@@ -212,3 +236,4 @@ int vid_get_viewport_yoffset() {
         return 30;
     return 0;
 }
+*/
