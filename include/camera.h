@@ -2326,6 +2326,7 @@
     #undef  CAM_CAN_UNLOCK_OPTICAL_ZOOM_IN_VIDEO    // canon firmware allow optical zoom while recording movie
     //#define CAM_EV_IN_VIDEO             1
     #define CAM_VIDEO_CONTROL           1
+    #define CAM_VIDEO_QUALITY_ONLY      1           // ToDo: Video Bitrate override cause crash
     #define DNG_SUPPORT                 1
     #define CAM_HAS_JOGDIAL             1
     #define CAM_FEATURE_FEATHER         1
