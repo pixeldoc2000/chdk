@@ -2348,32 +2348,21 @@
      -77419,  1000000, 639766,  1000000,  44009, 1000000,  \
       17965,  1000000, 78396,   1000000, 231868, 1000000
 
-    #define cam_CalibrationIlluminant1  1        // Daylight ?!?
+    #define cam_CalibrationIlluminant1  1        // ToDo: Daylight ?
 
     #define CAM_RAW_ROWPIX              3816     // ROM:FFB28EEC
     #define CAM_RAW_ROWS                2784     // ROM:FFB28EF4
 
-    #define CAM_JPEG_WIDTH              3648
-    #define CAM_JPEG_HEIGHT             2736
+    #define CAM_JPEG_WIDTH              3648     // JPEG Exif data or ROM:FFB28EFC
+    #define CAM_JPEG_HEIGHT             2736     // JPEG Exif data or ROM:FFB28F04
 
-    // use exiftool -activearea="22 120 2763 3784" to change values till DNG fit (http://chdk.setepontos.com/index.php?topic=6122.0)
-    // or dng4ps2 (http://chdk.setepontos.com/index.php/topic,3410.msg31974.html#msg31974)
+    // http://chdk.setepontos.com/index.php?topic=6122.0
+    // use exiftool -activearea="22 120 2763 3784" to change values till DNG fit
+    // use even numbers!
     #define CAM_ACTIVE_AREA_X1          120      // x offset (right)
     #define CAM_ACTIVE_AREA_Y1          22       // y offset (down)
     #define CAM_ACTIVE_AREA_X2          3784
-    #define CAM_ACTIVE_AREA_Y2          2764     // use even numbers!
-
-/*
-    // suggestion from Lebau: http://chdk.setepontos.com/index.php?topic=6122.msg61806#msg61806
-    #define CAM_RAW_ROWPIX             3816
-    #define CAM_RAW_ROWS                2784
-    // cropping
-    #define CAM_ACTIVE_AREA_X1 116
-    #define CAM_ACTIVE_AREA_Y1 14
-    #define CAM_ACTIVE_AREA_X2 3788
-    #define CAM_ACTIVE_AREA_Y2 2766
-    // Dark Frame is visible with DNG (left 4px, top 9px and right 4px)
-*/
+    #define CAM_ACTIVE_AREA_Y2          2764
 
     #undef  CAM_SENSOR_BITS_PER_PIXEL
     #define CAM_SENSOR_BITS_PER_PIXEL   12
@@ -2384,6 +2373,8 @@
 
     #define PARAM_CAMERA_NAME           4    // parameter number (index) for GetParameterData to get Camera Name
     #define DNG_EXT_FROM                ".CR2"
+
+	// everthing below is ToDo !!!!!!!!!!!!!!!!
 
     //#define CAM_HAS_VARIABLE_ASPECT     1        // ?!? like SX1
 
