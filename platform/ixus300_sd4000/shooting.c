@@ -10,7 +10,7 @@
 // Set AV Value in Canon Menu and watch PropertyCase Value with "Debug data display"
 // ToDo: must id start from 1 because id = 0 is off ?
 const ApertureSize aperture_sizes_table[] = {
-    // id, PropertyCase value, osd value)
+    // id, prop_id, name (typedef for ApertureSize struct is in platform.h)
     {  0, 200, "2.0" },
     {  1, 224, "2.2" },
     {  2, 256, "2.5" },
@@ -29,6 +29,7 @@ const ApertureSize aperture_sizes_table[] = {
 // ToDo
 // ROM:FFC15ED0
 const ShutterSpeed shutter_speeds_table[] = {
+    // id, prop_id, name, usec
     { -12, -384, "15", 15000000 },
     { -11, -352, "13", 13000000 },
     { -10, -320, "10", 10000000 },
@@ -80,6 +81,7 @@ const ShutterSpeed shutter_speeds_table[] = {
 
 // Propertycase 149
 const ISOTable iso_table[] = {
+    // id, prop_id, name, shutter_dfs_value
     {  0,    0, "Auto", -1},
     {  1,  125,  "125", -1},
     {  2,  200,  "200", -1},
