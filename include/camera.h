@@ -2358,12 +2358,30 @@
     #define CAM_JPEG_HEIGHT             2736     // JPEG Exif data or ROM:FFB28F04
 
     // http://chdk.setepontos.com/index.php?topic=6122.0
-    // use exiftool -activearea="22 120 2763 3784" to change values till DNG fit
+    // use exiftool -activearea="24 120 2764 3784" to change values till DNG fit
     // use even numbers!
+
+    // without Dark Frame
     #define CAM_ACTIVE_AREA_X1          120      // x offset (right)
-    #define CAM_ACTIVE_AREA_Y1          22       // y offset (down)
+    #define CAM_ACTIVE_AREA_Y1          24       // y offset (down)
     #define CAM_ACTIVE_AREA_X2          3784
     #define CAM_ACTIVE_AREA_Y2          2764
+
+    /*
+    // with Dark Frame
+    #define CAM_ACTIVE_AREA_X1          92       // x offset (right)
+    #define CAM_ACTIVE_AREA_Y1          4        // y offset (down)
+    #define CAM_ACTIVE_AREA_X2          3812
+    #define CAM_ACTIVE_AREA_Y2          2784
+    */
+
+    /*
+    // Test values to messure correct "crop" Values
+    #define CAM_ACTIVE_AREA_X1          0
+    #define CAM_ACTIVE_AREA_Y1          0
+    #define CAM_ACTIVE_AREA_X2          3816
+    #define CAM_ACTIVE_AREA_Y2          2784
+    */
 
     #undef  CAM_SENSOR_BITS_PER_PIXEL
     #define CAM_SENSOR_BITS_PER_PIXEL   12
