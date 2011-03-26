@@ -63,15 +63,13 @@ int get_zoom_x(int zp) {
 	return get_focal_length(zp)*10/focus_len_table[0];
 }
 
-// TODO
 long get_vbatt_min()
 {
-	return 6525;
+	return 6500;
 }
 
-// TODO
 long get_vbatt_max()
 {
-	return 8100;
+	return 8150;
 }
 

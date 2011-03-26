@@ -20,7 +20,6 @@ NHSTUB(TurnOffBackLight,				0xFF8B059C) // ok (comp 1.00h)
 NHSTUB(TurnOnBackLight,					0xFF8B0584) // ok (comp 1.00h)
 NHSTUB(Lseek,							0xff8371f8) // ok (comp 1.00h)
 NHSTUB(free,							0xFF814244) // ok (comp 1.00h)
-NHSTUB(Close,							0xff8370dc) // ok (comp 1.00h)
 NHSTUB(ExitTask,						0xff81eb30) // ok (comp 1.00h)
 NHSTUB(FreeUncacheableMemory,			0xff83afd8) // ok (comp 1.00h)
 NHSTUB(GetDrive_ClusterSize,			0xFF87724C) // ok (comp 1.00h)
@@ -37,7 +36,9 @@ NHSTUB(MakeDirectory_Fut,				0xff836ac8) // ok (comp 1.00h)
 NHSTUB(MoveFocusLensToDistance,			0xFFB52FB8) // ok (comp 1.00h)
 NHSTUB(MoveZoomLensWithPoint,			0xFFAE96B4)	// ok (comp 1.00h)
 NHSTUB(NewTaskShell,					0xff8993e8) // ok (comp 1.00h)
-NHSTUB(Open,							0xFF81AADC)	// update 5/3/2011 to fix crash startup
+NHSTUB(Close,							0xFF8370DC) // ok (eventproc_export_Close)
+NHSTUB(Open,							0xFF837070)	// wrapper for 'open' to give buffered/asynch I/O ?
+NHSTUB(open,							0xFF81AADC)	// 
 NHSTUB(PostLogicalEventForNotPowerType, 0xff89e02c) // ok (comp 1.00h)
 NHSTUB(PostLogicalEventToUI,			0xff89e078) // ok (comp 1.00h)
 NHSTUB(RenameFile_Fut,					0xFF8369C0) // ok (comp 1.00h)

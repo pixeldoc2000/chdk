@@ -2,8 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
-// TODO ????
-static long *nrflag = (long*)0xDE78; // in sub_FFB073AC (comp SX30)
+static long *nrflag = (long*)(0x76fc+0x8); // in _sub_FF98F86C__NRTable.c__0
+#define NR_AUTO (0)							// have to explictly reset value back to 0 to enable auto
 
 #include "../../../generic/capt_seq.c"
 
@@ -283,7 +283,7 @@ asm volatile (
 "		MOV     R2, #2 \n"
 "		ADD     R1, R4, #0x60 \n"
 "		MOV     R0, #0x6F \n"
-"		BL      sub_FF8999C8 \n"	//PT_GetPropertyCaseString
+"		BL      _PT_GetPropertyCaseString \n"
 "		TST     R0, #1 \n"
 "		LDRNE   R1, =0x531 \n"
 "		LDRNE   R0, =0xFF8820BC \n"	// aSsshoottask_c
@@ -351,12 +351,13 @@ asm volatile (
 "		BL	sub_FF8866F0 \n"
 "		B	loc_FF8828D0 \n"
 
-// jump table entry 36
+// jump table default entry
 "loc_FF8828C4: \n"
 "		LDR	R1, =0x591 \n"
 "		LDR	R0, =0xFF8820BC \n"	// aSsshoottask_c
 "		BL	_DebugAssert \n"
 
+// jump table entry 36
 "loc_FF8828D0: \n"
 "		LDR	R0, [SP] \n"
 "		LDR	R1, [R0,#4] \n"

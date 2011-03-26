@@ -42,19 +42,13 @@ extern void _GetKbdState(long*);
 ////	}
 //}
 
-#define KEYS_MASK0 (0x00CEFDE0)
+#define KEYS_MASK0 (0x00CFFDE0)
 #define KEYS_MASK1 (0x00000000)
 #define KEYS_MASK2 (0x00000300) 
 
-#define NEW_SS (0x2000)
 #define SD_READONLY_FLAG (0x20000)
 #define USB_MASK (0x4000000)
 #define USB_REG 2
-
-
-#ifndef MALLOCD_STACK
-static char kbd_stack[NEW_SS];
-#endif
 
 static KeyMap keymap[] = {
 	/* tiny bug: key order matters. see kbd_get_pressed_key()
@@ -265,7 +259,6 @@ void my_kbd_read_keys()
           physw_status[0] = kbd_new_state[0];
           physw_status[1] = kbd_new_state[1];
           physw_status[2] = kbd_new_state[2];
-          //physw_status[0] |= alt_mode_key_mask;
           jogdial_stopped=0;
 
 	} else {

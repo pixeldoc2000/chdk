@@ -65,13 +65,11 @@ int get_zoom_x(int zp) {
 	return get_focal_length(zp)*10/focus_len_table[0];
 }
 
-// TODO
 long get_vbatt_min()
 {
 	return 6500;	// from condor
 }
 
-// TODO
 long get_vbatt_max()
 {
 	return 8100;	// from condor

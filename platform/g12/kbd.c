@@ -49,11 +49,6 @@ extern void _GetKbdState(long*);
 #define USB_MASK (0x4000000)
 #define USB_REG 2
 
-//#ifndef MALLOCD_STACK
-//#define NEW_SS (0x2000)
-//static char kbd_stack[NEW_SS];
-//#endif
-
 static KeyMap keymap[] = {
 	/* tiny bug: key order matters. see kbd_get_pressed_key()
 	 * for example

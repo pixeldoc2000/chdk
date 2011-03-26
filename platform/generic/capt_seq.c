@@ -40,6 +40,9 @@ void __attribute__((naked,noinline)) capt_seq_hook_set_nr()
     switch (core_get_noise_reduction_value()){
     case NOISE_REDUCTION_AUTO_CANON:
         // leave it alone
+#if defined(NR_AUTO)			// If value defined store if (e.g. for G12 & SX30 need to reset back to 0 to enable auto)
+        *nrflag = NR_AUTO;
+#endif
         break;
     case NOISE_REDUCTION_OFF:
         *nrflag = NR_OFF;

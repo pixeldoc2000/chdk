@@ -2,8 +2,8 @@
 #include "platform.h"
 #include "core.h"
 
-// TODO ????
-static long *nrflag = (long*)0xE15C; // in sub_FFAEC6E8 (comp D10)
+static long *nrflag = (long*)(0x8608+0x8); // in _sub_FF9953B4__NRTable.c__0
+#define NR_AUTO (0)							// have to explictly reset value back to 0 to enable auto
 
 #include "../../../generic/capt_seq.c"
 

@@ -3236,6 +3236,9 @@
 	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
 	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
 
+	#define	CAM_STARTUP_CRASH_FILE_OPEN_FIX	1				// enable fix for camera crash at startup when opening the conf / font files
+															// see http://chdk.setepontos.com/index.php?topic=6179.0
+
     #define CAM_KEY_CLICK_DELAY 150 // SX30 appears to need extra delay for clicks
 //----------------------------------------------------------
 #elif defined (CAMERA_g12)
@@ -3344,6 +3347,9 @@
 	// EXMEM memory allocation values
 	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
 	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
+
+	#define	CAM_STARTUP_CRASH_FILE_OPEN_FIX	1				// enable fix for camera crash at startup when opening the conf / font files
+															// see http://chdk.setepontos.com/index.php?topic=6179.0
 
 //----------------------------------------------------------
 

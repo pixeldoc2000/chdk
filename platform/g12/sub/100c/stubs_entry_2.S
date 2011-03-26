@@ -20,7 +20,6 @@ NHSTUB(TurnOffBackLight,				0xFF8ABD94)	// ok (comp sx30)
 NHSTUB(TurnOnBackLight,					0xFF8ABD7C)	// ok (comp sx30)
 NHSTUB(Lseek,							0xFF8371FC)	// ok (comp sx30)
 NHSTUB(free,							0xFF814244)	// ok (comp sx30)
-NHSTUB(Close,							0xff8370e0)	// ok (comp sx30)
 NHSTUB(ExitTask,						0xff81eb30)	// ok (comp sx30)
 NHSTUB(FreeUncacheableMemory,			0xff83af70)	// ok (comp sx30)
 NHSTUB(GetDrive_ClusterSize,			0xff876948)	// ok (comp sx30)
@@ -37,7 +36,9 @@ NHSTUB(MakeDirectory_Fut,				0xff836acc)	// ok (comp sx30)
 NHSTUB(MoveFocusLensToDistance,			0xffb71f98)	// ok (comp sx30)
 NHSTUB(MoveZoomLensWithPoint,			0xffb05008)	// ok (comp sx30)
 NHSTUB(NewTaskShell,					0xff894f0c)	// ok (comp sx30)
-NHSTUB(Open,							0xFF81AADC)	// update 5/3/2011 to fix crash startup
+NHSTUB(Close,							0xFF8370E0)	// ok (eventproc_export_Close)
+NHSTUB(Open,							0xFF837074)	// wrapper for 'open' to give buffered/asynch I/O ?
+NHSTUB(open,							0xFF81AADC)	// 
 NHSTUB(PostLogicalEventForNotPowerType, 0xff899b70)	// ok (comp sx30)
 NHSTUB(PostLogicalEventToUI,			0xff899bbc)	// ok (comp sx30)
 NHSTUB(RenameFile_Fut,					0xFF8369C4)	// ok (comp sx30)
@@ -70,7 +71,8 @@ NHSTUB(strncpy,							0xff81402c)	// ok (comp sx30)
 NHSTUB(strrchr,							0xFF8140D8)	// ok (comp sx30)
 NHSTUB(time,							0xff88f66c)	// ok (comp sx30)
 NHSTUB(MakeAFScan,						0xFF98AA04)	// ok (comp s95)
-NHSTUB(ExpCtrlTool_StartContiAE,		0xFF8475EC)	// ok (comp s95)
+NHSTUB(ExpCtrlTool_StopContiAE,			0xFF8475EC)	// ok ?
+NHSTUB(ExpCtrlTool_StartContiAE,		0xFF847454)	// ok ?
 NHSTUB(UnsetZoomForMovie,				0xFF9C57D0)	// ok (comp s95)
 NHSTUB(LEDDrive,						0xFF8647EC)	// ok (comp sx30)
 NHSTUB(SetScriptMode,					0xFF89BF90)	// ok (comp sx30)

@@ -192,12 +192,19 @@ void lens_set_zoom_speed(long newspd)
 
 void lens_set_focus_pos(long newpos)
 {
-    _MoveFocusLensToDistance((short*)&newpos);
-    //while (focus_busy);
-    while ((shooting_is_flash_ready()!=1) || (focus_busy));
-    newpos = _GetFocusLensSubjectDistance();
-    _SetPropertyCase(PROPCASE_SUBJECT_DIST1, &newpos, sizeof(newpos));
-    _SetPropertyCase(PROPCASE_SUBJECT_DIST2, &newpos, sizeof(newpos));
+#if defined(CAMERA_g12)	// G12 crashes if in Continuous AF mode and try to call _MoveFocusLensToDistance
+	int af_mode;
+	get_property_case(PROPCASE_CONTINUOUS_AF,&af_mode,sizeof(af_mode));
+	if (af_mode == 0)	// can only set focus distance when not in continuous AF mode
+#endif
+	{
+		_MoveFocusLensToDistance((short*)&newpos);
+		//while (focus_busy);
+		while ((shooting_is_flash_ready()!=1) || (focus_busy));
+		newpos = _GetFocusLensSubjectDistance();
+		_SetPropertyCase(PROPCASE_SUBJECT_DIST1, &newpos, sizeof(newpos));
+		_SetPropertyCase(PROPCASE_SUBJECT_DIST2, &newpos, sizeof(newpos));
+	}
 }
 
 void play_sound(unsigned sound)
@@ -256,6 +263,12 @@ int open (const char *name, int flags, int mode )
 {
 #ifdef CAM_DRYOS_2_3_R39
     if(name[0]!='A')return -1;
+#endif
+#if defined(CAM_STARTUP_CRASH_FILE_OPEN_FIX)	// enable fix for camera crash at startup when opening the conf / font files
+												// see http://chdk.setepontos.com/index.php?topic=6179.0
+	#define O_RDONLY 0							// copied from stdlib.h (including stdlib.h causes compile errors due to function definition mismatch - needs fixing)
+	if (flags == O_RDONLY)						// At startup opening the conf / font files conflicts with Canon task if use _Open. Camera can randomly crash.
+		return _open(name, flags, mode);
 #endif
     return _Open(name, flags, mode);
 }
@@ -947,7 +960,16 @@ void MakeAFScan(void){
 #endif
  _MakeAFScan(&a, 3);
  some_flag_for_af_scan=save;
+#if defined(CAMERA_g12)
+ int ae_lock;
+ get_property_case(PROPCASE_AE_LOCK,&ae_lock,sizeof(ae_lock));
+ if (ae_lock == 0)						// AE not locked so ensure it is unlocked after re-focus
+	 _ExpCtrlTool_StartContiAE(0,0);
+ else									// AE locked before so re-lock after
+	 _ExpCtrlTool_StopContiAE(0,0);
+#else
  _ExpCtrlTool_StartContiAE(0,0);
+#endif
 }
 #endif
 
