@@ -33,6 +33,10 @@ The build uses tools/gen_propset_lua.sed to generate propset4.lua from this file
 #define PROPCASE_ISO_MODE                        149
 
 // SX30 & G12 values
+#define	PROPCASE_AE_LOCK						 3		// 0 = AE not locked, 1 = AE locked
+#define	PROPCASE_AF_FRAME						 8		// 1 = FlexiZone, 2 = Face AiAF / Tracking AF
+#define	PROPCASE_CONTINUOUS_AF					 12		// 0 = Continuous AF off, 1 = Continuous AF on
+#define	PROPCASE_SERVO_AF						 299	// 0 = Servo AF off, 1 = Servo AF on
 #define PROPCASE_METERING_MODE                   157
 #define PROPCASE_OPTICAL_ZOOM_POSITION           199
 #define PROPCASE_SHOOTING                        210
