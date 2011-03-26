@@ -100,6 +100,10 @@
 
     #undef CAM_DATE_FOLDER_NAMING                   // set if camera uses date based folder naming (Option "Create Folder" in Canon Menu) and get_target_dir_name is implemented
 
+    #undef CAM_KEY_CLICK_DELAY                      // additional delay between press and release for scripted click
+    #define CAM_KEY_PRESS_DELAY         20          // delay after a press - TODO can we combine this with above ?
+    #define CAM_KEY_RELEASE_DELAY       20          // delay after a release - TODO do we really need to wait after release ?
+
 //----------------------------------------------------------
 // Override Default values for Camera if necessary
 //----------------------------------------------------------
@@ -3218,13 +3222,13 @@
 	#undef CAM_BITMAP_PALETTE
 	#define CAM_BITMAP_PALETTE		7
 
-   //zebra letterbox for saving memory
-   #undef ZEBRA_HMARGIN0
-   #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+	//zebra letterbox for saving memory
+	#undef ZEBRA_HMARGIN0
+	#define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
   
-   #undef EDGE_HMARGIN
-   #define EDGE_HMARGIN 2
-   #define CAM_CHDK_PTP 1
+	#undef EDGE_HMARGIN
+	#define EDGE_HMARGIN 2
+	#define CAM_CHDK_PTP 1
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
 
@@ -3232,6 +3236,7 @@
 	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
 	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
 
+    #define CAM_KEY_CLICK_DELAY 150 // SX30 appears to need extra delay for clicks
 //----------------------------------------------------------
 #elif defined (CAMERA_g12)
     #define CAM_PROPSET                 4
@@ -3328,9 +3333,9 @@
 
 	#define CAM_ZEBRA_ASPECT_ADJUST 1
 
-   //zebra letterbox for saving memory
-   #undef ZEBRA_HMARGIN0
-   #define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
+	//zebra letterbox for saving memory
+	#undef ZEBRA_HMARGIN0
+	#define ZEBRA_HMARGIN0  30 //this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
 

@@ -121,7 +121,7 @@ void action_push_delay(long msec)
 void action_push_press(long key)
 {
     // WARNING stack program flow is reversed
-    action_push_delay(20);
+    action_push_delay(CAM_KEY_PRESS_DELAY);
     action_push(key);
     action_push(AS_PRESS);
 }
@@ -130,7 +130,7 @@ void action_push_press(long key)
 void action_push_release(long key)
 {
     // WARNING stack program flow is reversed
-    action_push_delay(20);
+    action_push_delay(CAM_KEY_RELEASE_DELAY);
     action_push(key);
     action_push(AS_RELEASE);
 }
@@ -139,6 +139,9 @@ void action_push_click(long key)
 {
 // WARNING stack program flow is reversed
     action_push_release(key);
+#if defined(CAM_KEY_CLICK_DELAY) // camera need delay for click
+    action_push_delay(CAM_KEY_CLICK_DELAY);
+#endif
     action_push_press(key);
 }
 
