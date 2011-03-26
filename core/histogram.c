@@ -60,12 +60,15 @@ static int clip(int v) {
     return v;
 }
 
+// Define how many viewport blocks to step in each loop iteration. Each block is 6 bytes (UYVYYY) or 4 image pixels
+#define	HISTO_STEP_SIZE	6
+
 void histogram_process()
 {
     static unsigned char *img;
     int i, hi, c;
     int y, v, u;
-	static int x, img_offset;
+	static int x;
     static int viewport_size;
     unsigned int histo_fill[5];
 
@@ -76,7 +79,7 @@ void histogram_process()
         	if (img==NULL){
 	    	  img = vid_get_viewport_fb();
 		    }
-			img_offset = vid_get_viewport_image_offset();		// offset into viewport for when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
+			img += vid_get_viewport_image_offset();		// offset into viewport for when image size != viewport size (e.g. 16:9 image on 4:3 LCD)
             viewport_size = vid_get_viewport_height() * vid_get_viewport_buffer_width();
             for (c=0; c<5; ++c) {
                 for (i=0; i<HISTO_WIDTH; ++i) {
@@ -91,12 +94,12 @@ void histogram_process()
         case 1:
         case 2:
         case 3:
-			x = 0;
-            for (i=(histogram_stage-1)*6; i<viewport_size*3; i+=6*3*2) {
-                y = img[img_offset+i+1];
-                u = *(signed char*)(&img[img_offset+i]);
+			x = 0;	// count how many blocks we have done on the current row (to skip unused buffer space at end of each row)
+            for (i=(histogram_stage-1)*6; i<viewport_size*3; i+=HISTO_STEP_SIZE*6) {
+                y = img[i+1];
+                u = *(signed char*)(&img[i]);
                 if (u&0x00000080) u|=0xFFFFFF00;
-                v = *(signed char*)(&img[img_offset+i+2]);
+                v = *(signed char*)(&img[i+2]);
                 if (v&0x00000080) v|=0xFFFFFF00;
 
                 hi = y*HISTO_WIDTH/256; // Y
@@ -109,7 +112,7 @@ void histogram_process()
                 ++histogram_proc[HISTO_B][hi];
 
 				// Handle case where viewport memory buffer is wider than the actual buffer.
-				x++;
+				x += HISTO_STEP_SIZE * 2;	// viewport width is measured in blocks of three bytes each even though the data is stored in six byte chunks !
 				if (x == vid_get_viewport_width())
 				{
 					i += vid_get_viewport_row_offset();
