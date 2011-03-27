@@ -15,5 +15,4 @@ DEF(focus_busy,0x70B8 + 0x8)						// (comp 1.00c)
 DEF(movie_status, 0x7290 + 0x44)					// in FF9860E4 (comp 1.00c)
 DEF(recreview_hold, 0x84C0 + 0xE0)					// in FF9C06A0 (comp 1.00c)
 DEF(some_flag_for_af_scan, 0x76B4)					// @FF98A814 (comp 1.00c)
-
-//DEF(zoom_status, 0xE7C4)							// ??? doesn't appear to work, can't find equivalent code
+DEF(zoom_status, 0xE590)							// sub_FFB21764 (comp s95)

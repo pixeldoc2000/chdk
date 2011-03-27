@@ -91,6 +91,7 @@ NHSTUB(UpdateMBROnFlash,				0xFF8767C8) // Search for 'BOOTDISK', function branc
 NHSTUB(exmem_alloc,						0xFF88FFD8)	// search for ExMem.AllocCacheable (from reyalp)
 NHSTUB(PutInNdFilter,                   0xFFB0501C)
 NHSTUB(PutOutNdFilter,                  0xFFB05040)
+NHSTUB(PT_MoveDigitalZoomToWide,		0xFF87F5C0)
 
 # From stubs_entry_ida.s
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff899bbc)

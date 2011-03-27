@@ -81,6 +81,7 @@ NHSTUB(GetKbdState,						0xFF865A28) // ok (comp 1.00h)
 NHSTUB(UnlockAF,						0xFF838AF0) // ok (comp 1.00h)
 NHSTUB(DoAFLock,						0xFF838AB8) // ok (comp 1.00h)
 NHSTUB(PT_MoveOpticalZoomAt,			0xFF883C04)	// ok (comp 1.00h) (found in table @ FFB98F98)
+NHSTUB(PT_MoveDigitalZoomToWide,		0xFF883C2C)
 NHSTUB(GetImageFolder,					0xFF95F0B8)	// function before 'GetCameraObjectTmpPath ERROR' string
 NHSTUB(UpdateMBROnFlash,				0xFF8770CC) // Search for 'BOOTDISK', function branches to this at end (after setting up R0,R1,R2)
 NHSTUB(PB2Rec,                          0xFF8A30F8)
