@@ -141,27 +141,46 @@ void lens_set_zoom_point(long newpt)
     } else if (newpt >= zoom_points) {
         newpt = zoom_points-1;
     }
-#if defined(CAMERA_sx30)
-// SX30 - Can't find zoom_status, _MoveZoomLensWithPoint crashes camera
-// _PT_MoveOpticalZoomAt works, and updates PROPCASE_OPTICAL_ZOOM_POSITION; but doesn't wait for zoom to finish
-	extern void _PT_MoveOpticalZoomAt(long*);
+
+#if defined(CAMERA_sx30) || defined(CAMERA_g12)
 	if (lens_get_zoom_point() != newpt)
 	{
+		// Get current digital zoom mode & state
+		// state == 1 && mode == 0 --> Digital Zoom Standard
+		int digizoom_mode, digizoom_state, digizoom_pos;
+		get_property_case(PROPCASE_DIGITAL_ZOOM_MODE,&digizoom_mode,sizeof(digizoom_mode));
+		get_property_case(PROPCASE_DIGITAL_ZOOM_STATE,&digizoom_state,sizeof(digizoom_state));
+		get_property_case(PROPCASE_DIGITAL_ZOOM_POSITION,&digizoom_pos,sizeof(digizoom_pos));
+		if ((digizoom_state == 1) && (digizoom_mode == 0) && (digizoom_pos != 0))
+		{
+			// reset digital zoom in case camera is in this zoom range
+			extern void _PT_MoveDigitalZoomToWide();
+			_PT_MoveDigitalZoomToWide();
+		}
+
+  #if defined(CAMERA_sx30)
+		// SX30 - _MoveZoomLensWithPoint crashes camera
+		// _PT_MoveOpticalZoomAt works, and updates PROPCASE_OPTICAL_ZOOM_POSITION; but doesn't wait for zoom to finish
+		extern void _PT_MoveOpticalZoomAt(long*);
 		_PT_MoveOpticalZoomAt(&newpt);
-		while (zoom_busy) msleep(10);
-	}
-#elif defined(CAMERA_g12)
-// G12 - Can't find zoom_status, _MoveZoomLensWithPoint works anyway; but doesn't wait for zoom to finish
-	if (lens_get_zoom_point() != newpt)
-	{
+  #else
 	    _MoveZoomLensWithPoint((short*)&newpt);
+  #endif
+
+		// have to sleep here, zoom_busy set in another task, without sleep this will hang
 		while (zoom_busy) msleep(10);
+
+		// g12 & sx30 only use this value for optical zoom
+		zoom_status=ZOOM_OPTICAL_MAX;
+
+  #if defined(CAMERA_g12)
 	    _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
+  #endif
 	}
-#else	// !CAMERA_g12
+#else	// !(CAMERA_g12 || CAMERA_sx30)
     _MoveZoomLensWithPoint((short*)&newpt);
 
-#if defined (CAMERA_s95)
+  #if defined (CAMERA_s95)
 	// this will hang sometimes on s95 when zoom_busy gets stuck as a 1
 	// we add a timeout as a work-around for this problem
 	startTime = get_tick_count();
@@ -169,15 +188,15 @@ void lens_set_zoom_point(long newpt)
 		if (!zoom_busy)
 			break;
 	}
-#else	// !CAMERA_s95
+  #else	// !CAMERA_s95
 	while (zoom_busy) ;
-#endif	// CAMERA_s95
+  #endif // !CAMERA_s95
 
     if (newpt==0) zoom_status=ZOOM_OPTICAL_MIN;
     else if (newpt >= zoom_points) zoom_status=ZOOM_OPTICAL_MAX;
     else zoom_status=ZOOM_OPTICAL_MEDIUM;
     _SetPropertyCase(PROPCASE_OPTICAL_ZOOM_POSITION, &newpt, sizeof(newpt));
-#endif	// CAMERA_g12
+#endif	// !(CAMERA_g12 || CAMERA_sx30)
 }
 
 void lens_set_zoom_speed(long newspd)
