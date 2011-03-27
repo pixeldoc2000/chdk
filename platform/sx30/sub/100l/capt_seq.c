@@ -85,11 +85,15 @@ asm volatile (
 "		BL	shooting_expo_param_override\n"  		// added
 
 "		BL	sub_FF8840C0 \n"
-"		LDR	R0, [R4,#0x24] \n"
-"		CMP	R0, #0 \n"
 
-//"		BLNE	sub_FF992F54 \n"
-"		BLNE	sub_FF992F54_my \n"
+"		MOV     R0, #0\n"							// added
+"		STR     R0, [R4,#0x24]\n"					// added, fixes overrides  behavior at short shutter press (from S95)
+
+//"		LDR	R0, [R4,#0x24] \n"						// above two lines make this code redundant
+//"		CMP	R0, #0 \n"								// above two lines make this code redundant
+
+//"		BLNE	sub_FF992F54 \n"					// above two lines make this code redundant
+//"		BLNE	sub_FF992F54_my \n"					// patched (above two lines make this patch redundant)
 
 "		B	loc_FF886B60 \n"
 
@@ -441,40 +445,40 @@ asm volatile(
 );
 }
 
-void __attribute__((naked,noinline)) sub_FF992F54_my(){
- asm volatile(
-"		STMFD	SP!, {R4-R6,LR} \n"
-"		BL	sub_FF886084 \n"
-"		MOV	R4, R0 \n"
-"		LDR	R0, =0x3BC24 \n"
-"		LDR	R5, =0x85AC \n"
-"		LDR	R0, [R0,#0x24] \n"
-"		MOV	R6, #1 \n"
-"		CMP	R0, #0 \n"
-"		BEQ	loc_FF992F98 \n"
-"		MOV	R0, #0xC \n"
-"		BL	sub_FF88C64C \n"
-"		TST	R0, #1 \n"
-"		STRNE	R6, [R5] \n"
-"		LDRNE	R0, [R4,#8] \n"
-"		ORRNE	R0, R0,	#0x40000000 \n"
-"		STRNE	R0, [R4,#8] \n"
-"		LDMNEFD	SP!, {R4-R6,PC} \n"
-"loc_FF992F98: \n"
-"		MOV	R0, R4 \n"
-"		BL	sub_FF992B58 \n"
-"		MOV	R0, R4 \n"
-"		BL	sub_FFAEC318 \n"
-"		MOV	R0, R4 \n"
-
-//"		BL	sub_FFAECCA0 \n"
-"		BL	sub_FFAECCA0_my \n"
-
-"		TST	R0, #1 \n"
-"		STRNE	R6, [R5] \n"
-"		LDMFD	SP!, {R4-R6,PC} \n"
- );
-}
+//void __attribute__((naked,noinline)) sub_FF992F54_my(){
+// asm volatile(
+//"		STMFD	SP!, {R4-R6,LR} \n"
+//"		BL	sub_FF886084 \n"
+//"		MOV	R4, R0 \n"
+//"		LDR	R0, =0x3BC24 \n"
+//"		LDR	R5, =0x85AC \n"
+//"		LDR	R0, [R0,#0x24] \n"
+//"		MOV	R6, #1 \n"
+//"		CMP	R0, #0 \n"
+//"		BEQ	loc_FF992F98 \n"
+//"		MOV	R0, #0xC \n"
+//"		BL	sub_FF88C64C \n"
+//"		TST	R0, #1 \n"
+//"		STRNE	R6, [R5] \n"
+//"		LDRNE	R0, [R4,#8] \n"
+//"		ORRNE	R0, R0,	#0x40000000 \n"
+//"		STRNE	R0, [R4,#8] \n"
+//"		LDMNEFD	SP!, {R4-R6,PC} \n"
+//"loc_FF992F98: \n"
+//"		MOV	R0, R4 \n"
+//"		BL	sub_FF992B58 \n"
+//"		MOV	R0, R4 \n"
+//"		BL	sub_FFAEC318 \n"
+//"		MOV	R0, R4 \n"
+//
+////"		BL	sub_FFAECCA0 \n"
+//"		BL	sub_FFAECCA0_my \n"
+//
+//"		TST	R0, #1 \n"
+//"		STRNE	R6, [R5] \n"
+//"		LDMFD	SP!, {R4-R6,PC} \n"
+// );
+//}
 
 void __attribute__((naked,noinline)) sub_FFAECCA0_my(){
  asm volatile(
