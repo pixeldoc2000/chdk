@@ -1,5 +1,5 @@
-#ifndef __PTP_H
-#define __PTP_H
+#ifndef __CHDK_PTP_H
+#define __CHDK_PTP_H
 #define PTP_CHDK_VERSION_MAJOR 1  // increase only with backwards incompatible changes (and reset minor)
 #define PTP_CHDK_VERSION_MINOR 0  // increase with extensions of functionality
 /*
@@ -11,10 +11,13 @@ protocol version history
 
 #define PTP_OC_CHDK 0x9999
 
+// PTP constants - only need to be defined in CHDK, not PC side
+#ifndef PTP_RC_OK
 #define PTP_RC_OK 0x2001
 #define PTP_RC_GeneralError 0x2002
 #define PTP_RC_ParameterNotSupported 0x2006
 #define PTP_RC_InvalidParameter 0x201D
+#endif
 
 // N.B.: unused parameters should be set to 0
 enum {
@@ -39,8 +42,8 @@ enum {
                             // return param2 is status, PTP_CHDK_S_ERRTYPE*
   PTP_CHDK_ScriptStatus,    // Script execution status
                             // return param1 bits
-                            // CHDK_PTP_SCRIPT_STATUS_RUN is set if a script running, cleared if not
-                            // CHDK_PTP_SCRIPT_STATUS_MSG is set if script messages from script waiting to be read
+                            // PTP_CHDK_SCRIPT_STATUS_RUN is set if a script running, cleared if not
+                            // PTP_CHDK_SCRIPT_STATUS_MSG is set if script messages from script waiting to be read
                             // all other bits and params are reserved for future use
   PTP_CHDK_ScriptSupport,   // Which scripting interfaces are supported in this build
                             // param1 CHDK_PTP_SUPPORT_LUA is set if lua is supported, cleared if not
@@ -49,7 +52,7 @@ enum {
                             // return param1 is chdk_ptp_s_msg_type
                             // return param2 is message subtype:
                             //   for script return and users this is ptp_chdk_script_data_type
-                            //   for error it may be an error ptp_chdk_script_error_type
+                            //   for error ptp_chdk_script_error_type
                             // return param3 is script id of script that generated the message
                             // return param4 is length of the message data
                             // return data is message.
@@ -110,4 +113,4 @@ enum {
     PTP_CHDK_S_MSGSTATUS_QFULL,  // queue is full
     PTP_CHDK_S_MSGSTATUS_BADID,  // specified ID is not running
 } ptp_chdk_script_msg_status;
-#endif // __PTP_H
+#endif // __CHDK_PTP_H
