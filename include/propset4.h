@@ -15,7 +15,8 @@ The build uses tools/gen_propset_lua.sed to generate propset4.lua from this file
 #define PROPCASE_BRACKET_MODE                    29
 #define PROPCASE_SHOOTING_MODE                   49
 #define PROPCASE_QUALITY                         57
-#define PROPCASE_DIGITAL_ZOOM_STATE              94
+#define PROPCASE_DIGITAL_ZOOM_MODE               91		// Digital Zoom Mode/State 0 = off/standard, 2 = 1.7x, 3 = 2.1x
+#define PROPCASE_DIGITAL_ZOOM_STATE              94		// Digital Zoom Mode/State 0 = Digital Zoom off, 1 = Digital Zoom on
 #define PROPCASE_DIGITAL_ZOOM_POSITION           95
 #define PROPCASE_DRIVE_MODE                      102
 #define PROPCASE_OVEREXPOSURE                    103
