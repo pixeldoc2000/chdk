@@ -2326,9 +2326,8 @@ void other_kbd_process(){
      get_property_case(PROPCASE_DIGITAL_ZOOM_STATE, &x, sizeof(x));
      if (x) {
       get_property_case(PROPCASE_DIGITAL_ZOOM_POSITION, &x, sizeof(x));
-#if defined (CAMERA_s90) || defined (CAMERA_s95)
+#if defined (CAMERA_s90) || defined (CAMERA_s95) || defined (CAMERA_g12) || defined (CAMERA_sx30)
 	  if (x==0) zoom_status=ZOOM_OPTICAL_MAX; //ERR99: No zoom back from digital to optical zoom possible if set to medium
-#elif defined (CAMERA_sx30)	|| defined (CAMERA_g12)		// can't find, crashes camera *******
 #else
 	  if (x==0) zoom_status=ZOOM_OPTICAL_MEDIUM;
 #endif
