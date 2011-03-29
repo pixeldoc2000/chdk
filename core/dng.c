@@ -335,9 +335,11 @@ unsigned int* get_focal_length_for_exif(int focal_length){
 
 unsigned short get_orientation_for_exif(short orientation){
  switch(orientation){
-  case 90:  return 6;
-  case 270: return 8;
-  default: return 1;
+  case  90: return 6;  // Right  - Top
+  case 180: return 3;  // Bottom - Right
+  case 270: return 8;  // Left   - Bottom
+  case   0:            // Top    - Left
+  default : return 1;
  }
 }
 

@@ -70,20 +70,20 @@ static KeyMap keymap[] = {
 	 * for example
 	 */
 
-	{ 0, KEY_SHOOT_FULL	, 0x00000003 },
-	{ 0, KEY_SHOOT_HALF	, 0x00000001 },
+	{ 0, KEY_SHOOT_FULL     , 0x00000003 },
+	{ 0, KEY_SHOOT_HALF     , 0x00000001 },
 
-	{ 1, KEY_UP		, 0x00000400 },
-	{ 1, KEY_DOWN		, 0x00000800 },
-	{ 1, KEY_LEFT		, 0x00002000 },
-	{ 1, KEY_RIGHT		, 0x00001000 },
-	{ 1, KEY_SET		, 0x00000100 },
-	{ 1, KEY_ZOOM_IN	, 0x00008000 },
-	{ 1, KEY_ZOOM_OUT	, 0x00040000 },
-	{ 1, KEY_MENU		, 0x00004000 },
-	{ 1, KEY_DISPLAY	, 0x00000200 },
-	{ 1, KEY_PRINT		, 0x00800000 },
-	{ 1, KEY_ERASE		, 0x00000080 },
+	{ 1, KEY_UP             , 0x00000400 },
+	{ 1, KEY_DOWN           , 0x00000800 },
+	{ 1, KEY_LEFT           , 0x00002000 },
+	{ 1, KEY_RIGHT          , 0x00001000 },
+	{ 1, KEY_SET            , 0x00000100 },
+	{ 1, KEY_ZOOM_IN        , 0x00008000 },
+	{ 1, KEY_ZOOM_OUT       , 0x00040000 },
+	{ 1, KEY_MENU           , 0x00004000 },
+	{ 1, KEY_DISPLAY        , 0x00000200 },
+	{ 1, KEY_PRINT          , 0x00800000 },
+	{ 1, KEY_ERASE          , 0x00000080 },
 	{ 1, KEY_EXPO_CORR      , 0x00000040 },
 	{ 1, KEY_FLASH          , 0x00100000 },
 	{ 1, KEY_VIDEO          , 0x00000020 },
@@ -296,7 +296,7 @@ void my_kbd_read_keys()
           physw_status[0] = kbd_new_state[0];
           physw_status[1] = kbd_new_state[1];
           physw_status[2] = kbd_new_state[2];
-          physw_status[2] |= alt_mode_key_mask;
+          physw_status[1] |= alt_mode_key_mask;
           jogdial_stopped=0;
 
 	} else {
