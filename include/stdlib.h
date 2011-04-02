@@ -136,11 +136,6 @@ extern void SleepTask(long msec);
 extern long taskLock();
 extern long taskUnlock();
 
-// TODO can we just use these all the time ?
-extern long RenameFile_Fut(const char *oldname, const char *newname);
-extern long MakeDirectory_Fut(const char *name);
-extern long DeleteFile_Fut(const char *name);
-
 extern int creat (const char *name, int flags);
 extern int open (const char *name, int flags, int mode );
 extern int close (int fd);
@@ -148,6 +143,9 @@ extern int write (int fd, const void *buffer, long nbytes);
 extern int read (int fd, void *buffer, long nbytes);
 extern int lseek (int fd, long offset, int whence);
 extern long mkdir(const char *dirname);
+extern int rename(const char *oldname, const char *newname);
+extern int chdir(char *pathname);
+extern int remove(const char *name);
 
 // reverse engineered file struct. Appears to be valid for both vxworks and dryos
 // don't use this directly unless you absolutely need to
@@ -173,7 +171,6 @@ extern long fflush(FILE *file);
 extern long feof(FILE *file);
 extern long ftell(FILE *file);
 extern char *fgets(char *buf, int n, FILE *f);
-#define fdelete(a) DeleteFile_Fut(a)
 
 /**
  * No STUBS!
@@ -223,7 +220,6 @@ typedef struct {
 } DIR;
 
 
-
 extern DIR*           opendir (const char* name);
 extern struct dirent* readdir (DIR*);
 extern int            closedir (DIR*);
@@ -248,14 +244,6 @@ typedef unsigned long time_t;
 
 extern struct tm * localtime(const unsigned long *_tod);
 
-extern int rename(const char *oldname, const char *newname);
-extern int chdir(char *pathname);
-extern int remove(const char *name);
-#ifdef FS_USE_FUT
-#define mkdir(x) MakeDirectory_Fut(x)
-#define rename(x,y) RenameFile_Fut(x,y)
-#define remove(x) DeleteFile_Fut(x)
-#endif
 struct utimbuf {
     unsigned long actime;       /* set the access time */
     unsigned long modtime;      /* set the modification time */

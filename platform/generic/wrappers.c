@@ -5,6 +5,9 @@
 #include "math.h"
 #include "levent.h"
 
+//----------------------------------------------------------------------------
+// Char Wrappers
+
 #if CAM_DRYOS
 #define _U	0x01	/* upper */
 #define _L	0x02	/* lower */
@@ -16,22 +19,22 @@
 #define _SP	0x80	/* hard space (0x20) */
 static int _ctype(int c,int t) {
 static unsigned char ctypes[] = {
-_C,_C,_C,_C,_C,_C,_C,_C,			/* 0-7 */
+_C,_C,_C,_C,_C,_C,_C,_C,					/* 0-7 */
 _C,_C|_S,_C|_S,_C|_S,_C|_S,_C|_S,_C,_C,		/* 8-15 */
-_C,_C,_C,_C,_C,_C,_C,_C,			/* 16-23 */
-_C,_C,_C,_C,_C,_C,_C,_C,			/* 24-31 */
-_S|_SP,_P,_P,_P,_P,_P,_P,_P,			/* 32-39 */
-_P,_P,_P,_P,_P,_P,_P,_P,			/* 40-47 */
-_D,_D,_D,_D,_D,_D,_D,_D,			/* 48-55 */
-_D,_D,_P,_P,_P,_P,_P,_P,			/* 56-63 */
+_C,_C,_C,_C,_C,_C,_C,_C,					/* 16-23 */
+_C,_C,_C,_C,_C,_C,_C,_C,					/* 24-31 */
+_S|_SP,_P,_P,_P,_P,_P,_P,_P,				/* 32-39 */
+_P,_P,_P,_P,_P,_P,_P,_P,					/* 40-47 */
+_D,_D,_D,_D,_D,_D,_D,_D,					/* 48-55 */
+_D,_D,_P,_P,_P,_P,_P,_P,					/* 56-63 */
 _P,_U|_X,_U|_X,_U|_X,_U|_X,_U|_X,_U|_X,_U,	/* 64-71 */
-_U,_U,_U,_U,_U,_U,_U,_U,			/* 72-79 */
-_U,_U,_U,_U,_U,_U,_U,_U,			/* 80-87 */
-_U,_U,_U,_P,_P,_P,_P,_P,			/* 88-95 */
+_U,_U,_U,_U,_U,_U,_U,_U,					/* 72-79 */
+_U,_U,_U,_U,_U,_U,_U,_U,					/* 80-87 */
+_U,_U,_U,_P,_P,_P,_P,_P,					/* 88-95 */
 _P,_L|_X,_L|_X,_L|_X,_L|_X,_L|_X,_L|_X,_L,	/* 96-103 */
-_L,_L,_L,_L,_L,_L,_L,_L,			/* 104-111 */
-_L,_L,_L,_L,_L,_L,_L,_L,			/* 112-119 */
-_L,_L,_L,_P,_P,_P,_P,_C,			/* 120-127 */
+_L,_L,_L,_L,_L,_L,_L,_L,					/* 104-111 */
+_L,_L,_L,_L,_L,_L,_L,_L,					/* 112-119 */
+_L,_L,_L,_P,_P,_P,_P,_C,					/* 120-127 */
 // since the following have nothing set, we can save memory by leaving them out
 #if 0
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 128-143 */
@@ -41,7 +44,7 @@ _L,_L,_L,_P,_P,_P,_P,_C,			/* 120-127 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 192-207 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 208-223 */
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 224-239 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0		/* 240-255 */
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0			/* 240-255 */
 #endif
 };
     // have to handle EOF (-1)
@@ -50,7 +53,40 @@ _L,_L,_L,_P,_P,_P,_P,_C,			/* 120-127 */
     }
     return ctypes[c] & t;
 }
+
+int isdigit(int c) { return _ctype(c,_D); }
+int isspace(int c) { return _ctype(c,_S); }
+int isalpha(int c) { return _ctype(c,(_U|_L)); }
+int isupper(int c) { return _ctype(c,_U); }
+int islower(int c) { return _ctype(c,_L); }
+int ispunct(int c) { return _ctype(c,_P); }
+int isxdigit(int c) { return _ctype(c,(_X|_D)); }
+int iscntrl(int c) { return _ctype(c,_C); }
+
+int tolower(int c) { return isupper(c) ? c | 0x20 : c; }
+int toupper(int c) { return islower(c) ? c & ~0x20 : c; }
+
+#else	//!CAM_DRYOS
+
+int isdigit(int c) { return _isdigit(c); }
+int isspace(int c) { return _isspace(c); }
+int isalpha(int c) { return _isalpha(c); }
+int isupper(int c) { return _isupper(c); }
+int islower(int c) { return _islower(c); }
+int ispunct(int c) { return _ispunct(c); }
+int isxdigit(int c) { return _isxdigit(c); }
+
+// don't want to require the whole ctype table on vxworks just for this one
+int iscntrl(int c) { return ((c >=0 && c <32) || c == 127); }
+
+int tolower(int c) { return _tolower(c); }
+int toupper(int c) { return _toupper(c); }
+
 #endif
+
+int isalnum(int c) { return (isdigit(c) || isalpha(c)); }
+
+//----------------------------------------------------------------------------
 
 void msleep(long msec)
 {
@@ -89,6 +125,16 @@ long set_property_case(long id, void *buf, long bufsize)
     return _SetPropertyCase(id, buf, bufsize);
 }
 
+long get_parameter_data(long id, void *buf, long bufsize)
+{
+    return _GetParameterData(id|0x4000, buf, bufsize);
+}
+
+long set_parameter_data(long id, void *buf, long bufsize)
+{
+    return _SetParameterData(id|0x4000, buf, bufsize);
+}
+
 void remount_filesystem()
 {
     _Unmount_FileSystem();
@@ -103,17 +149,6 @@ void mark_filesystem_bootable()
 void __attribute__((weak)) vid_bitmap_refresh()
 {
     _RefreshPhysicalScreen(1);
-}
-
-
-long get_parameter_data(long id, void *buf, long bufsize)
-{
-    return _GetParameterData(id|0x4000, buf, bufsize);
-}
-
-long set_parameter_data(long id, void *buf, long bufsize)
-{
-    return _SetParameterData(id|0x4000, buf, bufsize);
 }
 
 long lens_get_zoom_pos()
@@ -274,10 +309,14 @@ long t;
 #endif
 }
 
+//----------------------------------------------------------------------------
+// I/O wrappers
+
 /*int creat (const char *name, int flags)
 {
     return _creat(name, flags);
 }*/
+
 int open (const char *name, int flags, int mode )
 {
 #ifdef CAM_DRYOS_2_3_R39
@@ -291,30 +330,108 @@ int open (const char *name, int flags, int mode )
 #endif
     return _Open(name, flags, mode);
 }
+
 int close (int fd)
 {
     return _Close(fd);
 }
+
 int write (int fd, void *buffer, long nbytes)
 {
     return _Write(fd, buffer, nbytes);
 }
+
 int read (int fd, void *buffer, long nbytes)
 {
     return _Read(fd, buffer, nbytes);
 }
+
 int lseek (int fd, long offset, int whence)
 {
     return _lseek(fd, offset, whence); /* yes, it's lower-case lseek here since Lseek calls just lseek (A610) */
 }
-long mkdir(const char *dirname)
+
+long mkdir(const char *dirname) 
 {
-    return _mkdir(dirname);
+	return _MakeDirectory_Fut(dirname,-1); // meaning of second arg is not clear, firmware seems to use -1
 }
 
 int remove(const char *name) {
-    return _Remove(name);
+	return _DeleteFile_Fut(name);
 }
+
+void *opendir(const char* name) {
+    return _opendir(name);
+}
+
+void* readdir(void *d) {
+# if !CAM_DRYOS
+    return _readdir(d);
+#else
+// for DRYOS cameras  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
+  static char de[40];
+  _ReadFastDir(d, &de);
+  return de[0]? &de : (void*)0;
+#endif
+}
+
+int closedir(void *d) {
+    return _closedir(d);
+}
+
+void rewinddir(void *d) {
+    return _rewinddir(d);
+}
+
+int stat(char *name, void *pStat) {
+    return _stat(name, pStat);
+}
+
+long fopen(const char *filename, const char *mode) {
+    return _Fopen_Fut(filename,mode);
+}
+
+long fclose(long f) {
+    return _Fclose_Fut((long)f);
+}
+
+long fread(void *buf, long elsize, long count, long f) {
+    return _Fread_Fut(buf,elsize,count,(long)f);
+}
+
+long fwrite(const void *buf, long elsize, long count, long f) {
+    return _Fwrite_Fut(buf,elsize,count,(long)f);
+}
+
+long fseek(long file, long offset, long whence) {
+    return _Fseek_Fut((long)file,offset,whence);
+}
+
+long feof(long file) {
+    return _Feof_Fut((long)file);
+}
+
+long fflush(long file) {
+    return _Fflush_Fut((long)file);
+}
+
+char *fgets(char *buf, int n, long f) {
+    return _Fgets_Fut(buf,n,(int)f);
+}
+
+long rename(const char *oldname, const char *newname) {
+ return _RenameFile_Fut(oldname, newname);
+}
+
+unsigned int GetFreeCardSpaceKb(void){
+	return (_GetDrive_FreeClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
+}
+
+unsigned int GetTotalCardSpaceKb(void){
+	return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
+}
+
+//----------------------------------------------------------------------------
 
 int errnoOfTaskGet(int tid) {
 #if !CAM_DRYOS
@@ -324,76 +441,8 @@ int errnoOfTaskGet(int tid) {
 #endif
 }
 
-int isdigit(int c) {
-#if !CAM_DRYOS
-    return _isdigit(c);
-#else
-    return _ctype(c,_D);
-#endif
-}
-
-int isspace(int c) {
-#if !CAM_DRYOS
-    return _isspace(c);
-#else
-    return _ctype(c,_S);
-#endif
-
-}
-
-int isalpha(int c) {
-#if !CAM_DRYOS
-    return _isalpha(c);
-#else
-    return _ctype(c,(_U|_L));
-#endif
-}
-
-int isupper(int c) {
-#if !CAM_DRYOS
-    return _isupper(c);
-#else
-    return _ctype(c,_U);
-#endif
-
-}
-
-int islower(int c) {
-#if !CAM_DRYOS
-    return _islower(c);
-#else
-    return _ctype(c,_L);
-#endif
-
-}
-
-int ispunct(int c) {
-#if !CAM_DRYOS
-    return _ispunct(c);
-#else
-    return _ctype(c,_P);
-#endif
-}
-
-int isxdigit(int c) {
-#if !CAM_DRYOS
-    return _isxdigit(c);
-#else
-    return _ctype(c,(_X|_D));
-#endif
-}
-
-int isalnum(int c) {
-    return (isdigit(c) || isalpha(c));
-}
-
-int iscntrl(int c) {
-#if !CAM_DRYOS
-    return ((c >=0 && c <32) || c == 127); // don't want to require the whole ctype table on vxworks just for this one
-#else
-    return _ctype(c,_C);
-#endif
-}
+//----------------------------------------------------------------------------
+// String wrappers
 
 long strlen(const char *s) {
     return _strlen(s);
@@ -468,6 +517,8 @@ return (void*)0;
 #endif
 }
 
+//----------------------------------------------------------------------------
+
 long sprintf(char *s, const char *st, ...)
 {
     long res;
@@ -490,21 +541,8 @@ const char *strerror(int en) {
 #endif
 }
 
-int tolower(int c) {
-#if !CAM_DRYOS
-	return _tolower(c);
-#else
-	return isupper(c) ? c - 'A' + 'a' : c;
-#endif
-}
-
-int toupper(int c) {
-#if !CAM_DRYOS
-	return _toupper(c);
-#else
-	return islower(c) ? c - 'a' + 'A' : c;
-#endif
-}
+//----------------------------------------------------------------------------
+// Time wrappers
 
 unsigned long time(unsigned long *timer) {
     return _time(timer);
@@ -561,6 +599,9 @@ long strftime(char *s, unsigned long maxsize, const char *format, /*const struct
 #endif
 }
 
+//----------------------------------------------------------------------------
+// Math wrappers
+
 double _log(double x) {
     return __log(x);
 }
@@ -576,6 +617,9 @@ double _pow(double x, double y) {
 double _sqrt(double x) {
     return __sqrt(x);
 }
+
+//----------------------------------------------------------------------------
+// Memory wrappers
 
 #ifdef OPT_EXMEM_MALLOC
 // I set this up to 16 mb and it still booted...
@@ -636,6 +680,14 @@ void free(void *p) {
 }
 #endif
 
+void *umalloc(long size) {
+    return _AllocateUncacheableMemory(size);
+}
+
+void ufree(void *p) {
+    return _FreeUncacheableMemory(p);
+}
+
 void *memcpy(void *dest, const void *src, long n) {
     return _memcpy(dest, src, n);
 }
@@ -661,6 +713,8 @@ void *memchr(const void *s, int c, int n) {
 #endif
 }
 
+//----------------------------------------------------------------------------
+
 int rand(void) {
     return _rand();
 }
@@ -671,41 +725,6 @@ void *srand(unsigned int seed) {
 
 void qsort(void *__base, int __nelem, int __size, int (*__cmp)(const void *__e1, const void *__e2)) {
     _qsort(__base, __nelem, __size, __cmp);
-}
-
-void *opendir(const char* name) {
-    return _opendir(name);
-}
-
-void* readdir(void *d) {
-# if !CAM_DRYOS
-    return _readdir(d);
-#else
-// for DRYOS cameras  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
-  static char de[40];
-  _ReadFastDir(d, &de);
-  return de[0]? &de : (void*)0;
-#endif
-}
-
-int closedir(void *d) {
-    return _closedir(d);
-}
-
-void rewinddir(void *d) {
-    return _rewinddir(d);
-}
-
-int stat(char *name, void *pStat) {
-    return _stat(name, pStat);
-}
-
-void *umalloc(long size) {
-    return _AllocateUncacheableMemory(size);
-}
-
-void ufree(void *p) {
-    return _FreeUncacheableMemory(p);
 }
 
 static int shutdown_disabled = 0;
@@ -730,72 +749,13 @@ _SetAutoShutdownTime(1); // 1 sec
 for (i=0;i<200;i++) _UnlockMainPower(); // set power unlock counter to 200 or more, because every keyboard function call try to lock power again ( if "Disable LCD off" menu is "alt" or "script").
 //#endif
 }
-long MakeDirectory_Fut(const char *dirname) {
- return _MakeDirectory_Fut(dirname,-1); // meaning of second arg is not clear, firmware seems to use -1
-}
-
-long fopen(const char *filename, const char *mode) {
-    return _Fopen_Fut(filename,mode);
-}
-
-long fclose(long f) {
-    return _Fclose_Fut((long)f);
-}
-
-long fread(void *buf, long elsize, long count, long f) {
-    return _Fread_Fut(buf,elsize,count,(long)f);
-}
-
-long fwrite(const void *buf, long elsize, long count, long f) {
-    return _Fwrite_Fut(buf,elsize,count,(long)f);
-}
-
-long fseek(long file, long offset, long whence) {
-    return _Fseek_Fut((long)file,offset,whence);
-}
-
-long feof(long file) {
-    return _Feof_Fut((long)file);
-}
-
-long fflush(long file) {
-    return _Fflush_Fut((long)file);
-}
-
-char *fgets(char *buf, int n, long f) {
-    return _Fgets_Fut(buf,n,(int)f);
-}
-
-long RenameFile_Fut(const char *oldname, const char *newname) {
- return _RenameFile_Fut(oldname, newname);
-}
-
-int rename(const char *oldname, const char *newname){
- // doesn't appear to work on a540
- return _rename(oldname, newname);
-}
-
-long DeleteFile_Fut(const char *name) {
- return _DeleteFile_Fut(name);
-}
-
-unsigned int GetFreeCardSpaceKb(void){
- return (_GetDrive_FreeClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
-}
-
-unsigned int GetTotalCardSpaceKb(void){
- return (_GetDrive_TotalClusters(0)*(_GetDrive_ClusterSize(0)>>9))>>1;
-}
-
 
 unsigned int GetJpgCount(void){
-
  return strtol(camera_jpeg_count_str(),((void*)0),0);
 }
 
 unsigned int GetRawCount(void){
  return GetFreeCardSpaceKb()/((hook_raw_size() / 1024)+GetFreeCardSpaceKb()/GetJpgCount());
-
 }
 
 void EnterToCompensationEVF(void)
@@ -1224,6 +1184,7 @@ int __attribute__((weak)) switch_mode_usb(int mode)
     return 1;
 }
 #endif // vxworks
+
 /*
 // this wrapper isn't currently needed
 // 7 calls functions and sets some MMIOs, but doesn't disable caches and actually restart

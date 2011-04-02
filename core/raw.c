@@ -534,14 +534,14 @@ int badpixel_task_stack(long p) {
                 console_add_line("badpixel.bin created.");
                 sprintf(msg, "Bad pixel count: %d", badpix_cnt1);
                 console_add_line(msg);
-                DeleteFile_Fut(PATH_BADPIXEL_BIN);
-                RenameFile_Fut(PATH_BAD_TMP_BIN,PATH_BADPIXEL_BIN);
+                remove(PATH_BADPIXEL_BIN);
+                rename(PATH_BAD_TMP_BIN,PATH_BADPIXEL_BIN);
             } else {
                 console_add_line("badpixel.bin failed.");
                 console_add_line("Please try again.");
             }
             init_badpixel_bin_flag = 0;
-            DeleteFile_Fut(PATH_BAD_TMP_BIN);
+            remove(PATH_BAD_TMP_BIN);
 
             action_push_delay(3000);
             break;
