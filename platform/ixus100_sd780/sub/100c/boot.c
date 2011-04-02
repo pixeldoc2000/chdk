@@ -144,14 +144,14 @@ int jF;
 	long l;
 	char filen[32];
 
-	l = Fopen_Fut("A/0xCF90a.bin","ab");
-	Fwrite_Fut((void*)(START_ADDRESS),1,FWSIZE,l);
-	Fflush_Fut(l);
-	Fclose_Fut(l);
-	l = Fopen_Fut("A/0xCF90b.bin","ab");
-	Fwrite_Fut((void*)(START_ADDRESS2),1,FWSIZE,l);
-	Fflush_Fut(l);
-	Fclose_Fut(l);
+	l = _Fopen_Fut("A/0xCF90a.bin","ab");
+	_Fwrite_Fut((void*)(START_ADDRESS),1,FWSIZE,l);
+	_Fflush_Fut(l);
+	_Fclose_Fut(l);
+	l = _Fopen_Fut("A/0xCF90b.bin","ab");
+	_Fwrite_Fut((void*)(START_ADDRESS2),1,FWSIZE,l);
+	_Fflush_Fut(l);
+	_Fclose_Fut(l);
 
 	//jF = open("/_term", O_RDONLY,0777);
 	//getc()

@@ -216,14 +216,14 @@ void dumpProps() {
 	char aStr[50];
 	long l;
 
-	l=Fopen_Fut("A/PropDmp.txt","a");
+	l=_Fopen_Fut("A/PropDmp.txt","a");
 	for (i=0;i<300;i++){
 		_GetPropertyCase(i, &avv, sizeof(avv));	// 23 for DiGiC III
 		sprintf(aStr,"[%3d]=(%8x)\n",i,avv);
-		Fwrite_Fut(aStr,1,strlen(aStr),l);
+		_Fwrite_Fut(aStr,1,strlen(aStr),l);
 	}
-	Fflush_Fut(l);
-	Fclose_Fut(l);
+	_Fflush_Fut(l);
+	_Fclose_Fut(l);
 }
 
 int dump1900_SD780() {
@@ -247,7 +247,7 @@ int dump1900_SD780() {
 	//Fclose_Fut(l);
 	j=0;
 
-	l=Fopen_Fut("A/aHookList.txt","ab");
+	l=_Fopen_Fut("A/aHookList.txt","ab");
 
 	while (j<aHookNum)
 	{
@@ -264,15 +264,15 @@ int dump1900_SD780() {
 			{
 				sprintf(sampleChr,"loc:%8x - data:%8x - *data:unsafe\n",myPtr,*myPtr);//*myPtr);
 			}
-			Fwrite_Fut(sampleChr,1,63,l);
+			_Fwrite_Fut(sampleChr,1,63,l);
 			myPtr++;
 		}
 		sprintf(sampleChr,"Next Hook\n",myPtr,*myPtr,*myPtr);
-		Fwrite_Fut(sampleChr,1,63,l);
-		Fflush_Fut(l);
+		_Fwrite_Fut(sampleChr,1,63,l);
+		_Fflush_Fut(l);
 	}
-	Fflush_Fut(l);
-	Fclose_Fut(l);
+	_Fflush_Fut(l);
+	_Fclose_Fut(l);
 	return 0;
 
 //myPtr = (int*)0x1984;
