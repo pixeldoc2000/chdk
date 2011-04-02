@@ -136,18 +136,10 @@ extern void SleepTask(long msec);
 extern long taskLock();
 extern long taskUnlock();
 
-extern long Fopen_Fut(const char *filename, const char *mode);
-extern long Fclose_Fut(long file);
-extern long Fread_Fut(void *buf, long elsize, long count, long f);
-extern long Fwrite_Fut(const void *buf, long elsize, long count, long f);
-extern long Fseek_Fut(long file, long offset, long whence);
 // TODO can we just use these all the time ?
 extern long RenameFile_Fut(const char *oldname, const char *newname);
 extern long MakeDirectory_Fut(const char *name);
 extern long DeleteFile_Fut(const char *name);
-extern long Feof_Fut(long file);
-extern long Fflush_Fut(long file);
-extern char *Fgets_Fut(char *buf, int n, long f);
 
 extern int creat (const char *name, int flags);
 extern int open (const char *name, int flags, int mode );
@@ -171,36 +163,18 @@ typedef struct FILE_S {
     // unk3;        // +0x20 related to StartFileAccess_Sem
     // ...name
 } FILE;
-// these tiny inlines provide type safety, and should optimize away
-static inline FILE *fopen(const char *filename, const char *mode) {
-    return (FILE *)Fopen_Fut(filename,mode);
-}
-static inline long fclose(FILE *f) {
-    return Fclose_Fut((long)f);
-}
-static inline long fread(void *buf, long elsize, long count, FILE *f) {
-    return Fread_Fut(buf,elsize,count,(long)f);
-}
-static inline long fwrite(const void *buf, long elsize, long count, FILE *f) {
-    return Fwrite_Fut(buf,elsize,count,(long)f);
-}
-static inline long fseek(FILE *file, long offset, long whence) {
-    return Fseek_Fut((long)file,offset,whence);
-}
-static inline long fflush(FILE *file) {
-    return Fflush_Fut((long)file);
-}
-static inline long feof(FILE *file) {
-    return Feof_Fut((long)file);
-}
-static inline long ftell(FILE *file) {
-    if(!file) return -1;
-    return file->pos;
-}
-static inline char *fgets(char *buf, int n, FILE *f) {
-    return Fgets_Fut(buf,n,(int)f);
-}
+
+extern FILE *fopen(const char *filename, const char *mode);
+extern long fclose(FILE *f);
+extern long fread(void *buf, long elsize, long count, FILE *f);
+extern long fwrite(const void *buf, long elsize, long count, FILE *f);
+extern long fseek(FILE *file, long offset, long whence);
+extern long fflush(FILE *file);
+extern long feof(FILE *file);
+extern long ftell(FILE *file);
+extern char *fgets(char *buf, int n, FILE *f);
 #define fdelete(a) DeleteFile_Fut(a)
+
 /**
  * No STUBS!
  * You can't use these two directly from THUMB code (core), only from platform.
@@ -292,8 +266,6 @@ extern unsigned long time(unsigned long *timer);
 extern long strftime(char *s, unsigned long maxsize, const char *format, const struct tm *timp);
 extern time_t mktime(struct tm *timp);
 
-static inline int abs( int v ) {
-  return v<0 ? -v : v;
-}
+extern int abs( int v );
 
 #endif

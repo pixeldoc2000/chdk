@@ -178,3 +178,8 @@ void core_spytask() {
         msleep(20);
     }
 }
+
+long ftell(FILE *file) {
+    if(!file) return -1;
+    return file->pos;
+}

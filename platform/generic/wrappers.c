@@ -734,36 +734,36 @@ long MakeDirectory_Fut(const char *dirname) {
  return _MakeDirectory_Fut(dirname,-1); // meaning of second arg is not clear, firmware seems to use -1
 }
 
-long Fopen_Fut(const char *filename, const char *mode){
- return _Fopen_Fut(filename,mode);
+long fopen(const char *filename, const char *mode) {
+    return _Fopen_Fut(filename,mode);
 }
 
-long Fclose_Fut(long file){
- return _Fclose_Fut(file);
+long fclose(long f) {
+    return _Fclose_Fut((long)f);
 }
 
-long Fread_Fut(void *buf, long elsize, long count, long f){
- return _Fread_Fut(buf,  elsize,  count, f);
+long fread(void *buf, long elsize, long count, long f) {
+    return _Fread_Fut(buf,elsize,count,(long)f);
 }
 
-long Fwrite_Fut(const void *buf, long elsize, long count, long f){
-  return _Fwrite_Fut(buf, elsize, count, f);
+long fwrite(const void *buf, long elsize, long count, long f) {
+    return _Fwrite_Fut(buf,elsize,count,(long)f);
 }
 
-long Fseek_Fut(long file, long offset, long whence){
- return  _Fseek_Fut(file, offset, whence);
+long fseek(long file, long offset, long whence) {
+    return _Fseek_Fut((long)file,offset,whence);
 }
 
-long Feof_Fut(long file) {
- return _Feof_Fut(file);
+long feof(long file) {
+    return _Feof_Fut((long)file);
 }
 
-long Fflush_Fut(long file) {
- return _Fflush_Fut(file);
+long fflush(long file) {
+    return _Fflush_Fut((long)file);
 }
 
-char *Fgets_Fut(char *buf, int n, long f) {
- return _Fgets_Fut(buf,n,f);
+char *fgets(char *buf, int n, long f) {
+    return _Fgets_Fut(buf,n,(int)f);
 }
 
 long RenameFile_Fut(const char *oldname, const char *newname) {
