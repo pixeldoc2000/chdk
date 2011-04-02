@@ -609,7 +609,7 @@ void exmem_malloc_init() {
 	// pool zero is EXMEM_RAMDISK on d10
 	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0);
 	if(mem) {
-		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE-EXMEM_HEAP_SKIP,1,1024);
+		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE-EXMEM_HEAP_SKIP,1,8);
 	}
 }
 
