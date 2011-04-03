@@ -29,7 +29,7 @@ static struct font {
      int intline;
      int charFirst, charCount;
      char wTable[256];
-     char *cTable[256];
+     char *cTable;
      int maxWidth;
      int descent;
      int charLast;
@@ -38,7 +38,6 @@ static struct font {
      int _cmapAddr;
      int _unknown4;
 } rbf_symbol_font, rbf_font;
-static int need_free    = 0;
 static int rbf_codepage = FONT_CP_WIN; 
 
 //-------------------------------------------------------------------
@@ -48,7 +47,19 @@ static int dos2win(int ch) {
 }
 
 //-------------------------------------------------------------------
-int rbf_load(char *file) {
+// Return address of 'character' data for specified font & char
+char* rbf_font_char(struct font* f, int ch)
+{
+    if ((ch >= f->charFirst) && (ch <= f->charLast))
+    {
+        return &f->cTable[(ch-f->charFirst)*f->charSize];
+    }
+
+    return 0;
+}
+//-------------------------------------------------------------------
+// Load from from file. If maxchar != 0 limit charLast (for symbols)
+int rbf_font_load(char *file, struct font* f, int maxchar) {
 /*
     name         - name of font (max 64 characters)
     width        - font element width in pixels
@@ -73,117 +84,69 @@ int rbf_load(char *file) {
     fd = open(file, O_RDONLY, 0777);
     if (fd>=0 && read(fd, &buf, 8)==8 /* Magic number */ && memcmp(&buf, RBF_HDR_MAGIC, 8)==0) {
 
-        read(fd, &rbf_font.name, RBF_MAX_NAME);
-        read(fd, &rbf_font.charSize , 4);
-        read(fd, &rbf_font.points   , 4);
-        read(fd, &rbf_font.height   , 4);
-        read(fd, &rbf_font.maxWidth , 4);
-        read(fd, &rbf_font.charFirst, 4);
-        read(fd, &rbf_font.charLast , 4);
-        read(fd, &rbf_font._unknown4, 4);
-        read(fd, &rbf_font._wmapAddr, 4);
-        read(fd, &rbf_font._cmapAddr, 4);
-        read(fd, &rbf_font.descent  , 4);
-        read(fd, &rbf_font.intline  , 4);
+        read(fd, &f->name, RBF_MAX_NAME);
+        read(fd, &f->charSize , 4);
+        read(fd, &f->points   , 4);
+        read(fd, &f->height   , 4);
+        read(fd, &f->maxWidth , 4);
+        read(fd, &f->charFirst, 4);
+        read(fd, &f->charLast , 4);
+        read(fd, &f->_unknown4, 4);
+        read(fd, &f->_wmapAddr, 4);
+        read(fd, &f->_cmapAddr, 4);
+        read(fd, &f->descent  , 4);
+        read(fd, &f->intline  , 4);
 
-        rbf_font.width = 8 * rbf_font.charSize / rbf_font.height;
-        rbf_font.charCount = rbf_font.charLast - rbf_font.charFirst + 1;
+        if (maxchar != 0) {
+            f->charLast = maxchar;
+        }
+
+        f->width = 8 * f->charSize / f->height;
+        f->charCount = f->charLast - f->charFirst + 1;
 
         for (i=0; i<256; ++i) {
-            rbf_font.wTable[i]=0; 
-            if (need_free && rbf_font.cTable[i]) {
-                free(rbf_font.cTable[i]);
-            }
-            rbf_font.cTable[i]=NULL;
+            f->wTable[i]=0; 
         }
-        need_free = 0;
+        if (f->cTable) {
+            free(f->cTable);
+        }
+        f->cTable = malloc(f->charCount*f->charSize);
 
-        lseek(fd, rbf_font._wmapAddr, SEEK_SET);
-        for (i=rbf_font.charFirst; i<=rbf_font.charLast; ++i) {
-            read(fd, &rbf_font.wTable[i], 1);
-        }
+        lseek(fd, f->_wmapAddr, SEEK_SET);
+        read(fd, &f->wTable[f->charFirst], f->charCount);
 
-        lseek(fd, rbf_font._cmapAddr, SEEK_SET);
-        for (i=rbf_font.charFirst; i<=rbf_font.charLast; ++i) {
-            rbf_font.cTable[i]=malloc(rbf_font.charSize);
-            read(fd, rbf_font.cTable[i], rbf_font.charSize);
-        }
-        need_free = 1;
+        lseek(fd, f->_cmapAddr, SEEK_SET);
+        read(fd, f->cTable, f->charCount*f->charSize);
 
         close(fd);
+
+        // Reset symbol display if symbol font too tall
         if(conf.menu_symbol_enable) conf.menu_symbol_enable=(rbf_font.height>=rbf_symbol_font.height);
+
         return 1;
     }
 
     return 0;
+}
+//-------------------------------------------------------------------
+int rbf_load(char *file) {
+    return rbf_font_load(file, &rbf_font, 0);
 }
 
 //-------------------------------------------------------------------
 #define maxSymbols 128
 int rbf_load_symbol(char *file) {
-
-    int fd;
-    char buf[8];
-    int i;
-
-    fd = open(file, O_RDONLY, 0777);
-    if (fd>=0 && read(fd, &buf, 8)==8 /* Magic number */ && memcmp(&buf, RBF_HDR_MAGIC, 8)==0) {
-
-        read(fd, &rbf_symbol_font.name, RBF_MAX_NAME);
-        read(fd, &rbf_symbol_font.charSize , 4);
-        read(fd, &rbf_symbol_font.points   , 4);
-        read(fd, &rbf_symbol_font.height   , 4);
-        read(fd, &rbf_symbol_font.maxWidth , 4);
-        read(fd, &rbf_symbol_font.charFirst, 4);
-        read(fd, &rbf_symbol_font.charLast , 4);
-        read(fd, &rbf_symbol_font._unknown4, 4);
-        read(fd, &rbf_symbol_font._wmapAddr, 4);
-        read(fd, &rbf_symbol_font._cmapAddr, 4);
-        read(fd, &rbf_symbol_font.descent  , 4);
-        read(fd, &rbf_symbol_font.intline  , 4);
-
-        rbf_symbol_font.width = 8 * rbf_symbol_font.charSize / rbf_symbol_font.height;
-        rbf_symbol_font.charLast=maxSymbols+32;
-        rbf_symbol_font.charCount = rbf_symbol_font.charLast - rbf_symbol_font.charFirst + 1;
-
-        for (i=0; i<maxSymbols; ++i) {
-            rbf_symbol_font.wTable[i]=0; 
-            if (need_free && rbf_symbol_font.cTable[i]) {
-                free(rbf_symbol_font.cTable[i]);
-            }
-            rbf_symbol_font.cTable[i]=NULL;
-        }
-        need_free = 0;
-
-        lseek(fd, rbf_symbol_font._wmapAddr, SEEK_SET);
-        for (i=rbf_symbol_font.charFirst; i<=rbf_symbol_font.charLast; ++i) {
-            read(fd, &rbf_symbol_font.wTable[i], 1);
-        }
-
-        lseek(fd, rbf_symbol_font._cmapAddr, SEEK_SET);
-        for (i=rbf_symbol_font.charFirst; i<=rbf_symbol_font.charLast; ++i) {
-            rbf_symbol_font.cTable[i]=malloc(rbf_symbol_font.charSize);
-            read(fd, rbf_symbol_font.cTable[i], rbf_symbol_font.charSize);
-        }
-        need_free = 1;
-
-        close(fd);
-        if(conf.menu_symbol_enable) conf.menu_symbol_enable=(rbf_font.height>=rbf_symbol_font.height);
-        return 1;
-    }
-
-    return 0;
+    return rbf_font_load(file, &rbf_symbol_font, maxSymbols+32);
 }
 
 //-------------------------------------------------------------------
-static void rbf_assign_char_8x16(char **dst, char *font_ch, int height) {
+static void rbf_assign_char_8x16(char *dst, char *font_ch, int height) {
     int c, b;
 
-    *dst=malloc(height);
     for (c=0; c<height; ++c) {
-        (*dst)[c]=0;
+        dst[c]=0;
         for (b=0; b<8; ++b)
-            (*dst)[c]=((*dst)[c]<<1)|(((font_ch[c])>>b)&1);
+            dst[c]=(dst[c]<<1)|(((font_ch[c])>>b)&1);
     }
 }
 
@@ -202,17 +165,15 @@ void rbf_load_from_8x16(unsigned char font[256][16]) {
 
     for (i=0; i<256; ++i) {
         rbf_font.wTable[i]=8; 
-        if (need_free && rbf_font.cTable[i]) {
-            free(rbf_font.cTable[i]);
-        }
-        rbf_font.cTable[i]=NULL;
     }
-    need_free = 0;
+    if (rbf_font.cTable) {
+        free(rbf_font.cTable);
+    }
+    rbf_font.cTable = malloc(rbf_font.charCount*rbf_font.charSize);
     
     for (i=0; i<256; ++i) {
-        rbf_assign_char_8x16(&rbf_font.cTable[i], (char*)font[i], rbf_font.height);
+        rbf_assign_char_8x16(rbf_font_char(&rbf_font, i), (char*)font[i], rbf_font.height);
     }
-    need_free = 1;
 }
 
 //-------------------------------------------------------------------
@@ -268,10 +229,11 @@ int rbf_draw_char(int x, int y, int ch, color cl) {
             break;
     }
 
-    if (rbf_font.cTable[ch]) {
+    char* cdata = rbf_font_char(&rbf_font, ch);
+    if (cdata) {
         for (yy=0; yy<rbf_font.height; ++yy) {
             for (xx=0; xx<rbf_font.wTable[ch]; ++xx) {
-                draw_pixel(x+xx ,y+yy, (rbf_font.cTable[ch][yy*rbf_font.width/8+xx/8] & (1<<(xx%8)))? cl&0xff : cl>>8);
+                draw_pixel(x+xx ,y+yy, (cdata[yy*rbf_font.width/8+xx/8] & (1<<(xx%8)))? cl&0xff : cl>>8);
             }
         }
     }
@@ -283,7 +245,8 @@ int rbf_draw_symbol(int x, int y, int ch, color cl) {
     int xx, yy, space=0;
 
     if (rbf_font.height<rbf_symbol_font.height || ch==0x0) return 0;
-    if (rbf_symbol_font.cTable[ch]) {
+    char* cdata = rbf_font_char(&rbf_symbol_font, ch);
+    if (cdata) {
       if (rbf_font.height>rbf_symbol_font.height) {
         space=(rbf_font.height-rbf_symbol_font.height)/2;
         draw_filled_rect(x, y, x+rbf_symbol_width(ch), y+space, MAKE_COLOR(cl>>8, cl>>8));
@@ -291,7 +254,7 @@ int rbf_draw_symbol(int x, int y, int ch, color cl) {
       }
       for (yy=0; yy<rbf_symbol_font.height; ++yy) {
         for (xx=0; xx<rbf_symbol_font.wTable[ch]; ++xx) {
-          draw_pixel(x+xx ,y+yy, (rbf_symbol_font.cTable[ch][yy*rbf_symbol_font.width/8+xx/8] & (1<<(xx%8)))? cl&0xff : cl>>8);
+          draw_pixel(x+xx ,y+yy, (cdata[yy*rbf_symbol_font.width/8+xx/8] & (1<<(xx%8)))? cl&0xff : cl>>8);
         }
       }
       if (rbf_font.height>rbf_symbol_font.height) draw_filled_rect(x, y+yy, x+rbf_symbol_width(ch), y-space+rbf_font.height-1, MAKE_COLOR(cl>>8, cl>>8));
