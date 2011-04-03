@@ -1,3 +1,4 @@
+
 #include "../generic/wrappers.c"
 
 long lens_get_focus_pos()
@@ -13,28 +14,4 @@ long lens_get_focus_pos_from_lens()
 long lens_get_target_distance()
 {
 	return _GetCurrentTargetDistance();
-}
-
-
-// SX30 firmware does not include rand(), srand() so we add them here
-
-#define RAND_MAX 0x7fffffff
-
-static unsigned int next = 1;
-
-int rand_r(unsigned int *seed)
-{
-	*seed = *seed * 1103515245 + 12345;
-	return (*seed % ((unsigned int) RAND_MAX + 1));
-}
-
-int _rand(void)
-{
-	return (rand_r(&next));
-}
-
-void* _srand(unsigned int seed)
-{
-	next = seed;
-	return 0;				// unused return value
 }

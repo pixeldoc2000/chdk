@@ -87,6 +87,8 @@ NHSTUB(UpdateMBROnFlash,				0xFF8770CC) // Search for 'BOOTDISK', function branc
 NHSTUB(PB2Rec,                          0xFF8A30FC)
 NHSTUB(Rec2PB,                          0xFF8A1B40)
 NHSTUB(exmem_alloc,						0xFF8944F8)	// search for ExMem.AllocCacheable (from reyalp)
+NHSTUB(rand,							0xFFA4DB2C)	// search for 0x41C64E6D. Function before this value is rand.
+NHSTUB(srand,							0xFFA4DB20)	// search for 0x41C64E6D. Function before rand is srand.
 
 # from stubs_entry_ida.S
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff89e078)
@@ -112,8 +114,6 @@ DEF(task_ExpDrv,						0xFF8D081C)
 # Missing
 NHSTUB(kbd_pwr_off,						0xFF810B1C)								// ??? not on sx20 or s95
 NHSTUB(kbd_pwr_on,						0xFF810B1C)								// ??? not on sx20 or s95
-NSTUB(rand,								0xFF810B1C) // ??? could not find use C version from S95 wrappers
-NSTUB(srand,							0xFF810B1C) // ??? could not find use C version from S95 wrappers
 NHSTUB(UIFS_WriteFirmInfoToFile,		0xFF810B1C)	// Is this needed?
 NHSTUB(rewinddir,						0xFF810B1C)
 NHSTUB(SetZoomActuatorSpeedPercent,		0xFF810B1C)

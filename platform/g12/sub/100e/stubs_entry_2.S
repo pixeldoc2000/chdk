@@ -92,6 +92,8 @@ NHSTUB(exmem_alloc,						0xFF88FFD8)	// search for ExMem.AllocCacheable (from re
 NHSTUB(PutInNdFilter,                   0xFFB0501C)
 NHSTUB(PutOutNdFilter,                  0xFFB05040)
 NHSTUB(PT_MoveDigitalZoomToWide,		0xFF87F5C0)
+NHSTUB(rand,							0xFFA5B370)	// search for 0x41C64E6D. Function before this value is rand.
+NHSTUB(srand,							0xFFA5B364)	// search for 0x41C64E6D. Function before rand is srand.
 
 # From stubs_entry_ida.s
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff899bbc)
@@ -116,8 +118,6 @@ DEF(task_ExpDrv,						0xFF8CC0D0)	// ok (comp 1.00c)
 # Missing
 NHSTUB(kbd_pwr_off,						0xFF810B1C)								// ??? not on sx20 or s95
 NHSTUB(kbd_pwr_on,						0xFF810B1C)								// ??? not on sx20 or s95
-NSTUB(rand,								0xFF810B1C) // ??? could not find use C version from S95 wrappers
-NSTUB(srand,							0xFF810B1C) // ??? could not find use C version from S95 wrappers
 NHSTUB(UIFS_WriteFirmInfoToFile,		0xFF810B1C)	// Is this needed?
 NHSTUB(rewinddir,						0xFF810B1C)
 NHSTUB(SetZoomActuatorSpeedPercent,		0xFF810B1C)
