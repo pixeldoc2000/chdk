@@ -35,14 +35,12 @@ enum {
 
 struct allocator;
 
-
-
-typedef void *(*alloc_fn)(struct allocator *al, size_t size, int flags);
-typedef void *(*realloc_fn)(struct allocator *al, void *obj, size_t size);
-typedef int (*free_fn)(void *al, void *obj);
-typedef int (*reclaim_fn)(struct allocator *al, void *arg, int attempt);
-typedef void *(*new_fn)(void *context, size_t size, int flags);
-typedef int (*del_fn)(void *context, void *object);
+//typedef void *(*alloc_fn)(struct allocator *al, size_t size, int flags);
+//typedef void *(*realloc_fn)(struct allocator *al, void *obj, size_t size);
+//typedef int (*free_fn)(void *al, void *obj);
+//typedef int (*reclaim_fn)(struct allocator *al, void *arg, int attempt);
+//typedef void *(*new_fn)(void *context, size_t size, int flags);
+//typedef int (*del_fn)(void *context, void *object);
 
 struct allocator {
 	unsigned char magic[8];                /* suba header identifier */
@@ -56,14 +54,14 @@ struct allocator {
 					 * e.g. 50000.0 / 50911.0 * 100.0 = 98.2%
 					 */
 	size_t max_free;   /* for debugging - any cell larger throws err */
-	alloc_fn alloc;
-	realloc_fn realloc;
-	free_fn free;
+	//alloc_fn alloc;
+	//realloc_fn realloc;
+	//free_fn free;
 						/* for reaping memory from pool, varray, etc */
-	reclaim_fn reclaim;
-	void *reclaim_arg;
-	int reclaim_depth;
-	ref_t userref;
+	//reclaim_fn reclaim;
+	//void *reclaim_arg;
+	//int reclaim_depth;
+	//ref_t userref;
 } allocator;
 
 
@@ -84,11 +82,26 @@ struct cell {
 #define ISADJ(c1,c2) ((struct cell *)(C2P(c1) + (c1)->size) == (struct cell *)(c2))
 #define SREF(s,p) (ref_t)((char *)(p) - (char *)(s))
 #define SADR(s,r) (void *)((char *)(s) + (r))
-#define RECLAIM_DEPTH_MAX 2
+//#define RECLAIM_DEPTH_MAX 2
 #define SUBA_MAGIC "\xFF\x15\x15\x15SUBA"
 
+int suba_largest_block(struct allocator *suba)
+{
+	size_t sz = 0;
 
+	if (suba)
+	{
+		struct cell *c = SADR(suba, suba->tail);
+		if (c->size > sz) sz = c->size;
+		while (c->next != suba->tail)
+		{
+			c = SADR(suba, c->next);
+			if (c->size > sz) sz = c->size;
+		}
+	}
 
+	return sz;
+}
 
 void *
 suba_addr(const struct allocator *suba, const ref_t ref)
@@ -159,11 +172,11 @@ again:
 	if (reclaim) {
 		int progress = 0;
 
-		if (suba->reclaim && suba->reclaim_depth <= RECLAIM_DEPTH_MAX) {
-			suba->reclaim_depth++;
-			progress = suba->reclaim(suba, suba->reclaim_arg, reclaim);
-			suba->reclaim_depth--;
-		}
+		//if (suba->reclaim && suba->reclaim_depth <= RECLAIM_DEPTH_MAX) {
+		//	suba->reclaim_depth++;
+		//	progress = suba->reclaim(suba, suba->reclaim_arg, reclaim);
+		//	suba->reclaim_depth--;
+		//}
 
 		if (!progress) {
 			PMNO(errno = ENOMEM);

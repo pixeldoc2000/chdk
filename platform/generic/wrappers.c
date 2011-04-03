@@ -644,6 +644,8 @@ void exmem_free(unsigned pool_id)
 */
 
 static void *exmem_heap;
+void *exmem_start = 0, *exmem_end = 0;
+int exmem_size = 0;
 
 void *suba_init(void *heap, unsigned size, unsigned rst, unsigned mincell);
 void *suba_alloc(void *heap, unsigned size, unsigned zero);
@@ -653,7 +655,32 @@ void exmem_malloc_init() {
 	// pool zero is EXMEM_RAMDISK on d10
 	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0);
 	if(mem) {
-		exmem_heap = suba_init(mem,EXMEM_HEAP_SIZE-EXMEM_HEAP_SKIP,1,8);
+#if defined(OPT_CHDK_IN_EXMEM)
+		// If loading CHDK into exmem then move heap start past the end of CHDK
+		// and reduce available space by CHDK size (MEMISOSIZE)
+		// round MEMISOSIZE up to next 4 byte boundary if needed (just in case)
+		exmem_start = mem + ((MEMISOSIZE+3)&0xFFFFFFFC);
+		exmem_size = EXMEM_HEAP_SIZE - EXMEM_HEAP_SKIP - ((MEMISOSIZE+3)&0xFFFFFFFC);
+#else
+		// Set start & size based on requested values
+		exmem_start = mem;
+		exmem_size = EXMEM_HEAP_SIZE - EXMEM_HEAP_SKIP;
+#endif
+		exmem_end = exmem_start + exmem_size;
+#if defined(OPT_EXMEM_TESTING)
+		// For testing exmem allocated memory for corruption from normal camera operations
+		// set the above #define. This will allocate the memory; but won't use it (exmem_heap is set to 0)
+		// Instead all the memory is filled with the guard value below.
+		// In gui_draw_debug_vals_osd (gui.c) the memory is tested for the guard value and if any
+		// corruption has occurred then info about the memory locations that were altered is displayed
+		// If OPT_EXMEM_TESTING is defined then OPT_CHDK_IN_EXMEM should not be set.
+		unsigned long *p;
+		for (p=(unsigned long*)exmem_start; p<(unsigned long*)exmem_end; p++) *p = 0xDEADBEEF;
+		exmem_heap = 0;
+#else
+		// Normal operation, use the suba allocation system to manage the memory block
+		exmem_heap = suba_init(exmem_start,exmem_size,1,8);
+#endif
 	}
 }
 
@@ -668,6 +695,12 @@ void free(void *p) {
 		suba_free(exmem_heap,p);
 	else
 		_free(p);
+}
+
+int exmem_largest_block()
+{
+	extern int suba_largest_block(void*);
+	return suba_largest_block(exmem_heap);
 }
 // regular malloc
 #else

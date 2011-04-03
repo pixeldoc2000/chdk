@@ -2363,6 +2363,40 @@ void other_kbd_process(){
 
 void gui_draw_debug_vals_osd() {
 #ifdef OPT_DEBUGGING
+
+#if defined(OPT_EXMEM_TESTING)
+	// If defined the exmem memory is allocated; but not used for CHDK.
+	// It is filled with a guard value (see wrappers.c) which is checked here
+	// Any corruption is reported, otherwise 'OK' is displayed on screen.
+	extern void *exmem_start, *exmem_end;
+	// check exmem allocated memory for corruption
+	unsigned long* p = (unsigned long*)exmem_start;
+	unsigned long *f = 0, *l = 0;
+	long cnt = 0;
+	while (p < (unsigned long*)exmem_end)
+	{
+		if (p[0] != 0xDEADBEEF)
+		{
+			l = p;
+			if (f == 0) f = p;
+			cnt++;
+		}
+		p++;
+	}
+	if (cnt != 0)
+	{
+		sprintf(osd_buf, "s:%8x e:%8x", exmem_start, exmem_end);
+		draw_txt_string(2, 12, osd_buf, conf.osd_color);
+		sprintf(osd_buf, "f:%8x l:%8x c:%d", f, l, cnt);
+	}
+	else
+	{
+		strcpy(osd_buf,"OK");
+	}
+	draw_txt_string(2, 13, osd_buf, conf.osd_color);
+	// end of check	
+#endif
+
     if (conf.debug_misc_vals_show) {
         //        long v=get_file_counter();
         //	sprintf(osd_buf, "1:%03d-%04d  ", (v>>18)&0x3FF, (v>>4)&0x3FFF);

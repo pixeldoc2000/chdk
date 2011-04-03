@@ -3156,6 +3156,12 @@
 	#undef  CAM_UNCACHED_BIT			// shut up compiler
 	#define CAM_UNCACHED_BIT			0x40000000
 
+	#undef DEFAULT_RAW_EXT
+    #define DEFAULT_RAW_EXT             2   // use .CR2 
+
+    #undef CAM_MENU_BORDERWIDTH
+    #define CAM_MENU_BORDERWIDTH	10
+
 	// pattern
 	#define cam_CFAPattern 0x01000201 // Green  Blue  Red  Green
 	// color
@@ -3232,13 +3238,12 @@
   
 	#undef EDGE_HMARGIN
 	#define EDGE_HMARGIN 2
-	#define CAM_CHDK_PTP 1
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
 
 	// EXMEM memory allocation values
-	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
-	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
+	//#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
+	//#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
 
 	#define	CAM_STARTUP_CRASH_FILE_OPEN_FIX	1				// enable fix for camera crash at startup when opening the conf / font files
 															// see http://chdk.setepontos.com/index.php?topic=6179.0
@@ -3275,6 +3280,12 @@
     #undef CAM_UNCACHED_BIT
     #define CAM_UNCACHED_BIT            0x40000000  // S90 @FF8875FC(via ExMem.FreeCacheable)
 	#define CAM_SHOW_OSD_IN_SHOOT_MENU  1
+
+	#undef DEFAULT_RAW_EXT
+    #define DEFAULT_RAW_EXT             2   // use .CR2 
+
+    #undef CAM_MENU_BORDERWIDTH
+    #define CAM_MENU_BORDERWIDTH	10
 
     // camera name
     #define PARAM_CAMERA_NAME 4 // parameter number for GetParameterData
@@ -3346,11 +3357,9 @@
 	
 	#define	CAM_DATE_FOLDER_NAMING	1
 
-	#define CAM_CHDK_PTP 1
-
 	// EXMEM memory allocation values
-	#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
-	#define EXMEM_BUFFER_SIZE (1024*1024*2)					// desired amount of exmem memory to allocate
+	//#define EXMEM_HEAP_SKIP (0x08000000-0x07D08A00)			// G12 & SX30 uses movie memory buffers at the top of the memory allocated by exmem_alloc
+	//#define EXMEM_BUFFER_SIZE (1024*1024*4)					// desired amount of exmem memory to allocate
 
 	#define	CAM_STARTUP_CRASH_FILE_OPEN_FIX	1				// enable fix for camera crash at startup when opening the conf / font files
 															// see http://chdk.setepontos.com/index.php?topic=6179.0

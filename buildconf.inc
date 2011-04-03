@@ -25,6 +25,13 @@ OPT_LUA_OSLIB=1
 # experimental - allocate memory from alternate heap. Default 2MB from EXMEM_RAMDISK
 # See exmem_malloc_init in generic/wrappers.c
 #OPT_EXMEM_MALLOC=1
+# Set OPT_CHDK_IN_EXMEM to build and load CHDK into EXMEM memory 
+# Need to define MEMISOSTART and EXMEM values in PLATFORM/PLATFORMSUB/makefile.inc (see G12 or SX30 for example)
+# (if setting this must also set OPT_EXMEM_MALLOC !)
+#OPT_CHDK_IN_EXMEM=1
+# set this to enable exmem corruption testing (see wrappers.c). (Don't set OPT_CHDK_IN_EXMEM with this !)
+#OPT_EXMEM_TESTING=1
+
 #OPT_MD_DEBUG=1
 # require correct FI2 keys in platform/fi2.inc , see http://chdk.wikia.com/wiki/For_Developers/fi2offsets and http://chdk.setepontos.com/index.php/topic,2995.0.html
 #OPT_FI2=1

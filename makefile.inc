@@ -458,6 +458,22 @@ ifdef OPT_EXMEM_MALLOC
 CFLAGS+=-DOPT_EXMEM_MALLOC
 endif
 
+ifdef OPT_EXMEM_TESTING
+CFLAGS+=-DOPT_EXMEM_TESTING
+endif
+
+ifdef EXMEM_HEAP_SKIP
+CFLAGS+=-DEXMEM_HEAP_SKIP=$(EXMEM_HEAP_SKIP)
+endif
+
+ifdef EXMEM_BUFFER_SIZE
+CFLAGS+=-DEXMEM_BUFFER_SIZE=$(EXMEM_BUFFER_SIZE)
+endif
+
+ifdef OPT_CHDK_IN_EXMEM
+CFLAGS+=-DOPT_CHDK_IN_EXMEM
+endif
+
 ifdef OPT_WARNINGS
      ifeq ($(GCC_VERSION_MAJOR),3)
            CFLAGS+=-Wwrite-strings -Wsign-compare -Wunused -Wno-unused-parameter

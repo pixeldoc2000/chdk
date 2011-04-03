@@ -50,7 +50,14 @@ void dump_memory() {
 }
 
 int core_get_free_memory() {
-    int size, l_size, d;
+#if defined(OPT_EXMEM_MALLOC) && !defined(OPT_EXMEM_TESTING)
+	// If using the exmem / suba memory allocation system then don't need
+	// to try allocating memory to find out how much is available
+	// Call function to scan free list for the largest free block available.
+	extern int exmem_largest_block();
+	return exmem_largest_block();
+#else
+	int size, l_size, d;
     char* ptr;
 
     size = 16;
@@ -83,6 +90,7 @@ int core_get_free_memory() {
         
     }
     return size-1;
+#endif
 }
 
 static volatile long raw_data_available;
