@@ -2,23 +2,30 @@
 
 #define NULLSUB 0xFF810B04
 
+//>> 2011APR03  - changed to match 1.03B and 1.03C
+NHSTUB(TurnOffBackLight , 0xFF89764C)                // was 0xFF88F4C4
+NHSTUB(PT_PlaySound, 0xFF879708)                     // was 0xFF8708C8
+NHSTUB(SetScriptMode, 0xFF810F4C)	                 // was 0xFF88A82C
+NHSTUB(WriteSDCard, 0xFF926478)	                     // was 0xFF8827A8
+NHSTUB(UnlockAF,0xFF8368B4)		                     // was 0xFF870994
+NHSTUB(DoAFLock, 0xFF83687C)	                     // was 0xFF870984
+NHSTUB(closefastdir, 0xFFA4CF80)                     // was 0xffa4d294
+NHSTUB(GetFocusLensSubjectDistance, 0xFF93578C)      // was 0xFFAD10E4	
+//<< 2011APR03
+
 NHSTUB(ExpCtrlTool_StartContiAE, 0xFF844034)
 NHSTUB(MakeAFScan, 0xFF940504)
 
 // not found by finsig
-NHSTUB(PT_PlaySound, 0xFF8708C8)			 // or 0xFF879708 or FFA310EC
 NHSTUB(EnterToCompensationEVF, 0xFF8369D4)
 NHSTUB(ExitFromCompensationEVF, 0xFF836A18)
 NHSTUB(Remove,0xFF8353e8)
-NHSTUB(TurnOffBackLight, 0xFF88F4C4)		// or 0xFF89764C
 NHSTUB(UIFS_WriteFirmInfoToFile, 0xFF95673C)
 NHSTUB(kbd_pwr_on,NULLSUB)
 NHSTUB(openfastdir, 0xFFA4CFC4)				// ??
 NHSTUB(readfastdir, 0xFFA4D0F8)				// ??
 NHSTUB(rename, 0xFF835490)
-NHSTUB(WriteSDCard, 0xFF8827A8)
 NHSTUB(platformsub_kbd_fetch_data, 0xFF858DF8)
-
 
 // not 100% by finsig
 NHSTUB(set_control_event, 0xff88a500)   // *SD940 102c accept stubs_entry.s value per http://chdk.setepontos.com/index.php?topic=4338.msg61396#msg61396
@@ -27,7 +34,6 @@ NHSTUB(FreeUncacheableMemory, 0xFF8388D8)
 NHSTUB(GetBatteryTemperature, 0xFF85BD0C)
 NHSTUB(GetCCDTemperature, 0xff85bc98)
 NHSTUB(GetCurrentAvValue, 0xff936558)
-NHSTUB(GetFocusLensSubjectDistance, 0xFFAD10E4)		// or 0xff935724)
 NHSTUB(GetOpticalTemperature, 0xff85bd80)
 NHSTUB(GetParameterData, 0xff96b3c8)
 NHSTUB(GetPropertyCase, 0xff884948)
@@ -69,8 +75,6 @@ NHSTUB(SetFileTimeStamp, 0xff835640)
 
 // missing from finsig
 NHSTUB(LEDDrive,0xFF8582F4)
-NHSTUB(UnlockAF,0xFF870994)
-NHSTUB(DoAFLock,0xFF870984)
 NHSTUB(UnsetZoomForMovie,0xFF9712e4)
 NHSTUB(ScreenLock,0xFF9D1C7C)
 NHSTUB(RefreshPhysicalScreen, 0xFF9D1EA4)   // per SD940-1.03c SD90 101a & SD980 1.01c
@@ -85,18 +89,10 @@ NHSTUB(SetZoomActuatorSpeedPercent,NULLSUB)
 NHSTUB(Mount_FileSystem,NULLSUB)
 NHSTUB(Unmount_FileSystem,NULLSUB)
 
-/////////////////////////////////////////////////
-
 // need to redo??
 NSTUB(MoveFocusLensToDistance, 0xffad10e4)
-NHSTUB(SetScriptMode,0xFF88A82C)
-
-
-NHSTUB(closefastdir, 0xffa4d294)
 NHSTUB(stat, 0xff83550c)
 
-// do not need ??
-//NHSTUB(MoveZoomLensWithPoint, 0xffa67da4)
 
 
 
