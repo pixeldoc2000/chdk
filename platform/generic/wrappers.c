@@ -319,8 +319,9 @@ long t;
 
 int open (const char *name, int flags, int mode )
 {
-#ifdef CAM_DRYOS_2_3_R39
-    if(name[0]!='A')return -1;
+#ifdef CAM_DRYOS
+    if(!name || name[0]!='A')
+        return -1;
 #endif
 #if defined(CAM_STARTUP_CRASH_FILE_OPEN_FIX)	// enable fix for camera crash at startup when opening the conf / font files
 												// see http://chdk.setepontos.com/index.php?topic=6179.0
@@ -388,6 +389,11 @@ int stat(char *name, void *pStat) {
 }
 
 long fopen(const char *filename, const char *mode) {
+#ifdef CAM_DRYOS
+    if(!filename || filename[0]!='A') {
+        return 0;
+    }
+#endif
     return _Fopen_Fut(filename,mode);
 }
 
