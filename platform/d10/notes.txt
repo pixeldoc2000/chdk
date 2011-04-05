@@ -1,4 +1,6 @@
 Powershot D10
+Port for Canon firmware 100a also works on 100b
+
 Camera information
 
 Digic IV
@@ -30,6 +32,7 @@ Working/completed
 - video optical zoom unlock
 - USB remote support
 - bracketing in custom timer mode
+- CHDK ptp extension
 
 Scripts tested successfully
 - llibtst.lua 
@@ -47,4 +50,4 @@ Known issues:
 - DNG has dark borders. This is intentional, the active area covers all pixels that have any data, but there are large areas which have data but are distinct from the normal jpeg area.
 - AF in video doesn't seem to work
 - with video optical zoom, if you zoom into digital zoom, you cannot zoom out the optical
-- PTP doesn't support mode switching
+- Startup crash, especially with lots of images on the card.
