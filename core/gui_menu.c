@@ -667,7 +667,7 @@ void gui_menu_draw() {
             case MENUITEM_SEPARATOR:
                 if (lang_str(curr_menu->menu[imenu].text)[0]) {
                     j = rbf_str_width(lang_str(curr_menu->menu[imenu].text));
-#if defined (CAMERA_g11) || defined (CAMERA_s90)
+#if defined (CAMERA_g11) || defined (CAMERA_s90) || defined (CAMERA_sx130is)
 		xx+=((int)w-j-len_space*2)>>1;
 #else
 		xx+=(w-j-len_space*2)>>1;

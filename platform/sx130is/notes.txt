@@ -1,0 +1,10 @@
+sx130 port by contributors in http://chdk.setepontos.com/index.php?topic=5691.0
+especially quid
+
+WARNING WARNING WARNING
+Some users believe that CHDK has caused to permanent damage to cameras of
+this model, possibly as a side effect of crashing. See discussion starting at
+http://chdk.setepontos.com/index.php?topic=5691.msg62825#msg62825
+
+This is unconfirmed, however CHDK comes with absolutely now warranty and
+all use of CHDK is at your own risk.
