@@ -1,7 +1,5 @@
 #include "platform.h"
 #include "lolevel.h"
-#include "gui.h"
-#include "..\\..\\core\\gui_draw.h"
 
 static char*    frame_buffer[2];
 
