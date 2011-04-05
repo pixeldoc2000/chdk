@@ -241,7 +241,6 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=102c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=103c NO_INC_BUILD=1 firzipsub
-
 	$(MAKE) -s --no-print-directory PLATFORM=a480  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=101a NO_INC_BUILD=1 firzipsub
@@ -258,7 +257,8 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100h NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100l NO_INC_BUILD=1 firzipsub
-
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100h NO_INC_BUILD=1 firzipsub
 	@echo "**** All firmwares created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/$(VER)-a610-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a610-100d-$(BUILD_NUMBER).zip
@@ -294,7 +294,6 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus100_sd780-100c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-102c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus120_sd940-103c-$(BUILD_NUMBER)_BETA.zip
-
 	mv $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus85_sd770-100a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-d10-100a-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-d10-100a-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER)_BETA.zip
@@ -304,6 +303,8 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-sx30-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx30-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx30-100h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx30-100h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-sx30-100l-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx30-100l-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -408,7 +409,6 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus100_sd780  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=102c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=ixus120_sd940  PLATFORMSUB=103c NO_INC_BUILD=1 firzipsubcomplete
-
 	$(MAKE) -s --no-print-directory PLATFORM=a480  PLATFORMSUB=100b NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=s90  PLATFORMSUB=101a NO_INC_BUILD=1 firzipsubcomplete
@@ -425,6 +425,8 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=sx30  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=sx30  PLATFORMSUB=100h NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=sx30  PLATFORMSUB=100l NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100h NO_INC_BUILD=1 firzipsubcomplete
 	@echo "**** All zipfiles including firmwares and extra stuff created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/a610-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/a610-100d-$(BUILD_NUMBER)-full.zip
@@ -485,7 +487,6 @@ batch-zip-complete: version
 	mv $(topdir)bin/ixus120_sd940-102c-$(BUILD_NUMBER).zip $(topdir)bin/ixus120_sd940-102c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER).zip $(topdir)bin/ixus120_sd940-103c-$(BUILD_NUMBER)_BETA.zip
-
 	mv $(topdir)bin/s90-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/s90-100c-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/s90-100c-$(BUILD_NUMBER).zip $(topdir)bin/s90-100c-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s90-101a-$(BUILD_NUMBER)-full.zip $(topdir)bin/s90-101a-$(BUILD_NUMBER)-full_BETA.zip
@@ -512,6 +513,10 @@ batch-zip-complete: version
 	mv $(topdir)bin/sx30-100h-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100l-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100l-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -630,4 +635,6 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100h NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100l NO_INC_BUILD=1 clean
 
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100e NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100h NO_INC_BUILD=1 clean
 	.PHONY: fir upload
