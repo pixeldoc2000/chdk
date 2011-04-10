@@ -1,0 +1,18 @@
+notes from patch post http://chdk.setepontos.com/index.php?topic=650.msg64412#msg64412
+
+It doesn't seem to be very tested, but I've done a walk over CHDK User Manual and almost every function worked without problems:
+
+Half Shutter + Left Toggle Zebra on/off: yes, but it turns OSD off too, and doesn't turn it on again (also, AFL appears)
+Half Shutter + Up Toggle Histogram on/off: turns it off, but no on (and sets AEL)
+
+These Manual Focus adjustments can also be achieved with shortcut keys. In <ALT> mode, using the LEFT / RIGHT keys to adjust the Value Factor and the Zoom lever to adjust the Subject Distance: doesn't work
+
+Enable Fast EV Switch: activates ISO/Continous mode, and the camera hanged once when playing with that
+
+Video: zoom during video doesn't works, neither does AF key
+
+Curves: not tested
+
+Zoom values in OSD are wrong (40x?)
+
+Sokoban doesn't run
