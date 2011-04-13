@@ -377,7 +377,7 @@ int rbf_draw_clipped_string(int x, int y, const char *str, color cl, int l, int 
 //-------------------------------------------------------------------
 int rbf_draw_string_len(int x, int y, int len, const char *str, color cl) {
     // Draw string characters
-    int l = rbf_draw_string(x, y, str, cl);
+    int l = rbf_draw_clipped_string(x, y, str, cl, 0, len);
 
     // Fill any remaining space on right with background color
     if (l < len)
