@@ -370,7 +370,8 @@ void* readdir(void *d) {
     return _readdir(d);
 #else
 // for DRYOS cameras  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
-  static char de[40];
+  static char de[40] = "";	// (philmoz 15/4/2011) Must initialize this variable or GCC 4.4.0 will generate bad code and the File Browser will crash.
+                            // (reyalp) - whaaaaaaaaaa ?
   _ReadFastDir(d, &de);
   return de[0]? &de : (void*)0;
 #endif
