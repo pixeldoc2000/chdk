@@ -64,6 +64,6 @@
 
 #define CAM_EXT_TV_RANGE            1
 #define CAM_MULTIPART               1
-#define  CAM_CHDK_PTP               1 // include CHDK PTP support
+#define CAM_STARTUP_CRASH_FILE_OPEN_FIX 1
 //----------------------------------------------------------
 
