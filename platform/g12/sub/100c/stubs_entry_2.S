@@ -76,9 +76,9 @@ NHSTUB(ExpCtrlTool_StartContiAE,		0xFF847454)	// ok ?
 NHSTUB(UnsetZoomForMovie,				0xFF9C57D0)	// ok (comp s95)
 NHSTUB(LEDDrive,						0xFF8647EC)	// ok (comp sx30)
 NHSTUB(SetScriptMode,					0xFF89BF90)	// ok (comp sx30)
-NHSTUB(UnlockAndRefresh,				0xFF8B3A68)	// ok (comp sx30)
+//NHSTUB(UnlockAndRefresh,				0xFF8B3A68)	// ok (comp sx30)
 NHSTUB(RefreshPhysicalScreen,			0xFF8B3A68) // alias for UnlockAndRefresh
-NHSTUB(LockAndRefresh,				    0xFF8B50E4)	// ok (comp sx30)
+//NHSTUB(LockAndRefresh,				    0xFF8B50E4)	// ok (comp sx30)
 NHSTUB(ScreenLock,						0xFF8B4C98)	// ??? S95
 NHSTUB(ScreenUnlock,					0xFF8B4CFC)	// ??? S95
 NHSTUB(apex2us,							0xFFA5C23C)	// ok (comp sx30)

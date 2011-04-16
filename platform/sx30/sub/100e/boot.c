@@ -164,6 +164,7 @@ void __attribute__((naked,noinline)) boot() {
                  "CMP     R3, R1\n"
                  "STRCC   R2, [R3],#4\n"
                  "BCC     loc_FF810154\n"
+
                  "B       sub_FF810354_my" // -->
     );
 }

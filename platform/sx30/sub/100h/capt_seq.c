@@ -445,41 +445,6 @@ asm volatile(
 );
 }
 
-//void __attribute__((naked,noinline)) sub_FF992DAC_my(){
-// asm volatile(
-//"		STMFD	SP!, {R4-R6,LR} \n"
-//"		BL	sub_FF886080 \n"
-//"		MOV	R4, R0 \n"
-//"		LDR	R0, =0x3BC24 \n"
-//"		LDR	R5, =0x85AC \n"
-//"		LDR	R0, [R0,#0x24] \n"
-//"		MOV	R6, #1 \n"
-//"		CMP	R0, #0 \n"
-//"		BEQ	loc_FF992DF0 \n"
-//"		MOV	R0, #0xC \n"
-//"		BL	sub_FF88C648 \n"
-//"		TST	R0, #1 \n"
-//"		STRNE	R6, [R5] \n"
-//"		LDRNE	R0, [R4,#8] \n"
-//"		ORRNE	R0, R0,	#0x40000000 \n"
-//"		STRNE	R0, [R4,#8] \n"
-//"		LDMNEFD	SP!, {R4-R6,PC} \n"
-//"loc_FF992DF0: \n"
-//"		MOV	R0, R4 \n"
-//"		BL	sub_FF9929B0 \n"
-//"		MOV	R0, R4 \n"
-//"		BL	sub_FFAEC170 \n"
-//"		MOV	R0, R4 \n"
-//
-////"		BL	sub_FFAECAF8 \n"
-//"		BL	sub_FFAECAF8_my \n"					// patched
-//
-//"		TST	R0, #1 \n"
-//"		STRNE	R6, [R5] \n"
-//"		LDMFD	SP!, {R4-R6,PC} \n"
-// );
-//}
-
 void __attribute__((naked,noinline)) sub_FFAECAF8_my(){
  asm volatile(
 "                STMFD   SP!, {R2-R6,LR} \n"

@@ -97,9 +97,9 @@ void __attribute__((naked,noinline)) boot() {
                  "MCR     p15, 0, R0,c6,c0\n"
                  "MOV     R0, #0xC000002F\n"
                  "MCR     p15, 0, R0,c6,c1\n"
-                 "MOV     R0, #0x35\n"
+                 "MOV     R0, #0x35\n"					// memory region & size. bits 1 - 5 = size index, actual size = 2^(size index + 1) = 128MB
                  "MCR     p15, 0, R0,c6,c2\n"
-                 "MOV     R0, #0x40000035\n"
+                 "MOV     R0, #0x40000035\n"			// memory region & size. bits 1 - 5 = size index, actual size = 2^(size index + 1) = 128MB
                  "MCR     p15, 0, R0,c6,c3\n"
                  "MOV     R0, #0x80000017\n"
                  "MCR     p15, 0, R0,c6,c4\n"

@@ -3,21 +3,13 @@
 
 void vid_bitmap_refresh()
 {
-	extern int enabled_refresh_physical_screen;
 	extern int full_screen_refresh;
+	extern void _ScreenUnlock();
+	extern void _ScreenLock();
 
-	// i've tried refreshphysical screen (screen unlock) and that caused the canon and
-	// function menu to not display at all. This seems to work and is called in a similar
-	// way in other places where original OSD should be refreshed.
-	extern void _LockAndRefresh(); // wrapper function for screen lock
-	extern void _UnlockAndRefresh(); // wrapper function for screen unlock
-
-	_LockAndRefresh();
-
-	//enabled_refresh_physical_screen=1;
-	full_screen_refresh |= 3; //found in ScreenUnlock underneath a CameraLog.c call sub_FFA02598
-
-	_UnlockAndRefresh();
+	full_screen_refresh |= 3;
+	_ScreenLock();
+	_ScreenUnlock();
 }
 
 
@@ -68,7 +60,7 @@ void JogDial_CCW(void){
 // Viewport and Bitmap values that shouldn't change across firmware versions.
 // Values that may change are in lib.c for each firmware version.
 
-long vid_get_bitmap_screen_width() { return 320; }
+long vid_get_bitmap_screen_width() { return 360; }
 long vid_get_bitmap_screen_height() { return 240; }
 long vid_get_bitmap_buffer_width() { return 960; }
 long vid_get_bitmap_buffer_height() { return 270; }

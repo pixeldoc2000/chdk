@@ -72,9 +72,11 @@ NHSTUB(strrchr,							0xFF8140D8) // ok
 NHSTUB(time,							0xff893b88) // ok
 NHSTUB(LEDDrive,						0xff98ec88) // ok
 NHSTUB(SetScriptMode,					0xff8a001c) // ok
-NHSTUB(UnlockAndRefresh,				0xFF8B8238) // seems to work
+//NHSTUB(UnlockAndRefresh,				0xFF8B8238) // seems to work
 NHSTUB(RefreshPhysicalScreen,			0xFF8B8238) // alias for UnlockAndRefresh
-NHSTUB(LockAndRefresh,				    0xFF8B97D8) // seems to work
+//NHSTUB(LockAndRefresh,				    0xFF8B97D8) // seems to work
+NHSTUB(ScreenLock,						0xFF8B9340)	//
+NHSTUB(ScreenUnlock,					0xFF8B93A4)	//
 NHSTUB(apex2us,							0xFFA4E848) // ok (comp sx20)
 NHSTUB(WriteSDCard,						0xFF96DAB0)	// ok (comp sx20)
 NHSTUB(GetKbdState,						0xFF865A28) // ok (comp sx20)

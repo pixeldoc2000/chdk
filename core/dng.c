@@ -11,7 +11,11 @@
 const int cam_DefaultCropSize[]={CAM_JPEG_WIDTH, CAM_JPEG_HEIGHT};    // jpeg size
 const int cam_ActiveArea[]={CAM_ACTIVE_AREA_Y1, CAM_ACTIVE_AREA_X1, CAM_ACTIVE_AREA_Y2, CAM_ACTIVE_AREA_X2};
 const int cam_DefaultCropOrigin[]={CAM_DEFAULT_CROP_ORIGIN_W,CAM_DEFAULT_CROP_ORIGIN_H};
+#if defined(CAM_DNG_EXPOSURE_BIAS)
+const int cam_BaselineExposure[]={CAM_DNG_EXPOSURE_BIAS};
+#else
 const int cam_BaselineExposure[]={-1,2};
+#endif
 const int cam_BaselineNoise[]={1,1};
 const int cam_BaselineSharpness[]={4,3};
 const int cam_LinearResponseLimit[]={1,1};
