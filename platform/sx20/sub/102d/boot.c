@@ -176,9 +176,14 @@ void __attribute__((naked,noinline)) sub_FF811178_my() {
                  "BL      sub_FFB36ACC\n" // changed since 102b
                  "MOV     R0, #0x53000\n"
                  "STR     R0, [SP,#4]\n"
-//               "LDR     R0, =0x13DD6C\n" // -  // changed since 102b
-                 "LDR     R0, =new_sa\n"   // +
-                 "LDR     R0, [R0]\n"      // +
+
+#if defined(OPT_CHDK_IN_EXMEM)
+               "LDR     R0, =0x13DD6C\n" // -  // changed since 102b
+#else
+               "LDR     R0, =new_sa\n"   // otherwise use patched value
+               "LDR     R0, [R0]\n"      // 
+#endif
+
                  "LDR     R2, =0x2F9C00\n"
                  "LDR     R1, =0x2F24A8\n"
                  "STR     R0, [SP,#8]\n"

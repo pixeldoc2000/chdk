@@ -115,5 +115,9 @@
    #undef EDGE_HMARGIN
    #define EDGE_HMARGIN 28
    #define CAM_CHDK_PTP 1
+
+	#define	CAM_STARTUP_CRASH_FILE_OPEN_FIX	1				// enable fix for camera crash at startup when opening the conf / font files
+															// see http://chdk.setepontos.com/index.php?topic=6179.0
+
 //----------------------------------------------------------
 

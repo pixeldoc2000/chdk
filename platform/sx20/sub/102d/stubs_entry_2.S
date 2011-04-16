@@ -50,6 +50,7 @@ NHSTUB(add_ptp_handler, 				0xFFA49320)
 NHSTUB(Restart,							0xFF83A53C)
 NHSTUB(PB2Rec, 0xFF899E38)
 NHSTUB(Rec2PB, 0xFF8988A4)
+NHSTUB(exmem_alloc,						0xFF889DCC)	// search for ExMem.AllocCacheable (from reyalp)
 
 # Might be wrong
 NHSTUB(UnlockAF,						0xFF879714) // ? could be right
