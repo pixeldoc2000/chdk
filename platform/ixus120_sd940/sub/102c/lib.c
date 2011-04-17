@@ -78,7 +78,7 @@ long vid_get_viewport_height()
 /// check this
 int vid_get_viewport_width()
 {
-	return 960;
+	return 360;    // changed 2011/04/17 to match value use with IXUS120-SD940 firmare 1.01A, 1.03B, 1.03C
 }
 
 char *camera_jpeg_count_str()
