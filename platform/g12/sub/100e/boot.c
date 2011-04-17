@@ -50,10 +50,6 @@ void taskHook(context_t **context)
 	if(tcb->entry == (void*)task_ExpDrv)			tcb->entry = (void*)exp_drv_task;
 }
 
-void taskHook2(context_t **context)
-{ 
-}
-
 /*---------------------------------------------------------------------
   Memory Map:
 	0001900     MEMBASEADDR             start of data - used for initialized vars
@@ -177,7 +173,7 @@ void __attribute__((naked,noinline)) sub_FF810354_my() {
 
 	//http://chdk.setepontos.com/index.php/topic,4194.0.html
 	*(int*)0x1938=(int)taskHook;
-	*(int*)0x193C=(int)taskHook2; // setting this to an empty function seems to fix startup crash in movie mode ???
+	*(int*)0x193C=(int)taskHook;
     
 	// replacement of sub_FF864BE0 for correct power-on.
 	*(int*)(0x25E0) = (*(int*)0xC0220108)&1 ? 0x100000 : 0x200000; 

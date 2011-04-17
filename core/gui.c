@@ -2367,7 +2367,7 @@ void gui_draw_debug_vals_osd() {
 #if defined(OPT_EXMEM_TESTING)
 	// If defined the exmem memory is allocated; but not used for CHDK.
 	// It is filled with a guard value (see wrappers.c) which is checked here
-	// Any corruption is reported, otherwise 'OK' is displayed on screen.
+    // Any corruption is reported, otherwise 'OK' is displayed on screen (along with the exmem memory start address).
 	extern void *exmem_start, *exmem_end;
 	// check exmem allocated memory for corruption
 	unsigned long* p = (unsigned long*)exmem_start;
@@ -2391,7 +2391,7 @@ void gui_draw_debug_vals_osd() {
 	}
 	else
 	{
-		strcpy(osd_buf,"OK");
+		sprintf(osd_buf, "OK 0x%x", exmem_start);
 	}
 	draw_txt_string(2, 13, osd_buf, conf.osd_color);
 	// end of check	
