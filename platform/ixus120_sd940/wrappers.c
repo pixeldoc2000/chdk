@@ -17,50 +17,6 @@ long lens_get_target_distance()
 	return _GetCurrentTargetDistance();
 }
 
-typedef struct FILE_S {
-    int fd;         // used by Read/Write
-    unsigned len;   // +4 verfied in Fseek_FileStream
-    int unk0;       // +8
-    unsigned pos;   // +0xC verified in Fseek_FileStream
-    // unk1;        // +0x10
-    // unk2;        // +0x14
-    // io_buf;      // +0x18 32k uncached allocated in Fopen_FileStream
-    // unk3;        // +0x20 related to StartFileAccess_Sem
-    // ...name
-} FILE;
-// these tiny inlines provide type safety, and should optimize away
-
-typedef struct
-    {
-    unsigned long	st_dev;		//?
-    unsigned long	st_ino;		//?
-    unsigned short	st_mode;	//?
-    short		st_nlink;	//?
-    short		st_uid;		//?
-    short		st_gid;		//?
-    unsigned long	st_atime;	//?
-    unsigned long	st_mtime;	//?
-    unsigned long	st_ctime;	//?
-    unsigned long	st_size;
-    long		st_blksize;	//?
-    long		st_blocks;	//?
-    unsigned char	st_attrib;
-    int			reserved1;	//
-    int			reserved2;	//
-    int			reserved3;	//
-    int			reserved4;	//
-    int			reserved5;	//
-    int			reserved6;	//
-}stat_type;
-
-#define SEEK_SET        0
-#define SEEK_CUR        1
-#define SEEK_END        2
-
-#define O_RDONLY        0
-#define O_WRONLY        1
-#define O_RDWR          2
-
 /*
 int _stat(char *name, void *pStat) {
 	int fd;
