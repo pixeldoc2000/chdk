@@ -1,12 +1,13 @@
 #ifndef __CHDK_PTP_H
 #define __CHDK_PTP_H
-#define PTP_CHDK_VERSION_MAJOR 1  // increase only with backwards incompatible changes (and reset minor)
+#define PTP_CHDK_VERSION_MAJOR 2  // increase only with backwards incompatible changes (and reset minor)
 #define PTP_CHDK_VERSION_MINOR 0  // increase with extensions of functionality
 /*
 protocol version history
 0.1 - initial proposal from mweerden, + luar
 0.2 - Added ScriptStatus and ScriptSupport, based on work by ultimA
 1.0 - removed old script result code (luar), replace with message system
+2.0 - return PTP_CHDK_TYPE_TABLE for tables instead of TYPE_STRING, allow return of empty strings
 */
 
 #define PTP_OC_CHDK 0x9999
@@ -54,9 +55,9 @@ enum {
                             //   for script return and users this is ptp_chdk_script_data_type
                             //   for error ptp_chdk_script_error_type
                             // return param3 is script id of script that generated the message
-                            // return param4 is length of the message data
+                            // return param4 is length of the message data. 
                             // return data is message.
-                            // A minimum of 4 bytes of zeros is returned if there would not be data otherwise
+                            // A minimum of 1 bytes of zeros is returned if the message has no data (empty string or type NONE)
   PTP_CHDK_WriteScriptMsg,  // write a message for scripts running on camera
                             // input param2 is target script id, 0=don't care. Messages for a non-running script will be discarded
                             // data length is handled by ptp data phase
@@ -70,7 +71,10 @@ enum {
   PTP_CHDK_TYPE_NIL,
   PTP_CHDK_TYPE_BOOLEAN,
   PTP_CHDK_TYPE_INTEGER,
-  PTP_CHDK_TYPE_STRING, // NOTE tables currently returned as string
+  PTP_CHDK_TYPE_STRING, // Empty strings are returned with length=0
+  PTP_CHDK_TYPE_TABLE,  // tables are converted to a string by usb_msg_table_to_string, 
+                        // this function can be overridden in lua to change the format
+                        // the string may be empty for an empty table
 } ptp_chdk_script_data_type;
 
 // TempData flags
@@ -93,7 +97,7 @@ enum {
 // message types
 enum {
     PTP_CHDK_S_MSGTYPE_NONE = 0, // no messages waiting
-    PTP_CHDK_S_MSGTYPE_ERR,         // error message
+    PTP_CHDK_S_MSGTYPE_ERR,      // error message
     PTP_CHDK_S_MSGTYPE_RET,      // script return value
     PTP_CHDK_S_MSGTYPE_USER,     // message queued by script
 // TODO chdk console data ?

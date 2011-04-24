@@ -138,8 +138,7 @@ int enqueue_script_msg(ptp_script_msg_q *q,ptp_script_msg *msg) {
   if(w == q->r) {
     return 0;
   }
-  // zero size messages don't make any sense
-  if(msg == NULL || msg->size == 0) {
+  if(msg == NULL) {
     return 0;
   }
   q->q[q->w] = msg;
@@ -158,27 +157,28 @@ ptp_script_msg* dequeue_script_msg(ptp_script_msg_q *q) {
 }
 
 // public interface for script
+// create a message to be queued later
 ptp_script_msg* ptp_script_create_msg(unsigned type, unsigned subtype, unsigned datasize, const void *data) {
   ptp_script_msg *msg;
-  if(!datasize) {
-    return NULL;
-  }
   msg = malloc(sizeof(ptp_script_msg) + datasize);
   msg->size = datasize;
   msg->type = type;
   msg->subtype = subtype;
   // caller may fill in data themselves
-  if(data) {
+  // datasize may be empty (e.g. empty string)
+  if(data && datasize) {
       memcpy(msg->data,data,msg->size);
   }
   return msg;
 }
 
+// add a message to the outgoing queue
 int ptp_script_write_msg(ptp_script_msg *msg) {
   msg->script_id = script_run_id;
   return enqueue_script_msg(&msg_q_out,msg);
 }
 
+// retrieve the next message in the incoming queue
 ptp_script_msg* ptp_script_read_msg(void) {
   ptp_script_msg *msg;
   while(1) {
@@ -196,6 +196,8 @@ ptp_script_msg* ptp_script_read_msg(void) {
     }
   }
 }
+
+// convenience function write an error message
 int ptp_script_write_error_msg(unsigned errtype, const char *err) {
   if(script_msg_q_full(&msg_q_out)) {
     return 0;
@@ -216,8 +218,8 @@ static int handle_ptp(
   static union {
     char *str;
   } temp_data;
-  static int temp_data_kind = 0; // 0: nothing, 1: ascii string, 2: lua object
-  static int temp_data_extra; // size (ascii string) or type (lua object)
+  static int temp_data_kind = 0; // 0: nothing, 1: ascii string
+  static int temp_data_extra; // size (ascii string)
   PTPContainer ptp;
 
   // initialise default response
@@ -532,28 +534,31 @@ static int handle_ptp(
       }
     case PTP_CHDK_ReadScriptMsg:
     {
+      char *pdata="";
+      unsigned datasize=1;
+
       ptp_script_msg *msg = dequeue_script_msg(&msg_q_out);
       ptp.num_param = 4;
-      if(!msg) {
+      if(msg) {
+        ptp.param1 = msg->type;
+        ptp.param2 = msg->subtype;
+        ptp.param3 = msg->script_id;
+        ptp.param4 = msg->size;
+        // empty messages must have a data phase, so use default if no data
+        if(msg->size) {
+            datasize = msg->size;
+            pdata = msg->data;
+        }
+	  } else {
         // return a fully formed message for easier handling
         ptp.param1 = PTP_CHDK_S_MSGTYPE_NONE;
         ptp.param2 = 0;
         ptp.param3 = 0;
-        ptp.param4 = 4;
-        // looks like we need to send some data no matter what
-        if ( !send_ptp_data(data,"\0\0\0",4) )
-        {
-          ptp.code = PTP_RC_GeneralError;
-        }
-        break;
+        ptp.param4 = 0;
       }
-      ptp.param1 = msg->type;
-      ptp.param2 = msg->subtype;
-      ptp.param3 = msg->script_id;
-      ptp.param4 = msg->size;
 
       // NOTE message is lost if sending failed
-      if ( !send_ptp_data(data,msg->data,msg->size) )
+      if ( !send_ptp_data(data,pdata,datasize) )
       {
         ptp.code = PTP_RC_GeneralError;
       }

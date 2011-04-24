@@ -60,24 +60,38 @@ static ptp_script_msg *lua_create_usb_msg( lua_State* L, int index, unsigned msg
             datatype = PTP_CHDK_TYPE_STRING;
             data = (char *)lua_tolstring(L,index,&datasize);
         break;
-        // TODO this converts to a string and returns as STRING, format as described at 
+        // TODO this uses usb_msg_table_to_string to serialize the table
+        // the default format is described in
         // http://chdk.setepontos.com/index.php?topic=4338.msg62606#msg62606
-        // for compatibility with current PTPCAM/PTPCAMGUI implementation
-        // later we should switch to a proper serialized table with it's own return type
-        case LUA_TTABLE: 
-            lua_script_disable_yield_hook(); // don't want to yeild while converting
+        // other formats can be implemented by overriding this function in your lua code
+        case LUA_TTABLE: {
+            int result;
+            lua_script_disable_yield_hook(); // don't want to yield while converting
             lua_getglobal(L, "usb_msg_table_to_string"); // push function
             lua_pushvalue(L, index); // copy specified index to top of stack
-            lua_pcall(L,1,1,0); // this will leave an error message as a string on the stack if call fails
+            result = lua_pcall(L,1,1,0); // this will leave an error message as a string on the stack if call fails
             lua_script_enable_yield_hook();
-            // an empty table will be returned as an empty string
+            if( result ) {
+                // if called from lua, throw a normal error
+                if( msgtype == PTP_CHDK_S_MSGTYPE_USER ) {
+                    luaL_error(L,lua_tostring(L,-1));
+                    return NULL; // not reached
+                } else { // if it's a return, convert the message to an ERR
+                    msgtype = PTP_CHDK_S_MSGTYPE_ERR;
+                    datatype = PTP_CHDK_S_ERRTYPE_RUN;
+                    data = (char *)lua_tolstring(L,-1,&datasize);
+                    break;
+                }
+            }
+            // an empty table is returned as an empty string by default
             // a non-string should never show up here
-            if ( !(lua_isstring(L,-1) /*&& ( lua_objlen(L,-1) > 0 )*/)) { 
+            if ( !lua_isstring(L,-1) ) { 
                 return NULL;
             }
-            datatype = PTP_CHDK_TYPE_STRING;
+            datatype = PTP_CHDK_TYPE_TABLE;
             data = (char *)lua_tolstring(L,-1,&datasize);
             lua_pop(L,1);
+        }
         break;
         default:
             datatype = PTP_CHDK_TYPE_UNSUPPORTED;
@@ -142,9 +156,19 @@ void lua_script_finish(lua_State *L)
         // send all return values as RET messages
         int i,end = lua_gettop(L);
         for(i=1;i<=end; i++) {
+            ptp_script_msg *msg = lua_create_usb_msg(L,i,PTP_CHDK_S_MSGTYPE_RET);
             // if the queue is full return values will be silently discarded
             // incompatible types will be returned as TYPE_UNSUPPORTED to preserve expected number and order of return values
-            ptp_script_write_msg(lua_create_usb_msg(L,i,PTP_CHDK_S_MSGTYPE_RET)); 
+            if(msg) {
+                ptp_script_write_msg(msg); 
+                // create_usb_msg may convert the message to an error
+                if(msg->type != PTP_CHDK_S_MSGTYPE_RET) {
+                    break;
+                }
+            } else {
+                ptp_script_write_error_msg(PTP_CHDK_S_ERRTYPE_RUN, "error creating return msg");
+                break;
+            }
         }
     }
 #endif
