@@ -361,27 +361,15 @@ int remove(const char *name) {
 	return _DeleteFile_Fut(name);
 }
 
+//----------------------------------------------------------------------------
+// directory wrappers
+#ifndef CAM_DRYOS
 void *opendir(const char* name) {
     return _opendir(name);
 }
-
 void* readdir(void *d) {
-# if !CAM_DRYOS
     return _readdir(d);
-#else
-// TODO this makes a single static buffer for all directory handles.
-// This means you can only use one at a time, unless you memcpy!
-#ifdef CAM_DRYOS_2_3_R39
-  static char de[64];
-#else
-  static char de[40];
-#endif
-
-  _ReadFastDir(d, de);
-  return de[0]? de : (void*)0;
-#endif
 }
-
 int closedir(void *d) {
     return _closedir(d);
 }
@@ -389,6 +377,62 @@ int closedir(void *d) {
 void rewinddir(void *d) {
     return _rewinddir(d);
 }
+#else // dryos
+// TODO duplicated in stdlib.h!
+// structure returned by dryos
+// actual size may vary depending on version
+typedef struct {
+    int fh;
+    int unk[4];
+} DIR_dryos;
+
+// struct returned by our wrappers around opendir
+typedef struct {
+    DIR_dryos *dh;
+#ifdef CAM_DRYOS_2_3_R39
+    char de_buf[64];
+#else
+    char de_buf[40];
+#endif
+} DIR;
+
+DIR *opendir(const char* name) {
+    DIR *d;
+    DIR_dryos *dh = _opendir(name);
+    if(!dh) {
+        return (void *)0;
+    }
+    d = _malloc(sizeof(DIR));
+    if(!d) {
+        _closedir(dh);
+        return (void *)0;
+    }
+    d->dh = dh;
+    return d;
+}
+
+void* readdir(DIR *d) {
+  _ReadFastDir(d->dh, d->de_buf);
+  return d->de_buf[0]? d->de_buf : (void*)0;
+}
+
+int closedir(DIR *d) {
+    int r;
+    if(!d) {
+        return -1;
+    }
+    r = _closedir(d->dh);
+    _free(d);    
+    return r;
+}
+
+void rewinddir(DIR *d) {
+    if(!d) {
+        return;
+    }
+    _rewinddir(d->dh);
+}
+#endif // dryos dir functions
 
 int stat(char *name, void *pStat) {
     return _stat(name, pStat);

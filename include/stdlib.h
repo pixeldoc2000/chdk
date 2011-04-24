@@ -202,6 +202,7 @@ struct dirent {
     char                d_name[100];
 };
 #else
+// NOTE this is not complete and may not be accurate for all versions
 struct dirent {
     char                d_name[13];
     unsigned long	unk1;
@@ -213,13 +214,30 @@ struct dirent {
 };
 #endif
 
-// NOTE this is NOT the actual structure returned by dryos opendir!
+#if !CAM_DRYOS
 typedef struct {
-    unsigned int        fd; // first member is an fd from Open in dryos
+    unsigned int        fd;
     unsigned int        loc;
     struct dirent       dir;
 } DIR;
+#else
+// structure returned by dryos
+// actual size may vary depending on version
+typedef struct {
+    int fh;
+    int unk[4];
+} DIR_dryos;
 
+// struct returned by our wrappers around opendir
+typedef struct {
+    DIR_dryos *dh;
+#ifdef CAM_DRYOS_2_3_R39
+    char de_buf[64];
+#else
+    char de_buf[40];
+#endif
+} DIR;
+#endif
 
 extern DIR*           opendir (const char* name);
 extern struct dirent* readdir (DIR*);
