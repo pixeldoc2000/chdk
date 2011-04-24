@@ -4,6 +4,7 @@
 #include "conf.h"
 #include "math.h"
 #include "levent.h"
+#include "stdlib.h"
 
 //----------------------------------------------------------------------------
 // Char Wrappers
@@ -94,14 +95,14 @@ void msleep(long msec)
 }
 
 #ifndef CAM_DRYOS
-void task_lock()
+long task_lock()
 {
-    _taskLock();
+    return _taskLock();
 }
 
-void task_unlock()
+long task_unlock()
 {
-    _taskUnlock();
+    return _taskUnlock();
 }
 
 const char *task_name(int id)
@@ -337,7 +338,7 @@ int close (int fd)
     return _Close(fd);
 }
 
-int write (int fd, void *buffer, long nbytes)
+int write (int fd, const void *buffer, long nbytes)
 {
     return _Write(fd, buffer, nbytes);
 }
@@ -364,38 +365,20 @@ int remove(const char *name) {
 //----------------------------------------------------------------------------
 // directory wrappers
 #ifndef CAM_DRYOS
-void *opendir(const char* name) {
+DIR *opendir(const char* name) {
     return _opendir(name);
 }
-void* readdir(void *d) {
+struct dirent* readdir(DIR *d) {
     return _readdir(d);
 }
-int closedir(void *d) {
+int closedir(DIR *d) {
     return _closedir(d);
 }
 
-void rewinddir(void *d) {
+void rewinddir(DIR *d) {
     return _rewinddir(d);
 }
 #else // dryos
-// TODO duplicated in stdlib.h!
-// structure returned by dryos
-// actual size may vary depending on version
-typedef struct {
-    int fh;
-    int unk[4];
-} DIR_dryos;
-
-// struct returned by our wrappers around opendir
-typedef struct {
-    DIR_dryos *dh;
-#ifdef CAM_DRYOS_2_3_R39
-    char de_buf[64];
-#else
-    char de_buf[40];
-#endif
-} DIR;
-
 DIR *opendir(const char* name) {
     DIR *d;
     DIR_dryos *dh = _opendir(name);
@@ -405,15 +388,15 @@ DIR *opendir(const char* name) {
     d = _malloc(sizeof(DIR));
     if(!d) {
         _closedir(dh);
-        return (void *)0;
+        return NULL;
     }
     d->dh = dh;
     return d;
 }
 
-void* readdir(DIR *d) {
+struct dirent * readdir(DIR *d) {
   _ReadFastDir(d->dh, d->de_buf);
-  return d->de_buf[0]? d->de_buf : (void*)0;
+  return d->de_buf[0]? &d->de : NULL;
 }
 
 int closedir(DIR *d) {
@@ -434,48 +417,48 @@ void rewinddir(DIR *d) {
 }
 #endif // dryos dir functions
 
-int stat(char *name, void *pStat) {
+int stat(const char *name, struct stat *pStat) {
     return _stat(name, pStat);
 }
 
-long fopen(const char *filename, const char *mode) {
+FILE *fopen(const char *filename, const char *mode) {
 #ifdef CAM_DRYOS
     if(!filename || filename[0]!='A') {
-        return 0;
+        return NULL;
     }
 #endif
-    return _Fopen_Fut(filename,mode);
+    return (FILE *)_Fopen_Fut(filename,mode);
 }
 
-long fclose(long f) {
+long fclose(FILE *f) {
     return _Fclose_Fut((long)f);
 }
 
-long fread(void *buf, long elsize, long count, long f) {
+long fread(void *buf, long elsize, long count, FILE *f) {
     return _Fread_Fut(buf,elsize,count,(long)f);
 }
 
-long fwrite(const void *buf, long elsize, long count, long f) {
+long fwrite(const void *buf, long elsize, long count, FILE *f) {
     return _Fwrite_Fut(buf,elsize,count,(long)f);
 }
 
-long fseek(long file, long offset, long whence) {
+long fseek(FILE *file, long offset, long whence) {
     return _Fseek_Fut((long)file,offset,whence);
 }
 
-long feof(long file) {
+long feof(FILE * file) {
     return _Feof_Fut((long)file);
 }
 
-long fflush(long file) {
+long fflush(FILE * file) {
     return _Fflush_Fut((long)file);
 }
 
-char *fgets(char *buf, int n, long f) {
+char *fgets(char *buf, int n, FILE *f) {
     return _Fgets_Fut(buf,n,(int)f);
 }
 
-long rename(const char *oldname, const char *newname) {
+int rename(const char *oldname, const char *newname) {
  return _RenameFile_Fut(oldname, newname);
 }
 
@@ -604,7 +587,7 @@ unsigned long time(unsigned long *timer) {
     return _time(timer);
 }
 
-int utime(char *file, void *newTimes) {
+int utime(const char *file, struct utimbuf *newTimes) {
 #if !CAM_DRYOS
   return _utime(file, newTimes);
 #else
@@ -628,7 +611,7 @@ int utime(char *file, void *newTimes) {
 #endif
 }
 
-void *localtime(const unsigned long *_tod) {
+struct tm *localtime(const unsigned long *_tod) {
 #if !CAM_DRYOS
     return _localtime(_tod);
 #else
@@ -638,11 +621,11 @@ void *localtime(const unsigned long *_tod) {
 #endif
 }
 
-long strftime(char *s, unsigned long maxsize, const char *format, /*const struct tm*/ void *timp) {
+long strftime(char *s, unsigned long maxsize, const char *format, const struct tm *timp) {
 	return _strftime(s,maxsize,format,timp);
 }
 
-/*time_t*/ long mktime(/*struct tm*/ void *timp) {
+time_t mktime(struct tm *timp) {
 #if !CAM_DRYOS
 	return _mktime(timp);
 #else

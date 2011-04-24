@@ -71,7 +71,7 @@ extern long _mkdir(const char *dirname);
 
 extern int _Open (const char *name, int flags, int mode );
 extern int _Close (int fd);
-extern int _Write (int fd, void *buffer, long nbytes);
+extern int _Write (int fd, const void *buffer, long nbytes);
 extern int _Read (int fd, void *buffer, long nbytes);
 extern int _Lseek (int fd, long offset, int whence);
 extern int _Remove(const char *name);
@@ -220,7 +220,7 @@ extern double __pow(double x, double y);
 extern double __sqrt(double x);
 
 /* time */
-extern int _utime(char *file, void *newTimes);
+extern int _utime(const char *file, void *newTimes);
 extern unsigned long _time(unsigned long *timer);
 extern void *_localtime(const unsigned long *_tod);
 extern void *_LocalTime(const unsigned long *_tod, void * t_m); // DRYOS
@@ -240,7 +240,7 @@ extern void *_readdir(void *d);
 extern int _ReadFastDir(void *d, void* dd); // DRYOS
 extern int   _closedir(void *d);
 extern void  _rewinddir(void *d);
-extern int   _stat(char *name, void *pStat);
+extern int   _stat(const char *name, void *pStat);
 extern unsigned long _GetDrive_ClusterSize(int drive);
 extern unsigned long _GetDrive_TotalClusters(int drive);
 extern unsigned long _GetDrive_FreeClusters(int drive);

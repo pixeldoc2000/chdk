@@ -231,11 +231,14 @@ typedef struct {
 // struct returned by our wrappers around opendir
 typedef struct {
     DIR_dryos *dh;
+    union {
+        struct dirent de;
 #ifdef CAM_DRYOS_2_3_R39
-    char de_buf[64];
+        char de_buf[64];
 #else
-    char de_buf[40];
+        char de_buf[40];
 #endif
+    };
 } DIR;
 #endif
 
