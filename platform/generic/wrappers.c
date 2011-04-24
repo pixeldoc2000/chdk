@@ -723,7 +723,7 @@ void exmem_malloc_init() {
 	}
 }
 
-void *malloc(unsigned size) {
+void *malloc(long size) {
 	if(exmem_heap)
 		return suba_alloc(exmem_heap,size,0);
 	else
