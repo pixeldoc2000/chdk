@@ -369,11 +369,16 @@ void* readdir(void *d) {
 # if !CAM_DRYOS
     return _readdir(d);
 #else
-// for DRYOS cameras  A650, A720  do something with this!  - sizeof(de[]) must be >= sizeof(struct dirent): 'static char de[40];'
-  static char de[40] = "";	// (philmoz 15/4/2011) Must initialize this variable or GCC 4.4.0 will generate bad code and the File Browser will crash.
-                            // (reyalp) - whaaaaaaaaaa ?
-  _ReadFastDir(d, &de);
-  return de[0]? &de : (void*)0;
+// TODO this makes a single static buffer for all directory handles.
+// This means you can only use one at a time, unless you memcpy!
+#ifdef CAM_DRYOS_2_3_R39
+  static char de[64];
+#else
+  static char de[40];
+#endif
+
+  _ReadFastDir(d, de);
+  return de[0]? de : (void*)0;
 #endif
 }
 

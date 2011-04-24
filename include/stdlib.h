@@ -213,8 +213,9 @@ struct dirent {
 };
 #endif
 
+// NOTE this is NOT the actual structure returned by dryos opendir!
 typedef struct {
-    unsigned int        fd;
+    unsigned int        fd; // first member is an fd from Open in dryos
     unsigned int        loc;
     struct dirent       dir;
 } DIR;
