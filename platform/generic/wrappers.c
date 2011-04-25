@@ -1207,7 +1207,7 @@ int add_ptp_handler(int opcode, ptp_handler handler, int unknown)
 
 // this would make more sense in generic/main.c but not all a cameras use it
 void init_chdk_ptp_task() {
-  _CreateTask("InitCHDKPTP", 0x19, 0x2000, init_chdk_ptp, 0);
+  _CreateTask("InitCHDKPTP", 0x19, 0x200, init_chdk_ptp, 0);
 };
 
 #endif
