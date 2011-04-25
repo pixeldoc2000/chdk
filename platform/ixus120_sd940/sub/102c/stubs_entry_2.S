@@ -93,6 +93,6 @@ NHSTUB(Unmount_FileSystem,NULLSUB)
 NSTUB(MoveFocusLensToDistance, 0xffad10e4)
 NHSTUB(stat, 0xff83550c)
 
-
+NHSTUB(GetImageFolder, 0xFFA1901C) // function before 'GetCameraObjectTmpPath ERROR' string
 
 

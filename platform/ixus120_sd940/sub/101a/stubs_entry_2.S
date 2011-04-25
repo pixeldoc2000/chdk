@@ -73,6 +73,7 @@ NHSTUB(strtol, 0xff83e128)
 NHSTUB(TakeSemaphore, 0xff8381e4)
 NHSTUB(time, 0xFF87EAE4)
 NHSTUB(UnlockMainPower, 0xFF88A9B4)	
+NHSTUB(GetImageFolder, 0xFF91901C) // function before 'GetCameraObjectTmpPath ERROR' string
 NHSTUB(kbd_pwr_on , NULLSUB)
 NHSTUB(kbd_pwr_off, NULLSUB)
 

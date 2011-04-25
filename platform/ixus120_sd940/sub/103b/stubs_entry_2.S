@@ -90,7 +90,7 @@ NHSTUB(strtol, 0xff83e128)						//	SD940 103b matched with SD940 103c
 NHSTUB(TakeSemaphore, 0xff8381e4)				//	SD940 103b matched with SD940 103c TakeSemaphore
 NHSTUB(time, 0xFF87EAF0)						//	SD940 103b matched with SD940 103c ff87eb40 SystemTime
 NHSTUB(UnlockMainPower, 0xFF88A9C0)				//	SD940 103b matched with SD940 103c ff88aa10 UnlockMainPower
-
+NHSTUB(GetImageFolder, 0xFF919028)                              // function before 'GetCameraObjectTmpPath ERROR' string
 
 //** obsolete / unknown / not found subs
 

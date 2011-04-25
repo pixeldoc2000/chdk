@@ -102,3 +102,5 @@ NHSTUB(rewinddir, NULLSUB)						//** not found in SD90 or SD940-102c
 NHSTUB(SetZoomActuatorSpeedPercent, NULLSUB)	//** not found in SD90 or SD940-102c
 NHSTUB(Unmount_FileSystem, NULLSUB)				//** not found in SD90 or SD940-102c
 NHSTUB(Mount_FileSystem, NULLSUB)				//** not found in SD90 or SD940-102c
+
+NHSTUB(GetImageFolder, 0xFF919078)      // function before 'GetCameraObjectTmpPath ERROR' string
