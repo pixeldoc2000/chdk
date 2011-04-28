@@ -196,12 +196,13 @@ int vid_get_viewport_width() {
 
 // http://chdk.setepontos.com/index.php?topic=6037.msg62190#msg62190
 int vid_get_viewport_width() {
-    if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 0)    // On 16:9 (Widescreen) resolution PROPCASE_ASPECT_RATIO = 0
-        return 480;
-    else
+    //if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 0)    // On 16:9 (Widescreen) resolution PROPCASE_ASPECT_RATIO = 0
+    //    return 480;
+    //else
         return 360;
 }
 
+/*
 int vid_get_viewport_xoffset() {
     if (shooting_get_prop(PROPCASE_ASPECT_RATIO) == 0)
         return 0;
@@ -216,6 +217,7 @@ int vid_get_viewport_image_offset() {
 int vid_get_viewport_row_offset() {
     return (vid_get_viewport_buffer_width() - vid_get_viewport_width()) * 3;
 }
+*/
 
 long vid_get_viewport_height() {
     //return 240;
