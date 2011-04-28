@@ -2393,7 +2393,7 @@
     #define PARAM_CAMERA_NAME           4    // parameter number (index) for GetParameterData to get Camera Name
     #define DNG_EXT_FROM                ".CR2"
 
-	// everthing below is ToDo !!!!!!!!!!!!!!!!
+    // everthing below is ToDo !!!!!!!!!!!!!!!!
 
     //#define CAM_HAS_VARIABLE_ASPECT     1        // ?!? like SX1
 
@@ -2434,13 +2434,6 @@
     #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
     #undef ASPECT_GAMES_YCORRECTION
     #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
-
-    #define CAM_ZEBRA_ASPECT_ADJUST     1
-    #define CAM_ZEBRA_NOBUF             1
-
-    //zebra letterbox for saving memory
-    #undef ZEBRA_HMARGIN0
-    #define ZEBRA_HMARGIN0  30    // this 30 rows are not used by the display buffer is 720x240 effective, no 960x270, i.e. (270-240) reduction in widht possible but not done (more difficult to manage it and slower).
 //----------------------------------------------------------
 
 
