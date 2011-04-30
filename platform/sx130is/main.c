@@ -45,14 +45,14 @@ static const struct {
 #define NUM_FL (sizeof(fl_tbl)/sizeof(fl_tbl[0]))
 
 // SX130 focal lenght range 5.0 - 60 mm (35 mm equivalent: 28 - 336 mm)(1/2.3" Type CCD, Scale Factor To 35 mm Equivalent: 5.6)
-// 28/5.0*10000=56000
-// 336/60*10000=56000
-#define CF_EFL 56000
+// 28/5.0*100=560
+// 336/60*100=560
+#define CF_EFL 560
 
 const int zoom_points = 128;
 
 int get_effective_focal_length(int zp) {
-    return (CF_EFL*get_focal_length(zp))/10000;
+    return (CF_EFL*get_focal_length(zp))/100;
 }
 
 int get_focal_length(int zp) {
