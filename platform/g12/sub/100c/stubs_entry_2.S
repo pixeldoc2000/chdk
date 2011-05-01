@@ -94,6 +94,7 @@ NHSTUB(PutOutNdFilter,                  0xFFB04E90)
 NHSTUB(PT_MoveDigitalZoomToWide,		0xFF87F5C0)
 NHSTUB(rand,							0xFFA5B364)	// search for 0x41C64E6D. Function before this value is rand.
 NHSTUB(srand,							0xFFA5B358)	// search for 0x41C64E6D. Function before rand is srand.
+NHSTUB(MoveIrisWithAv,					0xFFB04878)
 
 # From stubs_entry_ida.s
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff899bbc)

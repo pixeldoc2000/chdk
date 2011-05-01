@@ -1131,31 +1131,52 @@ void shooting_tv_bracketing(){
 }
 
 void shooting_av_bracketing(){
- short value, is_odd;
- int m=mode_get()&MODE_SHOOTING_MASK;
- if (bracketing.shoot_counter==0) { // first shoot
-    bracketing.shoot_counter=1;
-    //short av_override_value=shooting_get_av96_override_value;
-    //if (av_override_value) bracketing.av96=av_override_value;
-    if (!(m==MODE_M || m==MODE_AV)) bracketing.av96=shooting_get_av96();
-	else bracketing.av96=shooting_get_user_av96();
-    bracketing.av96_step=32*conf.av_bracket_value;
-  }
-  // other shoots
-   bracketing.shoot_counter++;
-   is_odd=(bracketing.shoot_counter&1);
-   if (((!is_odd) || (conf.bracket_type>0)) || (((is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN)))
-       bracketing.dav96+=bracketing.av96_step;
-   if ((((!is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==1)) && ((bracketing.av96-bracketing.dav96)>=AV96_MIN))
-     {
-     value=bracketing.av96-bracketing.dav96;
-     shooting_set_av96_direct(value, SET_NOW);
-     }
-   else if (((is_odd) && (conf.bracket_type==0)) || (conf.bracket_type==2)  || (((!is_odd) && (conf.bracket_type==0)) && ((bracketing.av96-bracketing.dav96)<AV96_MIN)))
-     {
-     value=bracketing.av96+bracketing.dav96;
-     shooting_set_av96_direct(value, SET_NOW);
-     }
+    short value,is_odd;
+
+    int m = mode_get()&MODE_SHOOTING_MASK;
+
+    if (bracketing.shoot_counter == 0) { // first shoot
+        bracketing.shoot_counter = 1;
+        //short av_override_value=shooting_get_av96_override_value;
+        //if (av_override_value) bracketing.av96=av_override_value;
+        if (!(m==MODE_M || m==MODE_AV))
+            bracketing.av96 = shooting_get_av96();
+        else
+            bracketing.av96 = shooting_get_user_av96();
+        bracketing.av96_step = 32*conf.av_bracket_value;
+    }
+    // other shoots
+    bracketing.shoot_counter++;
+    is_odd = (bracketing.shoot_counter&1);
+    value = bracketing.av96;
+
+    if ( !is_odd || (conf.bracket_type > 0) ||
+         ( is_odd && (conf.bracket_type == 0) && ((bracketing.av96 - bracketing.dav96) < AV96_MIN) ))
+    {
+       bracketing.dav96 += bracketing.av96_step;
+    }
+
+    if (((!is_odd && (conf.bracket_type == 0)) || (conf.bracket_type == 1)) && ((bracketing.av96 - bracketing.dav96) >= AV96_MIN))
+    {
+        value -= bracketing.dav96;
+    }
+    else if ((is_odd && (conf.bracket_type == 0)) 
+                || (conf.bracket_type == 2) 
+                || ((!is_odd && (conf.bracket_type == 0)) && ((bracketing.av96 - bracketing.dav96) < AV96_MIN)))
+    {
+        value += bracketing.dav96;
+    }
+
+    if (value != bracketing.av96)
+    {
+        shooting_set_av96_direct(value, SET_NOW);
+// sx30 and g12 apparently do not set aperture from propcase in continuous mode
+// TODO if this is common to other models it should become a camera.h define
+#if defined(CAMERA_sx30) || defined(CAMERA_g12)
+        extern int _MoveIrisWithAv(short*);
+        _MoveIrisWithAv(&value);
+#endif
+    }
 }
 
 

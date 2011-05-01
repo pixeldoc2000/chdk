@@ -91,6 +91,7 @@ NHSTUB(Rec2PB,                          0xFF8A1B40)
 NHSTUB(exmem_alloc,						0xFF8944F8)	// search for ExMem.AllocCacheable (from reyalp)
 NHSTUB(rand,							0xFFA4DB2C)	// search for 0x41C64E6D. Function before this value is rand.
 NHSTUB(srand,							0xFFA4DB20)	// search for 0x41C64E6D. Function before rand is srand.
+NHSTUB(MoveIrisWithAv,					0xFFAE8FBC)
 
 # from stubs_entry_ida.S
 NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff89e078)
