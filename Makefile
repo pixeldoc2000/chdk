@@ -304,11 +304,6 @@ batch-zip: version
 	mv $(topdir)bin/$(VER)-d10-100b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-d10-100b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus95_sd1200-100c-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-g12-100c-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g12-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-g12-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-g12-100e-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx30-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx30-100e-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx30-100h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx30-100h-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-sx30-100l-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-sx30-100l-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
@@ -519,16 +514,6 @@ batch-zip-complete: version
 	mv $(topdir)bin/ixus95_sd1200-100c-$(BUILD_NUMBER).zip $(topdir)bin/ixus95_sd1200-100c-$(BUILD_NUMBER)_BETA.zip
 	#mv $(topdir)bin/a430-100b-$(BUILD_NUMBER)-full.zip $(topdir)bin/a430-100b-$(BUILD_NUMBER)-full_BETA.zip
 	#mv $(topdir)bin/a430-100b-$(BUILD_NUMBER).zip $(topdir)bin/a430-100b-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/g12-100c-$(BUILD_NUMBER)-full.zip $(topdir)bin/g12-100c-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/g12-100c-$(BUILD_NUMBER).zip $(topdir)bin/g12-100c-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/g12-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/g12-100e-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/g12-100e-$(BUILD_NUMBER).zip $(topdir)bin/g12-100e-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx30-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100e-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx30-100e-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100e-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx30-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100h-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx30-100h-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100h-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER)-full.zip $(topdir)bin/sx30-100l-$(BUILD_NUMBER)-full_BETA.zip
-	mv $(topdir)bin/sx30-100l-$(BUILD_NUMBER).zip $(topdir)bin/sx30-100l-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full_BETA.zip
