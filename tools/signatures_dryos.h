@@ -3349,6 +3349,39 @@ static FuncSig func_sig_Rec2PB_1[] = {
 	/* 28/32 */
 };
 
+static FuncSig func_sig_GetMemInfo_1[] = {
+	{   1, 0xe51f50e4, 0xfdffffff }, // ldr:4:0xE51F50E4
+	{   2, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   3, 0xe5950014, 0xfdffffff }, // ldr:4:0xE5950014
+	{   4, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   5, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFF9CF
+	{   6, 0xe1a02020, 0xfdffffff }, // mov:6:0xE3A02020
+	{   7, 0xe0851018, 0xfdffffff }, // add:6:0xE2851018
+	{   8, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{   9, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB08DE2A
+	{  10, 0xe1a00000, 0xfdffffff }, // mov:6:0xE3A00000
+	{  11, 0xe5953010, 0xfdffffff }, // ldr:4:0xE5953010
+	{  12, 0xe1a01000, 0xfdffffff }, // mov:6:0xE1A01000
+	{  13, 0xe1a02000, 0xfdffffff }, // mov:6:0xE1A02000
+	{  14, 0xea000000, 0xff000000 }, // b, bl:3:0xEA000005
+	{  15, 0xe593c004, 0xfdffffff }, // ldr:4:0xE593C004
+	{  16, 0xe5933008, 0xfdffffff }, // ldr:4:0xE5933008
+	{  17, 0xe15c0001, 0xfdffffff }, // cmp:7:0xE15C0001
+	{  18, 0x81a0100c, 0xfdffffff }, // mov:6:0x81A0100C
+	{  19, 0xe0822001, 0xfdffffff }, // add:6:0xE2822001
+	{  20, 0xe08c0000, 0xfdffffff }, // add:6:0xE08C0000
+	{  21, 0xe1530000, 0xfdffffff }, // cmp:7:0xE3530000
+	{  22, 0x1a000000, 0xff000000 }, // b, bl:3:0x1AFFFFF7
+	{  23, 0xe0846014, 0xfdffffff }, // add:6:0xE2846014
+	{  25, 0xe5950014, 0xfdffffff }, // ldr:4:0xE5950014
+	{  27, 0xea000000, 0xff000000 }, // b, bl:3:0xEAFFF9AC
+	{  28, 0xe52de004, 0xfdffffff }, // str:4:0xE52DE004
+	{  29, 0xe59fe150, 0xfdffffff }, // ldr:4:0xE59FE150
+	{  31, 0xe5902000, 0xfdffffff }, // ldr:4:0xE5902000
+	{ -1, -1, -1 },
+	/* 28/32 */
+};
+
 static FuncSig func_sig_AllocateMemory_2[] = {
 	{   0, 0xe5900000, 0xfdffffff }, // ldr:4:0xE5900000
 	{   1, 0xea000000, 0xff000000 }, // b, bl:3:0xEAF80561
@@ -4965,6 +4998,42 @@ static FuncSig func_sig_Rec2PB_3[] = {
 	/* 29/32 */
 };
 
+static FuncSig func_sig_GetMemInfo_3[] = {
+	{   1, 0xe59f50c8, 0xfdffffff }, // ldr:4:0xE59F50C8
+	{   2, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{   3, 0xe5950024, 0xfdffffff }, // ldr:4:0xE5950024
+	{   4, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   5, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE2EF
+	{   6, 0xe595000c, 0xfdffffff }, // ldr:4:0xE595000C
+	{   7, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{   8, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000021
+	{   9, 0xe5950004, 0xfdffffff }, // ldr:4:0xE5950004
+	{  10, 0xe0800008, 0xfdffffff }, // add:6:0xE2800008
+	{  11, 0xe5840000, 0xfdffffff }, // str:4:0xE5840000
+	{  12, 0xe5950004, 0xfdffffff }, // ldr:4:0xE5950004
+	{  13, 0xe5901004, 0xfdffffff }, // ldr:4:0xE5901004
+	{  14, 0xe1510000, 0xfdffffff }, // cmp:7:0xE3510000
+	{  15, 0x11a00001, 0xfdffffff }, // mov:6:0x11A00001
+	{  16, 0x1a000000, 0xff000000 }, // b, bl:3:0x1AFFFFFB
+	{  17, 0xe5901000, 0xfdffffff }, // ldr:4:0xE5901000
+	{  18, 0xe0810000, 0xfdffffff }, // add:6:0xE0810000
+	{  19, 0xe5840004, 0xfdffffff }, // str:4:0xE5840004
+	{  20, 0xe5950008, 0xfdffffff }, // ldr:4:0xE5950008
+	{  21, 0xe1a0100d, 0xfdffffff }, // mov:6:0xE1A0100D
+	{  22, 0xe5840008, 0xfdffffff }, // str:4:0xE5840008
+	{  23, 0xe5950018, 0xfdffffff }, // ldr:4:0xE5950018
+	{  24, 0xe5840010, 0xfdffffff }, // str:4:0xE5840010
+	{  25, 0xe595001c, 0xfdffffff }, // ldr:4:0xE595001C
+	{  26, 0xe584000c, 0xfdffffff }, // str:4:0xE584000C
+	{  27, 0xe5950020, 0xfdffffff }, // ldr:4:0xE5950020
+	{  28, 0xe5840014, 0xfdffffff }, // str:4:0xE5840014
+	{  29, 0xe59f0058, 0xfdffffff }, // ldr:4:0xE59F0058
+	{  30, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB00175B
+	{  31, 0xe59d0008, 0xfdffffff }, // ldr:4:0xE59D0008
+	{ -1, -1, -1 },
+	/* 31/32 */
+};
+
 FuncsList func_list[] = {
 	{ "AllocateMemory", func_sig_AllocateMemory_1 },
 	{ "AllocateMemory", func_sig_AllocateMemory_2 },
@@ -5006,6 +5075,8 @@ FuncsList func_list[] = {
 	{ "GetFocusLensSubjectDistance", func_sig_GetFocusLensSubjectDistance_1 },
 	{ "GetFocusLensSubjectDistanceFromLens", func_sig_GetFocusLensSubjectDistanceFromLens_1 },
 	{ "GetFocusLensSubjectDistanceFromLens", func_sig_GetFocusLensSubjectDistanceFromLens_3 },
+	{ "GetMemInfo", func_sig_GetMemInfo_1 },
+	{ "GetMemInfo", func_sig_GetMemInfo_3 },
 	{ "GetOpticalTemperature", func_sig_GetOpticalTemperature_2 },
 	{ "GetOpticalTemperature", func_sig_GetOpticalTemperature_3 },
 	{ "GetParameterData", func_sig_GetParameterData_1 },

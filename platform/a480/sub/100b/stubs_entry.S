@@ -31,6 +31,7 @@ NSTUB(GetCurrentAvValue, 0xffce0fe8)
 NSTUB(GetFocusLensSubjectDistance, 0xffce00c8)
 // Best match: 77%
 NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffce03d4)
+NSTUB(GetMemInfo, 0xffc03be8)
 // Best match: 80%
 NSTUB(GetOpticalTemperature, 0xffc2e9dc)
 // Best match: 96%

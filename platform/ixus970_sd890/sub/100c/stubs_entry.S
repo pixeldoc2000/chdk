@@ -32,6 +32,7 @@ NSTUB(GetDrive_TotalClusters, 0xff84f2f4)
 NSTUB(GetFocusLensSubjectDistance, 0xff92ec40)
 // Best match: 78%
 NSTUB(GetFocusLensSubjectDistanceFromLens, 0xff92ef4c)
+NSTUB(GetMemInfo, 0xff813c40)
 // Best match: 96%
 NSTUB(GetOpticalTemperature, 0xff845410)
 // Best match: 96%

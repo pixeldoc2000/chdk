@@ -38,6 +38,7 @@ NSTUB(GetDrive_TotalClusters, 0xff87697c)
 NSTUB(GetFocusLensSubjectDistance, 0xff97e348)
 // Best match: 83%
 NSTUB(GetFocusLensSubjectDistanceFromLens, 0xff97e794)
+NSTUB(GetMemInfo, 0xff81a264)
 // Best match: 88%
 NSTUB(GetOpticalTemperature, 0xff868ff4)
 // ERROR: GetParameterData is not found!

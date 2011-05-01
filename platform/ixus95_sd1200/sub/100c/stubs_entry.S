@@ -33,6 +33,7 @@ NSTUB(GetCurrentAvValue, 0xffcf1384)
 // ERROR: GetFocusLensSubjectDistance is not found!
 // Best match: 83%
 NSTUB(GetFocusLensSubjectDistanceFromLens, 0xffcf0810)
+NSTUB(GetMemInfo, 0xffc03be4)
 // Best match: 96%
 NSTUB(GetOpticalTemperature, 0xffc33940)
 // Best match: 96%
