@@ -72,7 +72,7 @@ long action_stack_create(action_process proc_func, long p)
         if (task_comp_id < 0)
             task_comp_id = 0;
     } while( !action_stack_is_finished(task_comp_id) );
-	return stack->comp_id; 
+    return stack->comp_id;
 }
 
 static void action_stack_finish(int task_id)
@@ -139,9 +139,9 @@ void action_push_click(long key)
 {
 // WARNING stack program flow is reversed
     action_push_release(key);
-#if defined(CAM_KEY_CLICK_DELAY) // camera need delay for click
-    action_push_delay(CAM_KEY_CLICK_DELAY);
-#endif
+#if defined(CAM_KEY_CLICK_DELAY) // camera need delay for click 
+    action_push_delay(CAM_KEY_CLICK_DELAY); 
+#endif 
     action_push_press(key);
 }
 
@@ -182,7 +182,8 @@ int action_process_delay(int p)
     if (action_stacks[active_stack]->delay_target_ticks == 0)
     {
         /* setup timer */
-        action_stacks[active_stack]->delay_target_ticks = t+action_get_prev(p);
+        long action = action_get_prev(p);
+        action_stacks[active_stack]->delay_target_ticks = t+((action)?action:86400000);
         return 0;
     }
     if (action_stacks[active_stack]->delay_target_ticks <= t)
