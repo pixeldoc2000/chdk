@@ -76,6 +76,7 @@ NSTUB(Read, 0xff86fba4)
 NSTUB(RefreshPhysicalScreen, 0xff975be8)
 NSTUB(Remove, 0xff86fb30)
 NSTUB(RenameFile_Fut, 0xff868974)
+NSTUB(Restart, 0xff823ac0)
 // Best match: 96%
 NSTUB(SetAutoShutdownTime, 0xff96042c)
 NSTUB(SetCurrentCaptureModeType, 0xff98cdf8)
@@ -103,6 +104,8 @@ NSTUB(_pow, 0xffac0ad4)
 // ALT: NSTUB(_pow, 0xffac0ad4) // 25/0
 NSTUB(_sqrt, 0xffac4e20)
 // ALT: NSTUB(_sqrt, 0xffac4e20) // 24/0
+// Best match: 96%
+NSTUB(add_ptp_handler, 0xffa3d504)
 NSTUB(chdir, 0xffad407c)
 // ALT: NSTUB(chdir, 0xffad407c) // 27/0
 NSTUB(close, 0xffad39bc)
