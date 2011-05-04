@@ -268,8 +268,9 @@ int action_stack_standard(long p)
     case AS_SHOOT:
         // Initiate a shoot. Remember that stack program flow is reversed!
         action_pop();
-
-        action_push_delay(conf.script_shoot_delay*100);// XXX FIXME find out how to wait to jpeg save finished
+        // XXX FIXME find out how to wait to jpeg save finished
+        // note, must not wait 0, means forever
+        action_push_delay((conf.script_shoot_delay)?conf.script_shoot_delay*100:1);
 
         action_push(AS_WAIT_SAVE);
 
