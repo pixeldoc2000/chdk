@@ -130,9 +130,6 @@
 
     #define  CAM_CHDK_PTP               1 // include CHDK PTP support
 
+#define CAM_FIRMWARE_MEMINFO    1       // Use 'GetMemInfo' to get free memory size.
+
 //----------------------------------------------------------
-
-
-//==========================================================
-// SD-Series (IXUS-Series)
-//==========================================================

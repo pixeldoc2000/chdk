@@ -85,22 +85,33 @@ struct cell {
 //#define RECLAIM_DEPTH_MAX 2
 #define SUBA_MAGIC "\xFF\x15\x15\x15SUBA"
 
-int suba_largest_block(struct allocator *suba)
+void suba_getmeminfo(struct allocator *suba, int *allocated_size, int *allocated_peak, int *allocated_count, int *free_size, int *largest_block, int *free_block_count)
 {
-	size_t sz = 0;
+	size_t largest = 0;
+    size_t free = 0;
+    size_t count = 0;
 
 	if (suba)
 	{
 		struct cell *c = SADR(suba, suba->tail);
-		if (c->size > sz) sz = c->size;
+		if (c->size > largest) largest = c->size;
+        free += c->size;
+        count++;
 		while (c->next != suba->tail)
 		{
 			c = SADR(suba, c->next);
-			if (c->size > sz) sz = c->size;
+			if (c->size > largest) largest = c->size;   
+            free += c->size;
+            count++;
 		}
 	}
 
-	return sz;
+    *largest_block = largest;
+    *free_size = free;
+    *free_block_count = count;
+    *allocated_size = suba->size_total;     // TODO check this is a reasonable value for this field
+    *allocated_peak = suba->alloc_total;    // TODO check this is a reasonable value for this field
+    *allocated_count = 0;                   // TODO implement this
 }
 
 void *

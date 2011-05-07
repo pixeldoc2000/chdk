@@ -103,4 +103,7 @@
 															// see http://chdk.setepontos.com/index.php?topic=6179.0
 
     #define CAM_KEY_CLICK_DELAY 150 // SX30 appears to need extra delay for clicks
+
+#define CAM_FIRMWARE_MEMINFO    1       // Use 'GetMemInfo' to get free memory size.
+
 //----------------------------------------------------------

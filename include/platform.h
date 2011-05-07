@@ -559,8 +559,26 @@ int switch_mode_usb(int mode); // 0 = playback, 1 = record; return indicates suc
 
 void ExitTask();
 
+// Data returned from GetMemInfo & GetExMemInfo functions stored in this data structure
+typedef struct {
+    int start_address;
+    int end_address;
+    int total_size;
+    int allocated_size;
+    int allocated_peak;
+    int allocated_count;
+    int free_size;
+    int free_block_max_size;
+    int free_block_count;
+} cam_meminfo;
+
+#if defined(CAM_FIRMWARE_MEMINFO)
+extern void GetMemInfo(cam_meminfo*);
+#endif
+
 #ifdef OPT_EXMEM_MALLOC
 void exmem_malloc_init(void);
+void GetExMemInfo(cam_meminfo*);
 #endif
 
 #endif

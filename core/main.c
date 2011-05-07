@@ -54,8 +54,14 @@ int core_get_free_memory() {
 	// If using the exmem / suba memory allocation system then don't need
 	// to try allocating memory to find out how much is available
 	// Call function to scan free list for the largest free block available.
-	extern int exmem_largest_block();
-	return exmem_largest_block();
+    cam_meminfo camera_meminfo;
+    GetExMemInfo(&camera_meminfo);
+    return camera_meminfo.free_block_max_size;
+#elif defined(CAM_FIRMWARE_MEMINFO)
+    // Call firmware function to fill memory info structure and return size of largest free block
+    cam_meminfo camera_meminfo;
+    GetMemInfo(&camera_meminfo);
+    return camera_meminfo.free_block_max_size;
 #else
 	int size, l_size, d;
     char* ptr;

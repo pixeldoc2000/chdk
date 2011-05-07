@@ -145,6 +145,11 @@
 
 #undef    PARAM_CAMERA_NAME                      // parameter number for GetParameterData to get camera name
 
+
+#undef  CAM_FIRMWARE_MEMINFO                    // Use 'GetMemInfo' function in firmware to get free memory details
+                                                // GetMemInfo should be found correctly by the gensig/finsig signature
+                                                // finder for all dryos based cameras.
+
 //----------------------------------------------------------
 // Override Default values for Camera if necessary
 //----------------------------------------------------------

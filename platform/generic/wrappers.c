@@ -699,11 +699,11 @@ void exmem_malloc_init() {
 		// and reduce available space by CHDK size (MEMISOSIZE)
 		// round MEMISOSIZE up to next 4 byte boundary if needed (just in case)
 		exmem_start = mem + ((MEMISOSIZE+3)&0xFFFFFFFC);
-		exmem_size = EXMEM_HEAP_SIZE - EXMEM_HEAP_SKIP - ((MEMISOSIZE+3)&0xFFFFFFFC);
+		exmem_size = EXMEM_BUFFER_SIZE - ((MEMISOSIZE+3)&0xFFFFFFFC);
 #else
 		// Set start & size based on requested values
 		exmem_start = mem;
-		exmem_size = EXMEM_HEAP_SIZE - EXMEM_HEAP_SKIP;
+		exmem_size = EXMEM_BUFFER_SIZE;
 #endif
 		exmem_end = exmem_start + exmem_size;
 #if defined(OPT_EXMEM_TESTING)
@@ -736,10 +736,18 @@ void free(void *p) {
 		_free(p);
 }
 
-int exmem_largest_block()
+// Use suba functions to fill meminfo structure to match firmware GetMemInfo function
+
+void GetExMemInfo(cam_meminfo *camera_meminfo)
 {
-	extern int suba_largest_block(void*);
-	return suba_largest_block(exmem_heap);
+	extern void suba_getmeminfo(void*, int*, int*, int*, int*, int*, int*);
+
+    camera_meminfo->start_address        = (int)exmem_start;
+    camera_meminfo->end_address          = (int)exmem_start + exmem_size;
+    camera_meminfo->total_size           = exmem_size;
+    suba_getmeminfo(exmem_heap,
+                    &camera_meminfo->allocated_size, &camera_meminfo->allocated_peak, &camera_meminfo->allocated_count,
+                    &camera_meminfo->free_size, &camera_meminfo->free_block_max_size, &camera_meminfo->free_block_count);
 }
 // regular malloc
 #else
@@ -784,6 +792,44 @@ void *memchr(const void *s, int c, int n) {
 	return (void *)0;
 #endif
 }
+ 
+#if defined(CAM_FIRMWARE_MEMINFO)
+
+// Use firmware GetMemInfo function to retrieve info about Canon heap memory allocation
+
+void GetMemInfo(cam_meminfo *camera_meminfo)
+{
+    // Prior to dryos R39 GetMemInfo returns 9 values, after R39 it returns 10 (all but 1 are used in each case)
+    int fw_info[10];
+    extern void _GetMemInfo(int*);
+    _GetMemInfo(fw_info);
+
+#if defined(CAM_DRYOS_2_3_R39)
+    // For newer dryos version copy all 9 used values to CHDK structure
+    camera_meminfo->start_address        = fw_info[0];
+    camera_meminfo->end_address          = fw_info[1];
+    camera_meminfo->total_size           = fw_info[2];
+    camera_meminfo->allocated_size       = fw_info[3];
+    camera_meminfo->allocated_peak       = fw_info[4];
+    camera_meminfo->allocated_count      = fw_info[5];
+    camera_meminfo->free_size            = fw_info[6];
+    camera_meminfo->free_block_max_size  = fw_info[7];
+    camera_meminfo->free_block_count     = fw_info[8];
+#else
+    // For older dryos version copy 8 used values to CHDK structure and calculate missing value
+    camera_meminfo->start_address        = fw_info[0];
+    camera_meminfo->end_address          = fw_info[0] + fw_info[1];
+    camera_meminfo->total_size           = fw_info[1];
+    camera_meminfo->allocated_size       = fw_info[2];
+    camera_meminfo->allocated_peak       = fw_info[3];
+    camera_meminfo->allocated_count      = fw_info[4];
+    camera_meminfo->free_size            = fw_info[5];
+    camera_meminfo->free_block_max_size  = fw_info[6];
+    camera_meminfo->free_block_count     = fw_info[7];
+#endif
+}
+
+#endif
 
 //----------------------------------------------------------------------------
 
