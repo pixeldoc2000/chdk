@@ -74,7 +74,7 @@
     // bayer sensor pattern
     #define cam_CFAPattern 0x02010100 // Red  Green  Green  Blue
 
-	#define	CAM_DNG_EXPOSURE_BIAS		0,0		// Specify DNG exposure bias value to 0 (to override default of -0.5 in the dng.c code)
+	#define	CAM_DNG_EXPOSURE_BIAS		0,1		// Specify DNG exposure bias value to 0 (to override default of -0.5 in the dng.c code)
 
 	//need fixing *****************************************************
     #define cam_CalibrationIlluminant1	17		// Standard Light A
