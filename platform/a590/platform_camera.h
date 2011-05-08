@@ -65,5 +65,8 @@
 #define CAM_EXT_TV_RANGE            1
 #define CAM_MULTIPART               1
 #define CAM_STARTUP_CRASH_FILE_OPEN_FIX 1
+
+#define CAM_FIRMWARE_MEMINFO    1       // Use 'GetMemInfo' to get free memory size.
+
 //----------------------------------------------------------
 

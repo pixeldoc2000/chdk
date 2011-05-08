@@ -1075,6 +1075,12 @@ static void set_string_field(lua_State* L, const char *key, const char *val)
   lua_setfield(L, -2, key);
 }
 
+static void set_number_field(lua_State* L, const char *key, int val)
+{
+  lua_pushnumber(L, val);
+  lua_setfield(L, -2, key);
+}
+
 static int luaCB_get_buildinfo( lua_State* L )
 {
   lua_createtable(L, 0, 8);
@@ -1089,8 +1095,7 @@ static int luaCB_get_buildinfo( lua_State* L )
 #else
   set_string_field( L,"os", "dryos" );
 #endif
-  lua_pushnumber( L, PLATFORMID );
-  lua_setfield(L, -2, "platformid");
+  set_number_field( L, "platformid", PLATFORMID );
   return 1;
 }
 
@@ -1579,6 +1584,92 @@ static int luaCB_write_usb_msg( lua_State* L )
 }
 #endif
 
+/* helper for meminfo to set table field only if valid */
+static void set_meminfo_num( lua_State* L,const char *name, int val) {
+    if(val != -1) {
+        set_number_field( L, name, val );
+    }
+}
+/*
+meminfo=get_meminfo([heapname])
+get camera memory information
+heapname="system" or "exmem" if not given, meminfo is returned for heap used by CHDK for malloc
+meminfo is false if the requested heapname isn't valid ("exmem" when exmem is not enabled, or unknown)
+otherwise, a table of the form
+meminfo = {
+    name -- string "system" or "exmem"
+    chdk_malloc -- bool, this is the heap used by CHDK for malloc
+    chdk_start -- number, load address of CHDK
+    chdk_size -- number, size of CHDK image
+    -- all the following are numbers, will not be set if not available
+    start_address
+    end_address
+    total_size
+    allocated_size
+    allocated_peak
+    allocated_count
+    free_size
+    free_block_max_size
+    free_block_count
+}
+NOTES
+* under vxworks and cameras without GetMemInfo only the only valid fields
+  for the system heap will be those defined by chdk and free_block_max_size
+* the meaning of fields may not correspond exactly between exmem and system
+*/
+static int luaCB_get_meminfo( lua_State* L ) {
+    // for memory info, duplicated from lowlevel
+    extern const char _start,_end;
+
+#if defined(OPT_EXMEM_MALLOC) && !defined(OPT_EXMEM_TESTING)
+    const char *default_heapname="exmem";
+#else
+    const char *default_heapname="system";
+#endif
+    const char *heapname = luaL_optstring( L, 1, default_heapname );
+    cam_meminfo meminfo;
+
+    if(strcmp(heapname,"system") == 0) {
+#if defined(CAM_FIRMWARE_MEMINFO)
+        GetMemInfo(&meminfo);
+#else
+        memset(&meminfo,0xFF,sizeof(cam_meminfo));
+        meminfo.free_block_max_size = core_get_free_memory();
+#endif
+    }
+#if defined(OPT_EXMEM_MALLOC) && !defined(OPT_EXMEM_TESTING)
+    else if(strcmp(heapname,"exmem") == 0) {
+        GetExMemInfo(&meminfo);
+        meminfo.allocated_count = -1; // not implemented in suba
+    }
+#endif
+    else {
+        lua_pushboolean(L,0);
+        return 1;
+    }
+    // adjust start and size, if CHDK is loaded at heap start
+    if(meminfo.start_address == (int)(&_start)) {
+        meminfo.start_address += MEMISOSIZE;
+        meminfo.total_size -= MEMISOSIZE;
+    }
+    lua_createtable(L, 0, 13); // might not always use 13, but doesn't hurt
+    set_string_field( L,"name", heapname );
+    lua_pushboolean( L, (strcmp(heapname,default_heapname)==0));
+    lua_setfield(L, -2, "chdk_malloc");
+    set_number_field( L, "chdk_start", (int)(&_start) );
+    set_number_field( L, "chdk_size", MEMISOSIZE );
+    set_meminfo_num( L, "start_address", meminfo.start_address );
+    set_meminfo_num( L, "end_address", meminfo.end_address);
+    set_meminfo_num( L, "total_size", meminfo.total_size);
+    set_meminfo_num( L, "allocated_size", meminfo.allocated_size);
+    set_meminfo_num( L, "allocated_peak", meminfo.allocated_peak);
+    set_meminfo_num( L, "allocated_count", meminfo.allocated_count);
+    set_meminfo_num( L, "free_size", meminfo.free_size);
+    set_meminfo_num( L, "free_block_max_size", meminfo.free_block_max_size);
+    set_meminfo_num( L, "free_block_count", meminfo.free_block_count);
+    return 1;
+}
+
 void register_lua_funcs( lua_State* L )
 {
 #define FUNC( X )			\
@@ -1771,4 +1862,5 @@ void register_lua_funcs( lua_State* L )
                    " end");
 
 #endif
+   FUNC(get_meminfo);
 }
