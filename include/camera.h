@@ -151,7 +151,7 @@
                                                 // GetMemInfo should be found correctly by the gensig/finsig signature
                                                 // finder for all dryos based cameras.
 
-#undef CAM_NO_MEMPART_INFO                      // VXWORKS camera does not have memPartInfoGet, fall back to memPartFindMax
+#undef CAM_NO_MEMPARTINFO                      // VXWORKS camera does not have memPartInfoGet, fall back to memPartFindMax
 //----------------------------------------------------------
 // Override Default values for Camera if necessary
 //----------------------------------------------------------
