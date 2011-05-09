@@ -26,3 +26,4 @@ DEF(some_f_for_dng, 0x887C) // found in sub_FFE39174
 DEF(second_ext_for_dng, 0x88A0) // .THM
 DEF(levent_table, 0xFFD517BC) // PressBlahBLah
 DEF(playrec_mode, 0x63C4) // "MenuIn", "MenuOut"
+DEF(sys_mempart_id, 0xBCA0) // memFindMax, calloc, cfree etc

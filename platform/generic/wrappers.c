@@ -692,7 +692,7 @@ int suba_free(void *heap, void *p);
 
 void exmem_malloc_init() {
 	// pool zero is EXMEM_RAMDISK on d10
-	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0);
+	void *mem = _exmem_alloc(0,EXMEM_HEAP_SIZE,0,0);
 	if(mem) {
 #if defined(OPT_CHDK_IN_EXMEM)
 		// If loading CHDK into exmem then move heap start past the end of CHDK
@@ -799,6 +799,7 @@ void *memchr(const void *s, int c, int n) {
 
 void GetMemInfo(cam_meminfo *camera_meminfo)
 {
+#if defined(CAM_DRYOS)
     // Prior to dryos R39 GetMemInfo returns 9 values, after R39 it returns 10 (all but 1 are used in each case)
     int fw_info[10];
     extern void _GetMemInfo(int*);
@@ -826,6 +827,24 @@ void GetMemInfo(cam_meminfo *camera_meminfo)
     camera_meminfo->free_size            = fw_info[5];
     camera_meminfo->free_block_max_size  = fw_info[6];
     camera_meminfo->free_block_count     = fw_info[7];
+#endif
+#else // vxworks
+extern int sys_mempart_id;
+    int fw_info[5];
+    // -1 for invalid
+    memset(camera_meminfo,0xFF,sizeof(cam_meminfo));
+#ifdef CAM_NO_MEMPARTINFO
+    camera_meminfo->free_block_max_size = _memPartFindMax(sys_mempart_id);
+#else
+    _memPartInfoGet(sys_mempart_id,fw_info);
+    // TODO we could fill in start address from _start + MEMISOSIZE, if chdk not in exmem
+    // these are guessed, look reasonable on a540
+    camera_meminfo->free_size = fw_info[0];
+    camera_meminfo->free_block_count = fw_info[1];
+    camera_meminfo->free_block_max_size = fw_info[2];
+    camera_meminfo->allocated_size = fw_info[3];
+    camera_meminfo->allocated_count = fw_info[4];
+#endif
 #endif
 }
 

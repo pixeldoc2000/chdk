@@ -3715,6 +3715,75 @@ static FuncSig func_sig_add_ptp_handler_1[] = {
 	/* 27/32 */
 };
 
+static FuncSig func_sig_memPartInfoGet_1[] = {
+	{   1, 0xe1b08000, 0xfdffffff }, // mov:6:0xE1B08000
+	{   2, 0xe1a0b001, 0xfdffffff }, // mov:6:0xE1A0B001
+	{   3, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000000
+	{   4, 0xe1510000, 0xfdffffff }, // cmp:7:0xE3510000
+	{   6, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A00004F
+	{   7, 0xe1180001, 0xfdffffff }, // tst:7:0xE3180001
+	{   9, 0x1a000000, 0xff000000 }, // b, bl:3:0x1A00004C
+	{  10, 0xe59fa130, 0xfdffffff }, // ldr:4:0xE59FA130
+	{  11, 0xe5989000, 0xfdffffff }, // ldr:4:0xE5989000
+	{  12, 0xe59aa000, 0xfdffffff }, // ldr:4:0xE59AA000
+	{  13, 0xe159000a, 0xfdffffff }, // cmp:7:0xE159000A
+	{  14, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000009
+	{  15, 0xe1590000, 0xfdffffff }, // cmp:7:0xE3590000
+	{  16, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000002
+	{  17, 0xe59ac024, 0xfdffffff }, // ldr:4:0xE59AC024
+	{  18, 0xe15c0009, 0xfdffffff }, // cmp:7:0xE15C0009
+	{  19, 0x0a000000, 0xff000000 }, // b, bl:3:0x0A000004
+	{  20, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFE4A8
+	{  21, 0xe59fc114, 0xfdffffff }, // ldr:4:0xE59FC114
+	{  22, 0xe580c000, 0xfdffffff }, // str:4:0xE580C000
+	{  24, 0xea000000, 0xff000000 }, // b, bl:3:0xEA00003D
+	{  25, 0xe1a09000, 0xfdffffff }, // mov:6:0xE3A09000
+	{  26, 0xe088000c, 0xfdffffff }, // add:6:0xE288000C
+	{  27, 0xe5819000, 0xfdffffff }, // str:4:0xE5819000
+	{  28, 0xe5819004, 0xfdffffff }, // str:4:0xE5819004
+	{  29, 0xe5819008, 0xfdffffff }, // str:4:0xE5819008
+	{  30, 0xe581900c, 0xfdffffff }, // str:4:0xE581900C
+	{  31, 0xe5819010, 0xfdffffff }, // str:4:0xE5819010
+	{ -1, -1, -1 },
+	/* 28/32 */
+};
+
+static FuncSig func_sig_exmem_alloc_1[] = {
+	{   1, 0xe04dd00c, 0xfdffffff }, // sub:6:0xE24DD00C
+	{   2, 0xe1a07000, 0xfdffffff }, // mov:6:0xE1A07000
+	{   3, 0xe1a06001, 0xfdffffff }, // mov:6:0xE1A06001
+	{   4, 0xe58d3008, 0xfdffffff }, // str:4:0xE58D3008
+	{   5, 0xe1a09002, 0xfdffffff }, // mov:6:0xE1A09002
+	{   6, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFD67
+	{   7, 0xe59f3150, 0xfdffffff }, // ldr:4:0xE59F3150
+	{   8, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   9, 0xe5930000, 0xfdffffff }, // ldr:4:0xE5930000
+	{  10, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB003966
+	{  11, 0xe59fb144, 0xfdffffff }, // ldr:4:0xE59FB144
+	{  12, 0xe1a0a001, 0xfdffffff }, // mov:6:0xE3A0A001
+	{  13, 0xe1a03fe2, 0xfdffffff }, // mov:6:0xE3A03FE2
+	{  14, 0xe157000c, 0xfdffffff }, // cmp:7:0xE357000C
+	{  15, 0x81a00000, 0xfdffffff }, // mov:6:0x83A00000
+	{  16, 0x91a00001, 0xfdffffff }, // mov:6:0x93A00001
+	{  17, 0xe59f1130, 0xfdffffff }, // ldr:4:0xE59F1130
+	{  18, 0xe1a0200b, 0xfdffffff }, // mov:6:0xE1A0200B
+	{  19, 0xe083300a, 0xfdffffff }, // add:6:0xE083300A
+	{  20, 0xe58da000, 0xfdffffff }, // str:4:0xE58DA000
+	{  21, 0xe58d7004, 0xfdffffff }, // str:4:0xE58D7004
+	{  22, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFE1B
+	{  23, 0xe59f511c, 0xfdffffff }, // ldr:4:0xE59F511C
+	{  24, 0xe1a08187, 0xfdffffff }, // mov:6:0xE1A08187
+	{  25, 0xe0853004, 0xfdffffff }, // add:6:0xE2853004
+	{  26, 0xe5930008, 0xfdffffff }, // ldr:4:0xE7930008
+	{  27, 0xe59f4110, 0xfdffffff }, // ldr:4:0xE59F4110
+	{  28, 0xe1a03fe3, 0xfdffffff }, // mov:6:0xE3A03FE3
+	{  29, 0xe083300a, 0xfdffffff }, // add:6:0xE083300A
+	{  30, 0xe1500000, 0xfdffffff }, // cmp:7:0xE3500000
+	{  31, 0x11a00000, 0xfdffffff }, // mov:6:0x13A00000
+	{ -1, -1, -1 },
+	/* 31/32 */
+};
+
 static FuncSig func_sig_GetSystemTime_2[] = {
 	{   1, 0xe59f6030, 0xfdffffff }, // ldr:4:0xE59F6030
 	{   2, 0xe5965000, 0xfdffffff }, // ldr:4:0xE5965000
@@ -5037,6 +5106,40 @@ static FuncSig func_sig_PostLogicalEventForNotPowerType_2[] = {
 	/* 18/32 */
 };
 
+static FuncSig func_sig_exmem_alloc_2[] = {
+	{   1, 0xe59f6048, 0xfdffffff }, // ldr:4:0xE59F6048
+	{   2, 0xe1a07000, 0xfdffffff }, // mov:6:0xE1A07000
+	{   3, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{   4, 0xe1a05002, 0xfdffffff }, // mov:6:0xE1A05002
+	{   5, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{   6, 0xe5960000, 0xfdffffff }, // ldr:4:0xE5960000
+	{   7, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB003B1D
+	{   8, 0xe1a01004, 0xfdffffff }, // mov:6:0xE1A01004
+	{   9, 0xe1a02005, 0xfdffffff }, // mov:6:0xE1A02005
+	{  10, 0xe1a03000, 0xfdffffff }, // mov:6:0xE3A03000
+	{  11, 0xe1a00007, 0xfdffffff }, // mov:6:0xE1A00007
+	{  12, 0xeb000000, 0xff000000 }, // b, bl:3:0xEBFFFF42
+	{  13, 0xe59f201c, 0xfdffffff }, // ldr:4:0xE59F201C
+	{  14, 0xe1a03000, 0xfdffffff }, // mov:6:0xE3A03000
+	{  15, 0xe1a04000, 0xfdffffff }, // mov:6:0xE1A04000
+	{  16, 0xe5823107, 0xfdffffff }, // str:4:0xE7823107
+	{  17, 0xe5960000, 0xfdffffff }, // ldr:4:0xE5960000
+	{  18, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB003B8C
+	{  19, 0xe1a00004, 0xfdffffff }, // mov:6:0xE1A00004
+	{  21, 0x00001ce4, 0xfdffffff }, // and:6:0x00001CE4
+	{  22, 0x00001cac, 0xfdffffff }, // and:6:0x00001CAC
+	{  24, 0xe59f6048, 0xfdffffff }, // ldr:4:0xE59F6048
+	{  25, 0xe1a07000, 0xfdffffff }, // mov:6:0xE1A07000
+	{  26, 0xe1a05002, 0xfdffffff }, // mov:6:0xE1A05002
+	{  27, 0xe1a04001, 0xfdffffff }, // mov:6:0xE1A04001
+	{  28, 0xe5960000, 0xfdffffff }, // ldr:4:0xE5960000
+	{  29, 0xe1a01000, 0xfdffffff }, // mov:6:0xE3A01000
+	{  30, 0xeb000000, 0xff000000 }, // b, bl:3:0xEB003B06
+	{  31, 0xe1a02004, 0xfdffffff }, // mov:6:0xE1A02004
+	{ -1, -1, -1 },
+	/* 29/32 */
+};
+
 static FuncSig func_sig_Fclose_Fut_3[] = {
 	{   1, 0xe0506000, 0xfdffffff }, // sub:6:0xE2506000
 	{   2, 0xe04dd03c, 0xfdffffff }, // sub:6:0xE24DD03C
@@ -5546,6 +5649,8 @@ FuncsList func_list[] = {
 	{ "close", func_sig_close_1 },
 	{ "closedir", func_sig_closedir_1 },
 	{ "errnoOfTaskGet", func_sig_errnoOfTaskGet_1 },
+	{ "exmem_alloc", func_sig_exmem_alloc_1 },
+	{ "exmem_alloc", func_sig_exmem_alloc_2 },
 	{ "free", func_sig_free_1 },
 	{ "free", func_sig_free_2 },
 	{ "ints_disable", func_sig_ints_disable_1 },
@@ -5572,6 +5677,7 @@ FuncsList func_list[] = {
 	{ "lseek", func_sig_lseek_1 },
 	{ "malloc", func_sig_malloc_1 },
 	{ "malloc", func_sig_malloc_2 },
+	{ "memPartInfoGet", func_sig_memPartInfoGet_1 },
 	{ "memchr", func_sig_memchr_1 },
 	{ "memcmp", func_sig_memcmp_1 },
 	{ "memcpy", func_sig_memcpy_1 },

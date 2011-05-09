@@ -34,3 +34,5 @@ NHSTUB(apex2us, 0xFFC9F288) // shutter.c from expdrvtask, similar to a570
 //code identical to PostLogicalEventToUI
 //NHSTUB(PostEventShootSeqToUI,0xFFD54734)  // string
 NHSTUB(SetScriptMode,0xFFD56460) // by find_eventproc name @ 0xFFD7F194
+//NHSTUB(exmem_alloc,0xFFC02818) // via CheckFirmWriterProgram
+//NHSTUB(exmem_free,0xFFC028E8) // via CheckFirmWriterProgram, not needed for now

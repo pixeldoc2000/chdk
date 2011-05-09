@@ -107,6 +107,7 @@ NSTUB(chdir, 0xffb5823c)
 NSTUB(close, 0xffb57b7c)
 NSTUB(closedir, 0xffb55004)
 NSTUB(errnoOfTaskGet, 0xffb557d0)
+NSTUB(exmem_alloc, 0xff812834)
 // ERROR: free is not found!
 NSTUB(ints_disable, 0xff81e2d0)
 NSTUB(ints_enable, 0xff81e2dc)
@@ -140,6 +141,7 @@ NSTUB(lseek, 0xffb57cc0)
 // Best match: 53%
 NSTUB(malloc, 0xffb5abbc)
 // ALT: NSTUB(malloc, 0xffb5abbc) // 15/13
+NSTUB(memPartInfoGet, 0xffb5afdc)
 NSTUB(memchr, 0xffb52ba4)
 NSTUB(memcmp, 0xffb52bd8)
 // ALT: NSTUB(memcmp, 0xffb5ed7c) // 9/0

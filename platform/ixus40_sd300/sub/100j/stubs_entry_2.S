@@ -122,3 +122,7 @@ NHSTUB(SetCurrentCaptureModeType,0xFFAAAEA8) // NOT FOUND, NULLSUB
 NHSTUB(SetLogicalEventActive,0xFFAAAEA8) // NOT FOUND, NULLSUB
 
 NHSTUB(Restart,0xFF824F58) // "Restart Called"
+
+// sd300 doesn't have memPartInfoGet, nullsub
+NHSTUB(memPartInfoGet,0xFF8101D0)
+NHSTUB(memPartFindMax,0xFFAC4598)

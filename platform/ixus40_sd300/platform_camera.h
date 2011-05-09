@@ -55,5 +55,6 @@
     #define CAM_ACTIVE_AREA_Y2 1764
     // camera name
     #define PARAM_CAMERA_NAME 2 // parameter number for GetParameterData
+#define CAM_NO_MEMPARTINFO 1 // vxworks function missing
 //----------------------------------------------------------
 

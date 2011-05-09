@@ -146,10 +146,12 @@
 #undef    PARAM_CAMERA_NAME                      // parameter number for GetParameterData to get camera name
 
 
-#undef  CAM_FIRMWARE_MEMINFO                    // Use 'GetMemInfo' function in firmware to get free memory details
+#undef  CAM_FIRMWARE_MEMINFO                    // Use 'GetMemInfo' (dryos) or 'memPartInfoGet'/'memPartFindMax' (vxworks)
+                                                // function in firmware to get free memory details
                                                 // GetMemInfo should be found correctly by the gensig/finsig signature
                                                 // finder for all dryos based cameras.
 
+#undef CAM_NO_MEMPART_INFO                      // VXWORKS camera does not have memPartInfoGet, fall back to memPartFindMax
 //----------------------------------------------------------
 // Override Default values for Camera if necessary
 //----------------------------------------------------------

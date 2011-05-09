@@ -147,6 +147,9 @@ NSTUB(closedir, 0xffabe6c0)
 // ALT: NSTUB(closedir, 0xfff52770) // 26/0
 NSTUB(errnoOfTaskGet, 0xffabee8c)
 // ALT: NSTUB(errnoOfTaskGet, 0xfff52f3c) // 15/0
+// Best match: 90%
+NSTUB(exmem_alloc, 0xff813884)
+// ALT: NSTUB(exmem_alloc, 0xfff16334) // 28/3
 // ERROR: free is not found!
 NSTUB(ints_disable, 0xff81f438)
 // ALT: NSTUB(ints_disable, 0xfff0f3a4) // 15/0
@@ -200,6 +203,7 @@ NSTUB(malloc, 0xffac58cc)
 // ALT: NSTUB(malloc, 0xffac58cc) // 15/13
 // ALT: NSTUB(malloc, 0xfff5997c) // 15/13
 // ALT: NSTUB(malloc, 0xfff5997c) // 15/13
+// ERROR: memPartInfoGet is not found!
 NSTUB(memchr, 0xffabc260)
 // ALT: NSTUB(memchr, 0xfff50310) // 19/0
 NSTUB(memcmp, 0xffabc294)

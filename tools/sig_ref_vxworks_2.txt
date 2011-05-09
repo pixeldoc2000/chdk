@@ -43,3 +43,4 @@ TurnOnBackLight 0xffdbd720
 TurnOffBackLight 0xffdbd750
 PostLogicalEventToUI 0xFFD6CD44
 PostLogicalEventForNotPowerType 0xFFD6CCC8
+exmem_alloc 0xFFC02834
