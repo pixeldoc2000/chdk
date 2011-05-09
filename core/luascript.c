@@ -15,6 +15,7 @@
 #include "action_stack.h"
 #include "motion_detector.h"
 #include "ptp.h"
+#include "core.h"
 
 #include "../lib/lua/lstate.h"  // for L->nCcalls, baseCcalls
 
@@ -1670,19 +1671,170 @@ static int luaCB_get_meminfo( lua_State* L ) {
     return 1;
 }
 
+static void register_func( lua_State* L, const char *name, void *func) {
+  lua_pushcfunction( L, func );
+  lua_setglobal( L, name );
+}
+
+#define FUNC( X ) { #X,	luaCB_##X },
+static const luaL_Reg chdk_funcs[] = {
+  FUNC(shoot)
+  FUNC(sleep)
+  FUNC(cls)
+  FUNC(set_console_layout)
+  FUNC(set_console_autoredraw)
+  FUNC(console_redraw)
+  FUNC(get_av96)
+  FUNC(get_av96)
+  FUNC(get_bv96)
+  FUNC(get_day_seconds)
+  FUNC(get_disk_size)
+  FUNC(get_dof)
+  FUNC(get_far_limit)
+  FUNC(get_free_disk_space)
+  FUNC(get_focus)
+  FUNC(get_hyp_dist)
+  FUNC(get_iso_market)
+  FUNC(get_iso_mode)
+  FUNC(get_iso_real)
+  FUNC(get_jpg_count)
+  FUNC(get_near_limit)
+  FUNC(get_prop)
+  FUNC(get_raw_count)
+  FUNC(get_raw_nr)
+  FUNC(get_raw)
+  FUNC(get_sv96)
+  FUNC(get_tick_count)
+  FUNC(get_tv96)
+  FUNC(get_user_av_id)
+  FUNC(get_user_av96)
+  FUNC(get_user_tv_id)
+  FUNC(get_user_tv96)
+  FUNC(get_vbatt)
+  FUNC(get_zoom)
+  FUNC(get_exp_count)
+  FUNC(get_flash_params_count)
+  FUNC(get_parameter_data)
+
+  FUNC(set_av96_direct)
+  FUNC(set_av96)
+  FUNC(set_focus)
+  FUNC(set_iso_mode)
+  FUNC(set_iso_real)
+  FUNC(set_led)
+  FUNC(set_nd_filter)
+  FUNC(set_prop)
+  FUNC(set_raw_nr)
+  FUNC(set_raw)
+  FUNC(set_sv96)
+  FUNC(set_tv96_direct)
+  FUNC(set_tv96)
+  FUNC(set_user_av_by_id_rel)
+  FUNC(set_user_av_by_id)
+  FUNC(set_user_av96)
+  FUNC(set_user_tv_by_id_rel)
+  FUNC(set_user_tv_by_id)
+  FUNC(set_user_tv96)
+  FUNC(set_zoom_speed)
+  FUNC(set_zoom_rel)
+  FUNC(set_zoom)
+
+  FUNC(wait_click)
+  FUNC(is_pressed)
+  FUNC(is_key)
+#ifdef CAM_HAS_JOGDIAL
+  FUNC(wheel_right)
+  FUNC(wheel_left)
+#endif
+  FUNC(md_get_cell_diff)
+  FUNC(md_detect_motion)
+  FUNC(autostarted)
+  FUNC(get_autostart)
+  FUNC(set_autostart)
+  FUNC(get_usb_power)
+  FUNC(exit_alt)
+  FUNC(shut_down)
+  FUNC(print_screen)
+
+  FUNC(get_focus_mode)
+  FUNC(get_propset)
+  FUNC(get_zoom_steps)
+  FUNC(get_drive_mode)
+  FUNC(get_flash_mode)
+  FUNC(get_shooting)
+  FUNC(get_flash_ready)
+  FUNC(get_IS_mode)
+  FUNC(set_ev)
+  FUNC(get_ev)
+  FUNC(get_orientation_sensor)
+  FUNC(get_nd_present)
+  FUNC(get_movie_status)
+  FUNC(set_movie_status)
+  
+  FUNC(get_histo_range)
+  FUNC(shot_histo_enable)
+  FUNC(play_sound)
+  FUNC(get_temperature)
+  FUNC(peek)
+  FUNC(poke)
+  FUNC(bitand)
+  FUNC(bitor)
+  FUNC(bitxor)
+  FUNC(bitshl)
+  FUNC(bitshri)
+  FUNC(bitshru)
+  FUNC(bitnot)
+
+  FUNC(get_time)
+
+  FUNC(get_buildinfo)
+  FUNC(get_mode)
+  
+  FUNC(set_raw_develop)
+  // NOTE these functions normally run in the spytask.
+  // called from lua they will run from kbd task instead
+  FUNC(raw_merge_start)
+  FUNC(raw_merge_add_file)
+  FUNC(raw_merge_end)
+  FUNC(set_backlight)
+   FUNC(set_aflock)
+#ifdef OPT_CURVES
+   FUNC(set_curve_state)
+#endif
+// get levent definition by name or id, nil if not found
+   FUNC(get_levent_def)
+// get levent definition by index, nil if out of range
+   FUNC(get_levent_def_by_index)
+// get levent index from name or ID
+   FUNC(get_levent_index)
+   FUNC(post_levent_to_ui)
+   FUNC(post_levent_for_npt)
+   FUNC(set_levent_active)
+   FUNC(set_levent_script_mode)
+
+   FUNC(set_capture_mode)
+   FUNC(set_capture_mode_canon)
+   FUNC(is_capture_mode_valid)
+
+   FUNC(set_record)
+   FUNC(switch_mode_usb)
+
+#ifdef OPT_LUA_CALL_NATIVE
+   FUNC(call_event_proc)
+   FUNC(call_func_ptr)
+#endif
+   FUNC(reboot)
+#ifdef CAM_CHDK_PTP
+   FUNC(read_usb_msg)
+   FUNC(write_usb_msg)
+#endif
+   FUNC(get_meminfo)
+  {NULL, NULL},
+};
+
 void register_lua_funcs( lua_State* L )
 {
-#define FUNC( X )			\
-  lua_pushcfunction( L, luaCB_##X );	\
-  lua_setglobal( L, #X )
-
-  FUNC(shoot);
-  FUNC(sleep);
-  FUNC(cls);
-  FUNC(set_console_layout);
-  FUNC(set_console_autoredraw);
-  FUNC(console_redraw);
-
+  const luaL_reg *r;
   lua_pushlightuserdata( L, action_push_click );
   lua_pushcclosure( L, luaCB_keyfunc, 1 );
   lua_setglobal( L, "click" );
@@ -1695,150 +1847,11 @@ void register_lua_funcs( lua_State* L )
   lua_pushcclosure( L, luaCB_keyfunc, 1 );
   lua_setglobal( L, "release" );
 
-  FUNC(get_av96);
-  FUNC(get_av96);
-  FUNC(get_bv96);
-  FUNC(get_day_seconds);
-  FUNC(get_disk_size);
-  FUNC(get_dof);
-  FUNC(get_far_limit);
-  FUNC(get_free_disk_space);
-  FUNC(get_focus);
-  FUNC(get_hyp_dist);
-  FUNC(get_iso_market);
-  FUNC(get_iso_mode);
-  FUNC(get_iso_real);
-  FUNC(get_jpg_count);
-  FUNC(get_near_limit);
-  FUNC(get_prop);
-  FUNC(get_raw_count);
-  FUNC(get_raw_nr);
-  FUNC(get_raw);
-  FUNC(get_sv96);
-  FUNC(get_tick_count);
-  FUNC(get_tv96);
-  FUNC(get_user_av_id);
-  FUNC(get_user_av96);
-  FUNC(get_user_tv_id);
-  FUNC(get_user_tv96);
-  FUNC(get_vbatt);
-  FUNC(get_zoom);
-  FUNC(get_exp_count);
-  FUNC(get_flash_params_count);
-  FUNC(get_parameter_data);
-
-  FUNC(set_av96_direct);
-  FUNC(set_av96);
-  FUNC(set_focus);
-  FUNC(set_iso_mode);
-  FUNC(set_iso_real);
-  FUNC(set_led);
-  FUNC(set_nd_filter);
-  FUNC(set_prop);
-  FUNC(set_raw_nr);
-  FUNC(set_raw);
-  FUNC(set_sv96);
-  FUNC(set_tv96_direct);
-  FUNC(set_tv96);
-  FUNC(set_user_av_by_id_rel);
-  FUNC(set_user_av_by_id);
-  FUNC(set_user_av96);
-  FUNC(set_user_tv_by_id_rel);
-  FUNC(set_user_tv_by_id);
-  FUNC(set_user_tv96);
-  FUNC(set_zoom_speed);
-  FUNC(set_zoom_rel);
-  FUNC(set_zoom);
-
-  FUNC(wait_click);
-  FUNC(is_pressed);
-  FUNC(is_key);
-#ifdef CAM_HAS_JOGDIAL
-  FUNC(wheel_right);
-  FUNC(wheel_left);
-#endif
-  FUNC(md_get_cell_diff);
-  FUNC(md_detect_motion);
-  FUNC(autostarted);
-  FUNC(get_autostart);
-  FUNC(set_autostart);
-  FUNC(get_usb_power);
-  FUNC(exit_alt);
-  FUNC(shut_down);
-  FUNC(print_screen);
-
-  FUNC(get_focus_mode);
-  FUNC(get_propset);
-  FUNC(get_zoom_steps);
-  FUNC(get_drive_mode);
-  FUNC(get_flash_mode);
-  FUNC(get_shooting);
-  FUNC(get_flash_ready);
-  FUNC(get_IS_mode);
-  FUNC(set_ev);
-  FUNC(get_ev);
-  FUNC(get_orientation_sensor);
-  FUNC(get_nd_present);
-  FUNC(get_movie_status);
-  FUNC(set_movie_status);
-  
-  FUNC(get_histo_range);
-  FUNC(shot_histo_enable);
-  FUNC(play_sound);
-  FUNC(get_temperature);
-  FUNC(peek);
-  FUNC(poke);
-  FUNC(bitand);
-  FUNC(bitor);
-  FUNC(bitxor);
-  FUNC(bitshl);
-  FUNC(bitshri);
-  FUNC(bitshru);
-  FUNC(bitnot);
-
-  FUNC(get_time);
-
-  FUNC(get_buildinfo);
-  FUNC(get_mode);
-  
-  FUNC(set_raw_develop);
-  // NOTE these functions normally run in the spytask.
-  // called from lua they will run from kbd task instead
-  FUNC(raw_merge_start);
-  FUNC(raw_merge_add_file);
-  FUNC(raw_merge_end);
-  FUNC(set_backlight);
-   FUNC(set_aflock);
-#ifdef OPT_CURVES
-   FUNC(set_curve_state);
-#endif
-// get levent definition by name or id, nil if not found
-   FUNC(get_levent_def);
-// get levent definition by index, nil if out of range
-   FUNC(get_levent_def_by_index);
-// get levent index from name or ID
-   FUNC(get_levent_index);
-   FUNC(post_levent_to_ui);
-   FUNC(post_levent_for_npt);
-   FUNC(set_levent_active);
-   FUNC(set_levent_script_mode);
-
-   FUNC(set_capture_mode);
-   FUNC(set_capture_mode_canon);
-   FUNC(is_capture_mode_valid);
-
-   FUNC(set_record);
-
-   FUNC(switch_mode_usb);
-
-#ifdef OPT_LUA_CALL_NATIVE
-   FUNC(call_event_proc);
-   FUNC(call_func_ptr);
-#endif
-   FUNC(reboot);
+  for(r=chdk_funcs;r->name;r++) {
+    lua_pushcfunction( L, r->func );
+    lua_setglobal( L, r->name );
+  }
 #ifdef CAM_CHDK_PTP
-   FUNC(read_usb_msg);
-   FUNC(write_usb_msg);
    luaL_dostring(L,"function usb_msg_table_to_string(t)"
                     " local v2s=function(v)"
                         " local t=type(v)"
@@ -1862,5 +1875,4 @@ void register_lua_funcs( lua_State* L )
                    " end");
 
 #endif
-   FUNC(get_meminfo);
 }

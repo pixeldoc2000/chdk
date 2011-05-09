@@ -307,7 +307,7 @@ batch-zip: version
 	#mv $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/$(VER)-ixus750_sd500-100h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus750_sd500-100h-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-ixus750_sd550-100h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus750_sd550-100h-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
@@ -521,8 +521,8 @@ batch-zip-complete: version
 	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/ixus750_sd500-100h-$(BUILD_NUMBER).zip $(topdir)bin/ixus750_sd500-100h-$(BUILD_NUMBER)_BETA.zip
-	mv $(topdir)bin/ixus750_sd500-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus750_sd500-100h-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER).zip $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER)-full_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
 	cat $(topdir)bin/caminfo.txt
