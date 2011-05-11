@@ -16,3 +16,4 @@ DEF(some_f_for_dng, 0x60C8)
 DEF(second_ext_for_dng, 0x60EC) // ".THM"
 
 DEF(levent_table,0xFFE9D378)
+DEF(sys_mempart_id, 0x48D0) // calloc

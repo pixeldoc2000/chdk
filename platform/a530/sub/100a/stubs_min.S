@@ -17,3 +17,4 @@ DEF(some_f_for_dng, 0x889C)
 DEF(second_ext_for_dng, 0x88C0)
 DEF(levent_table,0xFFD40EAC)
 DEF(playrec_mode,0x63F4) // "MenuIn"
+DEF(sys_mempart_id, 0xBC58) // calloc
