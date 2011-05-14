@@ -147,7 +147,8 @@ void action_push_click(long key)
 
 void action_wait_for_click(int timeout)
 {
-    action_push(timeout);
+    // accept wait_click 0 for infinite, but use -1 internally to avoid confusion with generated waits
+    action_push(timeout?timeout:-1);
     action_push(AS_WAIT_CLICK);
 }
 
@@ -177,13 +178,14 @@ long action_get_prev(int p)
 // does not pop the delay value off the stack or clear the delay value
 int action_process_delay(int p)
 {
-    int t = get_tick_count();
+    unsigned t = get_tick_count();
     // FIXME take care if overflow occurs
     if (action_stacks[active_stack]->delay_target_ticks == 0)
     {
         /* setup timer */
         long action = action_get_prev(p);
-        action_stacks[active_stack]->delay_target_ticks = t+((action)?action:86400000);
+        /* delay of -1 signals indefinite (actually 1 day) delay*/ 
+        action_stacks[active_stack]->delay_target_ticks = t+((action == -1)?86400000:action);
         return 0;
     }
     if (action_stacks[active_stack]->delay_target_ticks <= t)
@@ -269,8 +271,7 @@ int action_stack_standard(long p)
         // Initiate a shoot. Remember that stack program flow is reversed!
         action_pop();
         // XXX FIXME find out how to wait to jpeg save finished
-        // note, must not wait 0, means forever
-        action_push_delay((conf.script_shoot_delay)?conf.script_shoot_delay*100:1);
+        action_push_delay(conf.script_shoot_delay*100);
 
         action_push(AS_WAIT_SAVE);
 
