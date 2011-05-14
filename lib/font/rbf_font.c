@@ -13,55 +13,59 @@ static unsigned int RBF_HDR_MAGIC2 = 0x00000003;
 
 // Header as seperate structure so it can be directly loaded from the font file easily
 // structure layout maps to file layout - do not change !
-struct font_hdr {
-    int magic1, magic2;        // header magic numbers to identify correct font file
-    char name[RBF_MAX_NAME];
-    int charSize;
-    int points;
-    int height;
-    int maxWidth;
-    int charFirst;
-    int charLast;
-    int _unknown4;
-    int _wmapAddr;
-    int _cmapAddr;
-    int descent;
-    int intline;
-};
+typedef struct {
+    int magic1, magic2;         // header magic numbers to identify correct font file
+    char name[RBF_MAX_NAME];    // name of font (max 64 characters)
+    int charSize;               // # of bytes used to store each character
+    int points;                 // font size in points
+    int height;                 // font height in pixels
+    int maxWidth;               // width of widest character
+    int charFirst;              // first character #
+    int charLast;               // last character #
+    int _unknown4;              // ?
+    int _wmapAddr;              // offset in font file of wTable array
+    int _cmapAddr;              // offset in font file of cTable array
+    int descent;                // font descent (not used)
+    int intline;                // interline spacing (not used)
+} font_hdr;
 
-struct font {
-    struct font_hdr hdr;
+typedef struct _font {
+    font_hdr hdr;
 
     // calculated values (after font is loaded)
-    int charCount;
-    int width;
+    int charCount;              // count of chars containing in font
+    int width;                  // font element width in pixels
 
     // Width table
+    // List of character widths. Elements of list is width of char 
     char wTable[256];
 
     // Character data
+    // List of chars. Element of list is a bytecode string, contains pixels representation of char
     char *cTable;
 
-    // Current size of the cTable data
+    // Flag to indicate we are actually using the built in 8x16 font rather than a loaded font
     int usingFont8x16;
-    int cTableSize;
-    struct font *uncached_font;        // address of font in uncached memory (for passing to ufree & read)
-    char *uncached_cTable;            // address of cTable in uncached memory (for passing to ufree & read)
-};
 
-static struct font *rbf_symbol_font = 0, *rbf_font = 0;
+    // Current size of the cTable data
+    int cTableSize;
+    struct _font *uncached_font;      // address of font in uncached memory (for passing to ufree & read)
+    char *uncached_cTable;            // address of cTable in uncached memory (for passing to ufree & read)
+} font;
+
+static font *rbf_symbol_font = 0, *rbf_font = 0;
 static int rbf_codepage = FONT_CP_WIN; 
 
 //-------------------------------------------------------------------
 
-struct font *new_font() {
+font *new_font() {
     // allocate font from uncached memory
-    struct font *f = umalloc(sizeof(struct font));
+    font *f = umalloc(sizeof(font));
     if (f) {
-        memset(f,0,sizeof(struct font));    // wipe memory (use uncached address to avoid conflict with read & caching)
-        f->uncached_font = f;                // save uncached memory address
+        memset(f,0,sizeof(font));      // wipe memory (use uncached address to avoid conflict with read & caching)
+        f->uncached_font = f;          // save uncached memory address
         // return address in cached memory for faster font rendering
-        return (struct font*)((int)f & ~CAM_UNCACHED_BIT);
+        return (font*)((int)f & ~CAM_UNCACHED_BIT);
     }
 
     // memory not allocated ! should probably do something else in this case ?
@@ -75,7 +79,7 @@ void init_fonts()
     if (rbf_symbol_font == 0) rbf_symbol_font = new_font();
 }
 
-void alloc_cTable(struct font *f) {
+void alloc_cTable(font *f) {
 
     // Calculate additional values for font
     f->width = 8 * f->hdr.charSize / f->hdr.height;
@@ -131,7 +135,7 @@ int code_page_char(int ch)
 
 //-------------------------------------------------------------------
 // Return address of 'character' data for specified font & char
-char* rbf_font_char(struct font* f, int ch)
+char* rbf_font_char(font* f, int ch)
 {
     if (f && (ch >= f->hdr.charFirst) && (ch <= f->hdr.charLast))
     {
@@ -142,26 +146,9 @@ char* rbf_font_char(struct font* f, int ch)
 }
 //-------------------------------------------------------------------
 // Load from from file. If maxchar != 0 limit charLast (for symbols)
-int rbf_font_load(char *file, struct font* f, int maxchar) {
-/*
-    name         - name of font (max 64 characters)
-    width        - font element width in pixels
-    height       - font element height in pixels
-    points       - font size in points
-    charFirst    - ASCII code of first char, presents in font
-    charCount    - count of chars containing in font
-    cTable       - List of chars. Element of list is a bytecode string,
-                   contains pixels representation  of char
-    wTable       - List of character widths. Elements of list
-                   is width of char 
-    intline      - Interline spasing
-    maxWidth     - width of widhest char in pixels
-    descent      - font descent
-    '''
-*/        
-
-    int fd;
-    char buf[8];
+// Note: pass the uncached font address to this function
+int rbf_font_load(char *file, font* f, int maxchar)
+{
     int i;
 
     // make sure the font has been allocated
@@ -171,13 +158,13 @@ int rbf_font_load(char *file, struct font* f, int maxchar) {
     f->usingFont8x16 = 0;
 
     // open file (can't use fopen here due to potential conflict FsIoNotify crash)
-    fd = open(file, O_RDONLY, 0777);
-    if (fd>=0) {
+    int fd = open(file, O_RDONLY, 0777);
+    if (fd >= 0) {
         // read header
-        i = read(fd, &f->uncached_font->hdr, sizeof(struct font_hdr));
+        i = read(fd, &f->hdr, sizeof(font_hdr));
 
         // check size read is correct and magic numbers are valid
-        if ((i == sizeof(struct font_hdr)) && (f->hdr.magic1 == RBF_HDR_MAGIC1) && (f->hdr.magic2 == RBF_HDR_MAGIC2)) {
+        if ((i == sizeof(font_hdr)) && (f->hdr.magic1 == RBF_HDR_MAGIC1) && (f->hdr.magic2 == RBF_HDR_MAGIC2)) {
 
             if (maxchar != 0) {
                 f->hdr.charLast = maxchar;
@@ -187,7 +174,7 @@ int rbf_font_load(char *file, struct font* f, int maxchar) {
 
             // read width table (using uncached memory address)
             lseek(fd, f->hdr._wmapAddr, SEEK_SET);
-            read(fd, &f->uncached_font->wTable[f->hdr.charFirst], f->charCount);
+            read(fd, &f->wTable[f->hdr.charFirst], f->charCount);
 
             // read cTable data (using uncached memory address)
             lseek(fd, f->hdr._cmapAddr, SEEK_SET);
@@ -210,7 +197,7 @@ int rbf_load(char *file) {
     // Allocate font if needed
     init_fonts();
     // Load font
-    return rbf_font_load(file, rbf_font, 0);
+    return rbf_font_load(file, rbf_font->uncached_font, 0);
 }
 
 //-------------------------------------------------------------------
@@ -219,7 +206,7 @@ int rbf_load_symbol(char *file) {
     // Allocate font if needed
     init_fonts();
     // Load font
-    return rbf_font_load(file, rbf_symbol_font, maxSymbols+32);
+    return rbf_font_load(file, rbf_symbol_font->uncached_font, maxSymbols+32);
 }
 
 //-------------------------------------------------------------------
