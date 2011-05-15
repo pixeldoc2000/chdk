@@ -343,7 +343,7 @@ void __attribute__((naked,noinline)) taskcreate_Startup_my() {
 //		"BL		j_nullsub_223\n"
 		"BL		sub_FF83AA2C\n"
 		"MOV     R0, #0x46 \n"
-		"BL      _eventproc_export_SleepTask \n"
+		"BL      _SleepTask \n"
 		"LDR	R1, =0x3CE000\n"
 		"MOV	R0, #0\n"
 		"BL		sub_FF83AE74\n"
@@ -425,7 +425,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
                  "MOVS    R4, R0\n"
                  "MOVNE   R1, #0\n"
                  "MOVNE   R0, R5\n"
-                 "BLNE    _eventproc_export_PostLogicalEventToUI\n"
+                 "BLNE    _PostLogicalEventToUI\n"
 
 				 //"BL      sub_FF895DE8\n"
                  "BL      sub_FF895DE8_my\n"			// patched

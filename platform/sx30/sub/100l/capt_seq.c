@@ -32,7 +32,7 @@ asm volatile (
 	"LDR	R1, =0x43F\n"
 	"LDR	R0, =0xFF8863B4\n"
 	"BL		_DebugAssert\n"
-	"BL		_eventproc_export_ExitTask\n"
+	"BL		_ExitTask\n"
 	"LDMFD SP!, {R3-R7,PC}\n"
 
 "loc_FF886900:\n"
@@ -611,7 +611,7 @@ void __attribute__((naked,noinline)) exp_drv_task(){
 "                LDR     R0, [R7,#0x1C] \n"
 "                MOV     R1, #1 \n"
 "                BL      sub_FF89179C \n"
-"                BL      _eventproc_export_ExitTask \n"
+"                BL      _ExitTask \n"
 "                ADD     SP, SP, #0x20 \n"
 "                LDMFD   SP!, {R4-R8,PC} \n"
 

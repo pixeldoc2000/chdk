@@ -41,7 +41,6 @@ long hook_raw_size()
 }
 
 
-// TODO - check that this works
 char *camera_jpeg_count_str()
 {
 	return (char*)0xBB618; // loc_FFA435FC (search for "9999", passed to sprintf)

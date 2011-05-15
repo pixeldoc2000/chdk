@@ -422,7 +422,7 @@ void __attribute__((naked,noinline)) init_file_modules_task() {
                  "MOVS    R4, R0\n"
                  "MOVNE   R1, #0\n"
                  "MOVNE   R0, R5\n"
-                 "BLNE    _eventproc_export_PostLogicalEventToUI\n"
+                 "BLNE    _PostLogicalEventToUI\n"
 
 				 //"BL      sub_FF89A2C0\n"
                  "BL      sub_FF89A2C0_my\n"			// patched

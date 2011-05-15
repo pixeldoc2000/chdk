@@ -94,18 +94,12 @@ NHSTUB(srand,							0xFFA4D978)	// search for 0x41C64E6D. Function before rand i
 NHSTUB(MoveIrisWithAv,					0xFFAE8E14)
 
 # from stubs_entry_ida.S
-NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff89e074)
-NHSTUB(eventproc_export_SleepTask, 0xff83ac1c)
-NHSTUB(eventproc_export_ExitTask, 0xff81eb30)
-NHSTUB(eventproc_export_TakeSemaphore, 0xff83a8e4)
-NHSTUB(eventproc_export_GiveSemaphore, 0xff83a9b4)
-NHSTUB(eventproc_export_HardwareDefect, 0xff8a0534)
+NHSTUB(GiveSemaphore,					0xff83a9b4)
 
 # Misc
 NHSTUB(DebugAssert,						0xFF81EB78)
-NHSTUB(PT_GetPropertyCaseString,			0xFF8999C8)
-NHSTUB(takeSemaphore,						0xFF83ADC4)
-NHSTUB(err_init_task,						0xFF815FD4)
+NHSTUB(PT_GetPropertyCaseString,		0xFF8999C8)
+NHSTUB(err_init_task,					0xFF815FD4)
 
 # Addresses for firmware task handlers (used in taskHook)
 DEF(task_CaptSeq,						0xFF8868C0)

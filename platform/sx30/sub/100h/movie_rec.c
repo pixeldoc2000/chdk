@@ -29,7 +29,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 "                LDR     R0, [R4,#0xD0] \n"
 "                MOV     R3, R9 \n"
 "                MOV     R1, R8 \n"
-"                BL      _takeSemaphore \n"
+"                BL      _TakeSemaphore \n"
 "                LDR     R0, [R4,#0x2C] \n"
 "                CMP     R0, #0 \n"
 "                LDRNE   R0, [R4,#0xC] \n"
@@ -170,7 +170,7 @@ void __attribute__((naked,noinline)) movie_record_task(){
 "                MOV     R2, R8 \n"
 "                BL      sub_FF83AE1C \n"
 "                LDR     R0, [R4,#0xD0] \n"
-"                BL      _eventproc_export_GiveSemaphore \n" // ; LOCATION: KerSem.c:0 \n"
+"                BL      _GiveSemaphore \n" // ; LOCATION: KerSem.c:0 \n"
 "                B       loc_FF883368 \n"
  );
 }

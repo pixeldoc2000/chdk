@@ -9,7 +9,7 @@ NHSTUB(GetBatteryTemperature,			0xFF8697AC) // ok (comp 1.00h)
 NHSTUB(GetCCDTemperature,				0xFF869738) // ok (comp 1.00h)
 NHSTUB(GetCurrentAvValue,				0xFF980680) // ok (comp 1.00h)
 NHSTUB(GetParameterData,				0xFF9C2814) // ok (comp 1.00h)
-NHSTUB(GetZoomLensCurrentPoint,			0xFF87EE4C)	// ok (comp 1.00h)
+NHSTUB(GetZoomLensCurrentPoint,			0xFF87E9C4)	// ok (comp 1.00h)
 NHSTUB(GetZoomLensCurrentPosition,		0xFF9864AC) // ok (comp 1.00h)
 NHSTUB(PT_PlaySound,					0xFF88E660) // ok (comp 1.00h)
 NHSTUB(ReadFastDir,						0xFFACE02C) // ok (comp 1.00h)
@@ -94,17 +94,11 @@ NHSTUB(srand,							0xFFA4DB20)	// search for 0x41C64E6D. Function before rand i
 NHSTUB(MoveIrisWithAv,					0xFFAE8FBC)
 
 # from stubs_entry_ida.S
-NHSTUB(eventproc_export_PostLogicalEventToUI, 0xff89e078)
-NHSTUB(eventproc_export_SleepTask, 0xff83ac1c)
-NHSTUB(eventproc_export_ExitTask, 0xff81eb30)
-NHSTUB(eventproc_export_TakeSemaphore, 0xff83a8e4)
-NHSTUB(eventproc_export_GiveSemaphore, 0xff83a9b4)
-NHSTUB(eventproc_export_HardwareDefect, 0xff8a0538)
+NHSTUB(GiveSemaphore,					0xff83a9b4)
 
 # Misc
 NHSTUB(DebugAssert,						0xFF81EB78)
 NHSTUB(PT_GetPropertyCaseString,			0xFF8999CC)
-NHSTUB(takeSemaphore,						0xFF83ADC4)
 NHSTUB(err_init_task,						0xFF815FD4)
 
 # Addresses for firmware task handlers (used in taskHook)
