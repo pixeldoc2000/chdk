@@ -872,6 +872,21 @@ static void sprintf_dist(char *buf, float dist) {
     }
 }
 
+static void sprintf_dist_hyp(char *buf, float dist) {
+// length of printed string is always 4
+    if (dist<=0 || dist>MAX_DIST_HYPER_FOCAL) {
+        sprintf(buf, " inf");
+    } else if (dist<1000) {
+        sprintf(buf, ".%03d", (int)dist);
+    } else if (dist<10000) {
+        sprintf(buf, "%d.%02d", (int)(dist/1000), (int)(dist/10)%100);
+    } else if (dist<100000) {
+        sprintf(buf, "%02d.%d", (int)(dist/1000), (int)(dist/100)%10);
+    } else {
+        sprintf(buf, "%4d", (int)(dist/1000));
+    }
+}
+
 static void sprintf_canon_values(char *buf, short dist) 
 {
 short v=((dist<0)?-dist:dist);	
@@ -883,7 +898,7 @@ sprintf(buf, "%s%d.%02d", ((dist<0)?"-":""), v/96, v%96);
 
 void gui_osd_calc_dof() {
     
-    int av, av_min, c_of_c, fl, v, v1, m;
+    float av, av_min, c_of_c, fl, v, v1, m;
     //long lfpfl=lens_get_focus_pos_fl();
 
 #if CAM_HAS_IRIS_DIAPHRAGM
@@ -907,13 +922,13 @@ void gui_osd_calc_dof() {
         if ((av_min!=0) && (c_of_c!=0)) dof.hyperfocal_distance=v1/(c_of_c*av_min);
     		if ((dof.near_limit>0) && (dof.near_limit<MAX_DIST)) {
     			v=(dof.hyperfocal_distance-dof.near_limit);
-    			m=dof.hyperfocal_distance*dof.near_limit;
+    			m=(float)dof.hyperfocal_distance*(float)dof.near_limit;
     			if ((v>0) && (m>0)) dof.subject_distance=m/v;  
        		}
         dof.hyperfocal_distance=v1/(c_of_c*av);
         if ((dof.subject_distance>0) && (dof.subject_distance<MAX_DIST)) {
           v = (dof.hyperfocal_distance-dof.subject_distance);
-          m=dof.hyperfocal_distance*dof.subject_distance;
+          m=(float)dof.hyperfocal_distance*(float)dof.subject_distance;
           if ((v>0) && (m>0))  dof.far_limit=m/v;
           dof.depth_of_field=dof.far_limit-dof.near_limit;
         }
@@ -922,7 +937,7 @@ void gui_osd_calc_dof() {
        dof.subject_distance=shooting_get_canon_subject_distance();	
    	   dof.hyperfocal_distance=(fl*fl)/(10*circle_of_confusion*av);
        if (dof.subject_distance>0 && dof.subject_distance<MAX_DIST) {
-       	  m = dof.hyperfocal_distance*dof.subject_distance;
+       	  m = (float)dof.hyperfocal_distance*(float)dof.subject_distance;
           v = (dof.hyperfocal_distance+dof.subject_distance);
           if ((v>0) && (m>0))  dof.near_limit=m/v;
           v = (dof.hyperfocal_distance-dof.subject_distance);
@@ -975,7 +990,7 @@ void gui_osd_draw_dof() {
     sprintf_dist(osd_buf, dof.depth_of_field);
     int j=strlen(osd_buf);
     osd_buf[j]='/';
-    sprintf_dist(osd_buf+j+1, dof.hyperfocal_distance);
+    sprintf_dist_hyp(osd_buf+j+1, dof.hyperfocal_distance);
     draw_string(conf.dof_pos.x+8*FONT_WIDTH, conf.dof_pos.y+FONT_HEIGHT, osd_buf, conf.osd_color);
    
 }

@@ -421,8 +421,8 @@ int shooting_get_lens_to_focal_plane_width()
 int shooting_get_hyperfocal_distance_()
 {
   int av=shooting_get_real_aperture();
-  int fl=get_focal_length(lens_get_zoom_point());
-  if ((av>0) && (fl>0)) return (fl*fl)/(10*circle_of_confusion*av);
+  float fl=get_focal_length(lens_get_zoom_point());
+  if ((av>0) && (fl>0)) return (fl*fl)/(float)(10*circle_of_confusion*av);
   else return (-1);
 }
 
@@ -436,7 +436,7 @@ int shooting_get_hyperfocal_distance()
 
 int shooting_get_hyperfocal_distance_f(int av, int fl)
 {
-  if ((av>0) && (fl>0) && (circle_of_confusion>0)) return (fl*fl)/(10*circle_of_confusion*av);
+  if ((av>0) && (fl>0) && (circle_of_confusion>0)) return ((float)fl*(float)fl)/(float)(10*circle_of_confusion*av);
   else return (-1);
 }
 
@@ -450,17 +450,17 @@ int shooting_get_subject_distance_()
 {
    if (!conf.dof_subj_dist_as_near_limit) return shooting_get_canon_subject_distance();
    else {
-    	int h, v, m;
+    	float h, v, m;
    		int fl=get_focal_length(lens_get_zoom_point());
     	int near=shooting_get_canon_subject_distance();
-        int v1=(fl*fl);
+        float v1=(fl*fl);
       	int av_min=shooting_get_min_real_aperture();
         int c_of_c=circle_of_confusion*10;
         if ((av_min!=0) && (c_of_c!=0) && (v1)) {
-		    h=v1/(c_of_c*av_min);
+		    h=v1/(float)(c_of_c*av_min);
     	    if ((near>0) && (near<MAX_DIST)) {
     		  v=(h-near);
-    		  m=h*near;
+    		  m=h*(float)near;
     		  if ((v>0) && (m>0)) return m/v;
        	     }
         }
@@ -482,7 +482,7 @@ int shooting_get_near_limit_of_acceptable_sharpness_()
 	if (conf.dof_subj_dist_as_near_limit) return s;
     else {
       int h = shooting_get_hyperfocal_distance_();
-      int m = h*s;
+      float m = (float)h*(float)s;
       int v = h+s;
       if ((m>0) && (v>0)) return (m/v);
       else return (-1);
@@ -500,7 +500,7 @@ int shooting_get_near_limit_of_acceptable_sharpness()
 int shooting_get_near_limit_f(int s, int a, int fl)
 {
       int h = shooting_get_hyperfocal_distance_f(a, fl);
-      int m = h*s;
+      float m = (float)h*(float)s;
       int v = h+s;
       if ((m>0) && (v>0)) return (m/v);
       else return (-1);
@@ -510,7 +510,7 @@ int shooting_get_far_limit_of_acceptable_sharpness_()
 {
 	int s=shooting_get_subject_distance_(), h=shooting_get_hyperfocal_distance_();
     int v = h-s;
-    int m = h*s;
+    float m = (float)h*(float)s;
     if ((m>0) && (v>0)) return (m/v);
     else return (-1);
 }

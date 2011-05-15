@@ -48,6 +48,7 @@
 #endif
 
 #define MAX_DIST 65535
+#define MAX_DIST_HYPER_FOCAL 999999
 
 //********************
 //char * get_debug();
