@@ -42,3 +42,5 @@ NHSTUB(WriteSDCard,0xFFD01548)
 NHSTUB(SetScriptMode,0xFFC61F08) // string
 NHSTUB(TurnOnMic, 0xFFC35CFC)
 NHSTUB(TurnOffMic, 0xFFC35D28)
+
+NHSTUB(exmem_alloc, 0xFFC5869C)

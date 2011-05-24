@@ -198,3 +198,5 @@ NHSTUB(SetScriptMode, 0xFFC5BD20)
 NHSTUB(WriteSDCard,0xFFCF51B0)
 
 NHSTUB(apex2us, 0xFFD6363C) //for extra long exposures
+
+NHSTUB(exmem_alloc, 0xFFC56B44)
