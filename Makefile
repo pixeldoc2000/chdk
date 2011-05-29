@@ -258,11 +258,13 @@ batch-zip: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus900_sd900  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g12  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=g12  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=g12  PLATFORMSUB=100f NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100h NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100l NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsub
 	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100h NO_INC_BUILD=1 firzipsub
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100i NO_INC_BUILD=1 firzipsub	
 	@echo "**** All firmwares created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/$(VER)-a610-100e-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a610-100d-$(BUILD_NUMBER).zip
@@ -309,6 +311,7 @@ batch-zip: version
 	#mv $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-a430-100b-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/$(VER)-s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/$(VER)-s95-100i-$(BUILD_NUMBER).zip $(topdir)bin/s95-100i-$(BUILD_NUMBER)_BETA.zip	
 	mv $(topdir)bin/$(VER)-ixus750_sd550-100h-$(BUILD_NUMBER).zip $(topdir)bin/$(VER)-ixus750_sd550-100h-$(BUILD_NUMBER)_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
 	@echo "**** Summary of memisosizes"
@@ -431,11 +434,13 @@ batch-zip-complete: version
 	$(MAKE) -s --no-print-directory PLATFORM=ixus900_sd900  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=g12  PLATFORMSUB=100c NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=g12  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=g12  PLATFORMSUB=100f NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=sx30  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=sx30  PLATFORMSUB=100h NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=sx30  PLATFORMSUB=100l NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100e NO_INC_BUILD=1 firzipsubcomplete
 	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100h NO_INC_BUILD=1 firzipsubcomplete
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100i NO_INC_BUILD=1 firzipsubcomplete
 	@echo "**** All zipfiles including firmwares and extra stuff created successfully"
 	@echo "**** Copying duplicate Firmwares"
 	cp $(topdir)bin/a610-100e-$(BUILD_NUMBER)-full.zip $(topdir)bin/a610-100d-$(BUILD_NUMBER)-full.zip
@@ -526,6 +531,8 @@ batch-zip-complete: version
 	mv $(topdir)bin/s95-100e-$(BUILD_NUMBER).zip $(topdir)bin/s95-100e-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)-full_BETA.zip
 	mv $(topdir)bin/s95-100h-$(BUILD_NUMBER).zip $(topdir)bin/s95-100h-$(BUILD_NUMBER)_BETA.zip
+	mv $(topdir)bin/s95-100i-$(BUILD_NUMBER)-full.zip $(topdir)bin/s95-100i-$(BUILD_NUMBER)-full_BETA.zip
+	mv $(topdir)bin/s95-100i-$(BUILD_NUMBER).zip $(topdir)bin/s95-100i-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER).zip $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER)_BETA.zip
 	mv $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER)-full.zip $(topdir)bin/ixus750_sd550-100h-$(BUILD_NUMBER)-full_BETA.zip
 	@echo "**** Done Copying duplicate Firmwares"
@@ -645,9 +652,11 @@ batch-clean:
 	$(MAKE) -s --no-print-directory PLATFORM=ixus900_sd900  PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g12 PLATFORMSUB=100c NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=g12 PLATFORMSUB=100e NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=g12 PLATFORMSUB=100f NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100e NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100h NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=sx30 PLATFORMSUB=100l NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100e NO_INC_BUILD=1 clean
 	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100h NO_INC_BUILD=1 clean
+	$(MAKE) -s --no-print-directory PLATFORM=s95  PLATFORMSUB=100i NO_INC_BUILD=1 clean
 	.PHONY: fir upload
