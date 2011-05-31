@@ -151,4 +151,3 @@
     #define ASPECT_GAMES_XCORRECTION(x)   ( ((x)<<1) )
     #undef ASPECT_GAMES_YCORRECTION
     #define ASPECT_GAMES_YCORRECTION(y)   ( (y) )  //none
-
