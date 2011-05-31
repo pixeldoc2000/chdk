@@ -1,3 +1,138 @@
+--- CHDK Canon IXUS 300 HS / Powershot SD 4000 IS / IXY 30S ------------------------
+
+
+--- PropertyCase
+Number   Name                       Location            String
+1
+2
+3                                                       ExpMode.c
+4
+6                                                       ExpMode.c
+8
+9
+11                                                      ExpMode.c
+12
+13       AFStep                     ROM:FF93F350        GetAFStepResult
+18       AFResult                   ROM:FF93ECC8        GetAFResult
+23       PCH_AV_EFFECTIVE           ROM:FF869490        PROPCASE_AV
+23       Av                         ROM:FF93EAB8        GetAvResult
+26       PCH_AV_SETTING             ROM:FF869440        PROPCASE_USER_AV
+29
+34       Bv                         ROM:FF93EA74        GetBvResult
+35       BvC                        ROM:FF93EED4        GetBvCResult
+36       BvForFix                   ROM:FF93F044        GetBvForFixResult
+39       BvL                        ROM:FF93EF18        GetBvLResult
+40       BvS                        ROM:FF93EF54        GetBvSResult
+49       PCH_CAPTURE_MODE           ROM:FF8693F4        PROPCASE_SHOOTING_MODE
+50                                                      WBShtInf.c  PrcssFil.c
+57       Compression                ROM:FF8689EC
+58
+60                                                      SsISIF.c ExpMode.c
+67       DayLightValue              ROM:FF93EC4C        GetDayLightValueResult                ???
+77       DeltaDigital               ROM:FF93F084        GetDeltaDigitalResult  PrcssFil.c
+78                                                      ExpMode.c
+79       DeltaGain                  ROM:FF93EB30        GetDeltaGainResult
+80       DeltraNd                   ROM:FF93F114        GetDeltaNdResult
+81
+82                                                      PrcssFil.c
+91                                                      SsZoomCtrl.c
+93                                                      SsZoomCtrl.c
+94                                                      SsZoomCtrl.c
+95       DigitalZoomPos             ROM:FF868A24        PROPCASE_DIGITAL_ZOOM_POSITION  WBFaceWin.c
+96
+102
+103                                                     ExpMode.c
+105      Evf                        ROM:FF8375E4        ShootSeqAPI.c                         ???
+107                                                     AutoShut.c ?!? ExpCmp.c
+111
+112
+113
+114
+115
+117
+121                                                     MainFlash.c
+122      FlashDuration              ROM:FF93F3D4        GetFlashDurationResult
+127                                                     ExpCmp.c  MainFlash.c
+129      FlashLightValue            ROM:FF93EC0C        GetFlashLightValueResult              ???
+132
+133
+137                                                     ExpCmp.c
+138      HSCapture                  ROM:FF868A8C                      WBShtInf.c
+143                                                     SsStrobeCtrl.c  SsExpCtrl.c
+145                                                     SsISIF.c ExpMode.c
+149      ISOSpeed                   ROM:FF868A5C        PROPCASE_ISO_MODE
+166                                                     ShootSeqCommon.c
+169                                                     ShootSeqCommon.c ExpMode.c             Resolution Video ?
+170                                                     ShootSeqCommon.c
+186
+194                                                     ExpMode.c
+197
+205                                                     ExpMode.c
+206
+207                                                     ExpMode.c
+208                                                     ExpMode.c
+209      RealExposureCompensation   ROM:FF93EC8C        GetRealExposureCompensationResult
+210                                                     ExpMode.c
+215
+218                                                     ShootSeqCommon.c
+219
+220      Resolution                 ROM:FF8689C4        PROPCASE_RESOLUTION     (0=L, 1=M1, 2=M2, 3=M3, 4=S, 8=Widescreen)
+221      RotationAngle              ROM:FF93EFF8        GetRotationAngleResult                 PROPCASE_ORIENTATION_SENSOR
+222                                                     PrepareFlash.c  PreFlash.c
+223                                                     ExpMode.c
+225
+228                                                     ExpMode.c
+229
+242
+247      TargetDistance             ROM:FF93EBA8        GetTargetDistanceResult
+248      Sv                         ROM:FF93EB6C        GetSvResult
+249      SvFix                      ROM:FF93F0D4        GetSvFixResult
+252
+264      PCH_TV_EFFECTIVE           ROM:FF869614        PROPCASE_TV
+264      Tv                         ROM:FF93EAF4        GetTvResult
+266      PCH_TV_SETTING             ROM:FF869464        PROPCASE_USER_TV
+269                                                     WBDrv.c ???
+271
+279                                                     ExpMode.c
+280                                                     Sensitive.c ???
+
+294      ScreenAspect ?!? SX1                           http://chdk.setepontos.com/index.php/topic,3410.msg32416.html#msg32416
+295                                                     WBInteg.c ???  ExpMode.c
+296
+297
+300                                                     ExpMode.c
+301
+302
+304                                                     ExpRes.c  PrepareFlash.c
+308                                                     ExpCmp.c
+312
+316
+318
+319
+320
+322
+341
+
+ToDo: searched for Property Case till ROM:FF91EAB4
+
+
+--- Memory Map (like SX30) ------------------------------------------
+ToDo
+0001900     MEMBASEADDR             start of data - used for initialized vars
+???????                             end of inited data
+???????                             start of bss - used for zeroed/uninited vars
+???????                             end of bss
+014B394     MEMISOSTART             start of our data / bss
+
+0400000                             raw buffers
+83FFFFF ???                         end of raw buffers
+
+C0xxxxxx                            I/O
+
+FF810000    ROMBASEADDR             start of rom
+FFFFFFFF                            end of rom
+
+
 --- Canon Basic - UIFS_WriteFirmInfoToFile()
 Canon IXUS 300 HS
 P-ID:31F7  PAL D
